@@ -14,15 +14,24 @@ yarn add @forsyteco/product-ui
 
 ## Peer Dependencies
 
-This package requires React 19.2.1 or higher:
+This package requires React 19.x and Tailwind CSS 4.x:
 
 ```bash
-npm install react@^19.2.1 react-dom@^19.2.1
+npm install react@^19.2.1 react-dom@^19.2.1 tailwindcss@^4.1.17
 ```
 
-## Usage
+## Setup
 
-### Import Components
+### 1. Import Tailwind Base Styles
+
+Make sure Tailwind CSS is imported in your application:
+
+```css
+/* src/index.css or your main CSS file */
+@import 'tailwindcss';
+```
+
+### 2. Import Components
 
 ```typescript
 import { Spinner } from '@forsyteco/product-ui'
@@ -45,7 +54,7 @@ function App() {
 
 ## Components
 
-All components are self-contained with their own styles. You can override styles by passing a `className` prop, which will be merged with the component's default styles.
+All components use Tailwind CSS classes directly. Make sure Tailwind CSS is configured in your project.
 
 ### Spinner
 
@@ -63,8 +72,6 @@ import { Spinner } from '@forsyteco/product-ui'
 // Custom styling with Tailwind classes
 <Spinner className="text-blue-500 w-8 h-8" />
 ```
-
-Components use Tailwind CSS classes internally. If you have Tailwind configured in your project, you can override styles using the `className` prop.
 
 ## Development
 
@@ -84,4 +91,3 @@ pnpm --filter @forsyteco/product-ui storybook
 ## License
 
 MIT
-

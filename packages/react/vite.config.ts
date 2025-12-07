@@ -12,10 +12,16 @@ const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(file
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
-  plugins: [react(), tailwindcss(), dts({
-    include: ['src/**/*'],
-    exclude: ['src/**/*.stories.tsx', 'src/**/*.test.tsx']
-  })],
+  plugins: [
+    react({
+      jsxRuntime: 'automatic',
+    }),
+    tailwindcss(),
+    dts({
+      include: ['src/**/*'],
+      exclude: ['src/**/*.stories.tsx', 'src/**/*.test.tsx'],
+    }),
+  ],
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
@@ -37,17 +43,30 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
-    include: ['**/*.test.{ts,tsx}'],
-    exclude: ['**/*.stories.test.{ts,tsx}'],
+    include: ['src/**/*.test.{ts,tsx}'],
+    exclude: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/*.stories.test.{ts,tsx}',
+    ],
     projects: [
       {
+        extends: true,
         test: {
-          include: ['**/*.test.{ts,tsx}'],
-          exclude: ['**/*.stories.test.{ts,tsx}'],
+          include: ['src/**/*.test.{ts,tsx}'],
+          exclude: [
+            '**/node_modules/**',
+            '**/dist/**',
+            '**/*.stories.test.{ts,tsx}',
+          ],
         },
       },
       {
         plugins: [
+          react({
+            jsxRuntime: 'automatic',
+          }),
+          tailwindcss(),
           // The plugin will run tests for the stories defined in your Storybook config
           // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
           storybookTest({
@@ -55,7 +74,9 @@ export default defineConfig({
           }),
         ],
         test: {
-          include: ['**/*.stories.test.{ts,tsx}'],
+          // Storybook discovers stories via the 'stories' field in .storybook/main.ts
+          // Do not specify 'include' - let the plugin handle story discovery
+          globals: true,
           browser: {
             enabled: true,
             headless: true,

@@ -44,14 +44,18 @@
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
+    "@storybook/addon-vitest": "^10.1.4",
+    "@storybook/react-vite": "^10.1.4",
     "@types/react": "19",
     "@vitejs/plugin-react": "^4.3.4",
+    "storybook": "^10.1.4",
     "tailwindcss": "^4.1.17",
     "vite": "^7.2.6",
     "vite-plugin-dts": "^4.3.0",
     "vitest": "^4.0.15",
-    "storybook": "^10.1.4",
-    "@storybook/react-vite": "^10.1.4"
+    "playwright": "^1.57.0",
+    "@vitest/browser-playwright": "^4.0.15",
+    "@vitest/coverage-v8": "^4.0.15"
   },
   "scripts": {
     "build": "vite build",

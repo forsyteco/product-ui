@@ -16,7 +16,7 @@ const config: StorybookConfig = {
   stories: [
     "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"
   ],
-  addons: [],
+  addons: [getAbsolutePath("@storybook/addon-vitest")],
   framework: getAbsolutePath('@storybook/react-vite'),
   async viteFinal(config) {
     return mergeConfig(config, {

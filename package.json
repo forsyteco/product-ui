@@ -1,6 +1,13 @@
 {
   "name": "forsyteco-product-ui",
   "private": true,
+  "workspaces": [
+    "packages/react",
+    "packages/mcp",
+    "packages/*"
+  ],
+  "author": "etiCloud Ltd",
+  "license": "MIT",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",

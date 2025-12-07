@@ -1,0 +1,26 @@
+:where(.spinner) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:where(.spinnerFull) {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+:where(.spinnerIcon) {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+

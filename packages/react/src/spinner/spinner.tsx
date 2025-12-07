@@ -1,6 +1,6 @@
-import React from 'react';
 import { LoaderCircle } from 'lucide-react';
 import { cn } from '../utils/tailwind';
+import classes from './spinner.module.css';
 
 export type SpinnerProps = {
   full?: boolean
@@ -9,8 +9,8 @@ export type SpinnerProps = {
 
 function Spinner(props: SpinnerProps) {
   return (
-    <span className={cn(props.full && 'flex flex-1 items-center justify-center')}>
-      <LoaderCircle className={cn('animate-spin', props.className)} />
+    <span className={cn(classes.spinner, props.full && classes.spinnerFull)}>
+      <LoaderCircle className={cn(classes.spinnerIcon, props.className)} />
     </span>
   );
 };

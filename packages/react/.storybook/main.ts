@@ -2,7 +2,7 @@ import type { StorybookConfig } from '@storybook/react-vite';
 import { mergeConfig } from 'vite';
 import { dirname } from "path"
 import { fileURLToPath } from "url"
-import viteConfig from '../vite.config';
+import tailwindcss from '@tailwindcss/vite'
 
 /**
 * This function is used to resolve the absolute path of a package.
@@ -11,6 +11,7 @@ import viteConfig from '../vite.config';
 function getAbsolutePath(value: string): any {
   return dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)))
 }
+
 const config: StorybookConfig = {
   stories: [
     "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"
@@ -18,7 +19,11 @@ const config: StorybookConfig = {
   addons: [],
   framework: getAbsolutePath('@storybook/react-vite'),
   async viteFinal(config) {
-    return mergeConfig(config, viteConfig);
+    return mergeConfig(config, {
+      plugins: [
+        tailwindcss(),
+      ],
+    });
   },
 };
 export default config;

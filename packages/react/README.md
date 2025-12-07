@@ -1,6 +1,6 @@
 # @forsyteco/product-ui
 
-React component library for Forsyteco products, built with React 19, TypeScript, and Tailwind CSS 4.
+React component library for Forsyte app, built with React 19, TypeScript, and Tailwind CSS 4.
 
 ## Installation
 

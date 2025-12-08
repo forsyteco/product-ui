@@ -1,0 +1,159 @@
+version: 2.1
+
+jobs:
+  install-dependencies:
+    docker:
+      - image: cimg/node:20.11
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - pnpm-store-v1-{{ checksum "pnpm-lock.yaml" }}
+            - pnpm-store-v1-
+      - run:
+          name: Install pnpm
+          command: |
+            corepack enable
+            corepack prepare pnpm@9.0.0 --activate
+      - run:
+          name: Install dependencies
+          command: pnpm install --frozen-lockfile
+      - save_cache:
+          key: pnpm-store-v1-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - ~/.pnpm-store
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - node_modules
+            - packages/*/node_modules
+            - ~/.pnpm-store
+
+  lint:
+    docker:
+      - image: cimg/node:20.11
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - restore_cache:
+          keys:
+            - turbo-lint-{{ checksum "turbo.json" }}-{{ .Branch }}-{{ .Revision }}
+            - turbo-lint-{{ checksum "turbo.json" }}-{{ .Branch }}-
+            - turbo-lint-{{ checksum "turbo.json" }}-
+      - run:
+          name: Install pnpm
+          command: |
+            corepack enable
+            corepack prepare pnpm@9.0.0 --activate
+      - run:
+          name: Run lint
+          command: pnpm run lint
+      - save_cache:
+          key: turbo-lint-{{ checksum "turbo.json" }}-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - .turbo
+
+  check-types:
+    docker:
+      - image: cimg/node:20.11
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - restore_cache:
+          keys:
+            - turbo-check-types-{{ checksum "turbo.json" }}-{{ .Branch }}-{{ .Revision }}
+            - turbo-check-types-{{ checksum "turbo.json" }}-{{ .Branch }}-
+            - turbo-check-types-{{ checksum "turbo.json" }}-
+      - run:
+          name: Install pnpm
+          command: |
+            corepack enable
+            corepack prepare pnpm@9.0.0 --activate
+      - run:
+          name: Run type check
+          command: pnpm run check-types
+      - save_cache:
+          key: turbo-check-types-{{ checksum "turbo.json" }}-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - .turbo
+
+  test:
+    docker:
+      - image: cimg/node:20.11
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - restore_cache:
+          keys:
+            - playwright-browsers-v1
+      - run:
+          name: Install pnpm
+          command: |
+            corepack enable
+            corepack prepare pnpm@9.0.0 --activate
+      - run:
+          name: Install Playwright browsers
+          command: |
+            cd packages/react
+            pnpm exec playwright install --with-deps chromium
+      - save_cache:
+          key: playwright-browsers-v1
+          paths:
+            - ~/.cache/ms-playwright
+      - run:
+          name: Run tests
+          command: pnpm vitest run --dir packages/react
+
+  build:
+    docker:
+      - image: cimg/node:20.11
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - restore_cache:
+          keys:
+            - turbo-build-{{ checksum "turbo.json" }}-{{ .Branch }}-{{ .Revision }}
+            - turbo-build-{{ checksum "turbo.json" }}-{{ .Branch }}-
+            - turbo-build-{{ checksum "turbo.json" }}-
+      - run:
+          name: Install pnpm
+          command: |
+            corepack enable
+            corepack prepare pnpm@9.0.0 --activate
+      - run:
+          name: Build packages
+          command: pnpm run build
+      - save_cache:
+          key: turbo-build-{{ checksum "turbo.json" }}-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - .turbo
+            - packages/*/dist
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - packages/*/dist
+
+workflows:
+  ci:
+    jobs:
+      - install-dependencies
+      - lint:
+          requires:
+            - install-dependencies
+      - check-types:
+          requires:
+            - install-dependencies
+      - test:
+          requires:
+            - install-dependencies
+      - build:
+          requires:
+            - install-dependencies
+            - lint
+            - check-types
+            - test
+

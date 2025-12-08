@@ -7,7 +7,6 @@ export type SpinnerProps = {
   size?: number;
   strokeWidth?: number;
   colors?: string[];
-  full?: boolean;
   className?: string;
 };
 
@@ -16,7 +15,6 @@ function Spinner({
   strokeWidth = 5,
   colors = DEFAULT_COLORS,
   className,
-  full,
 }: SpinnerProps) {
   const [colorIndex, setColorIndex] = useState(0);
 
@@ -31,13 +29,7 @@ function Spinner({
   const color = colors[colorIndex] || colors[0] || '#000000';
 
   return (
-    <div
-      className={cn(
-        'inline-flex',
-        full && 'w-full items-center justify-center',
-        className
-      )}
-    >
+    <div className={cn('inline-flex', className)}>
       <svg
         viewBox="0 0 50 50"
         style={{ width: size, height: size }}

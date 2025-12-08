@@ -33,14 +33,6 @@ const meta = {
         defaultValue: { summary: "['#ffde13', '#b0b0b0', '#000000']" },
       },
     },
-    full: {
-      control: { type: 'boolean' },
-      description: 'Whether to center the spinner in full width container',
-      table: {
-        type: { summary: 'boolean' },
-        defaultValue: { summary: 'false' },
-      },
-    },
     className: {
       control: { type: 'text' },
       description: 'Additional CSS classes',
@@ -53,21 +45,6 @@ const meta = {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
-
-export const FullWidth: Story = {
-  render: () => (
-    <div className="w-full border border-gray-200 rounded-lg p-8">
-      <Spinner full size={64} strokeWidth={6} />
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: 'Full-width centered spinner using the `full` prop.',
-      },
-    },
-  },
-};
 
 export const InContext: Story = {
   render: () => (

@@ -38,14 +38,6 @@ const meta = {
         defaultValue: { summary: "['#ffde13', '#b0b0b0', '#000000']" },
       },
     },
-    full: {
-      control: { type: 'boolean' },
-      description: 'Whether to center the spinner in full width container',
-      table: {
-        type: { summary: 'boolean' },
-        defaultValue: { summary: 'false' },
-      },
-    },
     className: {
       control: { type: 'text' },
       description: 'Additional CSS classes',
@@ -69,7 +61,6 @@ export const Playground: Story = {
     size: 50,
     strokeWidth: 5,
     colors: ['#ffde13', '#b0b0b0', '#000000'],
-    full: false,
   },
   parameters: {
     docs: {

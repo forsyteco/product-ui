@@ -175,7 +175,7 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium
 
       - name: Run tests
-        run: pnpm vitest run --dir packages/react
+        run: pnpm --filter react exec vitest run
 
   build:
     runs-on: ubuntu-latest

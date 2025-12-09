@@ -39,15 +39,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Save node_modules
-        uses: actions/upload-artifact@v4
-        with:
-          name: node_modules
-          path: |
-            node_modules
-            packages/*/node_modules
-          retention-days: 1
-
   lint:
     runs-on: ubuntu-latest
     needs: install-dependencies
@@ -78,11 +69,8 @@ jobs:
           restore-keys: |
             pnpm-store-
 
-      - name: Restore node_modules
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules
-          path: .
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Setup Turborepo cache
         uses: actions/cache@v4
@@ -126,11 +114,8 @@ jobs:
           restore-keys: |
             pnpm-store-
 
-      - name: Restore node_modules
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules
-          path: .
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Setup Turborepo cache
         uses: actions/cache@v4
@@ -174,11 +159,8 @@ jobs:
           restore-keys: |
             pnpm-store-
 
-      - name: Restore node_modules
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules
-          path: .
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Setup Playwright cache
         uses: actions/cache@v4
@@ -225,11 +207,8 @@ jobs:
           restore-keys: |
             pnpm-store-
 
-      - name: Restore node_modules
-        uses: actions/download-artifact@v4
-        with:
-          name: node_modules
-          path: .
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Setup Turborepo cache
         uses: actions/cache@v4

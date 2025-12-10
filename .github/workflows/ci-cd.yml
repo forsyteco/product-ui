@@ -1,0 +1,56 @@
+name: CI/CD
+
+on:
+  merge_group:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - dev
+      - 'feature/*'
+  pull_request:
+    branches:
+      - main
+      - dev
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  type-check:
+    name: Type check
+    uses: ./.github/workflows/check-types.yml
+    secrets: inherit
+
+  lint:
+    name: Linters
+    uses: ./.github/workflows/lint.yml
+    secrets: inherit
+
+  unit-test:
+    name: Tests
+    uses: ./.github/workflows/unit-tests.yml
+    secrets: inherit
+
+  build:
+    name: Production builds
+    needs: [lint, type-check, unit-test]
+    uses: ./.github/workflows/production-build.yml
+    secrets: inherit
+
+  deploy-storybook:
+    name: Deploy Storybook
+    needs: [build]
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    uses: ./.github/workflows/deploy-storybook.yml
+    secrets: inherit
+
+  required:
+    needs: [lint, type-check, unit-test, build]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail if conditional jobs failed
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'skipped') || contains(needs.*.result, 'cancelled')
+        run: exit 1

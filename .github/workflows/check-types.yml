@@ -2,7 +2,6 @@ name: Check Types
 
 on:
   workflow_call:
-    secrets: inherit
 
 jobs:
   type-check:

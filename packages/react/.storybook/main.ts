@@ -16,6 +16,7 @@ const config: StorybookConfig = {
   framework: getAbsolutePath('@storybook/react-vite'),
   async viteFinal(config) {
     return mergeConfig(config, {
+      base: '/product-ui/',
       plugins: [
         tailwindcss(),
       ],

@@ -43,6 +43,10 @@ jobs:
     name: Deploy Storybook
     needs: [build]
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
     uses: ./.github/workflows/deploy-storybook.yml
     secrets: inherit
 

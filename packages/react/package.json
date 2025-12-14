@@ -36,11 +36,18 @@
   "author": "etiCloud Ltd",
   "license": "MIT",
   "dependencies": {
+    "@headlessui/react": "^2.2.9",
     "@tailwindcss/vite": "^4.1.17",
+    "boring-avatars": "^2.0.4",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dayjs": "^1.11.19",
     "lucide-react": "^0.556.0",
+    "radix-ui": "^1.4.3",
     "react": "^19.2.1",
+    "react-day-picker": "^9.12.0",
     "react-dom": "^19.2.1",
+    "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
@@ -63,6 +70,10 @@
   },
   "scripts": {
     "build": "vite build",
+    "check-types": "tsc -p tsconfig.build.json --noEmit",
+    "lint": "tsc -p tsconfig.build.json --noEmit",
+    "test": "vitest run -c vitest.unit.config.ts",
+    "test:cov": "vitest run -c vitest.unit.config.ts --coverage",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },

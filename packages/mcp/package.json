@@ -27,7 +27,11 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "tsc -p tsconfig.build.json"
+    "build": "tsc -p tsconfig.build.json",
+    "check-types": "tsc -p tsconfig.build.json --noEmit",
+    "lint": "tsc -p tsconfig.build.json --noEmit",
+    "test": "node -e \"console.log('No tests for @forsyteco/product-mcp')\"",
+    "test:cov": "node -e \"console.log('No tests for @forsyteco/product-mcp')\""
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.24.3",

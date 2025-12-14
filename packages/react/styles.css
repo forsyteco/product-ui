@@ -1,5 +1,122 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("./fonts/plus-jakarta-sans-[wght].woff2") format("woff2");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("./fonts/plus-jakarta-sans-italic-[wght].woff2") format("woff2");
+  font-weight: 200 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: rgb(var(--background));
+  --color-foreground: rgb(var(--foreground));
+  --color-muted: rgb(var(--muted));
+  --color-muted-foreground: rgb(var(--muted-foreground));
+  --color-border: rgb(var(--border));
+  --color-input: rgb(var(--input));
+  --color-accent: rgb(var(--accent));
+  --color-accent-foreground: rgb(var(--accent-foreground));
+  --color-primary: rgb(var(--primary));
+  --color-primary-foreground: rgb(var(--primary-foreground));
+  --color-secondary: rgb(var(--secondary));
+  --color-secondary-foreground: rgb(var(--secondary-foreground));
+  --color-destructive: rgb(var(--destructive));
+  --color-destructive-foreground: rgb(var(--destructive-foreground));
+  --color-ring: rgb(var(--ring));
+  --color-card: rgb(var(--card));
+  --color-card-foreground: rgb(var(--card-foreground));
+  --color-popover: rgb(var(--popover));
+  --color-popover-foreground: rgb(var(--popover-foreground));
+}
+
+:root {
+  --brand-yellow: 255 222 19;
+  --brand-black: 0 0 0;
+  --brand-white: 255 255 255;
+
+  --neutral-950: 28 28 28;
+  --neutral-900: 42 43 45;
+  --neutral-800: 57 61 65;
+  --neutral-700: 71 78 87;
+  --neutral-200: 179 192 209;
+  --neutral-100: 196 207 222;
+
+  --background: var(--brand-white);
+  --foreground: var(--brand-black);
+
+  --muted: 244 245 247;
+  --muted-foreground: var(--neutral-700);
+
+  --border: var(--neutral-200);
+  --input: var(--neutral-200);
+
+  --accent: var(--brand-yellow);
+  --accent-foreground: var(--brand-black);
+
+  --primary: var(--brand-black);
+  --primary-foreground: var(--brand-white);
+
+  --secondary: 244 245 247;
+  --secondary-foreground: var(--brand-black);
+
+  --destructive: 220 38 38;
+  --destructive-foreground: var(--brand-white);
+
+  --ring: var(--brand-black);
+
+  --card: var(--brand-white);
+  --card-foreground: var(--brand-black);
+
+  --popover: var(--brand-white);
+  --popover-foreground: var(--brand-black);
+}
+
+.dark {
+  --background: var(--neutral-950);
+  --foreground: var(--brand-white);
+
+  --muted: var(--neutral-900);
+  --muted-foreground: var(--neutral-200);
+
+  --border: var(--neutral-800);
+  --input: var(--neutral-800);
+
+  --primary: var(--brand-white);
+  --primary-foreground: var(--brand-black);
+
+  --secondary: var(--neutral-900);
+  --secondary-foreground: var(--brand-white);
+
+  --ring: var(--brand-white);
+
+  --card: var(--neutral-950);
+  --card-foreground: var(--brand-white);
+
+  --popover: var(--neutral-950);
+  --popover-foreground: var(--brand-white);
+}
+
+:root[data-accent="blue"] {
+  --accent: 37 99 235;
+  --accent-foreground: 255 255 255;
+}
+
+:root.dark[data-accent="blue"] {
+  --accent: 59 130 246;
+  --accent-foreground: 15 23 42;
+}
+
 @keyframes spinner-rotate {
   100% {
     transform: rotate(360deg);
@@ -11,10 +128,12 @@
     stroke-dasharray: 1, 150;
     stroke-dashoffset: 0;
   }
+
   50% {
     stroke-dasharray: 90, 150;
     stroke-dashoffset: -35;
   }
+
   100% {
     stroke-dasharray: 1, 150;
     stroke-dashoffset: -124;
@@ -28,4 +147,3 @@
 @utility animate-spinner-dash {
   animation: spinner-dash 1.5s ease-in-out infinite;
 }
-

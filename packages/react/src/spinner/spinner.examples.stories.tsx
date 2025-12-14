@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import Spinner from './spinner';
+import Button from '../button';
 
 const meta = {
   title: 'Components/Spinner/Examples',
@@ -61,14 +62,10 @@ export const InContext: Story = {
           <span className="text-sm text-gray-600">Processing...</span>
         </div>
       </div>
-      <button
-        type="button"
-        className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
-        disabled
-      >
-        <Spinner size={16} strokeWidth={3} colors={['#ffffff']} />
+      <Button type="button" disabled className="gap-2">
+        <Spinner size={16} strokeWidth={3} colors={['currentColor']} />
         <span>Submitting</span>
-      </button>
+      </Button>
     </div>
   ),
   parameters: {
@@ -111,14 +108,9 @@ export const FullLifecycle: Story = {
 
     return (
       <>
-        <button
-          type="button"
-          onClick={initiateLoading}
-          className="mb-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
-          disabled={state === 'done'}
-        >
+        <Button type="button" onClick={initiateLoading} disabled={state === 'done'} className="mb-4">
           Load content
-        </button>
+        </Button>
         {state === 'loading' && <Spinner />}
         {loadedContent && <p className="mt-4">{loadedContent}</p>}
         <div

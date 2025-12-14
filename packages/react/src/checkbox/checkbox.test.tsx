@@ -16,7 +16,7 @@ describe('Checkbox', () => {
   });
 
   it('applies checked state', () => {
-    render(<Checkbox checked />);
+    render(<Checkbox defaultChecked />);
     const checkbox = screen.getByRole('checkbox');
     expect(checkbox).toBeChecked();
   });

@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
-import { render } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
+import { act, render } from '@testing-library/react';
 import Spinner from './spinner';
 
 describe('Spinner', () => {
@@ -21,5 +21,23 @@ describe('Spinner', () => {
     const { container } = render(<Spinner className="text-blue-500" />);
     const wrapper = container.querySelector('div');
     expect(wrapper).toHaveClass('text-blue-500');
+  });
+
+  it('cycles through colors over time', () => {
+    vi.useFakeTimers();
+    const { container, unmount } = render(<Spinner colors={['#111111', '#222222']} />);
+    const circle = container.querySelector('circle');
+
+    expect(circle).toHaveStyle({ stroke: '#111111' });
+
+    act(() => {
+      vi.advanceTimersByTime(1500);
+    });
+    expect(circle).toHaveStyle({ stroke: '#222222' });
+
+    act(() => {
+      unmount();
+    });
+    vi.useRealTimers();
   });
 });

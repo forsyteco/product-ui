@@ -15,6 +15,22 @@ import {
 import { cn } from '../utils/tailwind';
 import Button, { buttonVariants } from '../button';
 
+type CalendarChevronProps = React.ComponentProps<typeof ChevronLeftIcon> & {
+  orientation?: 'left' | 'right' | string;
+};
+
+function CalendarChevron({ className, orientation, ...props }: CalendarChevronProps) {
+  if (orientation === 'left') {
+    return <ChevronLeftIcon className={cn('size-4', className)} {...props} />;
+  }
+
+  if (orientation === 'right') {
+    return <ChevronRightIcon className={cn('size-4', className)} {...props} />;
+  }
+
+  return <ChevronDownIcon className={cn('size-4', className)} {...props} />;
+}
+
 function Calendar({
   className,
   classNames,
@@ -188,26 +204,7 @@ function Calendar({
             />
           );
         },
-        Chevron: ({ className, orientation, ...props }) => {
-          if (orientation === 'left') {
-            return (
-              <ChevronLeftIcon className={cn('size-4', className)} {...props} />
-            );
-          }
-
-          if (orientation === 'right') {
-            return (
-              <ChevronRightIcon
-                className={cn('size-4', className)}
-                {...props}
-              />
-            );
-          }
-
-          return (
-            <ChevronDownIcon className={cn('size-4', className)} {...props} />
-          );
-        },
+        Chevron: (props) => <CalendarChevron {...props} />,
         Nav,
         DayButton: CalendarDayButton,
         WeekNumber: ({ children, ...props }) => {
@@ -250,4 +247,4 @@ function CalendarDayButton({
   );
 }
 
-export { Calendar, CalendarDayButton }
+export { Calendar, CalendarDayButton, CalendarChevron }

@@ -49,7 +49,59 @@
     <link href="./sb-addons/storybook-core-server-presets-0/common-manager-bundle.js" rel="modulepreload" />
     
     <link href="./sb-addons/vitest-1/manager-bundle.js" rel="modulepreload" />
-       
+    
+    <link href="./sb-addons/storybook-2/manager-bundle.js" rel="modulepreload" />
+      <style>
+    /* Remove extra left padding (optional) */
+    .sidebar-header {
+      padding-left: 0 !important;
+      display: flex;
+      align-items: center;
+    }
+  
+    /* ✅ Brand wrapper div: take remaining space, allow shrinking */
+    /* Best selector (modern browsers): */
+    .sidebar-header > div:has(> a[target="_blank"]) {
+      flex: 1 1 auto;
+      min-width: 0;
+      width: auto;
+      margin-right: 0 !important; /* remove any built-in margin */
+    }
+  
+    /* Fallback if :has isn't supported:
+       assumes the brand wrapper is the second child div */
+    @supports not selector(:has(*)) {
+      .sidebar-header > div {
+        flex: 1 1 auto;
+        min-width: 0;
+        width: auto;
+        margin-right: 0 !important;
+      }
+    }
+  
+    /* Brand link: keep on one line with ellipsis */
+    .sidebar-header a[target="_blank"] {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px; /* logo ↔ text */
+      min-width: 0;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  
+    /* 24x24 logo */
+    .sidebar-header a[target="_blank"]::before {
+      content: "";
+      width: 24px;
+      height: 24px;
+      flex: 0 0 24px;
+      display: inline-block;
+      background: url("images/logo.png") center / contain no-repeat;
+    }
+  </style>
+   
 
     <style>
       #storybook-root[hidden] {
@@ -129,6 +181,8 @@
         import './sb-addons/storybook-core-server-presets-0/common-manager-bundle.js';
       
         import './sb-addons/vitest-1/manager-bundle.js';
+      
+        import './sb-addons/storybook-2/manager-bundle.js';
       
 
       import './sb-manager/runtime.js';

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import Transition from './transition';
+import Button from '../button';
 
 const meta = {
   title: 'Components/Transition/Examples',
@@ -18,15 +19,14 @@ export const Notification: Story = {
     const [show, setShow] = useState(false);
     return (
       <div className="p-6">
-        <button
+        <Button
           onClick={() => {
             setShow(true);
             setTimeout(() => setShow(false), 3000);
           }}
-          className="px-4 py-2 bg-blue-600 text-white rounded"
         >
           Show Notification
-        </button>
+        </Button>
         <div className="fixed top-4 right-4">
           <Transition show={show}>
             <div className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg">

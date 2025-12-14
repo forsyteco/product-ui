@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import Input from './input';
+import Button from '../button';
 
 const meta = {
   title: 'Components/Input/Examples',
@@ -28,12 +29,9 @@ export const LoginForm: Story = {
           </label>
           <Input type="password" placeholder="••••••••" />
         </div>
-        <button
-          type="submit"
-          className="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
+        <Button type="submit" className="w-full">
           Sign In
-        </button>
+        </Button>
       </form>
     </div>
   ),

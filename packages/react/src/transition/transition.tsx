@@ -28,7 +28,6 @@ function Transition({
   return (
     <HeadlessTransition
       show={show}
-      className={className}
       enter={cn(enter)}
       enterFrom={cn(enterFrom)}
       enterTo={cn(enterTo)}
@@ -36,7 +35,7 @@ function Transition({
       leaveFrom={cn(leaveFrom)}
       leaveTo={cn(leaveTo)}
     >
-      {children}
+      <div className={cn(className)}>{children}</div>
     </HeadlessTransition>
   );
 }

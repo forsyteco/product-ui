@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import DropdownMenu, { DropdownMenuItem, DropdownMenuButton } from './dropdown-menu';
+import Button from '../button';
 
 const meta = {
   title: 'Components/DropdownMenu/Features',
@@ -27,7 +28,7 @@ export const Alignments: Story = {
   render: () => (
     <div className="flex gap-8">
       <div className="flex flex-col items-center gap-2">
-        <DropdownMenu trigger={<button className="px-4 py-2 bg-blue-600 text-white rounded">Left Aligned</button>} align="left">
+        <DropdownMenu trigger={<Button>Left Aligned</Button>} align="left">
           <DropdownMenuItem>Item 1</DropdownMenuItem>
           <DropdownMenuItem>Item 2</DropdownMenuItem>
           <DropdownMenuItem>Item 3</DropdownMenuItem>
@@ -35,7 +36,7 @@ export const Alignments: Story = {
         <span className="text-xs text-gray-600">Left</span>
       </div>
       <div className="flex flex-col items-center gap-2">
-        <DropdownMenu trigger={<button className="px-4 py-2 bg-blue-600 text-white rounded">Right Aligned</button>} align="right">
+        <DropdownMenu trigger={<Button>Right Aligned</Button>} align="right">
           <DropdownMenuItem>Item 1</DropdownMenuItem>
           <DropdownMenuItem>Item 2</DropdownMenuItem>
           <DropdownMenuItem>Item 3</DropdownMenuItem>
@@ -58,7 +59,7 @@ export const WithMenuButton: Story = {
 
 export const DisabledItems: Story = {
   render: () => (
-    <DropdownMenu trigger={<button className="px-4 py-2 bg-blue-600 text-white rounded">Menu</button>}>
+    <DropdownMenu trigger={<Button>Menu</Button>}>
       <DropdownMenuItem>Enabled Item</DropdownMenuItem>
       <DropdownMenuItem disabled>Disabled Item</DropdownMenuItem>
       <DropdownMenuItem>Another Enabled Item</DropdownMenuItem>

@@ -22,7 +22,7 @@ describe('Select', () => {
   it('applies error styling', () => {
     const { container } = render(<Select options={options} error />);
     const select = container.querySelector('select');
-    expect(select).toHaveClass('border-red-300');
+    expect(select).toHaveClass('border-destructive-border');
   });
 
   it('applies disabled state', () => {

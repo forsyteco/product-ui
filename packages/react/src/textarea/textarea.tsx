@@ -3,11 +3,11 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../utils/tailwind';
 
 const textareaVariants = cva(
-  'block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500',
+  'block w-full rounded-md border border-input bg-background text-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
   {
     variants: {
       error: {
-        true: 'border-red-300 focus:border-red-500 focus:ring-red-500',
+        true: 'border-destructive-border focus:border-destructive focus:ring-destructive',
         false: '',
       },
     },

@@ -12,7 +12,7 @@ describe('Textarea', () => {
   it('applies error styling', () => {
     const { container } = render(<Textarea error />);
     const textarea = container.querySelector('textarea');
-    expect(textarea).toHaveClass('border-red-300');
+    expect(textarea).toHaveClass('border-destructive-border');
   });
 
   it('applies disabled state', () => {

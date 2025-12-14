@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import Transition from './transition';
+import Button from '../button';
 
 const meta = {
   title: 'Components/Transition',
@@ -30,12 +31,9 @@ export const Default: Story = {
     const [show, setShow] = useState(false);
     return (
       <>
-        <button
-          onClick={() => setShow(!show)}
-          className="px-4 py-2 bg-blue-600 text-white rounded mb-4"
-        >
+        <Button variant="outline" onClick={() => setShow(!show)} className="mb-4">
           Toggle
-        </button>
+        </Button>
         <Transition show={show}>
           <div className="p-4 bg-gray-100 rounded">Transitioning content</div>
         </Transition>
@@ -49,12 +47,9 @@ export const Playground: Story = {
     const [show, setShow] = useState(false);
     return (
       <>
-        <button
-          onClick={() => setShow(!show)}
-          className="px-4 py-2 bg-blue-600 text-white rounded mb-4"
-        >
+        <Button variant="outline" onClick={() => setShow(!show)} className="mb-4">
           Toggle
-        </button>
+        </Button>
         <Transition {...args} show={show}>
           <div className="p-4 bg-gray-100 rounded">Custom transition</div>
         </Transition>

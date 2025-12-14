@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import Tabs, { TabList, Tab, TabPanels, TabPanel } from './tabs';
+import Button from '../button';
 
 const meta = {
   title: 'Components/Tabs/Examples',
@@ -57,9 +58,7 @@ export const SettingsPage: Story = {
                   <label className="block text-sm font-medium text-gray-700">New Password</label>
                   <input type="password" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
                 </div>
-                <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                  Update Password
-                </button>
+                <Button>Update Password</Button>
               </div>
             </TabPanel>
             <TabPanel>
@@ -85,9 +84,7 @@ export const SettingsPage: Story = {
                 <div className="border border-gray-200 rounded-lg p-4">
                   <h3 className="font-semibold mb-2">Current Plan</h3>
                   <p className="text-sm text-gray-600 mb-4">Pro Plan - $29/month</p>
-                  <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                    Change Plan
-                  </button>
+                  <Button>Change Plan</Button>
                 </div>
               </div>
             </TabPanel>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import Dialog, { DialogPanel, DialogTitle, DialogDescription } from './dialog';
+import Button from '../button';
 
 const meta = {
   title: 'Components/Dialog/Examples',
@@ -20,12 +21,9 @@ export const ConfirmationDialog: Story = {
 
     return (
       <div className="p-6">
-        <button
-          onClick={() => setIsOpen(true)}
-          className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-        >
+        <Button variant="destructive" onClick={() => setIsOpen(true)}>
           Delete Item
-        </button>
+        </Button>
         {confirmed && <p className="mt-4 text-green-600">Item deleted!</p>}
         <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
           <DialogPanel>
@@ -34,21 +32,18 @@ export const ConfirmationDialog: Story = {
               Are you sure you want to delete this item? This action cannot be undone.
             </DialogDescription>
             <div className="mt-6 flex justify-end gap-3">
-              <button
-                onClick={() => setIsOpen(false)}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
-              >
+              <Button variant="outline" onClick={() => setIsOpen(false)}>
                 Cancel
-              </button>
-              <button
+              </Button>
+              <Button
+                variant="destructive"
                 onClick={() => {
                   setConfirmed(true);
                   setIsOpen(false);
                 }}
-                className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700"
               >
                 Delete
-              </button>
+              </Button>
             </div>
           </DialogPanel>
         </Dialog>

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import DropdownMenu, { DropdownMenuItem, DropdownMenuButton } from './dropdown-menu';
+import Button from '../button';
 
 const meta = {
   title: 'Components/DropdownMenu',
@@ -31,7 +32,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
-    <DropdownMenu trigger={<button className="px-4 py-2 bg-blue-600 text-white rounded">Open Menu</button>}>
+    <DropdownMenu trigger={<Button>Open Menu</Button>}>
       <DropdownMenuItem>Item 1</DropdownMenuItem>
       <DropdownMenuItem>Item 2</DropdownMenuItem>
       <DropdownMenuItem>Item 3</DropdownMenuItem>
@@ -41,7 +42,7 @@ export const Default: Story = {
 
 export const Playground: Story = {
   render: (args) => (
-    <DropdownMenu {...args} trigger={<button className="px-4 py-2 bg-blue-600 text-white rounded">Open Menu</button>}>
+    <DropdownMenu {...args} trigger={<Button>Open Menu</Button>}>
       <DropdownMenuItem>Edit</DropdownMenuItem>
       <DropdownMenuItem>Duplicate</DropdownMenuItem>
       <DropdownMenuItem disabled>Delete</DropdownMenuItem>

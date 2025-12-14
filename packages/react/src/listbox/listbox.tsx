@@ -42,12 +42,12 @@ function Listbox({
   disabled = false,
 }: ListboxProps) {
   return (
-    <HeadlessListbox value={value} onChange={onChange} disabled={disabled}>
+    <HeadlessListbox value={value ?? undefined} onChange={onChange} disabled={disabled}>
       <div className={cn('relative', className)}>
         <HeadlessListbox.Button
           className={cn(
-            'relative w-full cursor-default rounded-md bg-white py-2 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500',
-            disabled && 'opacity-50 cursor-not-allowed'
+            'relative w-full cursor-default rounded-md bg-background py-2 pl-3 pr-10 text-left text-foreground shadow-sm ring-1 ring-inset ring-border focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background',
+            disabled && 'cursor-not-allowed opacity-50'
           )}
         >
           <span className="block truncate">
@@ -55,7 +55,7 @@ function Listbox({
           </span>
           <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
             <svg
-              className="h-5 w-5 text-gray-400"
+              className="h-5 w-5 text-muted-foreground"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -69,7 +69,7 @@ function Listbox({
             </svg>
           </span>
         </HeadlessListbox.Button>
-        <HeadlessListbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <HeadlessListbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-background py-1 text-base shadow-lg ring-1 ring-border focus:outline-none">
           {options.map((option) => (
             <HeadlessListbox.Option
               key={option.id}
@@ -78,8 +78,8 @@ function Listbox({
               className={({ active, disabled }) =>
                 cn(
                   'relative cursor-default select-none py-2 pl-10 pr-4',
-                  active ? 'bg-blue-600 text-white' : 'text-gray-900',
-                  disabled && 'opacity-50 cursor-not-allowed'
+                  active ? 'bg-accent text-accent-foreground' : 'text-foreground',
+                  disabled && 'cursor-not-allowed opacity-50'
                 )
               }
             >

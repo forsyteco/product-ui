@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import Dialog, { DialogPanel, DialogTitle, DialogDescription } from './dialog';
+import Button from '../button';
 
 const meta = {
   title: 'Components/Dialog/Features',
@@ -24,12 +25,9 @@ export const Basic: Story = {
     const [isOpen, setIsOpen] = useState(false);
     return (
       <>
-        <button
-          onClick={() => setIsOpen(true)}
-          className="px-4 py-2 bg-blue-600 text-white rounded"
-        >
+        <Button onClick={() => setIsOpen(true)}>
           Open Dialog
-        </button>
+        </Button>
         <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
           <DialogPanel>
             <DialogTitle>Confirm Action</DialogTitle>
@@ -37,18 +35,12 @@ export const Basic: Story = {
               Are you sure you want to proceed? This action cannot be undone.
             </DialogDescription>
             <div className="mt-4 flex justify-end gap-2">
-              <button
-                onClick={() => setIsOpen(false)}
-                className="px-4 py-2 text-gray-700 bg-gray-100 rounded hover:bg-gray-200"
-              >
+              <Button variant="outline" onClick={() => setIsOpen(false)}>
                 Cancel
-              </button>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-              >
+              </Button>
+              <Button onClick={() => setIsOpen(false)}>
                 Confirm
-              </button>
+              </Button>
             </div>
           </DialogPanel>
         </Dialog>
@@ -62,12 +54,9 @@ export const WithForm: Story = {
     const [isOpen, setIsOpen] = useState(false);
     return (
       <>
-        <button
-          onClick={() => setIsOpen(true)}
-          className="px-4 py-2 bg-blue-600 text-white rounded"
-        >
+        <Button onClick={() => setIsOpen(true)}>
           Open Form Dialog
-        </button>
+        </Button>
         <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
           <DialogPanel>
             <DialogTitle>Create New Item</DialogTitle>
@@ -90,20 +79,12 @@ export const WithForm: Story = {
                 />
               </div>
               <div className="flex justify-end gap-2">
-                <button
-                  type="button"
-                  onClick={() => setIsOpen(false)}
-                  className="px-4 py-2 text-gray-700 bg-gray-100 rounded hover:bg-gray-200"
-                >
+                <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>
                   Cancel
-                </button>
-                <button
-                  type="submit"
-                  onClick={() => setIsOpen(false)}
-                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                >
+                </Button>
+                <Button type="submit" onClick={() => setIsOpen(false)}>
                   Create
-                </button>
+                </Button>
               </div>
             </form>
           </DialogPanel>

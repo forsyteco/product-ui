@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import DropdownMenu, { DropdownMenuItem, DropdownMenuButton } from './dropdown-menu';
+import Button from '../button';
 
 const meta = {
   title: 'Components/DropdownMenu/Examples',
@@ -17,12 +18,12 @@ export const UserMenu: Story = {
     <div className="flex justify-end p-4">
       <DropdownMenu
         trigger={
-          <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200">
+          <Button variant="outline" className="flex items-center gap-2 rounded-lg">
             <span>John Doe</span>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
-          </button>
+          </Button>
         }
       >
         <DropdownMenuItem>Profile</DropdownMenuItem>

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import Popover, { PopoverButton, PopoverPanel } from './popover';
 
 describe('Popover', () => {
@@ -20,6 +20,8 @@ describe('Popover', () => {
         <PopoverPanel>Popover content</PopoverPanel>
       </Popover>
     );
+
+    fireEvent.click(screen.getByText('Open'));
     expect(screen.getByText('Popover content')).toBeInTheDocument();
   });
 });

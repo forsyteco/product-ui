@@ -15,7 +15,7 @@ describe('Disclosure', () => {
 
   it('renders panel content', () => {
     render(
-      <Disclosure>
+      <Disclosure defaultOpen>
         <DisclosureButton>Toggle</DisclosureButton>
         <DisclosurePanel>Panel content</DisclosurePanel>
       </Disclosure>

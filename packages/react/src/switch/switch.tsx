@@ -3,7 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../utils/tailwind';
 
 const switchVariants = cva(
-  'group ml-3 inline-flex items-center rounded-full bg-gray-200 transition data-checked:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
+  'group ml-3 inline-flex items-center rounded-full bg-muted transition data-checked:bg-accent focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
   {
     variants: {
       size: {
@@ -39,11 +39,12 @@ const switchThumbVariants = cva(
   }
 );
 
-export type SwitchProps = VariantProps<typeof switchVariants> & {
+export type SwitchProps = Omit<VariantProps<typeof switchVariants>, 'disabled'> & {
   checked?: boolean;
   onChange?: (checked: boolean) => void;
   label?: string;
   description?: string;
+  disabled?: boolean;
   className?: string;
 };
 
@@ -56,13 +57,15 @@ function Switch({
   size,
   className,
 }: SwitchProps) {
+  const isDisabled = Boolean(disabled);
+
   return (
     <Field className={cn('flex items-center', className)}>
       {label && (
         <Label
           className={cn(
             'text-sm font-medium',
-            disabled ? 'text-gray-400' : 'text-gray-900'
+            isDisabled ? 'text-muted-foreground opacity-50' : 'text-foreground'
           )}
         >
           {label}
@@ -72,7 +75,7 @@ function Switch({
         <Description
           className={cn(
             'text-sm',
-            disabled ? 'text-gray-400' : 'text-gray-500'
+            isDisabled ? 'text-muted-foreground opacity-50' : 'text-muted-foreground'
           )}
         >
           {description}
@@ -81,8 +84,8 @@ function Switch({
       <HeadlessSwitch
         checked={checked}
         onChange={onChange}
-        disabled={disabled}
-        className={switchVariants({ size, disabled })}
+        disabled={isDisabled}
+        className={switchVariants({ size, disabled: isDisabled })}
       >
         <span className={switchThumbVariants({ size })} />
       </HeadlessSwitch>

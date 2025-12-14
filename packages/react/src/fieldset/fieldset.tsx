@@ -3,12 +3,12 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../utils/tailwind';
 
 const fieldsetVariants = cva(
-  'border rounded-md p-4',
+  'border rounded-md p-4 bg-background',
   {
     variants: {
       variant: {
-        default: 'border-gray-300',
-        error: 'border-red-300',
+        default: 'border-border',
+        error: 'border-destructive-border',
       },
     },
     defaultVariants: {
@@ -29,7 +29,7 @@ function Fieldset({ legend, children, variant, className, ...props }: FieldsetPr
       {...props}
     >
       {legend && (
-        <legend className="px-2 text-sm font-medium text-gray-700">
+        <legend className="px-2 text-sm font-medium text-foreground">
           {legend}
         </legend>
       )}

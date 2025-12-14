@@ -10,9 +10,9 @@ describe('Input', () => {
   });
 
   it('applies error styling', () => {
-    const { container } = render(<Input error />);
-    const input = container.querySelector('input');
-    expect(input).toHaveClass('border-red-300');
+    const { container } = render(<Input aria-invalid="true" />);
+    const wrapper = container.firstChild;
+    expect(wrapper).toHaveClass('has-aria-invalid:border-destructive');
   });
 
   it('applies disabled state', () => {

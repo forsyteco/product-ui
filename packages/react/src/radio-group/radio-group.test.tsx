@@ -18,7 +18,7 @@ describe('RadioGroup', () => {
 
   it('displays selected value', () => {
     render(<RadioGroup options={options} value="option1" />);
-    const option1 = screen.getByText('Option 1').closest('div');
+    const option1 = screen.getByText('Option 1').closest('[role="radio"]');
     expect(option1).toHaveClass('border-blue-600');
   });
 

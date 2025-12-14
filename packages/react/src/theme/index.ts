@@ -1,4 +1,4 @@
 export { default as ThemeProvider } from './theme-provider';
 export { useTheme } from './use-theme';
-export type { ThemeProviderProps, AccentColor, ThemeMode, ThemeContextValue } from './theme-provider';
+export type { ThemeProviderProps, ColourScheme, ThemeMode, ThemeContextValue } from './theme-provider';
 

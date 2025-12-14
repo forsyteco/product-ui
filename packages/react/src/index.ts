@@ -79,4 +79,4 @@ export {
 } from './breadcrumb'
 
 export { ThemeProvider, useTheme } from './theme'
-export type { ThemeProviderProps, AccentColor, ThemeMode, ThemeContextValue } from './theme'
+export type { ThemeProviderProps, ColourScheme, ThemeMode, ThemeContextValue } from './theme'

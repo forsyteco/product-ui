@@ -76,6 +76,8 @@ const iconSizes = {
   large: 'h-6 w-6',
 } as const
 
+type IconButtonSize = NonNullable<VariantProps<typeof iconButtonVariants>['size']>
+
 const IconButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, IconButtonProps>(function IconButton(
   props: IconButtonProps,
   ref: ForwardedRef<HTMLButtonElement | HTMLAnchorElement>
@@ -100,7 +102,7 @@ const IconButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, IconButtonP
   const Component = as === 'a' ? 'a' : 'button'
   const tooltipText = description ?? ariaLabel
   const title = keybindingHint ? `${tooltipText} (${keybindingHint})` : tooltipText
-  const resolvedSize: keyof typeof iconSizes = (size ?? 'medium') as keyof typeof iconSizes
+  const resolvedSize: IconButtonSize = (size ?? 'medium') as IconButtonSize
   const iconClassName = iconSizes[resolvedSize]
   const sharedClassName = cn(iconButtonVariants({ variant, size, shape }), inactive && 'opacity-60', className)
   const screenReaderText = description ?? (typeof children === 'string' ? children : undefined)

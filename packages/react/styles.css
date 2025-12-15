@@ -107,6 +107,7 @@
   --popover-foreground: var(--brand-white);
 }
 
+<<<<<<< Updated upstream
 :root[data-accent="blue"] {
   --accent: 37 99 235;
   --accent-foreground: 255 255 255;
@@ -115,6 +116,13 @@
 :root.dark[data-accent="blue"] {
   --accent: 59 130 246;
   --accent-foreground: 15 23 42;
+=======
+body {
+  background-color: rgb(var(--background));
+  color: rgb(var(--foreground));
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
+>>>>>>> Stashed changes
 }
 
 @keyframes spinner-rotate {

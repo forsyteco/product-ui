@@ -59,7 +59,7 @@ export const InContext: Story = {
       <div className="border border-gray-200 rounded-lg p-4">
         <div className="flex items-center gap-3">
           <Spinner size={20} strokeWidth={3} />
-          <span className="text-sm text-gray-600">Processing...</span>
+          <span className="text-base text-gray-600">Processing...</span>
         </div>
       </div>
       <Button type="button" disabled className="gap-2">

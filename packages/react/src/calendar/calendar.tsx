@@ -127,7 +127,7 @@ function Calendar({
           defaultClassNames.month_caption
         ),
         dropdowns: cn(
-          'flex h-(--cell-size) w-full items-center justify-center gap-1.5 text-sm font-medium',
+          'flex h-(--cell-size) w-full items-center justify-center gap-1.5 text-base font-medium',
           defaultClassNames.dropdowns
         ),
         dropdown_root: cn(
@@ -141,8 +141,8 @@ function Calendar({
         caption_label: cn(
           'select-none font-medium',
           captionLayout === 'label'
-            ? 'text-sm'
-            : 'flex h-8 items-center gap-1 rounded-md pl-2 pr-1 text-sm [&>svg]:size-3.5 [&>svg]:text-muted-foreground',
+            ? 'text-base'
+            : 'flex h-8 items-center gap-1 rounded-md pl-2 pr-1 text-base [&>svg]:size-3.5 [&>svg]:text-muted-foreground',
           defaultClassNames.caption_label
         ),
         table: 'w-full border-collapse',
@@ -161,7 +161,7 @@ function Calendar({
           defaultClassNames.week_number
         ),
         day: cn(
-          'group/day relative flex size-(--cell-size) select-none items-center justify-center p-0 text-center text-sm [&>button]:size-(--cell-size) [&>span]:size-(--cell-size)',
+          'group/day relative flex size-(--cell-size) select-none items-center justify-center p-0 text-center text-base [&>button]:size-(--cell-size) [&>span]:size-(--cell-size)',
           defaultClassNames.day
         ),
         day_button: cn(

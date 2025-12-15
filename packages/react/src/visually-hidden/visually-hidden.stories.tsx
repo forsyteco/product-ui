@@ -28,7 +28,7 @@ export const Default: Story = {
         <VisuallyHidden>Opens settings</VisuallyHidden>
         Settings
       </Button>
-      <span className="text-sm text-muted-foreground">
+      <span className="text-base text-muted-foreground">
         The “Opens settings” text is hidden visually, but available to screen readers.
       </span>
     </div>

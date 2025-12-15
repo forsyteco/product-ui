@@ -29,7 +29,7 @@ export const WithHeaderAction: Story = {
         </CardAction>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-2 text-sm">
+        <div className="grid gap-2 text-base">
           <div className="flex items-center justify-between">
             <span className="text-muted-foreground">Members</span>
             <span className="text-foreground">12</span>
@@ -52,7 +52,7 @@ export const Minimal: Story = {
   render: () => (
     <Card className="w-[360px]">
       <CardContent>
-        <p className="text-sm text-foreground">A minimal card with only content.</p>
+        <p className="text-base text-foreground">A minimal card with only content.</p>
       </CardContent>
     </Card>
   ),

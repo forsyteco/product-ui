@@ -18,8 +18,8 @@ export const Basic: Story = {
     <Popover>
       <PopoverButton>Open Popover</PopoverButton>
       <PopoverPanel>
-        <h3 className="text-sm font-medium text-gray-900 mb-2">Popover Title</h3>
-        <p className="text-sm text-gray-600">This is the popover content.</p>
+        <h3 className="text-base font-medium text-gray-900 mb-2">Popover Title</h3>
+        <p className="text-base text-gray-600">This is the popover content.</p>
       </PopoverPanel>
     </Popover>
   ),
@@ -32,7 +32,7 @@ export const WithForm: Story = {
       <PopoverPanel>
         <form className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Status</label>
+            <label className="block text-base font-medium text-gray-700">Status</label>
             <select className="mt-1 block w-full rounded-md border-gray-300">
               <option>All</option>
               <option>Active</option>
@@ -40,7 +40,7 @@ export const WithForm: Story = {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Date Range</label>
+            <label className="block text-base font-medium text-gray-700">Date Range</label>
             <input type="date" className="mt-1 block w-full rounded-md border-gray-300" />
           </div>
           <Button type="submit" className="w-full">

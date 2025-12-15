@@ -60,7 +60,7 @@ export function DialogTitle({ children, className }: DialogTitleProps) {
 
 export function DialogDescription({ children, className }: DialogDescriptionProps) {
   return (
-    <HeadlessDialog.Description className={cn('mt-2 text-sm text-gray-600', className)}>
+    <HeadlessDialog.Description className={cn('mt-2 text-base text-gray-600', className)}>
       {children}
     </HeadlessDialog.Description>
   );

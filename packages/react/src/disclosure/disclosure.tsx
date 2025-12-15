@@ -32,7 +32,7 @@ export function DisclosureButton({ children, className }: DisclosureButtonProps)
   return (
     <HeadlessDisclosure.Button
       className={cn(
-        'flex w-full justify-between rounded-lg bg-gray-100 px-4 py-2 text-left text-sm font-medium text-gray-900 hover:bg-gray-200 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75',
+        'flex w-full justify-between rounded-lg bg-gray-100 px-4 py-2 text-left text-base font-medium text-gray-900 hover:bg-gray-200 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75',
         className
       )}
     >
@@ -44,7 +44,7 @@ export function DisclosureButton({ children, className }: DisclosureButtonProps)
 export function DisclosurePanel({ children, className }: DisclosurePanelProps) {
   return (
     <HeadlessDisclosure.Panel
-      className={cn('px-4 pb-2 pt-4 text-sm text-gray-500', className)}
+      className={cn('px-4 pb-2 pt-4 text-base text-gray-500', className)}
     >
       {children}
     </HeadlessDisclosure.Panel>

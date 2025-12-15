@@ -16,7 +16,7 @@ export const InfoPopover: Story = {
   render: () => (
     <div className="p-6">
       <div className="flex items-center gap-2">
-        <span className="text-sm font-medium">Total Revenue</span>
+        <span className="text-base font-medium">Total Revenue</span>
         <Popover>
           <PopoverButton className="p-1">
             <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -24,7 +24,7 @@ export const InfoPopover: Story = {
             </svg>
           </PopoverButton>
           <PopoverPanel>
-            <p className="text-sm text-gray-600">
+            <p className="text-base text-gray-600">
               Total revenue includes all sales from the current period, including refunds and discounts.
             </p>
           </PopoverPanel>

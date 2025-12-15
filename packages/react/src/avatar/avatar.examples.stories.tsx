@@ -27,7 +27,7 @@ export const MemberList: Story = {
               <Avatar>
                 <AvatarFallback variant="boring" name={name} />
               </Avatar>
-              <div className="text-sm">{name}</div>
+              <div className="text-base">{name}</div>
             </div>
           ))}
         </CardContent>

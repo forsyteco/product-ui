@@ -59,7 +59,7 @@ function Combobox({
       >
         <HeadlessCombobox.Input
           className={cn(
-            'w-full rounded-md border border-input bg-background py-2 pl-3 pr-10 text-sm leading-5 text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background',
+            'w-full rounded-md border border-input bg-background py-2 pl-3 pr-10 text-base leading-5 text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background',
             disabled && 'cursor-not-allowed opacity-50'
           )}
           displayValue={(option: ComboboxOption | null) => option?.label || ''}

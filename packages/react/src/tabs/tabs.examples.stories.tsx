@@ -31,7 +31,7 @@ export const SettingsPage: Story = {
             <TabPanel>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Display Name</label>
+                  <label className="block text-base font-medium text-gray-700">Display Name</label>
                   <input
                     type="text"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
@@ -39,7 +39,7 @@ export const SettingsPage: Story = {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Email</label>
+                  <label className="block text-base font-medium text-gray-700">Email</label>
                   <input
                     type="email"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
@@ -51,11 +51,11 @@ export const SettingsPage: Story = {
             <TabPanel>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Current Password</label>
+                  <label className="block text-base font-medium text-gray-700">Current Password</label>
                   <input type="password" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">New Password</label>
+                  <label className="block text-base font-medium text-gray-700">New Password</label>
                   <input type="password" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
                 </div>
                 <Button>Update Password</Button>
@@ -65,15 +65,15 @@ export const SettingsPage: Story = {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-sm font-medium">Public Profile</h3>
-                    <p className="text-sm text-gray-600">Make your profile visible to everyone</p>
+                    <h3 className="text-base font-medium">Public Profile</h3>
+                    <p className="text-base text-gray-600">Make your profile visible to everyone</p>
                   </div>
                   <input type="checkbox" className="rounded" />
                 </div>
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-sm font-medium">Email Notifications</h3>
-                    <p className="text-sm text-gray-600">Receive email updates</p>
+                    <h3 className="text-base font-medium">Email Notifications</h3>
+                    <p className="text-base text-gray-600">Receive email updates</p>
                   </div>
                   <input type="checkbox" className="rounded" defaultChecked />
                 </div>
@@ -83,7 +83,7 @@ export const SettingsPage: Story = {
               <div className="space-y-4">
                 <div className="border border-gray-200 rounded-lg p-4">
                   <h3 className="font-semibold mb-2">Current Plan</h3>
-                  <p className="text-sm text-gray-600 mb-4">Pro Plan - $29/month</p>
+                  <p className="text-base text-gray-600 mb-4">Pro Plan - $29/month</p>
                   <Button>Change Plan</Button>
                 </div>
               </div>

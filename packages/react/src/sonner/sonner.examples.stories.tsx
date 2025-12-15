@@ -25,7 +25,7 @@ export const InlineCTA: Story = {
           <CardTitle>Notifications</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-base text-muted-foreground">
             Trigger toasts from anywhere; the toaster stays at the app root.
           </p>
         </CardContent>

@@ -65,14 +65,10 @@ function ThemeProvider({
     if (typeof window === 'undefined') return;
     const root = document.documentElement;
 
-    // CSS still uses "accent" as the attribute name
-    root.setAttribute('data-accent', colourSchemeState);
+    // Expose selected colour scheme for CSS hooks
+    root.setAttribute('data-colour-scheme', colourSchemeState);
+    root.setAttribute('data-colour-mode', resolvedMode);
 
-    if (resolvedMode === 'dark') {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
   }, [colourSchemeState, resolvedMode]);
 
   // Persist to storage
@@ -92,11 +88,12 @@ function ThemeProvider({
 
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-    const handleChange = () => {
+    const applyMode = (isDark: boolean) => {
       const root = document.documentElement;
-      if (mediaQuery.matches) root.classList.add('dark');
-      else root.classList.remove('dark');
+      root.setAttribute('data-colour-mode', isDark ? 'dark' : 'light');
     };
+
+    const handleChange = () => applyMode(mediaQuery.matches);
 
     // Ensure we’re correct immediately in case system changed while running
     handleChange();

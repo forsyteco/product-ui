@@ -22,7 +22,7 @@ npm install react@^19.2.1 react-dom@^19.2.1 tailwindcss@^4.1.17
 
 ## Setup
 
-### 1. Import Tailwind Base Styles
+### 1. Import Tailwind base styles
 
 Make sure Tailwind CSS is imported in your application:
 
@@ -31,7 +31,16 @@ Make sure Tailwind CSS is imported in your application:
 @import 'tailwindcss';
 ```
 
-### 2. Import Components
+### 2. Import the design system styles
+
+Pull in the design tokens, fonts, and utilities provided by the library:
+
+```css
+/* src/index.css or your main CSS file, after tailwindcss */
+@import '@forsyteco/product-ui/styles.css';
+```
+
+### 3. Import components
 
 ```typescript
 import { Spinner } from '@forsyteco/product-ui'

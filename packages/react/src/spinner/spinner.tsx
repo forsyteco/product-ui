@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { cn } from '../utils/tailwind';
 
-const DEFAULT_COLORS = ['#ffde13', '#b0b0b0', '#000000'];
+const DEFAULT_COLORS = ['var(--color-spinner-primary)', 'var(--color-spinner-secondary)', 'var(--color-spinner-tertiary)'];
 
 export type SpinnerProps = {
   size?: number;

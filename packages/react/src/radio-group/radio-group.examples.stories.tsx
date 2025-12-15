@@ -47,7 +47,7 @@ export const PlanSelector: Story = {
           onChange={setSelectedPlan}
         />
         <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-          <p className="text-sm text-gray-600">
+          <p className="text-base text-gray-600">
             Selected plan: <span className="font-medium">{selectedPlan}</span>
           </p>
         </div>

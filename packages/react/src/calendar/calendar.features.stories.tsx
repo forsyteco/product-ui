@@ -27,7 +27,7 @@ export const ControlledSingle: Story = {
           if (date) setSelected(date);
         }}
         footer={
-          <div className="mt-4 text-sm">
+          <div className="mt-4 text-base">
             {selected ? `Selected: ${dayjs(selected).format('DD/MM/YYYY')}` : 'Pick a day'}
           </div>
         }

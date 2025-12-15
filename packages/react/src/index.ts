@@ -21,6 +21,8 @@ export type { TransitionProps } from './transition'
 
 export { default as Button } from './button'
 export type { ButtonProps } from './button'
+export { default as IconButton } from './icon-button'
+export type { IconButtonProps } from './icon-button'
 
 export { default as Checkbox } from './checkbox'
 export type { CheckboxProps } from './checkbox'
@@ -58,6 +60,9 @@ export type { SonnerProps } from './sonner'
 
 export { default as Skeleton } from './skeleton'
 export type { SkeletonProps } from './skeleton'
+
+export { default as RelativeTime } from './relative-time'
+export type { RelativeTimeProps } from './relative-time'
 
 export { VisuallyHidden } from './visually-hidden'
 export type { VisuallyHiddenProps } from './visually-hidden'

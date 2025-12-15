@@ -23,8 +23,8 @@ export const Default: Story = {
     <Popover>
       <PopoverButton>Open Popover</PopoverButton>
       <PopoverPanel>
-        <h3 className="text-sm font-medium text-gray-900 mb-2">Popover Title</h3>
-        <p className="text-sm text-gray-600">This is the popover content.</p>
+        <h3 className="text-base font-medium text-gray-900 mb-2">Popover Title</h3>
+        <p className="text-base text-gray-600">This is the popover content.</p>
       </PopoverPanel>
     </Popover>
   ),
@@ -35,8 +35,8 @@ export const Playground: Story = {
     <Popover {...args}>
       <PopoverButton>Toggle Popover</PopoverButton>
       <PopoverPanel>
-        <h3 className="text-sm font-medium text-gray-900 mb-2">Custom Popover</h3>
-        <p className="text-sm text-gray-600">You can customize the content and styling.</p>
+        <h3 className="text-base font-medium text-gray-900 mb-2">Custom Popover</h3>
+        <p className="text-base text-gray-600">You can customize the content and styling.</p>
       </PopoverPanel>
     </Popover>
   ),

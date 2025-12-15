@@ -23,7 +23,7 @@ export const ProductCard: Story = {
           <CardDescription>Everything you need to get started quickly.</CardDescription>
         </CardHeader>
         <CardContent>
-          <ul className="space-y-2 text-sm">
+          <ul className="space-y-2 text-base">
             <li className="flex items-center justify-between">
               <span className="text-muted-foreground">Projects</span>
               <span>Unlimited</span>

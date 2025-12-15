@@ -17,7 +17,7 @@ export const CountrySelect: Story = {
     <div className="p-6 max-w-md">
       <form className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-base font-medium text-gray-700 mb-1">
             Country
           </label>
           <Select
@@ -31,7 +31,7 @@ export const CountrySelect: Story = {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-base font-medium text-gray-700 mb-1">
             State/Province
           </label>
           <Select

@@ -5,7 +5,7 @@ import { cn } from '../utils/tailwind';
 
 const inputVariants = cva(
   cn(
-    'relative flex w-full min-w-0 items-center overflow-hidden rounded-md border border-input bg-background/80 text-base text-foreground shadow-xs transition-[color,box-shadow] md:text-sm',
+    'relative flex w-full min-w-0 items-center overflow-hidden rounded-md border border-input bg-background/80 text-base text-foreground shadow-xs transition-[color,box-shadow]',
     'selection:bg-primary selection:text-primary-foreground',
     '[&>input]:placeholder:text-muted-foreground',
     'focus-within:border-ring focus-within:ring-[3px] focus-within:ring-ring/50',

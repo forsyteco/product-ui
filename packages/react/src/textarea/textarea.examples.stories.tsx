@@ -18,7 +18,7 @@ export const ContactForm: Story = {
     <div className="p-6 max-w-md">
       <form className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-base font-medium text-gray-700 mb-1">
             Name
           </label>
           <input
@@ -28,7 +28,7 @@ export const ContactForm: Story = {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-base font-medium text-gray-700 mb-1">
             Email
           </label>
           <input
@@ -38,7 +38,7 @@ export const ContactForm: Story = {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-base font-medium text-gray-700 mb-1">
             Message
           </label>
           <Textarea
@@ -59,7 +59,7 @@ export const FormWithValidation: Story = {
     <div className="p-6 max-w-md">
       <form className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-base font-medium text-gray-700 mb-1">
             Description
           </label>
           <Textarea
@@ -67,7 +67,7 @@ export const FormWithValidation: Story = {
             placeholder="Enter description..."
             error
           />
-          <p className="mt-1 text-sm text-red-600">
+          <p className="mt-1 text-base text-red-600">
             Description must be at least 10 characters
           </p>
         </div>

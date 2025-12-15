@@ -30,15 +30,15 @@ export const Basic: Story = {
         <TabPanels>
           <TabPanel>
             <h3 className="font-semibold mb-2">Account Settings</h3>
-            <p className="text-sm text-gray-600">Manage your account preferences here.</p>
+            <p className="text-base text-gray-600">Manage your account preferences here.</p>
           </TabPanel>
           <TabPanel>
             <h3 className="font-semibold mb-2">Password Settings</h3>
-            <p className="text-sm text-gray-600">Update your password and security settings.</p>
+            <p className="text-base text-gray-600">Update your password and security settings.</p>
           </TabPanel>
           <TabPanel>
             <h3 className="font-semibold mb-2">Notification Settings</h3>
-            <p className="text-sm text-gray-600">Configure how you receive notifications.</p>
+            <p className="text-base text-gray-600">Configure how you receive notifications.</p>
           </TabPanel>
         </TabPanels>
       </Tabs>

@@ -43,7 +43,7 @@ export const RangePickerInCard: Story = {
           />
         </CardContent>
         <CardFooter className="justify-between gap-2">
-          <div className="text-sm text-muted-foreground">{label}</div>
+          <div className="text-base text-muted-foreground">{label}</div>
           <Button variant="outline" size="sm">
             Clear
           </Button>

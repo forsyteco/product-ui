@@ -46,7 +46,7 @@ function Listbox({
       <div className={cn('relative', className)}>
         <HeadlessListbox.Button
           className={cn(
-            'relative w-full cursor-default rounded-md bg-background py-2 pl-3 pr-10 text-left text-foreground shadow-sm ring-1 ring-inset ring-border focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background',
+            'relative w-full cursor-default rounded-md bg-background py-2 pl-3 pr-10 text-left text-base text-foreground shadow-sm ring-1 ring-inset ring-border focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background',
             disabled && 'cursor-not-allowed opacity-50'
           )}
         >

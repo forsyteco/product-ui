@@ -62,7 +62,7 @@ export function Tab({ children, className }: TabProps) {
     <HeadlessTab
       className={({ selected }) =>
         cn(
-          'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
+          'w-full rounded-lg py-2.5 text-base font-medium leading-5',
           'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
           selected
             ? 'bg-white text-gray-900 shadow'

@@ -45,7 +45,7 @@ function Checkbox({ label, size, className, id, ...props }: CheckboxProps) {
         {...props}
       />
       {label && (
-        <label htmlFor={checkboxId} className="ml-2 text-sm text-foreground">
+        <label htmlFor={checkboxId} className="ml-2 text-base text-foreground">
           {label}
         </label>
       )}

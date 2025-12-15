@@ -50,7 +50,7 @@ function RadioGroup({
             <>
               <div className="flex w-full items-center justify-between">
                 <div className="flex items-center">
-                  <div className="text-sm">
+                  <div className="text-base">
                     <HeadlessRadioGroup.Label
                       as="p"
                       className={cn('font-medium', checked ? 'text-blue-900' : 'text-gray-900')}

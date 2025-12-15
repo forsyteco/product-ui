@@ -28,7 +28,7 @@ export const Default: Story = {
         <CardDescription>Short supporting text goes here.</CardDescription>
       </CardHeader>
       <CardContent>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-base text-muted-foreground">
           This is the main content area. Use it for body copy, forms, or other components.
         </p>
       </CardContent>

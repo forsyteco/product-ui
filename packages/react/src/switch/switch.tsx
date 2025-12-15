@@ -64,7 +64,7 @@ function Switch({
       {label && (
         <Label
           className={cn(
-            'text-sm font-medium',
+            'text-base font-medium',
             isDisabled ? 'text-muted-foreground opacity-50' : 'text-foreground'
           )}
         >
@@ -74,7 +74,7 @@ function Switch({
       {description && (
         <Description
           className={cn(
-            'text-sm',
+            'text-base',
             isDisabled ? 'text-muted-foreground opacity-50' : 'text-muted-foreground'
           )}
         >

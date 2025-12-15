@@ -18,11 +18,11 @@ export const Variants: Story = {
   render: () => (
     <div className="flex items-center gap-3">
       <div className="flex items-center gap-2">
-        <span className="text-sm text-muted-foreground">Secondary</span>
+        <span className="text-base text-muted-foreground">Secondary</span>
         <CounterLabel variant="secondary">7</CounterLabel>
       </div>
       <div className="flex items-center gap-2">
-        <span className="text-sm text-muted-foreground">Primary</span>
+        <span className="text-base text-muted-foreground">Primary</span>
         <CounterLabel variant="primary">7</CounterLabel>
       </div>
     </div>

@@ -61,6 +61,9 @@ export type { SonnerProps } from './sonner'
 export { default as Skeleton } from './skeleton'
 export type { SkeletonProps } from './skeleton'
 
+export { default as RelativeTime } from './relative-time'
+export type { RelativeTimeProps } from './relative-time'
+
 export { VisuallyHidden } from './visually-hidden'
 export type { VisuallyHiddenProps } from './visually-hidden'
 

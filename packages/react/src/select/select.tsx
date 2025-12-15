@@ -9,7 +9,7 @@ export type SelectOption = {
 };
 
 const selectVariants = cva(
-  'block w-full rounded-md border border-input bg-background text-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+  'relative block w-full cursor-default rounded-md border border-input bg-background py-2 pl-3 pr-10 text-left text-base text-foreground shadow-sm ring-1 ring-inset ring-border focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background appearance-none disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       error: {
@@ -30,21 +30,33 @@ export type SelectProps = Omit<SelectHTMLAttributes<HTMLSelectElement>, 'childre
 
 function Select({ options, placeholder, error, className, ...props }: SelectProps) {
   return (
-    <select
-      className={cn(selectVariants({ error }), className)}
-      {...props}
-    >
-      {placeholder && (
-        <option value="" disabled>
-          {placeholder}
-        </option>
-      )}
-      {options.map((option) => (
-        <option key={option.value} value={option.value} disabled={option.disabled}>
-          {option.label}
-        </option>
-      ))}
-    </select>
+    <div className="relative">
+      <select
+        className={cn(selectVariants({ error }), className)}
+        {...props}
+      >
+        {placeholder && (
+          <option value="" disabled>
+            {placeholder}
+          </option>
+        )}
+        {options.map((option) => (
+          <option key={option.value} value={option.value} disabled={option.disabled}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+      <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+        <svg
+          className="h-5 w-5 text-muted-foreground"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </span>
+    </div>
   );
 }
 

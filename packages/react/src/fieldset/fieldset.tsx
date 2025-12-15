@@ -29,7 +29,7 @@ function Fieldset({ legend, children, variant, className, ...props }: FieldsetPr
       {...props}
     >
       {legend && (
-        <legend className="px-2 text-sm font-medium text-foreground">
+        <legend className="px-2 text-base font-medium text-foreground">
           {legend}
         </legend>
       )}

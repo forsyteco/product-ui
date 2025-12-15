@@ -26,7 +26,7 @@ export const StatusSelector: Story = {
     const [selected, setSelected] = useState<ListboxOption | null>(null);
     return (
       <div className="p-6 max-w-md">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-base font-medium text-gray-700 mb-2">
           Status
         </label>
         <Listbox
@@ -36,7 +36,7 @@ export const StatusSelector: Story = {
           placeholder="Select status..."
         />
         {selected && (
-          <p className="mt-4 text-sm text-gray-600">
+          <p className="mt-4 text-base text-gray-600">
             Selected: {selected.label}
           </p>
         )}

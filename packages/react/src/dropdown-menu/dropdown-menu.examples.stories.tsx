@@ -50,7 +50,7 @@ export const ActionMenu: Story = {
             <DropdownMenuItem className="text-red-600">Delete</DropdownMenuItem>
           </DropdownMenu>
         </div>
-        <p className="text-sm text-gray-600">This is a sample document with an action menu.</p>
+        <p className="text-base text-gray-600">This is a sample document with an action menu.</p>
       </div>
     </div>
   ),

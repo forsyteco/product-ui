@@ -16,10 +16,14 @@
         "default": "./dist/index.cjs"
       }
     },
+    "./styles.css": "./styles.css",
+    "./fonts/*": "./fonts/*",
     "./tailwind": "./tailwind.config.js"
   },
   "files": [
     "dist",
+    "styles.css",
+    "fonts",
     "tailwind.config.js",
     "README.md"
   ],

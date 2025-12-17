@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Transition } from './transition';
-import Button from '../button';
+import { Button } from '../button';
 
 const meta = {
   title: 'Components/Transition/Features',

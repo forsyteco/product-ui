@@ -51,6 +51,28 @@ export type { SwitchProps } from './switch'
 export { Textarea } from './textarea'
 export type { TextareaProps } from './textarea'
 
+export {
+  PageLayout,
+  PageLayoutSection,
+  PageLayoutHeader,
+  PageLayoutFooter,
+  PageLayoutBody,
+  PageLayoutContent,
+  PageLayoutPane,
+} from './page-layout'
+export type {
+  PageLayoutProps,
+  PageLayoutSectionProps,
+  PageLayoutBodyProps,
+  PageLayoutContentOwnProps,
+  PageLayoutPaneProps,
+  ContainerWidth,
+  Spacing,
+  Gap,
+  Divider,
+  PanePosition,
+} from './page-layout'
+
 export { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './card'
 
 export { Calendar, CalendarDayButton } from './calendar'

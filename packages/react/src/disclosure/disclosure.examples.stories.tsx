@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Disclosure, { DisclosureButton, DisclosurePanel } from './disclosure';
+import { Disclosure, DisclosureButton, DisclosurePanel } from './disclosure';
 
 const meta = {
   title: 'Components/Disclosure/Examples',

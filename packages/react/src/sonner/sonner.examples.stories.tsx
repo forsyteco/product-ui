@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { toast } from 'sonner';
 
-import Button from '../button';
+import { Button } from '../button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../card';
 import { Sonner } from './sonner';
 

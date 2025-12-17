@@ -2,7 +2,8 @@ import '../styles.css';
 import * as React from 'react';
 import type { Decorator, Preview } from '@storybook/react-vite';
 
-import ThemeProvider, {
+import {
+  ThemeProvider,
   type ColourScheme,
   type ThemeMode,
 } from '../src/theme/theme-provider';

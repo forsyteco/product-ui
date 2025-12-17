@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Tabs, { TabList, Tab, TabPanels, TabPanel } from './tabs';
-import Button from '../button';
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from './tabs';
+import { Button } from '../button';
 
 const meta = {
   title: 'Components/Tabs/Examples',

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import Button from '../button';
-import DropdownMenu, { DropdownMenuItem } from '../dropdown-menu/dropdown-menu';
+import { Button } from '../button';
+import { DropdownMenu, DropdownMenuItem } from '../dropdown-menu/dropdown-menu';
 import {
   Breadcrumb,
   BreadcrumbEllipsis,

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Dialog, { DialogPanel, DialogTitle, DialogDescription } from './dialog';
-import Button from '../button';
+import { Dialog, DialogPanel, DialogTitle, DialogDescription } from './dialog';
+import { Button } from '../button';
 
 const meta = {
   title: 'Components/Dialog',

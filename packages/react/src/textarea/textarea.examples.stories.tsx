@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Textarea from './textarea';
+import { Textarea } from './textarea';
 import Button from '../button';
 
 const meta = {

@@ -53,5 +53,5 @@ function Checkbox({ label, size, className, id, ...props }: CheckboxProps) {
   );
 }
 
-export default Checkbox;
+export { Checkbox };
 

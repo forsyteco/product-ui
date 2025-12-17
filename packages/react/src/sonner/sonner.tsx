@@ -38,4 +38,3 @@ export const Sonner = ({ ...props }: SonnerProps) => {
   );
 };
 
-export default Sonner;

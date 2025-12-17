@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
-import Combobox from './combobox';
+import { Combobox } from './combobox';
 
 const options = [
   { id: '1', label: 'Option 1', value: 'option1' },

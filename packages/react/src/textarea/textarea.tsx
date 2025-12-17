@@ -28,5 +28,5 @@ function Textarea({ error, className, ...props }: TextareaProps) {
   );
 }
 
-export default Textarea;
+export { Textarea };
 

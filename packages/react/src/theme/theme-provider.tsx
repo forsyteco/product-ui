@@ -125,7 +125,7 @@ function ThemeProvider({
   );
 }
 
-export default ThemeProvider;
+export { ThemeProvider };
 
 export function useTheme() {
   const ctx = useContext(ThemeContext);

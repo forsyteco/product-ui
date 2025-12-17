@@ -1,5 +1,5 @@
 import React from 'react'
-import RelativeTime from './relative-time'
+import { RelativeTime } from './relative-time';
 import Button from '../button'
 
 export default {

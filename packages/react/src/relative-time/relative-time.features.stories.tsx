@@ -1,4 +1,4 @@
-import RelativeTime from './relative-time'
+import { RelativeTime } from './relative-time';
 import type {Meta, StoryFn} from '@storybook/react-vite'
 
 const meta: Meta = {

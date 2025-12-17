@@ -50,4 +50,4 @@ function Spinner({
   );
 }
 
-export default Spinner;
+export { Spinner };

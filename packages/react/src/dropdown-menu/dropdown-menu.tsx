@@ -1,6 +1,6 @@
 import { Fragment, type ReactNode } from 'react';
 import { Menu, Transition } from '@headlessui/react';
-import Button, { type ButtonProps } from '../button';
+import { Button, type ButtonProps } from '../button';
 import { cn } from '../utils/tailwind';
 
 export type DropdownMenuProps = {
@@ -83,5 +83,5 @@ export function DropdownMenuButton({ children, className, ...props }: DropdownMe
   );
 }
 
-export default DropdownMenu;
+export { DropdownMenu };
 

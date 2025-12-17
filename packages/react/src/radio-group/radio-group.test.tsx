@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import RadioGroup from './radio-group';
+import { RadioGroup } from './radio-group';
 
 const options = [
   { id: '1', label: 'Option 1', value: 'option1' },

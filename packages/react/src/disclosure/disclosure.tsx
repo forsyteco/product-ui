@@ -51,5 +51,5 @@ export function DisclosurePanel({ children, className }: DisclosurePanelProps) {
   );
 }
 
-export default Disclosure;
+export { Disclosure };
 

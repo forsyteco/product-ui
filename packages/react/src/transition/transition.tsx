@@ -40,5 +40,5 @@ function Transition({
   );
 }
 
-export default Transition;
+export { Transition };
 

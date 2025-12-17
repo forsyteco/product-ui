@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Fieldset from './fieldset';
+import { Fieldset } from './fieldset';
 
 const meta = {
   title: 'Components/Fieldset',

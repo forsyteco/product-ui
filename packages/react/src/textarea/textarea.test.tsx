@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import Textarea from './textarea';
+import { Textarea } from './textarea';
 
 describe('Textarea', () => {
   it('renders the textarea component', () => {

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import Select from './select';
+import { Select } from './select';
 
 const options = [
   { value: '1', label: 'Option 1' },

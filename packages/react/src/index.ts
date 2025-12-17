@@ -1,76 +1,76 @@
-export { default as Spinner } from './spinner'
+export { Spinner } from './spinner'
 export type { SpinnerProps } from './spinner'
 
-export { default as DropdownMenu, DropdownMenuItem, DropdownMenuButton } from './dropdown-menu'
+export { DropdownMenu, DropdownMenuItem, DropdownMenuButton } from './dropdown-menu'
 export type { DropdownMenuProps, DropdownMenuItemProps, DropdownMenuButtonProps } from './dropdown-menu'
 
-export { default as Disclosure, DisclosureButton, DisclosurePanel } from './disclosure'
+export { Disclosure, DisclosureButton, DisclosurePanel } from './disclosure'
 export type { DisclosureProps, DisclosureButtonProps, DisclosurePanelProps } from './disclosure'
 
-export { default as Dialog, DialogPanel, DialogTitle, DialogDescription } from './dialog'
+export { Dialog, DialogPanel, DialogTitle, DialogDescription } from './dialog'
 export type { DialogProps, DialogPanelProps, DialogTitleProps, DialogDescriptionProps } from './dialog'
 
-export { default as Popover, PopoverButton, PopoverPanel } from './popover'
+export { Popover, PopoverButton, PopoverPanel } from './popover'
 export type { PopoverProps, PopoverButtonProps, PopoverPanelProps } from './popover'
 
-export { default as Tabs, TabList, Tab, TabPanels, TabPanel } from './tabs'
+export { Tabs, TabList, Tab, TabPanels, TabPanel } from './tabs'
 export type { TabsProps, TabListProps, TabProps, TabPanelsProps, TabPanelProps } from './tabs'
 
-export { default as Transition } from './transition'
+export { Transition } from './transition'
 export type { TransitionProps } from './transition'
 
-export { default as Button } from './button'
+export { Button } from './button'
 export type { ButtonProps } from './button'
-export { default as IconButton } from './icon-button'
+export { IconButton } from './icon-button'
 export type { IconButtonProps } from './icon-button'
 
-export { default as Checkbox } from './checkbox'
+export { Checkbox } from './checkbox'
 export type { CheckboxProps } from './checkbox'
 
-export { default as Combobox } from './combobox'
+export { Combobox } from './combobox'
 export type { ComboboxProps, ComboboxOption } from './combobox'
 
-export { default as Fieldset } from './fieldset'
+export { Fieldset } from './fieldset'
 export type { FieldsetProps } from './fieldset'
 
-export { default as Input } from './input'
+export { Input } from './input'
 export type { InputProps } from './input'
 
-export { default as Listbox } from './listbox'
+export { Listbox } from './listbox'
 export type { ListboxProps, ListboxOption } from './listbox'
 
-export { default as RadioGroup } from './radio-group'
+export { RadioGroup } from './radio-group'
 export type { RadioGroupProps, RadioGroupOption } from './radio-group'
 
-export { default as Select } from './select'
+export { Select } from './select'
 export type { SelectProps, SelectOption } from './select'
 
-export { default as Switch } from './switch'
+export { Switch } from './switch'
 export type { SwitchProps } from './switch'
 
-export { default as Textarea } from './textarea'
+export { Textarea } from './textarea'
 export type { TextareaProps } from './textarea'
 
 export { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './card'
 
-export { default as Calendar, CalendarDayButton } from './calendar'
+export { Calendar, CalendarDayButton } from './calendar'
 
-export { default as Sonner } from './sonner'
+export { Sonner } from './sonner'
 export type { SonnerProps } from './sonner'
 
-export { default as Skeleton } from './skeleton'
+export { Skeleton } from './skeleton'
 export type { SkeletonProps } from './skeleton'
 
-export { default as RelativeTime } from './relative-time'
+export { RelativeTime } from './relative-time'
 export type { RelativeTimeProps } from './relative-time'
 
 export { VisuallyHidden } from './visually-hidden'
 export type { VisuallyHiddenProps } from './visually-hidden'
 
-export { default as CounterLabel } from './counter-label'
+export { CounterLabel } from './counter-label'
 export type { CounterLabelProps } from './counter-label'
 
-export { default as Avatar, AvatarFallback, AvatarImage } from './avatar'
+export { Avatar, AvatarFallback, AvatarImage } from './avatar'
 export type { AvatarProps, AvatarFallbackProps, AvatarImageProps } from './avatar'
 
 export {

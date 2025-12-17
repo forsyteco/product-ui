@@ -108,5 +108,5 @@ function Combobox({
   );
 }
 
-export default Combobox;
+export { Combobox };
 

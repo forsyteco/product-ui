@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 import { Popover as HeadlessPopover } from '@headlessui/react';
-import Button, { type ButtonProps } from '../button';
+import { Button, type ButtonProps } from '../button';
 import { cn } from '../utils/tailwind';
 
 export type PopoverProps = {
@@ -52,5 +52,5 @@ export function PopoverPanel({ children, className }: PopoverPanelProps) {
   );
 }
 
-export default Popover;
+export { Popover };
 

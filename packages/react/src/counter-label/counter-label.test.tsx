@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import CounterLabel from './counter-label';
+import { CounterLabel } from './counter-label';
 
 describe('CounterLabel', () => {
   it('renders with default variant and aria-hidden', () => {

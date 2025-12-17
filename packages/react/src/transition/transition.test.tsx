@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import Transition from './transition';
+import { Transition } from './transition';
 
 describe('Transition', () => {
   it('renders children when show is true', () => {

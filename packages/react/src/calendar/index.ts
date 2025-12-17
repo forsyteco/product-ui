@@ -1,3 +1,3 @@
-export { Calendar as default, CalendarDayButton, Calendar } from './calendar';
+export { Calendar, CalendarDayButton } from './calendar';
 
 

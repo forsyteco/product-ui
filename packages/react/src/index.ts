@@ -53,7 +53,6 @@ export type { TextareaProps } from './textarea'
 
 export {
   PageLayout,
-  PageLayoutSection,
   PageLayoutHeader,
   PageLayoutFooter,
   PageLayoutBody,
@@ -62,9 +61,9 @@ export {
 } from './page-layout'
 export type {
   PageLayoutProps,
-  PageLayoutSectionProps,
+  PageLayoutRegionProps,
   PageLayoutBodyProps,
-  PageLayoutContentOwnProps,
+  PageLayoutContentProps,
   PageLayoutPaneProps,
   ContainerWidth,
   Spacing,

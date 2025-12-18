@@ -1,8 +1,9 @@
+// page-layout.tsx
 import * as React from 'react'
 import { cn } from '../utils/tailwind'
 
 /* -------------------------------------------------------------------------------------------------
- * Tokens → Tailwind classes
+ * Types
  * ------------------------------------------------------------------------------------------------- */
 
 export type ContainerWidth = 'full' | 'medium' | 'large' | 'xlarge'
@@ -11,6 +12,10 @@ export type Gap = 'none' | 'condensed' | 'normal'
 export type Divider = 'none' | 'line' | 'filled'
 export type PanePosition = 'start' | 'end'
 
+/* -------------------------------------------------------------------------------------------------
+ * Class maps
+ * ------------------------------------------------------------------------------------------------- */
+
 const containerWidthClass: Record<ContainerWidth, string> = {
   full: 'max-w-none',
   medium: 'max-w-3xl',
@@ -18,444 +23,253 @@ const containerWidthClass: Record<ContainerWidth, string> = {
   xlarge: 'max-w-7xl',
 }
 
-const paddingClass: Record<Spacing, string> = {
-  none: 'px-0 py-0',
-  condensed: 'px-4 py-4 sm:px-6',
-  normal: 'px-4 py-6 sm:px-6 lg:px-8',
+const gutterXClass: Record<Spacing, string> = {
+  none: 'px-0',
+  condensed: 'px-4 sm:px-6',
+  normal: 'px-4 sm:px-8',
 }
 
-const gapXClass: Record<Gap, string> = {
-  none: 'gap-x-0',
-  condensed: 'gap-x-4',
-  normal: 'gap-x-6',
+const paddingYClass: Record<Spacing, string> = {
+  none: 'py-0',
+  condensed: 'py-3',
+  normal: 'py-4',
 }
 
-const gapXValue: Record<Gap, string> = {
-  none: '0px',
-  condensed: '1rem', // tailwind gap-4
-  normal: '1.5rem', // tailwind gap-6
+const gapClass: Record<Gap, string> = {
+  none: 'gap-0',
+  condensed: 'gap-4',
+  normal: 'gap-6',
 }
 
-const gapYClass: Record<Gap, string> = {
-  none: 'gap-y-0',
-  condensed: 'gap-y-4',
-  normal: 'gap-y-6',
-}
-
-const gapYValue: Record<Gap, string> = {
-  none: '0px',
-  condensed: '1rem',
-  normal: '1.5rem',
-}
-
-const dividerElClass: Record<Exclude<Divider, 'none'>, string> = {
+const dividerClass: Record<Exclude<Divider, 'none'>, string> = {
   line: 'border-t border-border',
-  filled: 'h-px bg-border',
+  filled: 'border-t border-border bg-muted/40',
 }
 
 /* -------------------------------------------------------------------------------------------------
- * Context
+ * Context (only what Pane needs)
  * ------------------------------------------------------------------------------------------------- */
 
 type PageLayoutContextValue = {
-  containerWidth: ContainerWidth
-  padding: Spacing
-  rowGap: Gap
-  columnGap: Gap
+  panePosition: PanePosition
 }
 
 const PageLayoutContext = React.createContext<PageLayoutContextValue | null>(null)
 
-function usePageLayoutContext() {
+function usePageLayoutCtx(component: string) {
   const ctx = React.useContext(PageLayoutContext)
-  if (!ctx) throw new Error('PageLayout.* must be used inside <PageLayout>.')
+  if (!ctx) throw new Error(`${component} must be used within <PageLayout>.`)
   return ctx
 }
 
 /* -------------------------------------------------------------------------------------------------
- * PageLayout root
+ * PageLayout
  * ------------------------------------------------------------------------------------------------- */
 
 export type PageLayoutProps = {
-  containerWidth?: ContainerWidth
-  padding?: Spacing
-  columnGap?: Gap
-  rowGap?: Gap
-  className?: string
   children: React.ReactNode
+  className?: string
+
+  /** Container width token (max-w-*) */
+  containerWidth?: ContainerWidth
+
+  /** Horizontal gutters for the whole page */
+  gutters?: Spacing
+
+  /** Vertical spacing between top-level regions (header/body/footer/etc.) */
+  spacing?: Gap
+
+  /** Default pane position (can be overridden per-pane) */
+  panePosition?: PanePosition
 }
 
 export function PageLayout({
-  containerWidth = 'xlarge',
-  padding = 'normal',
-  columnGap = 'normal',
-  rowGap = 'normal',
-  className,
   children,
+  className,
+  containerWidth = 'xlarge',
+  gutters = 'normal',
+  spacing = 'normal',
+  panePosition = 'end',
 }: PageLayoutProps) {
+  const stack =
+    spacing === 'none' ? null : spacing === 'condensed' ? 'space-y-4' : 'space-y-6'
+
   return (
-    <PageLayoutContext.Provider value={{ containerWidth, padding, columnGap, rowGap }}>
-      <div className={cn('w-full', className)}>{children}</div>
+    <PageLayoutContext.Provider value={{ panePosition }}>
+      <div className={cn('w-full', className)}>
+        <div className={cn('mx-auto w-full', containerWidthClass[containerWidth], gutterXClass[gutters], stack)}>
+          {children}
+        </div>
+      </div>
     </PageLayoutContext.Provider>
   )
 }
 
 /* -------------------------------------------------------------------------------------------------
- * Shared a11y props
+ * Header / Footer
  * ------------------------------------------------------------------------------------------------- */
 
-type A11yProps = {
+export type PageLayoutRegionProps = {
+  children?: React.ReactNode
+  className?: string
+  padding?: Spacing
+  divider?: Divider
   ariaLabel?: string
   ariaLabelledby?: string
 }
 
-/* -------------------------------------------------------------------------------------------------
- * Section (container + padding wrapper)
- * ------------------------------------------------------------------------------------------------- */
-
-export type PageLayoutSectionProps = React.ComponentPropsWithoutRef<'section'> & {
-  containerWidth?: ContainerWidth
-  padding?: Spacing
-}
-
-export function PageLayoutSection({
-  containerWidth: cw,
-  padding: p,
+function Region({
+  as: Comp,
+  children,
   className,
-  ...rest
-}: PageLayoutSectionProps) {
-  const ctx = usePageLayoutContext()
-  const resolvedWidth = cw ?? ctx.containerWidth
-  const resolvedPadding = p ?? ctx.padding
-
-  return (
-    <section
-      className={cn(
-        'mx-auto w-full',
-        containerWidthClass[resolvedWidth],
-        paddingClass[resolvedPadding],
-        className
-      )}
-      {...rest}
-    />
-  )
-}
-
-/* -------------------------------------------------------------------------------------------------
- * Header / Footer
- * - Divider is "sugar"; for responsive dividers use className (e.g., "md:border-t")
- * ------------------------------------------------------------------------------------------------- */
-
-type HeaderFooterProps = A11yProps &
-  Omit<React.ComponentPropsWithoutRef<'header'>, 'aria-label'> & {
-    padding?: Spacing
-    divider?: Divider
-  }
-
-function DividerBar({ divider }: { divider: Divider }) {
-  if (divider === 'none') return null
-  return <div className={cn('w-full', dividerElClass[divider])} aria-hidden="true" />
-}
-
-export function PageLayoutHeader({
+  padding = 'normal',
+  divider = 'none',
   ariaLabel,
   ariaLabelledby,
-  padding,
-  divider = 'none',
-  className,
-  children,
-  ...rest
-}: HeaderFooterProps) {
-  const ctx = usePageLayoutContext()
-  const p = padding ?? ctx.padding
+}: PageLayoutRegionProps & { as: 'header' | 'footer' }) {
+  const dividerCls = divider === 'none' ? null : dividerClass[divider]
+  const filledCls = divider === 'filled' ? 'rounded-md' : null
 
   return (
-    <header
+    <Comp
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledby}
-      className={cn('mx-auto w-full', containerWidthClass[ctx.containerWidth], paddingClass[p], className)}
-      {...rest}
+      className={cn(dividerCls, filledCls, className)}
     >
-      <DividerBar divider={divider} />
-      {children}
-    </header>
+      <div className={cn(paddingYClass[padding])}>{children}</div>
+    </Comp>
   )
 }
 
-export function PageLayoutFooter({
-  ariaLabel,
-  ariaLabelledby,
-  padding,
-  divider = 'none',
-  className,
-  children,
-  ...rest
-}: HeaderFooterProps) {
-  const ctx = usePageLayoutContext()
-  const p = padding ?? ctx.padding
+export function PageLayoutHeader(props: PageLayoutRegionProps) {
+  return <Region as="header" {...props} />
+}
 
-  return (
-    <footer
-      aria-label={ariaLabel}
-      aria-labelledby={ariaLabelledby}
-      className={cn('mx-auto w-full', containerWidthClass[ctx.containerWidth], paddingClass[p], className)}
-      {...rest}
-    >
-      <DividerBar divider={divider} />
-      {children}
-    </footer>
-  )
+export function PageLayoutFooter(props: PageLayoutRegionProps) {
+  return <Region as="footer" {...props} />
 }
 
 /* -------------------------------------------------------------------------------------------------
- * Body
- * - 12-col grid wrapper. Content + Pane(s) are expected inside.
+ * Body (owns the 12-col grid)
  * ------------------------------------------------------------------------------------------------- */
 
-export type PageLayoutBodyProps = React.ComponentPropsWithoutRef<'div'> & {
-  containerWidth?: ContainerWidth
-  padding?: Spacing
-  columnGap?: Gap
-  rowGap?: Gap
-}
-
-export function PageLayoutBody({
-  containerWidth,
-  padding,
-  columnGap,
-  rowGap,
-  className,
-  style,
-  ...rest
-}: PageLayoutBodyProps) {
-  const ctx = usePageLayoutContext()
-  const cw = containerWidth ?? ctx.containerWidth
-  const p = padding ?? ctx.padding
-  const cg = columnGap ?? ctx.columnGap
-  const rg = rowGap ?? ctx.rowGap
-  const mergedStyle = {
-    rowGap: gapYValue[rg],
-    columnGap: gapXValue[cg],
-    ...style,
-  }
-
-  return (
-    <div
-      className={cn(
-        'mx-auto w-full',
-        containerWidthClass[cw],
-        paddingClass[p],
-        'grid grid-cols-12',
-        gapXClass[cg],
-        gapYClass[rg],
-        className
-      )}
-      style={mergedStyle}
-      {...rest}
-    />
-  )
-}
-
-/* -------------------------------------------------------------------------------------------------
- * Content (polymorphic)
- * ------------------------------------------------------------------------------------------------- */
-
-type PolymorphicProps<E extends React.ElementType, P> = P &
-  Omit<React.ComponentPropsWithoutRef<E>, keyof P | 'as'> & {
-    as?: E
-  }
-
-export type PageLayoutContentOwnProps = A11yProps & {
-  /** Useful when Content is used outside Body; inside Body you typically use col-span classes */
-  width?: ContainerWidth
-  /** Default is 'none' because Body already applies padding */
-  padding?: Spacing
+export type PageLayoutBodyProps = {
+  children: React.ReactNode
   className?: string
+  gap?: Gap
 }
 
-export function PageLayoutContent<E extends React.ElementType = 'main'>(
-  props: PolymorphicProps<E, PageLayoutContentOwnProps>
-) {
-  const { as, ariaLabel, ariaLabelledby, width, padding, className, ...rest } = props
-  const ctx = usePageLayoutContext()
-  const Component = (as ?? 'main') as React.ElementType
+export function PageLayoutBody({ children, className, gap = 'normal' }: PageLayoutBodyProps) {
+  return <main className={cn('grid grid-cols-12 items-start', gapClass[gap], className)}>{children}</main>
+}
 
-  const cw = width ?? ctx.containerWidth
-  const p = padding ?? 'none'
+/* -------------------------------------------------------------------------------------------------
+ * Content (thin + boring)
+ * - spans/breakpoints are className responsibility (e.g. "lg:col-span-8")
+ * ------------------------------------------------------------------------------------------------- */
 
+export type PageLayoutContentProps = {
+  children?: React.ReactNode
+  className?: string
+  padding?: Spacing
+}
+
+export function PageLayoutContent({ children, className, padding = 'none' }: PageLayoutContentProps) {
   return (
-    <Component
-      aria-label={ariaLabel}
-      aria-labelledby={ariaLabelledby}
-      className={cn(
-        'col-span-12 min-w-0 w-full',
-        containerWidthClass[cw],
-        p === 'none' ? '' : paddingClass[p],
-        className
-      )}
-      {...rest}
-    />
+    <section className={cn('col-span-12 min-w-0', paddingYClass[padding], className)}>
+      {children}
+    </section>
   )
 }
 
 /* -------------------------------------------------------------------------------------------------
- * Pane (sticky + optional resizable)
- * - No responsive prop modelling; use Tailwind classes to control spans/visibility.
+ * Pane (the only smart one)
+ * - ordering based on pane position
+ * - divider-side based on position
+ * - sticky/resizable behaviors
+ * - spans/breakpoints remain className responsibility
  * ------------------------------------------------------------------------------------------------- */
 
-export type PageLayoutPaneProps = A11yProps &
-  Omit<React.ComponentPropsWithoutRef<'aside'>, 'children'> & {
-    position?: PanePosition
-    width?: ContainerWidth
-    minWidth?: number
-    resizable?: boolean
-    widthStorageKey?: string
-    sticky?: boolean
-    offsetHeader?: number | string
-    padding?: Spacing
-    divider?: Divider
-    className?: string
-    children: React.ReactNode
-  }
+export type PageLayoutPaneProps = {
+  children?: React.ReactNode
+  className?: string
+  padding?: Spacing
+  divider?: Divider
+  ariaLabel?: string
+  ariaLabelledby?: string
 
-export const PageLayoutPane = React.forwardRef<HTMLDivElement, PageLayoutPaneProps>(
-  (
-    {
-      ariaLabel,
-      ariaLabelledby,
-      position = 'end',
-      width,
-      minWidth = 280,
-      resizable = false,
-      widthStorageKey,
-      sticky = false,
-      offsetHeader = 0,
-      padding,
-      divider = 'none',
-      className,
-      children,
-      ...asideProps
-    },
-    ref
-  ) => {
-    const ctx = usePageLayoutContext()
-    const cw = width ?? ctx.containerWidth
-    const p = padding ?? 'none'
+  /** Overrides PageLayout default */
+  position?: PanePosition
 
-    const [paneWidth, setPaneWidth] = React.useState<number | null>(null)
-    const dragRef = React.useRef<{ startX: number; startW: number } | null>(null)
+  sticky?: boolean
+  resizable?: boolean
 
-    // Load persisted width
-    React.useEffect(() => {
-      if (!resizable || !widthStorageKey) return
-      try {
-        const raw = window.localStorage.getItem(widthStorageKey)
-        if (!raw) return
-        const n = Number(raw)
-        if (Number.isFinite(n) && n >= minWidth) setPaneWidth(n)
-      } catch {
-        // ignore
-      }
-    }, [resizable, widthStorageKey, minWidth])
+  /** CSS min-width; number treated as px */
+  minWidth?: number | string
 
-    // Persist width
-    React.useEffect(() => {
-      if (!resizable || !widthStorageKey || paneWidth == null) return
-      try {
-        window.localStorage.setItem(widthStorageKey, String(paneWidth))
-      } catch {
-        // ignore
-      }
-    }, [resizable, widthStorageKey, paneWidth])
+  /**
+   * Tailwind top-* class used when sticky=true, applied at lg+ only.
+   * Default: "top-6" -> "lg:top-6"
+   */
+  stickyTopClassName?: string
+}
 
-    const stickyStyle: React.CSSProperties | undefined = sticky
-      ? {
-          position: 'sticky',
-          top: typeof offsetHeader === 'number' ? `${offsetHeader}px` : offsetHeader,
-          alignSelf: 'start',
-        }
-      : undefined
+export function PageLayoutPane({
+  children,
+  className,
+  padding = 'none',
+  divider = 'none',
+  ariaLabel,
+  ariaLabelledby,
+  position,
+  sticky = false,
+  resizable = false,
+  minWidth,
+  stickyTopClassName = 'top-6',
+}: PageLayoutPaneProps) {
+  const ctx = usePageLayoutCtx('PageLayoutPane')
+  const panePosition = position ?? ctx.panePosition
 
-    const widthStyle: React.CSSProperties | undefined =
-      resizable && paneWidth != null
-        ? { width: `${paneWidth}px`, minWidth: `${minWidth}px` }
-        : { minWidth: `${minWidth}px` }
+  const order =
+    panePosition === 'start'
+      ? 'order-first lg:order-first'
+      : 'order-last lg:order-last'
 
-    const onPointerDown = (e: React.PointerEvent) => {
-      if (!resizable) return
-      const el = (ref as React.RefObject<HTMLDivElement>)?.current
-      if (!el) return
+  const dividerSide =
+    divider === 'line'
+      ? panePosition === 'end'
+        ? 'lg:border-l lg:border-border lg:pl-6'
+        : 'lg:border-r lg:border-border lg:pr-6'
+      : divider === 'filled'
+      ? 'rounded-md bg-muted/40'
+      : null
 
-      const rect = el.getBoundingClientRect()
-      dragRef.current = { startX: e.clientX, startW: rect.width }
-      ;(e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId)
-      e.preventDefault()
-    }
+  const stickyCls = sticky ? cn('lg:sticky self-start', `lg:${stickyTopClassName}`) : null
+  const resizableCls = resizable ? 'lg:resize-x lg:overflow-auto' : null
 
-    const onPointerMove = (e: React.PointerEvent) => {
-      if (!resizable) return
-      const drag = dragRef.current
-      if (!drag) return
+  const style =
+    minWidth == null
+      ? undefined
+      : ({
+          minWidth: typeof minWidth === 'number' ? `${minWidth}px` : minWidth,
+        } as React.CSSProperties)
 
-      const delta = e.clientX - drag.startX
-      const next = position === 'end' ? drag.startW - delta : drag.startW + delta
-      setPaneWidth(Math.max(minWidth, Math.round(next)))
-    }
-
-    const onPointerUp = () => {
-      dragRef.current = null
-    }
-
-    // Default grid behaviour inside Body:
-    // - mobile: full width
-    // - lg+: 4/12 columns
-    // Consumers override spans with className (e.g., "lg:col-span-3")
-    const gridPos =
-      position === 'start'
-        ? 'col-span-12 lg:col-span-4 lg:order-first'
-        : 'col-span-12 lg:col-span-4 lg:order-last'
-
-    return (
-      <div
-        ref={ref}
-        className={cn(
-          gridPos,
-          'relative min-w-0',
-          // Nice defaults if used outside Body:
-          'w-full',
-          containerWidthClass[cw],
-          p === 'none' ? '' : paddingClass[p],
-          className
-        )}
-        style={{ ...stickyStyle, ...widthStyle }}
-      >
-        <DividerBar divider={divider} />
-
-        <aside
-          aria-label={ariaLabel}
-          aria-labelledby={ariaLabelledby}
-          className="relative"
-          {...asideProps}
-        >
-          {children}
-        </aside>
-
-        {resizable ? (
-          <div
-            role="separator"
-            aria-orientation="vertical"
-            className={cn(
-              'absolute top-0 h-full w-2 cursor-col-resize select-none',
-              position === 'end' ? 'left-0 -ml-1' : 'right-0 -mr-1',
-              'hover:bg-border/60'
-            )}
-            onPointerDown={onPointerDown}
-            onPointerMove={onPointerMove}
-            onPointerUp={onPointerUp}
-          />
-        ) : null}
-      </div>
-    )
-  }
-)
-PageLayoutPane.displayName = 'PageLayoutPane'
+  return (
+    <aside
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledby}
+      className={cn(
+        order,
+        'col-span-12 min-w-0',
+        paddingYClass[padding],
+        dividerSide,
+        stickyCls,
+        resizableCls,
+        className
+      )}
+      style={style}
+    >
+      {children}
+    </aside>
+  )
+}

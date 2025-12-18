@@ -1,21 +1,16 @@
-import type { Meta, StoryObj, StoryFn } from '@storybook/react-vite'
+// page-layout.stories.tsx
+import type { Meta, StoryFn, StoryObj } from '@storybook/react-vite'
 import * as React from 'react'
 
 import {
   PageLayout,
   PageLayoutBody,
   PageLayoutContent,
-  PageLayoutHeader,
   PageLayoutFooter,
+  PageLayoutHeader,
   PageLayoutPane,
 } from './page-layout'
-import type {
-  ContainerWidth,
-  Divider,
-  Gap,
-  PanePosition,
-  Spacing,
-} from './page-layout'
+import type { ContainerWidth, Divider, Gap, PanePosition, Spacing } from './page-layout'
 
 type StoryArgs = {
   // Debug toggles
@@ -26,26 +21,33 @@ type StoryArgs = {
   paneHeight: number
   contentHeight: number
   footerHeight: number
+
   // PageLayout props
   containerWidth: ContainerWidth
-  padding: Spacing
-  rowGap: Gap
-  columnGap: Gap
+  gutters: Spacing
+  spacing: Gap
   className?: string
+
+  // Layout controls
+  panePosition: PanePosition
+  bodyGap: Gap
+  paneSticky: boolean
+  paneResizable: boolean
+  paneMinWidth: number | string
+  contentSpan: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+  paneSpan: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+
   // Header props
   headerDivider: Divider
   headerPadding: Spacing
+
   // Content props
-  contentWidth: ContainerWidth
   contentPadding: Spacing
+
   // Pane props
-  panePosition: PanePosition
-  paneWidth: ContainerWidth
-  paneMinWidth: number
-  paneSticky: boolean
-  paneResizable: boolean
   panePadding: Spacing
   paneDivider: Divider
+
   // Footer props
   footerDivider: Divider
   footerPadding: Spacing
@@ -65,21 +67,28 @@ const meta: Meta<StoryArgs> = {
     paneHeight: 200,
     contentHeight: 400,
     footerHeight: 64,
+
     containerWidth: 'xlarge',
-    padding: 'normal',
-    rowGap: 'normal',
-    columnGap: 'normal',
-    headerDivider: 'none',
-    headerPadding: 'normal',
-    contentWidth: 'full',
-    contentPadding: 'none',
+    gutters: 'normal',
+    spacing: 'normal',
+    className: '',
+
     panePosition: 'end',
-    paneWidth: 'large',
-    paneMinWidth: 280,
+    bodyGap: 'normal',
     paneSticky: false,
     paneResizable: false,
+    paneMinWidth: 280,
+    contentSpan: 8,
+    paneSpan: 4,
+
+    headerDivider: 'none',
+    headerPadding: 'normal',
+
+    contentPadding: 'none',
+
     panePadding: 'none',
     paneDivider: 'none',
+
     footerDivider: 'none',
     footerPadding: 'normal',
   },
@@ -97,81 +106,77 @@ const meta: Meta<StoryArgs> = {
       options: ['full', 'medium', 'large', 'xlarge'],
       table: { category: 'PageLayout props' },
     },
-    padding: {
+    gutters: {
       control: { type: 'radio' },
       options: ['none', 'condensed', 'normal'],
       table: { category: 'PageLayout props' },
     },
-    rowGap: {
-      control: { type: 'radio' },
-      options: ['none', 'condensed', 'normal'],
-      table: { category: 'PageLayout props' },
-    },
-    columnGap: {
+    spacing: {
       control: { type: 'radio' },
       options: ['none', 'condensed', 'normal'],
       table: { category: 'PageLayout props' },
     },
     className: { control: 'text', table: { category: 'PageLayout props' } },
 
+    panePosition: {
+      control: { type: 'radio' },
+      options: ['start', 'end'],
+      table: { category: 'Layout' },
+    },
+    bodyGap: {
+      control: { type: 'radio' },
+      options: ['none', 'condensed', 'normal'],
+      table: { category: 'Layout' },
+    },
+    paneSticky: { control: 'boolean', table: { category: 'Layout' } },
+    paneResizable: { control: 'boolean', table: { category: 'Layout' } },
+    paneMinWidth: { control: 'text', table: { category: 'Layout' } },
+    contentSpan: {
+      control: { type: 'range', min: 1, max: 12, step: 1 },
+      table: { category: 'Layout' },
+    },
+    paneSpan: {
+      control: { type: 'range', min: 1, max: 12, step: 1 },
+      table: { category: 'Layout' },
+    },
+
     headerDivider: {
       control: { type: 'radio' },
       options: ['none', 'line', 'filled'],
-      table: { category: 'Header props' },
+      table: { category: 'Header' },
     },
     headerPadding: {
       control: { type: 'radio' },
       options: ['none', 'condensed', 'normal'],
-      table: { category: 'Header props' },
+      table: { category: 'Header' },
     },
 
-    contentWidth: {
-      control: { type: 'radio' },
-      options: ['full', 'medium', 'large', 'xlarge'],
-      table: { category: 'Content props' },
-    },
     contentPadding: {
       control: { type: 'radio' },
       options: ['none', 'condensed', 'normal'],
-      table: { category: 'Content props' },
+      table: { category: 'Content' },
     },
 
-    panePosition: {
-      control: { type: 'radio' },
-      options: ['start', 'end'],
-      table: { category: 'Pane props' },
-    },
-    paneWidth: {
-      control: { type: 'radio' },
-      options: ['full', 'medium', 'large', 'xlarge'],
-      table: { category: 'Pane props' },
-    },
-    paneMinWidth: {
-      control: { type: 'number' },
-      table: { category: 'Pane props' },
-    },
-    paneSticky: { control: 'boolean', table: { category: 'Pane props' } },
-    paneResizable: { control: 'boolean', table: { category: 'Pane props' } },
     panePadding: {
       control: { type: 'radio' },
       options: ['none', 'condensed', 'normal'],
-      table: { category: 'Pane props' },
+      table: { category: 'Pane' },
     },
     paneDivider: {
       control: { type: 'radio' },
       options: ['none', 'line', 'filled'],
-      table: { category: 'Pane props' },
+      table: { category: 'Pane' },
     },
 
     footerDivider: {
       control: { type: 'radio' },
       options: ['none', 'line', 'filled'],
-      table: { category: 'Footer props' },
+      table: { category: 'Footer' },
     },
     footerPadding: {
       control: { type: 'radio' },
       options: ['none', 'condensed', 'normal'],
-      table: { category: 'Footer props' },
+      table: { category: 'Footer' },
     },
   },
   tags: ['autodocs'],
@@ -189,14 +194,18 @@ const Placeholder = ({ height, label }: { height: number; label: string }) => (
   </div>
 )
 
-const Template: StoryFn<StoryArgs> = (args) => {
+const Template: StoryFn<StoryArgs> = (args: StoryArgs) => {
+  const showPane = args.renderPane
+  const contentSpanClass = `lg:col-span-${args.contentSpan}`
+  const paneSpanClass = `lg:col-span-${args.paneSpan}`
+
   return (
     <PageLayout
       containerWidth={args.containerWidth}
-      padding={args.padding}
-      rowGap={args.rowGap}
-      columnGap={args.columnGap}
+      gutters={args.gutters}
+      spacing={args.spacing}
       className={args.className}
+      panePosition={args.panePosition}
     >
       {args.renderHeader ? (
         <PageLayoutHeader divider={args.headerDivider} padding={args.headerPadding}>
@@ -204,21 +213,20 @@ const Template: StoryFn<StoryArgs> = (args) => {
         </PageLayoutHeader>
       ) : null}
 
-      <PageLayoutBody>
-        <PageLayoutContent width={args.contentWidth} padding={args.contentPadding} className="lg:col-span-8">
+      <PageLayoutBody gap={args.bodyGap}>
+        <PageLayoutContent padding={args.contentPadding} className={contentSpanClass}>
           <Placeholder height={args.contentHeight} label="Content" />
         </PageLayoutContent>
 
-        {args.renderPane ? (
+        {showPane ? (
           <PageLayoutPane
-            position={args.panePosition}
-            width={args.paneWidth}
-            minWidth={args.paneMinWidth}
-            sticky={args.paneSticky}
-            resizable={args.paneResizable}
             padding={args.panePadding}
             divider={args.paneDivider}
-            className="lg:col-span-4"
+            ariaLabel="Page pane"
+            sticky={args.paneSticky}
+            resizable={args.paneResizable}
+            minWidth={args.paneMinWidth}
+            className={paneSpanClass}
           >
             <Placeholder height={args.paneHeight} label="Pane" />
           </PageLayoutPane>
@@ -243,11 +251,108 @@ export const Playground: Story = {
   args: {
     ...meta.args,
     containerWidth: 'large',
-    rowGap: 'condensed',
-    columnGap: 'condensed',
+    spacing: 'condensed',
+    bodyGap: 'condensed',
     headerDivider: 'line',
     panePosition: 'start',
     paneSticky: true,
+    contentHeight: 800
   },
-  render: Template,
+  render: (args: StoryArgs) => {
+    const showPane = args.renderPane
+    const contentSpanClass = `lg:col-span-${args.contentSpan}`
+    const paneSpanClass = `lg:col-span-${args.paneSpan}`
+
+    return (
+      <div className="space-y-6">
+        <div className="rounded-md border border-dashed border-muted-foreground/40 bg-muted/30 p-3 text-sm text-muted-foreground">
+          Borders and notes are added to make the layout edges obvious. Use this to see
+          how header, content, pane, and footer align in the 12-column grid.
+        </div>
+
+        <PageLayout
+          containerWidth={args.containerWidth}
+          gutters={args.gutters}
+          spacing={args.spacing}
+          className={`bg-background/40 ${args.className ?? ''}`}
+          panePosition={args.panePosition}
+        >
+          {args.renderHeader ? (
+            <PageLayoutHeader
+              divider={args.headerDivider}
+              padding={args.headerPadding}
+              className="rounded-lg border-2 border-sky-500/80 bg-sky-50/80 shadow-sm"
+            >
+              <div className="flex items-center justify-between" style={{ minHeight: args.headerHeight }}>
+                <div className="text-sm font-semibold text-sky-900">Header</div>
+                <div className="rounded-full bg-sky-500/90 px-2.5 py-0.5 text-xs font-medium text-white shadow">
+                  Page width &amp; padding
+                </div>
+              </div>
+            </PageLayoutHeader>
+          ) : null}
+
+          <PageLayoutBody gap={args.bodyGap}>
+            <PageLayoutContent
+              padding={args.contentPadding}
+              className={`rounded-lg border-2 border-indigo-500/80 bg-indigo-50/70 shadow-sm ${contentSpanClass}`}
+            >
+              <div className="flex items-start justify-between gap-3" style={{ minHeight: args.contentHeight }}>
+                <div>
+                  <div className="text-sm font-semibold text-indigo-900">Content</div>
+                  <p className="mt-2 text-sm text-indigo-900/80">
+                    Controlled by <code className="rounded bg-indigo-100 px-1 py-0.5">contentSpan</code>.
+                  </p>
+                </div>
+                <span className="rounded-full bg-indigo-500/90 px-2.5 py-0.5 text-xs font-medium text-white shadow">
+                  lg: {args.contentSpan}/12
+                </span>
+              </div>
+            </PageLayoutContent>
+
+            {showPane ? (
+              <PageLayoutPane
+                padding={args.panePadding}
+                divider={args.paneDivider}
+                className={`rounded-lg border-2 border-amber-500/80 bg-amber-50/70 shadow-sm ${paneSpanClass}`}
+                ariaLabel="Pane with guides"
+                sticky={args.paneSticky}
+                resizable={args.paneResizable}
+                minWidth={args.paneMinWidth}
+              >
+              <div style={{ minHeight: args.paneHeight }}>
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <div className="text-sm font-semibold text-amber-900">Pane</div>
+                    <p className="mt-2 text-sm text-amber-900/80">
+                      Controlled by <code className="rounded bg-amber-100 px-1 py-0.5">paneSpan</code>.
+                    </p>
+                  </div>
+                  <span className="rounded-full bg-amber-500/90 px-2.5 py-0.5 text-xs font-medium text-white shadow">
+                    lg: {args.paneSpan}/12
+                  </span>
+                </div>
+                </div>
+              </PageLayoutPane>
+            ) : null}
+          </PageLayoutBody>
+
+          {args.renderFooter ? (
+            <PageLayoutFooter
+              divider={args.footerDivider}
+              padding={args.footerPadding}
+              className="rounded-lg border-2 border-purple-500/80 bg-purple-50/80 shadow-sm"
+            >
+              <div className="flex items-center justify-between" style={{ minHeight: args.footerHeight }}>
+                <div className="text-sm font-semibold text-purple-900">Footer</div>
+                <div className="rounded-full bg-purple-500/90 px-2.5 py-0.5 text-xs font-medium text-white shadow">
+                  Stays aligned with content width
+                </div>
+              </div>
+            </PageLayoutFooter>
+          ) : null}
+        </PageLayout>
+      </div>
+    )
+  },
 }

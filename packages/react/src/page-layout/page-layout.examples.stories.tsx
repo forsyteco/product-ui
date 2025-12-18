@@ -1,3 +1,4 @@
+// page-layout.examples.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import * as React from 'react'
 
@@ -13,9 +14,7 @@ import {
 const meta = {
   title: 'Components/PageLayout/Examples',
   component: PageLayout,
-  parameters: {
-    layout: 'fullscreen',
-  },
+  parameters: { layout: 'fullscreen' },
 } satisfies Meta<typeof PageLayout>
 
 export default meta
@@ -31,15 +30,12 @@ function Panel({ title, children }: { title: string; children?: React.ReactNode 
 }
 
 export const DashboardTwoColumn: Story = {
-  args: {
-    children: null,
-    containerWidth: 'xlarge',
-    padding: 'normal',
-    columnGap: 'normal',
-    rowGap: 'normal',
-  },
   render: () => (
-    <PageLayout containerWidth="xlarge" padding="normal" columnGap="normal" rowGap="normal">
+    <PageLayout
+      containerWidth="xlarge"
+      gutters="normal"
+      spacing="normal"
+    >
       <PageLayoutHeader divider="none">
         <div className="flex items-center justify-between">
           <div>
@@ -62,7 +58,7 @@ export const DashboardTwoColumn: Story = {
           </div>
         </PageLayoutContent>
 
-        <PageLayoutPane className="lg:col-span-3" position="end" sticky offsetHeader={0}>
+        <PageLayoutPane ariaLabel="Quick actions" divider="line" sticky className="lg:col-span-3">
           <div className="grid gap-4">
             <Panel title="Quick actions">Buttons</Panel>
             <Panel title="Context">Selected matter/client details</Panel>
@@ -78,21 +74,18 @@ export const DashboardTwoColumn: Story = {
 }
 
 export const ContentOnly: Story = {
-  args: {
-    children: null,
-    containerWidth: 'large',
-    padding: 'normal',
-    columnGap: 'normal',
-    rowGap: 'normal',
-  },
   render: () => (
-    <PageLayout containerWidth="large" padding="normal" columnGap="normal" rowGap="normal">
+    <PageLayout
+      containerWidth="large"
+      gutters="normal"
+      spacing="normal"
+    >
       <PageLayoutHeader divider="line">
         <div className="text-lg font-semibold">Content-only page</div>
       </PageLayoutHeader>
 
       <PageLayoutBody>
-        <PageLayoutContent className="lg:col-span-12">
+        <PageLayoutContent>
           <div className="grid gap-4">
             <Panel title="Form section">Inputs</Panel>
             <Panel title="Form section">Inputs</Panel>
@@ -105,15 +98,13 @@ export const ContentOnly: Story = {
 }
 
 export const LeftPaneNavigation: Story = {
-  args: {
-    children: null,
-    containerWidth: 'xlarge',
-    padding: 'normal',
-    columnGap: 'normal',
-    rowGap: 'normal',
-  },
   render: () => (
-    <PageLayout containerWidth="xlarge" padding="normal" columnGap="normal" rowGap="normal">
+    <PageLayout
+      containerWidth="xlarge"
+      gutters="normal"
+      spacing="normal"
+      panePosition="start"
+    >
       <PageLayoutHeader divider="none">
         <div className="flex items-center justify-between">
           <div className="text-lg font-semibold">Settings</div>
@@ -122,7 +113,7 @@ export const LeftPaneNavigation: Story = {
       </PageLayoutHeader>
 
       <PageLayoutBody>
-        <PageLayoutPane className="lg:col-span-3" position="start" sticky offsetHeader={0}>
+        <PageLayoutPane ariaLabel="Settings navigation" divider="line" sticky className="lg:col-span-3">
           <div className="grid gap-2">
             {['Profile', 'Security', 'Billing', 'Integrations', 'Audit log'].map((item) => (
               <div key={item} className="rounded-md border px-3 py-2 text-sm">

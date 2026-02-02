@@ -5,6 +5,7 @@ import { ROW_INTERACTION } from './constants';
 import type { DataTableColumn, SortState, FilterState } from './types';
 import { queryData } from './stories/mock-data-service';
 import DateCell from './components/date-cell';
+import NameCell from './components/name-cell';
 
 const meta = {
   title: 'Components/DataTable/Examples',
@@ -173,13 +174,6 @@ export const ClientsTable: Story = {
       setFilterState(newFilterState);
       setPage(1);
     };
-
-    const NameCell = ({ value, row }: { value: string; row: Client }) => (
-      <div>
-        <div className="font-medium text-accent">{value}</div>
-        <div className="text-xs text-muted-foreground">{row.email}</div>
-      </div>
-    );
 
     const columns: DataTableColumn<Client>[] = [
       { id: 'name', header: 'Name', accessorKey: 'name', cell: NameCell, sortable: true, width: '200px' },

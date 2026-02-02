@@ -130,17 +130,12 @@ function TableHeader<TData>({
                   <SortIndicator direction={sortDirection} />
                 )}
                 {column.filterable && column.filterValues && onFilterChange && (
-                  <span
-                    onClick={(e) => e.stopPropagation()}
-                    onKeyDown={(e) => e.stopPropagation()}
-                  >
-                    <FilterDropdown
-                      columnId={column.id}
-                      filterValues={column.filterValues}
-                      selectedValues={getColumnFilterValues(column.id)}
-                      onFilterChange={handleFilterChange}
-                    />
-                  </span>
+                  <FilterDropdown
+                    columnId={column.id}
+                    filterValues={column.filterValues}
+                    selectedValues={getColumnFilterValues(column.id)}
+                    onFilterChange={handleFilterChange}
+                  />
                 )}
               </div>
             </th>

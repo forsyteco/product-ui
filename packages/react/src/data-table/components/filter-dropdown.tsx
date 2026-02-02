@@ -53,8 +53,12 @@ function FilterDropdown({
     onFilterChange(columnId, [...filterValues]);
   };
 
+  const handleContainerClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block" onClick={handleContainerClick}>
       <HeadlessPopover>
         <HeadlessPopover.Button
           aria-label={`Filter ${columnId}`}

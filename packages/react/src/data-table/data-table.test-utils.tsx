@@ -71,7 +71,7 @@ export async function openStatusFilterDropdown(user: UserEvent) {
     name: /filter/i,
   });
   await user.click(filterButton);
-  return screen.getByRole('listbox');
+  return screen.getByTestId('filter-options');
 }
 
 /**

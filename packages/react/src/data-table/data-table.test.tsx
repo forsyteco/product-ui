@@ -385,9 +385,9 @@ describe('DataTable', () => {
 
       render(<DataTable {...createDefaultProps({ ...filterProps, onFilterChange })} />);
 
-      const dropdown = await openStatusFilterDropdown(user);
-      const activeOption = within(dropdown).getByRole('option', { name: 'Active' });
-      await user.click(activeOption);
+      await openStatusFilterDropdown(user);
+      const activeCheckbox = screen.getByLabelText('Active');
+      await user.click(activeCheckbox);
 
       expect(onFilterChange).toHaveBeenCalledTimes(1);
       const filterArg: FilterState = onFilterChange.mock.calls[0][0];
@@ -427,10 +427,10 @@ describe('DataTable', () => {
       await openStatusFilterDropdown(user);
 
       const searchInput = screen.getByRole('searchbox');
-      const listbox = screen.getByRole('listbox');
+      const filterOptions = screen.getByTestId('filter-options');
 
-      expect(listbox.contains(searchInput)).toBe(false);
-      expect(listbox).toHaveClass('overflow-y-auto');
+      expect(filterOptions.contains(searchInput)).toBe(false);
+      expect(filterOptions).toHaveClass('overflow-y-auto');
     });
 
     it('filter list has scrollable container for many items', async () => {

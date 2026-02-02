@@ -112,16 +112,13 @@ function FilterDropdown({
                 Clear all
               </span>
             </Button>
-            <div role="listbox" className="overflow-y-auto flex-1 min-h-0">
+            <div data-testid="filter-options" className="overflow-y-auto flex-1 min-h-0">
               {filteredValues.map((value) => {
                 const isSelected = selectedValues.includes(value);
                 const displayLabel = formatFilterLabel(value);
                 return (
                   <div
                     key={value}
-                    role="option"
-                    aria-label={displayLabel}
-                    aria-selected={isSelected}
                     onClick={() => handleToggleValue(value)}
                     className="flex cursor-pointer items-center rounded px-2 py-1.5 hover:bg-muted"
                   >

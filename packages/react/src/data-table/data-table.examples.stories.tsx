@@ -9,6 +9,7 @@ import NameCell from './components/name-cell';
 import RiskLevelCell from './components/risk-level-cell';
 import CountryCell from './components/country-cell';
 import CopyableCell from './components/copyable-cell';
+import StatusCell, { STATUS, type Status } from './components/status-cell';
 
 const meta = {
   title: 'Components/DataTable/Examples',
@@ -221,36 +222,37 @@ type RiskAssessment = {
   client: string;
   matter: string;
   riskLevel: string;
-  status: string;
+  status: Status;
+  version: string | null | false;
   assignedTo: string;
   updated: string;
 };
 
 const riskData: RiskAssessment[] = [
-  { id: '1', client: 'Otter Pritchard', matter: 'Sale with negative equity', riskLevel: 'Medium', status: 'In progress', assignedTo: 'Rebecca Thomas', updated: '2026-01-29' },
-  { id: '2', client: 'James Morgan', matter: 'Property Sale', riskLevel: 'Medium', status: 'In progress', assignedTo: 'Navya Nataraja', updated: '2026-01-28' },
-  { id: '3', client: 'Linda Cooper', matter: 'Property Sale', riskLevel: 'Medium', status: 'In progress', assignedTo: 'Kayleigh Smale', updated: '2026-01-28' },
-  { id: '4', client: 'Skywalker, Leia', matter: 'Purchase of Millennium Falcon', riskLevel: 'Medium', status: 'Complete', assignedTo: 'Jane Pritchard', updated: '2026-01-28' },
-  { id: '5', client: 'Skywalker, Luke', matter: 'Purchase of Millennium Falcon', riskLevel: 'Medium', status: 'In progress', assignedTo: 'Jane Pritchard', updated: '2026-01-28' },
-  { id: '6', client: 'Skywalker, Leia', matter: 'Purchase of Millennium Falcon', riskLevel: 'Medium', status: 'In progress', assignedTo: 'Jane Pritchard', updated: '2026-01-27' },
-  { id: '7', client: 'Skywalker, Luke', matter: 'Purchase of Millennium Falcon', riskLevel: 'Medium', status: 'In progress', assignedTo: 'Jane Pritchard', updated: '2026-01-27' },
-  { id: '8', client: 'Skywalker, Leia', matter: 'Purchase of Millennium Falcon', riskLevel: 'Medium', status: 'In progress', assignedTo: 'Jane Pritchard', updated: '2026-01-23' },
-  { id: '9', client: 'Skywalker, Luke', matter: 'Purchase of Millennium Falcon', riskLevel: 'Medium', status: 'In progress', assignedTo: 'Jane Pritchard', updated: '2026-01-23' },
-  { id: '10', client: 'Emma Thomson', matter: 'Residential purchase of detached property in the Cotswolds', riskLevel: 'Medium', status: 'In progress', assignedTo: 'Navya Nataraja', updated: '2026-01-23' },
-  { id: '11', client: 'Acme Corporation', matter: 'Commercial property acquisition', riskLevel: 'High', status: 'In progress', assignedTo: 'Rebecca Thomas', updated: '2026-01-22' },
-  { id: '12', client: 'Global Investments Ltd', matter: 'Portfolio restructuring', riskLevel: 'High', status: 'Not started', assignedTo: 'Jane Pritchard', updated: '2026-01-20' },
-  { id: '13', client: 'Sophie Laurent', matter: 'Cross-border property transfer', riskLevel: 'High', status: 'In progress', assignedTo: 'Kayleigh Smale', updated: '2026-01-18' },
-  { id: '14', client: 'David Mitchell', matter: 'Remortgage application', riskLevel: 'Low', status: 'Complete', assignedTo: 'Navya Nataraja', updated: '2026-01-15' },
-  { id: '15', client: 'Fredrik Larsen', matter: 'International property sale', riskLevel: 'Medium', status: 'In progress', assignedTo: 'Rebecca Thomas', updated: '2026-01-12' },
-  { id: '16', client: 'Maria Santos', matter: 'First-time buyer purchase', riskLevel: 'Low', status: 'Complete', assignedTo: 'Jane Pritchard', updated: '2026-01-10' },
-  { id: '17', client: 'Hans Weber', matter: 'Commercial lease agreement', riskLevel: 'Medium', status: 'In progress', assignedTo: 'Kayleigh Smale', updated: '2026-01-08' },
-  { id: '18', client: 'Tech Solutions Inc', matter: 'Office relocation', riskLevel: 'Low', status: 'Not started', assignedTo: 'Navya Nataraja', updated: '2026-01-05' },
-  { id: '19', client: 'Pierre Dubois', matter: 'Investment property purchase', riskLevel: 'Medium', status: 'In progress', assignedTo: 'Rebecca Thomas', updated: '2026-01-02' },
-  { id: '20', client: 'Sarah Johnson', matter: 'Property sale chain', riskLevel: 'High', status: 'In progress', assignedTo: 'Jane Pritchard', updated: '2025-12-28' },
-  { id: '21', client: 'Nordic Shipping AS', matter: 'Warehouse acquisition', riskLevel: 'Medium', status: 'Complete', assignedTo: 'Kayleigh Smale', updated: '2025-12-22' },
-  { id: '22', client: 'Michael Chen', matter: 'Buy-to-let purchase', riskLevel: 'Low', status: 'Complete', assignedTo: 'Navya Nataraja', updated: '2025-12-18' },
-  { id: '23', client: 'Isabella Romano', matter: 'Holiday home purchase', riskLevel: 'Medium', status: 'In progress', assignedTo: 'Rebecca Thomas', updated: '2025-12-15' },
-  { id: '24', client: 'Euro Finance GmbH', matter: 'Multi-property portfolio', riskLevel: 'High', status: 'Not started', assignedTo: 'Jane Pritchard', updated: '2025-12-10' },
+  { id: '1', client: 'Otter Pritchard', matter: 'Sale with negative equity', riskLevel: 'Medium', status: STATUS.IN_PROGRESS, version: null, assignedTo: 'Rebecca Thomas', updated: '2026-01-29' },
+  { id: '2', client: 'James Morgan', matter: 'Property Sale', riskLevel: 'Medium', status: STATUS.IN_PROGRESS, version: 'v2.1', assignedTo: 'Navya Nataraja', updated: '2026-01-28' },
+  { id: '3', client: 'Linda Cooper', matter: 'Property Sale', riskLevel: 'Medium', status: STATUS.IN_PROGRESS, version: 'v1.0', assignedTo: 'Kayleigh Smale', updated: '2026-01-28' },
+  { id: '4', client: 'Skywalker, Leia', matter: 'Purchase of Millennium Falcon', riskLevel: 'Medium', status: STATUS.COMPLETE, version: 'v3.0', assignedTo: 'Jane Pritchard', updated: '2026-01-28' },
+  { id: '5', client: 'Skywalker, Luke', matter: 'Purchase of Millennium Falcon', riskLevel: 'Medium', status: STATUS.IN_PROGRESS, version: null, assignedTo: 'Jane Pritchard', updated: '2026-01-28' },
+  { id: '6', client: 'Skywalker, Leia', matter: 'Purchase of Millennium Falcon', riskLevel: 'Medium', status: STATUS.DO_NOT_ACT, version: 'v2.0', assignedTo: 'Jane Pritchard', updated: '2026-01-27' },
+  { id: '7', client: 'Skywalker, Luke', matter: 'Purchase of Millennium Falcon', riskLevel: 'Medium', status: STATUS.IN_PROGRESS, version: 'v1.5', assignedTo: 'Jane Pritchard', updated: '2026-01-27' },
+  { id: '8', client: 'Skywalker, Leia', matter: 'Purchase of Millennium Falcon', riskLevel: 'Medium', status: STATUS.IN_PROGRESS, version: null, assignedTo: 'Jane Pritchard', updated: '2026-01-23' },
+  { id: '9', client: 'Skywalker, Luke', matter: 'Purchase of Millennium Falcon', riskLevel: 'Medium', status: STATUS.IN_PROGRESS, version: 'v1.0', assignedTo: 'Jane Pritchard', updated: '2026-01-23' },
+  { id: '10', client: 'Emma Thomson', matter: 'Residential purchase of detached property in the Cotswolds', riskLevel: 'Medium', status: STATUS.IN_PROGRESS, version: 'v2.3', assignedTo: 'Navya Nataraja', updated: '2026-01-23' },
+  { id: '11', client: 'Acme Corporation', matter: 'Commercial property acquisition', riskLevel: 'High', status: STATUS.IN_PROGRESS, version: 'v1.0', assignedTo: 'Rebecca Thomas', updated: '2026-01-22' },
+  { id: '12', client: 'Global Investments Ltd', matter: 'Portfolio restructuring', riskLevel: 'High', status: STATUS.FAILED, version: null, assignedTo: 'Jane Pritchard', updated: '2026-01-20' },
+  { id: '13', client: 'Sophie Laurent', matter: 'Cross-border property transfer', riskLevel: 'High', status: STATUS.IN_PROGRESS, version: 'v4.0', assignedTo: 'Kayleigh Smale', updated: '2026-01-18' },
+  { id: '14', client: 'David Mitchell', matter: 'Remortgage application', riskLevel: 'Low', status: STATUS.COMPLETE, version: 'v2.0', assignedTo: 'Navya Nataraja', updated: '2026-01-15' },
+  { id: '15', client: 'Fredrik Larsen', matter: 'International property sale', riskLevel: 'Medium', status: STATUS.IN_PROGRESS, version: null, assignedTo: 'Rebecca Thomas', updated: '2026-01-12' },
+  { id: '16', client: 'Maria Santos', matter: 'First-time buyer purchase', riskLevel: 'Low', status: STATUS.COMPLETE, version: 'v1.0', assignedTo: 'Jane Pritchard', updated: '2026-01-10' },
+  { id: '17', client: 'Hans Weber', matter: 'Commercial lease agreement', riskLevel: 'Medium', status: STATUS.IN_PROGRESS, version: 'v3.2', assignedTo: 'Kayleigh Smale', updated: '2026-01-08' },
+  { id: '18', client: 'Tech Solutions Inc', matter: 'Office relocation', riskLevel: 'Low', status: STATUS.DO_NOT_ACT, version: null, assignedTo: 'Navya Nataraja', updated: '2026-01-05' },
+  { id: '19', client: 'Pierre Dubois', matter: 'Investment property purchase', riskLevel: 'Medium', status: STATUS.IN_PROGRESS, version: 'v1.0', assignedTo: 'Rebecca Thomas', updated: '2026-01-02' },
+  { id: '20', client: 'Sarah Johnson', matter: 'Property sale chain', riskLevel: 'High', status: STATUS.IN_PROGRESS, version: 'v2.1', assignedTo: 'Jane Pritchard', updated: '2025-12-28' },
+  { id: '21', client: 'Nordic Shipping AS', matter: 'Warehouse acquisition', riskLevel: 'Medium', status: STATUS.COMPLETE, version: 'v5.0', assignedTo: 'Kayleigh Smale', updated: '2025-12-22' },
+  { id: '22', client: 'Michael Chen', matter: 'Buy-to-let purchase', riskLevel: 'Low', status: STATUS.COMPLETE, version: 'v1.0', assignedTo: 'Navya Nataraja', updated: '2025-12-18' },
+  { id: '23', client: 'Isabella Romano', matter: 'Holiday home purchase', riskLevel: 'Medium', status: STATUS.IN_PROGRESS, version: null, assignedTo: 'Rebecca Thomas', updated: '2025-12-15' },
+  { id: '24', client: 'Euro Finance GmbH', matter: 'Multi-property portfolio', riskLevel: 'High', status: STATUS.FAILED, version: null, assignedTo: 'Jane Pritchard', updated: '2025-12-10' },
 ];
 
 export const RiskAssessmentsTable: Story = {
@@ -272,23 +274,16 @@ export const RiskAssessmentsTable: Story = {
       setPage(1);
     };
 
-    const StatusBadge = ({ value }: { value: string }) => (
-      <span
-        className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
-          value === 'Complete' ? 'bg-green-100 text-green-800' :
-          value === 'In progress' ? 'bg-blue-100 text-blue-800' :
-          'bg-gray-100 text-gray-800'
-        }`}
-      >
-        {value}
-      </span>
+    // Custom cell to combine status with version from row data
+    const RiskStatusCell = ({ value, row }: { value: Status; row: RiskAssessment }) => (
+      <StatusCell value={value} version={row.version} />
     );
 
     const columns: DataTableColumn<RiskAssessment>[] = [
       { id: 'client', header: 'Client', accessorKey: 'client', sortable: true },
       { id: 'matter', header: 'Matter', accessorKey: 'matter', width: '300px' },
       { id: 'riskLevel', header: 'Risk level', accessorKey: 'riskLevel', cell: RiskLevelCell, sortable: true, filterable: true, filterValues: ['Low', 'Medium', 'High'] },
-      { id: 'status', header: 'Status', accessorKey: 'status', cell: StatusBadge, sortable: true, filterable: true, filterValues: ['In progress', 'Complete', 'Not started'] },
+      { id: 'status', header: 'Status', accessorKey: 'status', cell: RiskStatusCell, sortable: true, filterable: true, filterValues: [STATUS.IN_PROGRESS, STATUS.COMPLETE, STATUS.DO_NOT_ACT, STATUS.FAILED] },
       { id: 'assignedTo', header: 'Assigned to', accessorKey: 'assignedTo', sortable: true, filterable: true, filterValues: ['Jane Pritchard', 'Kayleigh Smale', 'Navya Nataraja', 'Rebecca Thomas'] },
       { id: 'updated', header: 'Updated', accessorKey: 'updated', cell: DateCell, sortable: true },
     ];

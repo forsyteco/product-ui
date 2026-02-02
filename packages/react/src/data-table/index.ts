@@ -4,6 +4,7 @@ export { default as NameCell } from './components/name-cell';
 export { default as RiskLevelCell } from './components/risk-level-cell';
 export { default as CountryCell } from './components/country-cell';
 export { default as CopyableCell } from './components/copyable-cell';
+export { default as StatusCell, STATUS } from './components/status-cell';
 export { ROW_INTERACTION } from './constants';
 export type { RowInteractionMode } from './constants';
 export type {
@@ -21,3 +22,4 @@ export type { NameCellProps } from './components/name-cell';
 export type { RiskLevelCellProps } from './components/risk-level-cell';
 export type { CountryCellProps } from './components/country-cell';
 export type { CopyableCellProps } from './components/copyable-cell';
+export type { StatusCellProps, Status } from './components/status-cell';

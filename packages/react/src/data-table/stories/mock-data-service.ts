@@ -22,6 +22,68 @@ export type QueryResult<TData> = {
 };
 
 /**
+ * Converts a value to a string for comparison purposes
+ */
+function valueToString(value: unknown): string {
+  if (value == null) return '';
+  if (typeof value === 'object') return JSON.stringify(value);
+  return String(value);
+}
+
+/**
+ * Compares two values for sorting
+ */
+function compareValues(aValue: unknown, bValue: unknown, direction: 'asc' | 'desc'): number {
+  // Handle null/undefined
+  if (aValue == null && bValue == null) return 0;
+  if (aValue == null) return direction === 'asc' ? 1 : -1;
+  if (bValue == null) return direction === 'asc' ? -1 : 1;
+
+  // Compare values
+  let comparison = 0;
+  if (typeof aValue === 'string' && typeof bValue === 'string') {
+    comparison = aValue.localeCompare(bValue);
+  } else if (typeof aValue === 'number' && typeof bValue === 'number') {
+    comparison = aValue - bValue;
+  } else {
+    comparison = valueToString(aValue).localeCompare(valueToString(bValue));
+  }
+
+  return direction === 'asc' ? comparison : -comparison;
+}
+
+/**
+ * Applies filter state to data
+ */
+function applyFilters<TData extends Record<string, unknown>>(
+  data: TData[],
+  filterState: FilterState
+): TData[] {
+  if (!filterState || filterState.length === 0) return data;
+
+  return data.filter((row) => {
+    return filterState.every((filter) => {
+      if (filter.values.length === 0) return true;
+      const rowValue = valueToString(row[filter.columnId]);
+      return filter.values.includes(rowValue);
+    });
+  });
+}
+
+/**
+ * Applies sort state to data
+ */
+function applySorting<TData extends Record<string, unknown>>(
+  data: TData[],
+  sortState: SortState
+): TData[] {
+  if (!sortState) return data;
+
+  const { columnId, direction } = sortState;
+  return [...data].sort((a, b) => compareValues(a[columnId], b[columnId], direction));
+}
+
+/**
  * Simulates a server-side data query with sorting, filtering, and pagination
  */
 export function queryData<TData extends Record<string, unknown>>({
@@ -31,47 +93,11 @@ export function queryData<TData extends Record<string, unknown>>({
   sortState,
   filterState,
 }: QueryParams<TData>): QueryResult<TData> {
-  let result = [...data];
-
   // Apply filters
-  if (filterState && filterState.length > 0) {
-    result = result.filter((row) => {
-      return filterState.every((filter) => {
-        if (filter.values.length === 0) return true;
-        const rawValue = row[filter.columnId];
-        const rowValue = typeof rawValue === 'object' ? JSON.stringify(rawValue) : String(rawValue ?? '');
-        return filter.values.includes(rowValue);
-      });
-    });
-  }
+  let result = applyFilters(data, filterState ?? []);
 
   // Apply sorting
-  if (sortState) {
-    const { columnId, direction } = sortState;
-    result = result.sort((a, b) => {
-      const aValue = a[columnId];
-      const bValue = b[columnId];
-
-      // Handle null/undefined
-      if (aValue == null && bValue == null) return 0;
-      if (aValue == null) return direction === 'asc' ? 1 : -1;
-      if (bValue == null) return direction === 'asc' ? -1 : 1;
-
-      // Compare values
-      let comparison = 0;
-      if (typeof aValue === 'string' && typeof bValue === 'string') {
-        comparison = aValue.localeCompare(bValue);
-      } else if (typeof aValue === 'number' && typeof bValue === 'number') {
-        comparison = aValue - bValue;
-      } else {
-        const aStr = typeof aValue === 'object' ? JSON.stringify(aValue) : String(aValue);
-        const bStr = typeof bValue === 'object' ? JSON.stringify(bValue) : String(bValue);
-        comparison = aStr.localeCompare(bStr);
-      }
-
-      return direction === 'asc' ? comparison : -comparison;
-    });
-  }
+  result = applySorting(result, sortState ?? null);
 
   // Calculate pagination
   const totalCount = result.length;

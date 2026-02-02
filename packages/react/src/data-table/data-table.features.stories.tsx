@@ -30,7 +30,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-type StoryArgs = { pageSize?: number };
+type StoryArgs = Readonly<{ pageSize?: number }>;
 
 function SortingStory({ pageSize: argPageSize }: StoryArgs) {
   const [page, setPage] = useState(1);
@@ -308,31 +308,34 @@ export const SortingAndFiltering: Story = {
   args: { pageSize: 10 },
 };
 
+type UserExpandedContentProps = Readonly<{
+  row: User;
+  rowId: string;
+  data: UserExpandedData | null;
+  loading: boolean;
+}>;
+
 // Expanded row content component
 function UserExpandedContent({
   row,
   rowId,
   data,
   loading,
-}: {
-  row: User;
-  rowId: string;
-  data: UserExpandedData | null;
-  loading: boolean;
-}) {
+}: UserExpandedContentProps) {
   return (
     <div
       className="transition-opacity duration-300"
       style={{ opacity: loading ? 0.5 : 1 }}
     >
-      {loading ? (
+      {loading && (
         <div className="flex items-center justify-center py-8">
           <div className="flex items-center gap-3">
             <div className="h-5 w-5 animate-spin rounded-full border-2 border-muted-foreground border-t-transparent" />
             <span className="text-sm text-muted-foreground">Loading details for {row.name}...</span>
           </div>
         </div>
-      ) : data ? (
+      )}
+      {!loading && data && (
         <div className="space-y-4 p-4">
           <div className="flex items-start justify-between">
             <div className="space-y-3">
@@ -377,7 +380,7 @@ function UserExpandedContent({
             </div>
           </div>
         </div>
-      ) : null}
+      )}
     </div>
   );
 }
@@ -418,6 +421,24 @@ export const ExpandableRows: Story = {
   args: { pageSize: 10 },
 };
 
+type StatusBadgeProps = Readonly<{ value: string }>;
+
+function StatusBadge({ value }: StatusBadgeProps) {
+  const colorClass = value === 'Active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800';
+  return (
+    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${colorClass}`}>
+      {value}
+    </span>
+  );
+}
+
+const customCellColumns: DataTableColumn<User>[] = [
+  { id: 'name', header: 'Name', accessorKey: 'name', sortable: true },
+  { id: 'email', header: 'Email', accessorKey: 'email' },
+  { id: 'status', header: 'Status', accessorKey: 'status', cell: StatusBadge, sortable: true },
+  { id: 'role', header: 'Role', accessorKey: 'role' },
+];
+
 function CustomCellRendererStory({ pageSize: argPageSize }: StoryArgs) {
   const [page, setPage] = useState(1);
   const [sortState, setSortState] = useState<SortState>(null);
@@ -428,30 +449,13 @@ function CustomCellRendererStory({ pageSize: argPageSize }: StoryArgs) {
     [page, pageSize, sortState]
   );
 
-  const StatusBadge = ({ value }: { value: string }) => (
-    <span
-      className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
-        value === 'Active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-      }`}
-    >
-      {value}
-    </span>
-  );
-
-  const columnsWithCustomCell: DataTableColumn<User>[] = [
-    { id: 'name', header: 'Name', accessorKey: 'name', sortable: true },
-    { id: 'email', header: 'Email', accessorKey: 'email' },
-    { id: 'status', header: 'Status', accessorKey: 'status', cell: StatusBadge, sortable: true },
-    { id: 'role', header: 'Role', accessorKey: 'role' },
-  ];
-
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
         The "Status" column uses a custom cell renderer to display badges. Sorting still works with custom renderers.
       </p>
       <DataTable
-        columns={columnsWithCustomCell}
+        columns={customCellColumns}
         data={result.data}
         getRowId={(row) => row.id}
         page={page}

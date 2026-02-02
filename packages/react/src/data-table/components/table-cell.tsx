@@ -1,5 +1,4 @@
-import type { ComponentType } from 'react';
-import type { CellRendererProps, DataTableColumn } from '../types';
+import type { DataTableColumn } from '../types';
 import { cn } from '../../utils/tailwind';
 
 export type TableCellProps<TData, TValue = unknown> = Readonly<{

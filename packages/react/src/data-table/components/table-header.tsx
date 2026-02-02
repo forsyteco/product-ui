@@ -130,8 +130,7 @@ function TableHeader<TData>({
                   <SortIndicator direction={sortDirection} />
                 )}
                 {column.filterable && column.filterValues && onFilterChange && (
-                  <div
-                    role="presentation"
+                  <span
                     onClick={(e) => e.stopPropagation()}
                     onKeyDown={(e) => e.stopPropagation()}
                   >
@@ -141,7 +140,7 @@ function TableHeader<TData>({
                       selectedValues={getColumnFilterValues(column.id)}
                       onFilterChange={handleFilterChange}
                     />
-                  </div>
+                  </span>
                 )}
               </div>
             </th>

@@ -50,7 +50,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-type StoryArgs = { pageSize?: number };
+type StoryArgs = Readonly<{ pageSize?: number }>;
 
 function DefaultStory({ pageSize: argPageSize }: StoryArgs) {
   const [page, setPage] = useState(1);

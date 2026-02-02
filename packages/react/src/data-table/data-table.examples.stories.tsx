@@ -61,7 +61,9 @@ function getTypeBadgeClasses(value: string): string {
   return 'border-gray-200 bg-gray-50 text-gray-600';
 }
 
-function TypeBadge({ value }: { value: string }) {
+type TypeBadgeProps = Readonly<{ value: string }>;
+
+function TypeBadge({ value }: TypeBadgeProps) {
   return (
     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getTypeBadgeClasses(value)}`}>
       {value}
@@ -259,7 +261,9 @@ const riskData: RiskAssessment[] = [
   { id: '24', client: 'Euro Finance GmbH', matter: 'Multi-property portfolio', riskLevel: 'High', status: STATUS.FAILED, version: null, assignedTo: 'Jane Pritchard', updated: '2025-12-10' },
 ];
 
-function RiskStatusCell({ value, row }: { value: Status; row: RiskAssessment }) {
+type RiskStatusCellProps = Readonly<{ value: Status; row: RiskAssessment }>;
+
+function RiskStatusCell({ value, row }: RiskStatusCellProps) {
   return <StatusCell value={value} version={row.version} />;
 }
 

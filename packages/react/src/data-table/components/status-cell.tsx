@@ -45,13 +45,11 @@ function getStatusColors(status: Status): string {
 }
 
 /**
- * Formats the status value for display (converts snake_case to Title Case).
+ * Formats the status value for display (converts snake_case to Sentence case).
  */
 function formatStatusDisplay(status: Status): string {
-  return status
-    .split('_')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ');
+  const withSpaces = status.replace(/_/g, ' ');
+  return withSpaces.charAt(0).toUpperCase() + withSpaces.slice(1).toLowerCase();
 }
 
 /**

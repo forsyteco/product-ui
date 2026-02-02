@@ -7,7 +7,7 @@ describe('StatusCell', () => {
     it('renders the status value formatted correctly (snake_case to Title Case)', () => {
       render(<StatusCell value={STATUS.IN_PROGRESS} />);
 
-      expect(screen.getByText('In Progress')).toBeInTheDocument();
+      expect(screen.getByText('In progress')).toBeInTheDocument();
     });
 
     it('renders "Complete" for complete status', () => {
@@ -16,10 +16,10 @@ describe('StatusCell', () => {
       expect(screen.getByText('Complete')).toBeInTheDocument();
     });
 
-    it('renders "Do Not Act" for do_not_act status', () => {
+    it('renders "Do not act" for do_not_act status', () => {
       render(<StatusCell value={STATUS.DO_NOT_ACT} />);
 
-      expect(screen.getByText('Do Not Act')).toBeInTheDocument();
+      expect(screen.getByText('Do not act')).toBeInTheDocument();
     });
 
     it('renders "Failed" for failed status', () => {
@@ -31,7 +31,7 @@ describe('StatusCell', () => {
     it('applies badge styling to status (rounded, text-xs, font-medium)', () => {
       render(<StatusCell value={STATUS.IN_PROGRESS} />);
 
-      const badge = screen.getByText('In Progress');
+      const badge = screen.getByText('In progress');
       expect(badge).toHaveClass('rounded');
       expect(badge).toHaveClass('text-xs');
       expect(badge).toHaveClass('font-medium');
@@ -50,7 +50,7 @@ describe('StatusCell', () => {
     it('applies rose colors for do_not_act status', () => {
       render(<StatusCell value={STATUS.DO_NOT_ACT} />);
 
-      const badge = screen.getByText('Do Not Act');
+      const badge = screen.getByText('Do not act');
       expect(badge).toHaveClass('bg-rose-100');
       expect(badge).toHaveClass('text-rose-800');
     });
@@ -66,7 +66,7 @@ describe('StatusCell', () => {
     it('applies gray colors for in_progress status', () => {
       render(<StatusCell value={STATUS.IN_PROGRESS} />);
 
-      const badge = screen.getByText('In Progress');
+      const badge = screen.getByText('In progress');
       expect(badge).toHaveClass('bg-gray-100');
       expect(badge).toHaveClass('text-gray-800');
     });
@@ -83,7 +83,7 @@ describe('StatusCell', () => {
     it('still shows the status badge when version is false', () => {
       render(<StatusCell value={STATUS.IN_PROGRESS} version={false} />);
 
-      expect(screen.getByText('In Progress')).toBeInTheDocument();
+      expect(screen.getByText('In progress')).toBeInTheDocument();
     });
   });
 
@@ -103,13 +103,13 @@ describe('StatusCell', () => {
     it('still shows the status badge when version is undefined', () => {
       render(<StatusCell value={STATUS.IN_PROGRESS} />);
 
-      expect(screen.getByText('In Progress')).toBeInTheDocument();
+      expect(screen.getByText('In progress')).toBeInTheDocument();
     });
 
     it('still shows the status badge when version is "unknown"', () => {
       render(<StatusCell value={STATUS.IN_PROGRESS} version="unknown" />);
 
-      expect(screen.getByText('In Progress')).toBeInTheDocument();
+      expect(screen.getByText('In progress')).toBeInTheDocument();
     });
   });
 

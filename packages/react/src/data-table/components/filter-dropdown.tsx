@@ -6,6 +6,14 @@ import Input from '../../input';
 import Button from '../../button';
 import Checkbox from '../../checkbox';
 
+/**
+ * Formats a filter value for display (converts snake_case to Sentence case).
+ */
+function formatFilterLabel(value: string): string {
+  const withSpaces = value.replace(/_/g, ' ');
+  return withSpaces.charAt(0).toUpperCase() + withSpaces.slice(1).toLowerCase();
+}
+
 export type FilterDropdownProps = {
   columnId: string;
   filterValues: string[];
@@ -23,8 +31,10 @@ function FilterDropdown({
 
   const filteredValues = useMemo(() => {
     if (!searchTerm) return filterValues;
+    const lowerSearch = searchTerm.toLowerCase();
     return filterValues.filter((value) =>
-      value.toLowerCase().includes(searchTerm.toLowerCase())
+      value.toLowerCase().includes(lowerSearch) ||
+      formatFilterLabel(value).toLowerCase().includes(lowerSearch)
     );
   }, [filterValues, searchTerm]);
 
@@ -105,11 +115,12 @@ function FilterDropdown({
             <div role="listbox" className="overflow-y-auto flex-1 min-h-0">
               {filteredValues.map((value) => {
                 const isSelected = selectedValues.includes(value);
+                const displayLabel = formatFilterLabel(value);
                 return (
                   <div
                     key={value}
                     role="option"
-                    aria-label={value}
+                    aria-label={displayLabel}
                     aria-selected={isSelected}
                     onClick={() => handleToggleValue(value)}
                     className="flex cursor-pointer items-center rounded px-2 py-1.5 hover:bg-muted"
@@ -117,7 +128,7 @@ function FilterDropdown({
                     <Checkbox
                       checked={isSelected}
                       onChange={() => handleToggleValue(value)}
-                      label={value}
+                      label={displayLabel}
                       onClick={(e) => e.stopPropagation()}
                     />
                   </div>

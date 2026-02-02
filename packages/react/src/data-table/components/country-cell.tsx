@@ -51,7 +51,7 @@ function getFlagUrl(isoCode: string): string {
     .toUpperCase()
     .split('')
     .map((char) => {
-      const offset = char.charCodeAt(0) - 'A'.charCodeAt(0);
+      const offset = (char.codePointAt(0) ?? 0) - ('A'.codePointAt(0) ?? 0);
       return (BASE_CODE_POINT + offset).toString(16);
     })
     .join('-');

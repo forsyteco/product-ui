@@ -50,17 +50,61 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+type StoryArgs = { pageSize?: number };
+
+function DefaultStory({ pageSize: argPageSize }: StoryArgs) {
+  const [page, setPage] = useState(1);
+  const pageSize = argPageSize ?? 10;
+
+  const result = useMemo(
+    () => queryData({ data: sampleUsers, page, pageSize }),
+    [page, pageSize]
+  );
+
+  return (
+    <DataTable
+      columns={userColumnsWithSortAndFilter}
+      data={result.data}
+      getRowId={(row) => row.id}
+      page={page}
+      pageSize={pageSize}
+      totalCount={result.totalCount}
+      onPageChange={setPage}
+    />
+  );
+}
+
 export const Default: Story = {
-  render: (args) => {
-    const [page, setPage] = useState(1);
-    const pageSize = args.pageSize ?? 10;
+  render: (args) => <DefaultStory pageSize={args.pageSize} />,
+  args: {
+    pageSize: 10,
+  },
+};
 
-    const result = useMemo(
-      () => queryData({ data: sampleUsers, page, pageSize }),
-      [page, pageSize]
-    );
+function PlaygroundStory({ pageSize: argPageSize }: StoryArgs) {
+  const [page, setPage] = useState(1);
+  const [sortState, setSortState] = useState<SortState>(null);
+  const [filterState, setFilterState] = useState<FilterState>([]);
+  const [selectedRowIds, setSelectedRowIds] = useState<Set<string>>(new Set());
+  const pageSize = argPageSize ?? 10;
 
-    return (
+  const result = useMemo(
+    () => queryData({ data: sampleUsers, page, pageSize, sortState, filterState }),
+    [page, pageSize, sortState, filterState]
+  );
+
+  const handleFilterChange = (newFilterState: FilterState) => {
+    setFilterState(newFilterState);
+    setPage(1);
+  };
+
+  return (
+    <div className="space-y-4">
+      <div className="text-sm text-muted-foreground space-y-1">
+        <p>Status and Role columns have both sorting and filtering enabled.</p>
+        <p><strong>Sort:</strong> {sortState ? `${sortState.columnId} (${sortState.direction})` : 'none'} | <strong>Filter:</strong> {filterState.length > 0 ? filterState.map(f => `${f.columnId}: ${f.values.join(', ')}`).join(' | ') : 'none'}</p>
+        <p><strong>Results:</strong> {result.totalCount} of {sampleUsers.length} users | <strong>Selected:</strong> {selectedRowIds.size > 0 ? Array.from(selectedRowIds).join(', ') : 'none'}</p>
+      </div>
       <DataTable
         columns={userColumnsWithSortAndFilter}
         data={result.data}
@@ -69,58 +113,20 @@ export const Default: Story = {
         pageSize={pageSize}
         totalCount={result.totalCount}
         onPageChange={setPage}
+        sortState={sortState}
+        onSortChange={setSortState}
+        filterState={filterState}
+        onFilterChange={handleFilterChange}
+        rowInteraction={ROW_INTERACTION.SELECTION}
+        selectedRowIds={selectedRowIds}
+        onSelectionChange={setSelectedRowIds}
       />
-    );
-  },
-  args: {
-    pageSize: 10,
-  },
-};
+    </div>
+  );
+}
 
 export const Playground: Story = {
-  render: (args) => {
-    const [page, setPage] = useState(1);
-    const [sortState, setSortState] = useState<SortState>(null);
-    const [filterState, setFilterState] = useState<FilterState>([]);
-    const [selectedRowIds, setSelectedRowIds] = useState<Set<string>>(new Set());
-    const pageSize = args.pageSize ?? 10;
-
-    const result = useMemo(
-      () => queryData({ data: sampleUsers, page, pageSize, sortState, filterState }),
-      [page, pageSize, sortState, filterState]
-    );
-
-    const handleFilterChange = (newFilterState: FilterState) => {
-      setFilterState(newFilterState);
-      setPage(1);
-    };
-
-    return (
-      <div className="space-y-4">
-        <div className="text-sm text-muted-foreground space-y-1">
-          <p>Status and Role columns have both sorting and filtering enabled.</p>
-          <p><strong>Sort:</strong> {sortState ? `${sortState.columnId} (${sortState.direction})` : 'none'} | <strong>Filter:</strong> {filterState.length > 0 ? filterState.map(f => `${f.columnId}: ${f.values.join(', ')}`).join(' | ') : 'none'}</p>
-          <p><strong>Results:</strong> {result.totalCount} of {sampleUsers.length} users | <strong>Selected:</strong> {selectedRowIds.size > 0 ? Array.from(selectedRowIds).join(', ') : 'none'}</p>
-        </div>
-        <DataTable
-          columns={userColumnsWithSortAndFilter}
-          data={result.data}
-          getRowId={(row) => row.id}
-          page={page}
-          pageSize={pageSize}
-          totalCount={result.totalCount}
-          onPageChange={setPage}
-          sortState={sortState}
-          onSortChange={setSortState}
-          filterState={filterState}
-          onFilterChange={handleFilterChange}
-          rowInteraction={ROW_INTERACTION.SELECTION}
-          selectedRowIds={selectedRowIds}
-          onSelectionChange={setSelectedRowIds}
-        />
-      </div>
-    );
-  },
+  render: (args) => <PlaygroundStory pageSize={args.pageSize} />,
   args: {
     pageSize: 10,
   },

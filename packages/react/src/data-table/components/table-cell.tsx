@@ -2,11 +2,11 @@ import type { ComponentType } from 'react';
 import type { CellRendererProps, DataTableColumn } from '../types';
 import { cn } from '../../utils/tailwind';
 
-export type TableCellProps<TData, TValue = unknown> = {
+export type TableCellProps<TData, TValue = unknown> = Readonly<{
   column: DataTableColumn<TData, TValue>;
   row: TData;
   value: TValue;
-};
+}>;
 
 function TableCell<TData, TValue = unknown>({
   column,
@@ -19,7 +19,7 @@ function TableCell<TData, TValue = unknown>({
     right: 'text-right',
   }[column.align || 'left'];
 
-  const CellComponent = column.cell as ComponentType<CellRendererProps<TData, TValue>> | undefined;
+  const CellComponent = column.cell;
 
   return (
     <td

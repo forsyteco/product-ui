@@ -69,14 +69,14 @@ export const getExpandedUserData = (row: User, rowId: string): Promise<UserExpan
     setTimeout(() => {
       resolve({
         bio: `${row.name} is a dedicated ${row.role.toLowerCase()} who has been contributing to the team since joining. Known for their expertise in various projects and collaborative spirit.`,
-        joinDate: `January ${2020 + parseInt(rowId, 10) % 5}`,
+        joinDate: `January ${2020 + Number.parseInt(rowId, 10) % 5}`,
         lastLogin: row.status === 'Active' ? 'Today at 9:30 AM' : '3 days ago',
         projects: [
           'Project Alpha',
           'Dashboard Redesign',
           `${row.name.split(' ')[0]}'s Initiative`,
           'Q4 Planning',
-        ].slice(0, 2 + parseInt(rowId, 10) % 3),
+        ].slice(0, 2 + Number.parseInt(rowId, 10) % 3),
       });
     }, 300);
   });

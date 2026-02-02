@@ -5,7 +5,7 @@ import { ROW_INTERACTION, type RowInteractionMode } from '../constants';
 import Checkbox from '../../checkbox';
 import IconButton from '../../icon-button';
 
-export type TableRowProps<TData> = {
+export type TableRowProps<TData> = Readonly<{
   row: TData;
   rowId: string;
   rowInteraction?: RowInteractionMode;
@@ -17,7 +17,7 @@ export type TableRowProps<TData> = {
   isExpanded?: boolean;
   onExpandRow?: (row: TData, rowId: string) => void;
   expandedContentId?: string;
-};
+}>;
 
 function TableRow<TData>({
   row,

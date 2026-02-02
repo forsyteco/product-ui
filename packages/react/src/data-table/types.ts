@@ -81,7 +81,7 @@ export type ExpandedRowContentProps<TData, TExpandedData = unknown> = {
 /**
  * DataTable component props
  */
-export type DataTableProps<TData, TExpandedData = unknown> = {
+export type DataTableProps<TData, TExpandedData = unknown> = Readonly<{
   /** Column definitions */
   columns: DataTableColumn<TData>[];
   /** Row data array */
@@ -136,4 +136,4 @@ export type DataTableProps<TData, TExpandedData = unknown> = {
   // === Styling ===
   /** Additional class name for the table container */
   className?: string;
-};
+}>;

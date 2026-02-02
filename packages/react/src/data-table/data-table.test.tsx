@@ -8,7 +8,6 @@ import type { DataTableColumn, FilterState, CellRendererProps } from './types';
 import {
   type TestData,
   type ExpandedRowData,
-  mockColumns,
   mockData,
   MockExpandedRowContent,
   createDeferredPromise,
@@ -22,7 +21,7 @@ describe('DataTable', () => {
     it('renders table with columns and data', () => {
       render(<DataTable {...createDefaultProps()} />);
 
-      const table = screen.getByRole('grid');
+      const table = screen.getByRole('table');
       expect(table).toBeInTheDocument();
 
       expect(screen.getByText('John Doe')).toBeInTheDocument();
@@ -69,7 +68,7 @@ describe('DataTable', () => {
     it('renders skeleton rows when loading is true', () => {
       render(<DataTable {...createDefaultProps({ loading: true })} />);
 
-      const table = screen.getByRole('grid');
+      const table = screen.getByRole('table');
       expect(table).toBeInTheDocument();
 
       expect(screen.queryByText('John Doe')).not.toBeInTheDocument();
@@ -79,7 +78,7 @@ describe('DataTable', () => {
     it('table has aria-busy="true" when loading', () => {
       render(<DataTable {...createDefaultProps({ loading: true })} />);
 
-      const table = screen.getByRole('grid');
+      const table = screen.getByRole('table');
       expect(table).toHaveAttribute('aria-busy', 'true');
     });
 
@@ -414,7 +413,7 @@ describe('DataTable', () => {
       render(<DataTable {...createDefaultProps(filterProps)} />);
 
       const dropdown = await openStatusFilterDropdown(user);
-      const table = screen.getByRole('grid');
+      const table = screen.getByRole('table');
 
       expect(table.contains(dropdown)).toBe(false);
     });
@@ -636,10 +635,10 @@ describe('DataTable', () => {
   });
 
   describe('Accessibility', () => {
-    it('table has role="grid"', () => {
+    it('table uses native table semantics', () => {
       render(<DataTable {...createDefaultProps()} />);
 
-      const table = screen.getByRole('grid');
+      const table = screen.getByRole('table');
       expect(table).toBeInTheDocument();
     });
 
@@ -733,7 +732,7 @@ describe('DataTable', () => {
     it('table has aria-busy="false" when not loading', () => {
       render(<DataTable {...createDefaultProps({ loading: false })} />);
 
-      const table = screen.getByRole('grid');
+      const table = screen.getByRole('table');
       expect(table).toHaveAttribute('aria-busy', 'false');
     });
   });

@@ -8,7 +8,7 @@ import SkeletonRow from './skeleton-row';
 import EmptyState from './empty-state';
 import ExpandedRow from './expanded-row';
 
-export type TableBodyProps<TData, TExpandedData = unknown> = {
+export type TableBodyProps<TData, TExpandedData = unknown> = Readonly<{
   columns: DataTableColumn<TData>[];
   data: TData[];
   getRowId: (row: TData) => string;
@@ -25,7 +25,7 @@ export type TableBodyProps<TData, TExpandedData = unknown> = {
   isLoadingExpanded?: boolean;
   onExpandRow?: (row: TData, rowId: string) => void;
   expandedRowContent?: ComponentType<ExpandedRowContentProps<TData, TExpandedData>>;
-};
+}>;
 
 function TableBody<TData, TExpandedData = unknown>({
   columns,
@@ -74,9 +74,9 @@ function TableBody<TData, TExpandedData = unknown>({
   if (loading) {
     return (
       <tbody>
-        {Array.from({ length: Math.min(pageSize, 5) }).map((_, index) => (
+        {Array.from({ length: Math.min(pageSize, 5) }, (_, i) => `skeleton-row-${i}`).map((skeletonId) => (
           <SkeletonRow
-            key={`skeleton-${index}`}
+            key={skeletonId}
             columns={columns}
             rowInteraction={rowInteraction}
           />
@@ -114,11 +114,12 @@ function TableBody<TData, TExpandedData = unknown>({
               expandedContentId={expandedContentId}
             >
               {columns.map((column) => {
-                const value = column.accessorFn
-                  ? column.accessorFn(row)
-                  : column.accessorKey
-                    ? (row as Record<string, unknown>)[column.accessorKey]
-                    : undefined;
+                const getValue = () => {
+                  if (column.accessorFn) return column.accessorFn(row);
+                  if (column.accessorKey) return (row as Record<string, unknown>)[column.accessorKey];
+                  return undefined;
+                };
+                const value = getValue();
 
                 return (
                   <TableCell

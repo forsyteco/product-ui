@@ -3,10 +3,10 @@ import type { DataTableColumn } from '../types';
 import type { RowInteractionMode } from '../constants';
 import { ROW_INTERACTION } from '../constants';
 
-export type SkeletonRowProps<TData> = {
+export type SkeletonRowProps<TData> = Readonly<{
   columns: DataTableColumn<TData>[];
   rowInteraction?: RowInteractionMode;
-};
+}>;
 
 function SkeletonRow<TData>({ columns, rowInteraction }: SkeletonRowProps<TData>) {
   return (

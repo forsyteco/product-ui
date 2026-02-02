@@ -48,7 +48,7 @@ function getStatusColors(status: Status): string {
  * Formats the status value for display (converts snake_case to Sentence case).
  */
 function formatStatusDisplay(status: Status): string {
-  const withSpaces = status.replace(/_/g, ' ');
+  const withSpaces = status.replaceAll('_', ' ');
   return withSpaces.charAt(0).toUpperCase() + withSpaces.slice(1).toLowerCase();
 }
 
@@ -73,7 +73,7 @@ export default function StatusCell({ value, version }: StatusCellProps) {
       </span>
       {showVersion && (
         <span className="text-xs text-muted-foreground">
-          <span>Version:</span> <span>{version === null ? '-' : version}</span>
+          <span>Version:</span> <span>{version ?? '-'}</span>
         </span>
       )}
     </div>

@@ -89,7 +89,6 @@ function DataTable<TData, TExpandedData = unknown>({
     <div className={cn('overflow-hidden rounded-lg border border-border', className)}>
       <div className="overflow-x-auto">
         <table
-          role="grid"
           aria-busy={loading}
           className="w-full border-collapse text-sm"
         >

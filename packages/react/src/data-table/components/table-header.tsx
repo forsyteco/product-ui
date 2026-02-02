@@ -6,7 +6,7 @@ import SortIndicator from './sort-indicator';
 import FilterDropdown from './filter-dropdown';
 import Checkbox from '../../checkbox';
 
-export type TableHeaderProps<TData> = {
+export type TableHeaderProps<TData> = Readonly<{
   columns: DataTableColumn<TData>[];
   sortState?: SortState;
   onSortChange?: (sort: SortState) => void;
@@ -16,7 +16,7 @@ export type TableHeaderProps<TData> = {
   allRowIds: string[];
   selectedRowIds?: Set<string>;
   onSelectionChange?: (selectedIds: Set<string>) => void;
-};
+}>;
 
 function TableHeader<TData>({
   columns,
@@ -130,7 +130,11 @@ function TableHeader<TData>({
                   <SortIndicator direction={sortDirection} />
                 )}
                 {column.filterable && column.filterValues && onFilterChange && (
-                  <div onClick={(e) => e.stopPropagation()}>
+                  <div
+                    role="presentation"
+                    onClick={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                  >
                     <FilterDropdown
                       columnId={column.id}
                       filterValues={column.filterValues}

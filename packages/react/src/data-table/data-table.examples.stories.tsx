@@ -55,68 +55,72 @@ const policiesData: Policy[] = [
   { id: '18', name: 'Environmental Policy', type: 'Draft', created: '2024-01-10', lastUpdated: '2024-02-15', version: 'v1.0', author: 'Tracey Longbottom' },
 ];
 
-export const PoliciesTable: Story = {
-  render: () => {
-    const [page, setPage] = useState(1);
-    const [sortState, setSortState] = useState<SortState>(null);
-    const [filterState, setFilterState] = useState<FilterState>([]);
-    const pageSize = 6;
+function getTypeBadgeClasses(value: string): string {
+  if (value === 'Active') return 'border-green-200 bg-green-50 text-green-700';
+  if (value === 'Draft') return 'border-amber-200 bg-amber-50 text-amber-700';
+  return 'border-gray-200 bg-gray-50 text-gray-600';
+}
 
-    // Use mock service to sort, filter, and paginate data
-    const result = useMemo(
-      () => queryData({ data: policiesData, page, pageSize, sortState, filterState }),
-      [page, pageSize, sortState, filterState]
-    );
+function TypeBadge({ value }: { value: string }) {
+  return (
+    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getTypeBadgeClasses(value)}`}>
+      {value}
+    </span>
+  );
+}
 
-    // Reset to page 1 when filters change
-    const handleFilterChange = (newFilterState: FilterState) => {
-      setFilterState(newFilterState);
-      setPage(1);
-    };
+const policyColumns: DataTableColumn<Policy>[] = [
+  { id: 'name', header: 'Name', accessorKey: 'name', sortable: true, width: '250px' },
+  { id: 'type', header: 'Type', accessorKey: 'type', cell: TypeBadge, sortable: true, filterable: true, filterValues: ['Active', 'Draft', 'Archived'] },
+  { id: 'created', header: 'Created', accessorKey: 'created', cell: DateCell, sortable: true },
+  { id: 'lastUpdated', header: 'Last Updated', accessorKey: 'lastUpdated', cell: DateCell, sortable: true },
+  { id: 'version', header: 'Version', accessorKey: 'version', sortable: true },
+  { id: 'author', header: 'Author', accessorKey: 'author', sortable: true, filterable: true, filterValues: ['Jane Pritchard', 'Tracey Longbottom'] },
+];
 
-    const TypeBadge = ({ value }: { value: string }) => (
-      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
-        value === 'Active' ? 'border-green-200 bg-green-50 text-green-700' :
-        value === 'Draft' ? 'border-amber-200 bg-amber-50 text-amber-700' :
-        'border-gray-200 bg-gray-50 text-gray-600'
-      }`}>
-        {value}
-      </span>
-    );
+function PoliciesTableStory() {
+  const [page, setPage] = useState(1);
+  const [sortState, setSortState] = useState<SortState>(null);
+  const [filterState, setFilterState] = useState<FilterState>([]);
+  const pageSize = 6;
 
-    const columns: DataTableColumn<Policy>[] = [
-      { id: 'name', header: 'Name', accessorKey: 'name', sortable: true, width: '250px' },
-      { id: 'type', header: 'Type', accessorKey: 'type', cell: TypeBadge, sortable: true, filterable: true, filterValues: ['Active', 'Draft', 'Archived'] },
-      { id: 'created', header: 'Created', accessorKey: 'created', cell: DateCell, sortable: true },
-      { id: 'lastUpdated', header: 'Last Updated', accessorKey: 'lastUpdated', cell: DateCell, sortable: true },
-      { id: 'version', header: 'Version', accessorKey: 'version', sortable: true },
-      { id: 'author', header: 'Author', accessorKey: 'author', sortable: true, filterable: true, filterValues: ['Jane Pritchard', 'Tracey Longbottom'] },
-    ];
+  const result = useMemo(
+    () => queryData({ data: policiesData, page, pageSize, sortState, filterState }),
+    [page, sortState, filterState]
+  );
 
-    return (
-      <div className="space-y-4">
-        <div>
-          <h2 className="text-2xl font-bold">Policies</h2>
-          <p className="text-muted-foreground">Manage your firm's policies advanced versioning and compliance features.</p>
-        </div>
-        <DataTable
-          columns={columns}
-          data={result.data}
-          getRowId={(row) => row.id}
-          page={page}
-          pageSize={pageSize}
-          totalCount={result.totalCount}
-          onPageChange={setPage}
-          sortState={sortState}
-          onSortChange={setSortState}
-          filterState={filterState}
-          onFilterChange={handleFilterChange}
-          rowInteraction={ROW_INTERACTION.LINK}
-          onRowClick={(row) => alert(`Viewing policy: ${row.name}`)}
-        />
+  const handleFilterChange = (newFilterState: FilterState) => {
+    setFilterState(newFilterState);
+    setPage(1);
+  };
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <h2 className="text-2xl font-bold">Policies</h2>
+        <p className="text-muted-foreground">Manage your firm's policies advanced versioning and compliance features.</p>
       </div>
-    );
-  },
+      <DataTable
+        columns={policyColumns}
+        data={result.data}
+        getRowId={(row) => row.id}
+        page={page}
+        pageSize={pageSize}
+        totalCount={result.totalCount}
+        onPageChange={setPage}
+        sortState={sortState}
+        onSortChange={setSortState}
+        filterState={filterState}
+        onFilterChange={handleFilterChange}
+        rowInteraction={ROW_INTERACTION.LINK}
+        onRowClick={(row) => alert(`Viewing policy: ${row.name}`)}
+      />
+    </div>
+  );
+}
+
+export const PoliciesTable: Story = {
+  render: () => <PoliciesTableStory />,
 };
 
 // ============ Clients Example ============
@@ -159,60 +163,60 @@ const clientsData: Client[] = [
   { id: '24', name: 'Anna Kowalski', email: 'anna.k@email.com', reference: 'REF-036', type: 'Individual', owner: 'Kayleigh Smale', country: 'Poland', created: '2024-01-05' },
 ];
 
-export const ClientsTable: Story = {
-  render: () => {
-    const [page, setPage] = useState(1);
-    const [sortState, setSortState] = useState<SortState>(null);
-    const [filterState, setFilterState] = useState<FilterState>([]);
-    const [selectedRowIds, setSelectedRowIds] = useState<Set<string>>(new Set());
-    const pageSize = 10;
+const clientColumns: DataTableColumn<Client>[] = [
+  { id: 'name', header: 'Name', accessorKey: 'name', cell: NameCell, sortable: true, width: '200px' },
+  { id: 'reference', header: 'Reference', accessorKey: 'reference', cell: CopyableCell, sortable: true },
+  { id: 'type', header: 'Type', accessorKey: 'type', sortable: true, filterable: true, filterValues: ['Individual', 'Company'] },
+  { id: 'owner', header: 'Owner', accessorKey: 'owner', sortable: true, filterable: true, filterValues: ['Jane Pritchard', 'Kayleigh Smale', 'Navya Nataraja', 'Tracey Longbottom'] },
+  { id: 'country', header: 'Residence country', accessorKey: 'country', cell: CountryCell, sortable: true, filterable: true, filterValues: ['United Kingdom', 'France', 'Germany', 'Norway', 'Spain', 'Italy', 'Poland', 'United States'] },
+  { id: 'created', header: 'Created', accessorKey: 'created', cell: DateCell, sortable: true },
+];
 
-    // Use mock service to sort, filter, and paginate data
-    const result = useMemo(
-      () => queryData({ data: clientsData, page, pageSize, sortState, filterState }),
-      [page, pageSize, sortState, filterState]
-    );
+function ClientsTableStory() {
+  const [page, setPage] = useState(1);
+  const [sortState, setSortState] = useState<SortState>(null);
+  const [filterState, setFilterState] = useState<FilterState>([]);
+  const [selectedRowIds, setSelectedRowIds] = useState<Set<string>>(new Set());
+  const pageSize = 10;
 
-    // Reset to page 1 when filters change
-    const handleFilterChange = (newFilterState: FilterState) => {
-      setFilterState(newFilterState);
-      setPage(1);
-    };
+  const result = useMemo(
+    () => queryData({ data: clientsData, page, pageSize, sortState, filterState }),
+    [page, sortState, filterState]
+  );
 
-    const columns: DataTableColumn<Client>[] = [
-      { id: 'name', header: 'Name', accessorKey: 'name', cell: NameCell, sortable: true, width: '200px' },
-      { id: 'reference', header: 'Reference', accessorKey: 'reference', cell: CopyableCell, sortable: true },
-      { id: 'type', header: 'Type', accessorKey: 'type', sortable: true, filterable: true, filterValues: ['Individual', 'Company'] },
-      { id: 'owner', header: 'Owner', accessorKey: 'owner', sortable: true, filterable: true, filterValues: ['Jane Pritchard', 'Kayleigh Smale', 'Navya Nataraja', 'Tracey Longbottom'] },
-      { id: 'country', header: 'Residence country', accessorKey: 'country', cell: CountryCell, sortable: true, filterable: true, filterValues: ['United Kingdom', 'France', 'Germany', 'Norway', 'Spain', 'Italy', 'Poland', 'United States'] },
-      { id: 'created', header: 'Created', accessorKey: 'created', cell: DateCell, sortable: true },
-    ];
+  const handleFilterChange = (newFilterState: FilterState) => {
+    setFilterState(newFilterState);
+    setPage(1);
+  };
 
-    return (
-      <div className="space-y-4">
-        <div>
-          <h2 className="text-2xl font-bold">Clients</h2>
-          <p className="text-muted-foreground">Manage your clients ({result.totalCount} of {clientsData.length} shown)</p>
-        </div>
-        <DataTable
-          columns={columns}
-          data={result.data}
-          getRowId={(row) => row.id}
-          page={page}
-          pageSize={pageSize}
-          totalCount={result.totalCount}
-          onPageChange={setPage}
-          sortState={sortState}
-          onSortChange={setSortState}
-          filterState={filterState}
-          onFilterChange={handleFilterChange}
-          rowInteraction={ROW_INTERACTION.SELECTION}
-          selectedRowIds={selectedRowIds}
-          onSelectionChange={setSelectedRowIds}
-        />
+  return (
+    <div className="space-y-4">
+      <div>
+        <h2 className="text-2xl font-bold">Clients</h2>
+        <p className="text-muted-foreground">Manage your clients ({result.totalCount} of {clientsData.length} shown)</p>
       </div>
-    );
-  },
+      <DataTable
+        columns={clientColumns}
+        data={result.data}
+        getRowId={(row) => row.id}
+        page={page}
+        pageSize={pageSize}
+        totalCount={result.totalCount}
+        onPageChange={setPage}
+        sortState={sortState}
+        onSortChange={setSortState}
+        filterState={filterState}
+        onFilterChange={handleFilterChange}
+        rowInteraction={ROW_INTERACTION.SELECTION}
+        selectedRowIds={selectedRowIds}
+        onSelectionChange={setSelectedRowIds}
+      />
+    </div>
+  );
+}
+
+export const ClientsTable: Story = {
+  render: () => <ClientsTableStory />,
 };
 
 // ============ Risk Assessments Example ============
@@ -255,61 +259,60 @@ const riskData: RiskAssessment[] = [
   { id: '24', client: 'Euro Finance GmbH', matter: 'Multi-property portfolio', riskLevel: 'High', status: STATUS.FAILED, version: null, assignedTo: 'Jane Pritchard', updated: '2025-12-10' },
 ];
 
-export const RiskAssessmentsTable: Story = {
-  render: () => {
-    const [page, setPage] = useState(1);
-    const [sortState, setSortState] = useState<SortState>(null);
-    const [filterState, setFilterState] = useState<FilterState>([]);
-    const pageSize = 10;
+function RiskStatusCell({ value, row }: { value: Status; row: RiskAssessment }) {
+  return <StatusCell value={value} version={row.version} />;
+}
 
-    // Use mock service to sort, filter, and paginate data
-    const result = useMemo(
-      () => queryData({ data: riskData, page, pageSize, sortState, filterState }),
-      [page, pageSize, sortState, filterState]
-    );
+const riskColumns: DataTableColumn<RiskAssessment>[] = [
+  { id: 'client', header: 'Client', accessorKey: 'client', sortable: true },
+  { id: 'matter', header: 'Matter', accessorKey: 'matter', width: '300px' },
+  { id: 'riskLevel', header: 'Risk level', accessorKey: 'riskLevel', cell: RiskLevelCell, sortable: true, filterable: true, filterValues: ['Low', 'Medium', 'High'] },
+  { id: 'status', header: 'Status', accessorKey: 'status', cell: RiskStatusCell, sortable: true, filterable: true, filterValues: [STATUS.IN_PROGRESS, STATUS.COMPLETE, STATUS.DO_NOT_ACT, STATUS.FAILED] },
+  { id: 'assignedTo', header: 'Assigned to', accessorKey: 'assignedTo', sortable: true, filterable: true, filterValues: ['Jane Pritchard', 'Kayleigh Smale', 'Navya Nataraja', 'Rebecca Thomas'] },
+  { id: 'updated', header: 'Updated', accessorKey: 'updated', cell: DateCell, sortable: true },
+];
 
-    // Reset to page 1 when filters change
-    const handleFilterChange = (newFilterState: FilterState) => {
-      setFilterState(newFilterState);
-      setPage(1);
-    };
+function RiskAssessmentsTableStory() {
+  const [page, setPage] = useState(1);
+  const [sortState, setSortState] = useState<SortState>(null);
+  const [filterState, setFilterState] = useState<FilterState>([]);
+  const pageSize = 10;
 
-    // Custom cell to combine status with version from row data
-    const RiskStatusCell = ({ value, row }: { value: Status; row: RiskAssessment }) => (
-      <StatusCell value={value} version={row.version} />
-    );
+  const result = useMemo(
+    () => queryData({ data: riskData, page, pageSize, sortState, filterState }),
+    [page, sortState, filterState]
+  );
 
-    const columns: DataTableColumn<RiskAssessment>[] = [
-      { id: 'client', header: 'Client', accessorKey: 'client', sortable: true },
-      { id: 'matter', header: 'Matter', accessorKey: 'matter', width: '300px' },
-      { id: 'riskLevel', header: 'Risk level', accessorKey: 'riskLevel', cell: RiskLevelCell, sortable: true, filterable: true, filterValues: ['Low', 'Medium', 'High'] },
-      { id: 'status', header: 'Status', accessorKey: 'status', cell: RiskStatusCell, sortable: true, filterable: true, filterValues: [STATUS.IN_PROGRESS, STATUS.COMPLETE, STATUS.DO_NOT_ACT, STATUS.FAILED] },
-      { id: 'assignedTo', header: 'Assigned to', accessorKey: 'assignedTo', sortable: true, filterable: true, filterValues: ['Jane Pritchard', 'Kayleigh Smale', 'Navya Nataraja', 'Rebecca Thomas'] },
-      { id: 'updated', header: 'Updated', accessorKey: 'updated', cell: DateCell, sortable: true },
-    ];
+  const handleFilterChange = (newFilterState: FilterState) => {
+    setFilterState(newFilterState);
+    setPage(1);
+  };
 
-    return (
-      <div className="space-y-4">
-        <div>
-          <h2 className="text-2xl font-bold">Risk assessments</h2>
-          <p className="text-muted-foreground">Manage your risk assessments ({result.totalCount} of {riskData.length} shown)</p>
-        </div>
-        <DataTable
-          columns={columns}
-          data={result.data}
-          getRowId={(row) => row.id}
-          page={page}
-          pageSize={pageSize}
-          totalCount={result.totalCount}
-          onPageChange={setPage}
-          sortState={sortState}
-          onSortChange={setSortState}
-          filterState={filterState}
-          onFilterChange={handleFilterChange}
-          rowInteraction={ROW_INTERACTION.LINK}
-          onRowClick={(row) => alert(`Viewing assessment for: ${row.client}`)}
-        />
+  return (
+    <div className="space-y-4">
+      <div>
+        <h2 className="text-2xl font-bold">Risk assessments</h2>
+        <p className="text-muted-foreground">Manage your risk assessments ({result.totalCount} of {riskData.length} shown)</p>
       </div>
-    );
-  },
+      <DataTable
+        columns={riskColumns}
+        data={result.data}
+        getRowId={(row) => row.id}
+        page={page}
+        pageSize={pageSize}
+        totalCount={result.totalCount}
+        onPageChange={setPage}
+        sortState={sortState}
+        onSortChange={setSortState}
+        filterState={filterState}
+        onFilterChange={handleFilterChange}
+        rowInteraction={ROW_INTERACTION.LINK}
+        onRowClick={(row) => alert(`Viewing assessment for: ${row.client}`)}
+      />
+    </div>
+  );
+}
+
+export const RiskAssessmentsTable: Story = {
+  render: () => <RiskAssessmentsTableStory />,
 };

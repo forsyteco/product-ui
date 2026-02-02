@@ -38,7 +38,8 @@ export function queryData<TData extends Record<string, unknown>>({
     result = result.filter((row) => {
       return filterState.every((filter) => {
         if (filter.values.length === 0) return true;
-        const rowValue = String(row[filter.columnId] ?? '');
+        const rawValue = row[filter.columnId];
+        const rowValue = typeof rawValue === 'object' ? JSON.stringify(rawValue) : String(rawValue ?? '');
         return filter.values.includes(rowValue);
       });
     });
@@ -63,7 +64,9 @@ export function queryData<TData extends Record<string, unknown>>({
       } else if (typeof aValue === 'number' && typeof bValue === 'number') {
         comparison = aValue - bValue;
       } else {
-        comparison = String(aValue).localeCompare(String(bValue));
+        const aStr = typeof aValue === 'object' ? JSON.stringify(aValue) : String(aValue);
+        const bStr = typeof bValue === 'object' ? JSON.stringify(bValue) : String(bValue);
+        comparison = aStr.localeCompare(bStr);
       }
 
       return direction === 'asc' ? comparison : -comparison;

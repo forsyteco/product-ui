@@ -10,7 +10,7 @@ import Checkbox from '../../checkbox';
  * Formats a filter value for display (converts snake_case to Sentence case).
  */
 function formatFilterLabel(value: string): string {
-  const withSpaces = value.replace(/_/g, ' ');
+  const withSpaces = value.replaceAll('_', ' ');
   return withSpaces.charAt(0).toUpperCase() + withSpaces.slice(1).toLowerCase();
 }
 
@@ -117,18 +117,16 @@ function FilterDropdown({
                 const isSelected = selectedValues.includes(value);
                 const displayLabel = formatFilterLabel(value);
                 return (
-                  <div
+                  <label
                     key={value}
-                    onClick={() => handleToggleValue(value)}
                     className="flex cursor-pointer items-center rounded px-2 py-1.5 hover:bg-muted"
                   >
                     <Checkbox
                       checked={isSelected}
                       onChange={() => handleToggleValue(value)}
                       label={displayLabel}
-                      onClick={(e) => e.stopPropagation()}
                     />
-                  </div>
+                  </label>
                 );
               })}
             </div>

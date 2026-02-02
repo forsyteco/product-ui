@@ -77,7 +77,7 @@ function FilterDropdown({
               variant="ghost"
               size="sm"
               onClick={selectedValues.length > 0 ? handleClearAll : handleSelectAll}
-              className="mb-2 flex-shrink-0 justify-start px-0 text-muted-foreground hover:text-foreground relative h-5 overflow-hidden"
+              className="mb-2 flex-shrink-0 justify-center px-0 text-muted-foreground hover:text-foreground relative h-5 overflow-hidden"
             >
               <span
                 aria-hidden={selectedValues.length > 0}
@@ -93,7 +93,7 @@ function FilterDropdown({
               <span
                 aria-hidden={selectedValues.length === 0}
                 className={cn(
-                  'absolute inset-0 inline-block transition-all duration-200',
+                  'absolute inset-0 flex items-center justify-center transition-all duration-200',
                   selectedValues.length > 0
                     ? 'translate-y-0 opacity-100'
                     : 'translate-y-full opacity-0'

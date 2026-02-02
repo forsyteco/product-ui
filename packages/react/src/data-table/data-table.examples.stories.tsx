@@ -8,6 +8,7 @@ import DateCell from './components/date-cell';
 import NameCell from './components/name-cell';
 import RiskLevelCell from './components/risk-level-cell';
 import CountryCell from './components/country-cell';
+import CopyableCell from './components/copyable-cell';
 
 const meta = {
   title: 'Components/DataTable/Examples',
@@ -179,7 +180,7 @@ export const ClientsTable: Story = {
 
     const columns: DataTableColumn<Client>[] = [
       { id: 'name', header: 'Name', accessorKey: 'name', cell: NameCell, sortable: true, width: '200px' },
-      { id: 'reference', header: 'Reference', accessorKey: 'reference', sortable: true },
+      { id: 'reference', header: 'Reference', accessorKey: 'reference', cell: CopyableCell, sortable: true },
       { id: 'type', header: 'Type', accessorKey: 'type', sortable: true, filterable: true, filterValues: ['Individual', 'Company'] },
       { id: 'owner', header: 'Owner', accessorKey: 'owner', sortable: true, filterable: true, filterValues: ['Jane Pritchard', 'Kayleigh Smale', 'Navya Nataraja', 'Tracey Longbottom'] },
       { id: 'country', header: 'Residence country', accessorKey: 'country', cell: CountryCell, sortable: true, filterable: true, filterValues: ['United Kingdom', 'France', 'Germany', 'Norway', 'Spain', 'Italy', 'Poland', 'United States'] },

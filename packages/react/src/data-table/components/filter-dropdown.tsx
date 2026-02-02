@@ -53,12 +53,8 @@ function FilterDropdown({
     onFilterChange(columnId, [...filterValues]);
   };
 
-  const handleContainerClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-  };
-
   return (
-    <div className="relative inline-block" onClick={handleContainerClick}>
+    <div className="relative inline-block">
       <HeadlessPopover>
         <HeadlessPopover.Button
           aria-label={`Filter ${columnId}`}
@@ -66,6 +62,7 @@ function FilterDropdown({
             'inline-flex items-center justify-center rounded p-1',
             selectedValues.length > 0 && 'bg-accent'
           )}
+          onClick={(e: React.MouseEvent) => e.stopPropagation()}
         >
           <Filter className="h-3 w-3 text-foreground" />
         </HeadlessPopover.Button>

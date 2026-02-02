@@ -3,6 +3,7 @@ import { ChevronRight } from 'lucide-react';
 import { cn } from '../../utils/tailwind';
 import { ROW_INTERACTION, type RowInteractionMode } from '../constants';
 import Checkbox from '../../checkbox';
+import IconButton from '../../icon-button';
 
 export type TableRowProps<TData> = {
   row: TData;
@@ -67,21 +68,19 @@ function TableRow<TData>({
     >
       {isExpandable && (
         <td className="w-10 px-4 py-3">
-          <button
-            type="button"
+          <IconButton
+            icon={ChevronRight}
+            variant="ghost"
+            size="small"
             onClick={handleExpandClick}
             aria-expanded={isExpanded}
             aria-controls={isExpanded ? expandedContentId : undefined}
             aria-label="Expand row"
-            className="flex h-6 w-6 items-center justify-center rounded transition-colors duration-300 hover:bg-muted/50 focus:outline-none focus:ring-2 focus:ring-ring"
-          >
-            <ChevronRight
-              className={cn(
-                'h-4 w-4 text-muted-foreground transition-transform duration-300',
-                isExpanded && 'rotate-90'
-              )}
-            />
-          </button>
+            className={cn(
+              'h-6 w-6 [&_svg]:transition-transform [&_svg]:duration-300',
+              isExpanded && '[&_svg]:rotate-90'
+            )}
+          />
         </td>
       )}
       {isSelectable && (

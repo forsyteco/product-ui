@@ -2,6 +2,9 @@ import { useState, useMemo } from 'react';
 import { Popover as HeadlessPopover, Portal } from '@headlessui/react';
 import { Filter, Search } from 'lucide-react';
 import { cn } from '../../utils/tailwind';
+import Input from '../../input';
+import Button from '../../button';
+import Checkbox from '../../checkbox';
 
 export type FilterDropdownProps = {
   columnId: string;
@@ -59,22 +62,22 @@ function FilterDropdown({
             className="z-50 w-56 max-h-80 flex flex-col rounded-md bg-background shadow-lg ring-1 ring-border focus:outline-none"
           >
           <div className="p-2 flex flex-col min-h-0 flex-1">
-            <div className="relative mb-2 flex-shrink-0">
-              <Search className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <input
+            <div className="mb-2 flex-shrink-0">
+              <Input
                 type="search"
-                role="searchbox"
                 placeholder="Search..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 autoFocus
-                className="w-full rounded-md border border-input bg-background py-1.5 pl-8 pr-3 text-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring"
+                size="sm"
+                startElement={<Search className="h-4 w-4" />}
               />
             </div>
-            <button
-              type="button"
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={selectedValues.length > 0 ? handleClearAll : handleSelectAll}
-              className="mb-2 flex-shrink-0 text-sm text-muted-foreground hover:text-foreground transition-colors relative h-5 overflow-hidden"
+              className="mb-2 flex-shrink-0 justify-start px-0 text-muted-foreground hover:text-foreground relative h-5 overflow-hidden"
             >
               <span
                 aria-hidden={selectedValues.length > 0}
@@ -98,9 +101,9 @@ function FilterDropdown({
               >
                 Clear all
               </span>
-            </button>
+            </Button>
             <div role="listbox" className="overflow-y-auto flex-1 min-h-0">
-              {filteredValues.map((value, index) => {
+              {filteredValues.map((value) => {
                 const isSelected = selectedValues.includes(value);
                 return (
                   <div
@@ -109,22 +112,14 @@ function FilterDropdown({
                     aria-label={value}
                     aria-selected={isSelected}
                     onClick={() => handleToggleValue(value)}
-                    className="flex cursor-pointer items-center gap-2 rounded px-2 py-1.5 hover:bg-muted"
+                    className="flex cursor-pointer items-center rounded px-2 py-1.5 hover:bg-muted"
                   >
-                    <span
-                      className={cn(
-                        'relative inline-flex h-4 w-4 shrink-0 items-center justify-center rounded border',
-                        isSelected
-                          ? 'border-accent bg-accent text-accent-foreground'
-                          : 'border-input bg-background'
-                      )}
-                      aria-hidden="true"
-                    >
-                      {isSelected && (
-                        <span className="absolute block h-2 w-1 rotate-45 border-b-2 border-r-2 border-current" />
-                      )}
-                    </span>
-                    <span className="text-sm">{value}</span>
+                    <Checkbox
+                      checked={isSelected}
+                      onChange={() => handleToggleValue(value)}
+                      label={value}
+                      onClick={(e) => e.stopPropagation()}
+                    />
                   </div>
                 );
               })}

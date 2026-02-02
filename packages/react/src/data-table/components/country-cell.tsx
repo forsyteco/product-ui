@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-export type CountryCellProps = {
+export type CountryCellProps = Readonly<{
   /** The country name to display (e.g., "United Kingdom", "France") */
   value: string;
-};
+}>;
 
 /**
  * Mapping of country names to ISO 2-letter country codes

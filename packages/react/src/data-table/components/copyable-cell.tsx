@@ -1,9 +1,9 @@
 import { Copy } from 'lucide-react';
 import { cn } from '../../utils/tailwind';
 
-export interface CopyableCellProps {
+export type CopyableCellProps = Readonly<{
   value: string;
-}
+}>;
 
 export default function CopyableCell({ value }: CopyableCellProps) {
   const handleCopy = () => {

@@ -12,7 +12,7 @@ export const STATUS = {
 
 export type Status = (typeof STATUS)[keyof typeof STATUS];
 
-export type StatusCellProps = {
+export type StatusCellProps = Readonly<{
   /**
    * The status to display in the badge
    */
@@ -25,7 +25,7 @@ export type StatusCellProps = {
    * - string: show the version value
    */
   version?: string | null | false;
-};
+}>;
 
 /**
  * Returns the appropriate color classes based on the status.

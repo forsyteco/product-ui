@@ -1,9 +1,9 @@
 import { cn } from '../../utils/tailwind';
 
-export type RiskLevelCellProps = {
+export type RiskLevelCellProps = Readonly<{
   /** The risk level to display */
   value: string;
-};
+}>;
 
 /**
  * Returns the appropriate color classes based on the risk level.

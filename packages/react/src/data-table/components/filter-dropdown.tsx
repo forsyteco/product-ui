@@ -14,12 +14,12 @@ function formatFilterLabel(value: string): string {
   return withSpaces.charAt(0).toUpperCase() + withSpaces.slice(1).toLowerCase();
 }
 
-export type FilterDropdownProps = {
+export type FilterDropdownProps = Readonly<{
   columnId: string;
   filterValues: string[];
   selectedValues: string[];
   onFilterChange: (columnId: string, values: string[]) => void;
-};
+}>;
 
 function FilterDropdown({
   columnId,

@@ -2,9 +2,9 @@ import { ArrowUp, ArrowDown, ArrowUpDown } from 'lucide-react';
 import { cn } from '../../utils/tailwind';
 import type { SortDirection } from '../types';
 
-export type SortIndicatorProps = {
+export type SortIndicatorProps = Readonly<{
   direction: SortDirection | null;
-};
+}>;
 
 function SortIndicator({ direction }: SortIndicatorProps) {
   const isActive = direction !== null;

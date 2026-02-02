@@ -2,12 +2,12 @@ import dayjs from 'dayjs';
 import { Clock } from 'lucide-react';
 import { cn } from '../../utils/tailwind';
 
-export type DateCellProps = {
+export type DateCellProps = Readonly<{
   /** The date to display */
   value: Date | string;
   /** Optional format string to override default (uses dayjs format tokens) */
   dateFormat?: string;
-};
+}>;
 
 /**
  * Calculates the relative time string for a date

@@ -2,13 +2,13 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '../../utils/tailwind';
 import IconButton from '../../icon-button';
 
-export type PaginationProps = {
+export type PaginationProps = Readonly<{
   page: number;
   pageSize: number;
   totalCount: number;
   onPageChange: (page: number) => void;
   className?: string;
-};
+}>;
 
 function Pagination({
   page,

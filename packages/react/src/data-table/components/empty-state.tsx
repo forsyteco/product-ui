@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
 
-export type EmptyStateProps = {
+export type EmptyStateProps = Readonly<{
   children?: ReactNode;
   colSpan: number;
-};
+}>;
 
 function EmptyState({ children, colSpan }: EmptyStateProps) {
   return (

@@ -1,12 +1,12 @@
 import { type ReactNode, useState, useEffect, useRef } from 'react';
 import { cn } from '../../utils/tailwind';
 
-export type ExpandedRowProps = {
+export type ExpandedRowProps = Readonly<{
   id: string;
   colSpan: number;
   children: ReactNode;
   isCollapsing?: boolean;
-};
+}>;
 
 function ExpandedRow({ id, colSpan, children, isCollapsing = false }: ExpandedRowProps) {
   const [isVisible, setIsVisible] = useState(false);

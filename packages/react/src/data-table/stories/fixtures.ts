@@ -40,16 +40,19 @@ export const sampleUsers: User[] = [
   { id: '25', name: 'Wendy Darling', email: 'wendy@example.com', status: 'Active', role: 'Manager' },
 ];
 
+// Extract all unique emails from sampleUsers for filter values
+const allEmails = sampleUsers.map((user) => user.email);
+
 export const userColumns: DataTableColumn<User>[] = [
   { id: 'name', header: 'Name', accessorKey: 'name', sortable: true },
-  { id: 'email', header: 'Email', accessorKey: 'email', sortable: true },
+  { id: 'email', header: 'Email', accessorKey: 'email', sortable: true, filterable: true, filterValues: allEmails },
   { id: 'status', header: 'Status', accessorKey: 'status', filterable: true, filterValues: ['Active', 'Inactive'] },
   { id: 'role', header: 'Role', accessorKey: 'role', filterable: true, filterValues: ['Admin', 'Manager', 'User'] },
 ];
 
 export const userColumnsWithSortAndFilter: DataTableColumn<User>[] = [
   { id: 'name', header: 'Name', accessorKey: 'name', sortable: true },
-  { id: 'email', header: 'Email', accessorKey: 'email', sortable: true },
+  { id: 'email', header: 'Email', accessorKey: 'email', sortable: true, filterable: true, filterValues: allEmails },
   { id: 'status', header: 'Status', accessorKey: 'status', sortable: true, filterable: true, filterValues: ['Active', 'Inactive'] },
   { id: 'role', header: 'Role', accessorKey: 'role', sortable: true, filterable: true, filterValues: ['Admin', 'Manager', 'User'] },
 ];

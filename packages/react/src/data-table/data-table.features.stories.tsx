@@ -84,7 +84,7 @@ export const Filtering: Story = {
     return (
       <div className="space-y-4">
         <p className="text-sm text-muted-foreground">
-          Click on the filter icon in "Status" or "Role" columns to filter.
+          Click on the filter icon in "Email", "Status" or "Role" columns to filter.
           Active filters: {filterState.length > 0 ? filterState.map(f => `${f.columnId}: ${f.values.join(', ')}`).join(' | ') : 'none'}
           {filterState.length > 0 && ` (showing ${result.totalCount} of ${sampleUsers.length} users)`}
         </p>

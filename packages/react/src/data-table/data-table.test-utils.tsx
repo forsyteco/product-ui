@@ -53,21 +53,21 @@ export const MockExpandedRowContent = ({
 
 // Helper to create a controlled Promise for testing async behavior
 export const createDeferredPromise = <T,>() => {
-  let resolve: (value: T) => void;
-  let reject: (reason?: unknown) => void;
+  let resolve!: (value: T) => void;
+  let reject!: (reason?: unknown) => void;
   const promise = new Promise<T>((res, rej) => {
     resolve = res;
     reject = rej;
   });
-  return { promise, resolve: resolve!, reject: reject! };
+  return { promise, resolve, reject };
 };
 
 /**
  * Opens the filter dropdown for the Status column and returns the dropdown element
  */
 export async function openStatusFilterDropdown(user: UserEvent) {
-  const statusHeader = screen.getByText('Status').closest('th, [role="columnheader"]');
-  const filterButton = within(statusHeader as HTMLElement).getByRole('button', {
+  const statusHeader = screen.getByText('Status').closest('th, [role="columnheader"]')!;
+  const filterButton = within(statusHeader).getByRole('button', {
     name: /filter/i,
   });
   await user.click(filterButton);
@@ -78,8 +78,8 @@ export async function openStatusFilterDropdown(user: UserEvent) {
  * Gets the filter button for a column
  */
 export function getFilterButton(columnName: string) {
-  const header = screen.getByText(columnName).closest('th, [role="columnheader"]');
-  return within(header as HTMLElement).getByRole('button', { name: /filter/i });
+  const header = screen.getByText(columnName).closest('th, [role="columnheader"]')!;
+  return within(header).getByRole('button', { name: /filter/i });
 }
 
 /**

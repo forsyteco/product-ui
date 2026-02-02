@@ -157,7 +157,7 @@ describe('StatusCell', () => {
     it('uses flex column layout for stacked display', () => {
       const { container } = render(<StatusCell value={STATUS.IN_PROGRESS} version="1.0.0" />);
 
-      const wrapper = container.firstChild as HTMLElement;
+      const wrapper = container.firstChild;
       expect(wrapper).toHaveClass('flex');
       expect(wrapper).toHaveClass('flex-col');
     });
@@ -165,7 +165,7 @@ describe('StatusCell', () => {
     it('has appropriate gap between status and version', () => {
       const { container } = render(<StatusCell value={STATUS.IN_PROGRESS} version="1.0.0" />);
 
-      const wrapper = container.firstChild as HTMLElement;
+      const wrapper = container.firstChild;
       expect(wrapper).toHaveClass('gap-1');
     });
   });

@@ -56,7 +56,7 @@ describe('CopyableCell', () => {
     it('container has proper layout classes (inline-flex, items-center, gap)', () => {
       const { container } = render(<CopyableCell value="Test value" />);
 
-      const wrapper = container.firstChild as HTMLElement;
+      const wrapper = container.firstChild;
       expect(wrapper).toHaveClass('inline-flex');
       expect(wrapper).toHaveClass('items-center');
       expect(wrapper).toHaveClass('gap-1');
@@ -65,7 +65,7 @@ describe('CopyableCell', () => {
     it('container has group class for hover interactions', () => {
       const { container } = render(<CopyableCell value="Test value" />);
 
-      const wrapper = container.firstChild as HTMLElement;
+      const wrapper = container.firstChild;
       expect(wrapper).toHaveClass('group');
     });
   });
@@ -102,7 +102,9 @@ describe('CopyableCell', () => {
       const copyButton = container.querySelector('button');
       expect(copyButton).toBeInTheDocument();
 
-      fireEvent.click(copyButton!);
+      if (copyButton) {
+        fireEvent.click(copyButton);
+      }
 
       expect(mockWriteText).toHaveBeenCalledTimes(1);
       expect(mockWriteText).toHaveBeenCalledWith('Copy this text');
@@ -112,7 +114,9 @@ describe('CopyableCell', () => {
       const { container } = render(<CopyableCell value="" />);
 
       const copyButton = container.querySelector('button');
-      fireEvent.click(copyButton!);
+      if (copyButton) {
+        fireEvent.click(copyButton);
+      }
 
       expect(mockWriteText).toHaveBeenCalledWith('');
     });

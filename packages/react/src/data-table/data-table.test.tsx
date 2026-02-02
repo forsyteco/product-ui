@@ -222,10 +222,8 @@ describe('DataTable', () => {
         />
       );
 
-      const checkboxes = screen.getAllByRole('checkbox');
-      const checkedCheckboxes = checkboxes.filter(
-        (cb) => (cb as HTMLInputElement).checked
-      );
+      const checkboxes = screen.getAllByRole('checkbox') as HTMLInputElement[];
+      const checkedCheckboxes = checkboxes.filter((cb) => cb.checked);
       expect(checkedCheckboxes.length).toBeGreaterThanOrEqual(1);
     });
   });
@@ -346,8 +344,8 @@ describe('DataTable', () => {
   });
 
   describe('Filtering', () => {
-    const filterProps = {
-      filterState: [] as FilterState,
+    const filterProps: { filterState: FilterState; onFilterChange: ReturnType<typeof vi.fn> } = {
+      filterState: [],
       onFilterChange: vi.fn(),
     };
 
@@ -392,7 +390,7 @@ describe('DataTable', () => {
       await user.click(activeOption);
 
       expect(onFilterChange).toHaveBeenCalledTimes(1);
-      const filterArg = onFilterChange.mock.calls[0][0] as FilterState;
+      const filterArg: FilterState = onFilterChange.mock.calls[0][0];
       expect(filterArg).toContainEqual({
         columnId: 'status',
         values: expect.arrayContaining(['Active']),
@@ -841,10 +839,8 @@ describe('DataTable', () => {
         />
       );
 
-      const checkboxes = screen.getAllByRole('checkbox');
-      const row1Checkbox = checkboxes.find(
-        (cb) => (cb as HTMLInputElement).checked && cb !== checkboxes[0]
-      );
+      const checkboxes = screen.getAllByRole('checkbox') as HTMLInputElement[];
+      const row1Checkbox = checkboxes.find((cb) => cb.checked && cb !== checkboxes[0]);
 
       if (row1Checkbox) {
         await user.click(row1Checkbox);

@@ -59,7 +59,7 @@ describe('CountryCell', () => {
     it('applies correct styling to container (inline-flex, items-center, gap)', () => {
       const { container } = render(<CountryCell value="Australia" />);
 
-      const wrapper = container.firstChild as HTMLElement;
+      const wrapper = container.firstChild;
       expect(wrapper).toHaveClass('inline-flex');
       expect(wrapper).toHaveClass('items-center');
       expect(wrapper).toHaveClass('gap-2');
@@ -114,7 +114,7 @@ describe('CountryCell', () => {
     it('handles empty string gracefully', () => {
       const { container } = render(<CountryCell value="" />);
 
-      const wrapper = container.firstChild as HTMLElement;
+      const wrapper = container.firstChild;
       expect(wrapper).toBeInTheDocument();
     });
 

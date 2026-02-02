@@ -2,41 +2,9 @@ import { useState, useMemo } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import DataTable from './data-table';
 import { ROW_INTERACTION } from './constants';
-import type { DataTableColumn, SortState, FilterState } from './types';
+import type { SortState, FilterState } from './types';
 import { queryData } from './stories/mock-data-service';
-
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  status: string;
-  role: string;
-};
-
-const sampleData: User[] = [
-  { id: '1', name: 'John Doe', email: 'john@example.com', status: 'Active', role: 'Admin' },
-  { id: '2', name: 'Jane Smith', email: 'jane@example.com', status: 'Active', role: 'User' },
-  { id: '3', name: 'Bob Johnson', email: 'bob@example.com', status: 'Inactive', role: 'User' },
-  { id: '4', name: 'Alice Brown', email: 'alice@example.com', status: 'Active', role: 'Manager' },
-  { id: '5', name: 'Charlie Wilson', email: 'charlie@example.com', status: 'Inactive', role: 'User' },
-  { id: '6', name: 'Diana Prince', email: 'diana@example.com', status: 'Active', role: 'Admin' },
-  { id: '7', name: 'Edward Norton', email: 'edward@example.com', status: 'Active', role: 'User' },
-  { id: '8', name: 'Fiona Apple', email: 'fiona@example.com', status: 'Inactive', role: 'Manager' },
-  { id: '9', name: 'George Lucas', email: 'george@example.com', status: 'Active', role: 'User' },
-  { id: '10', name: 'Hannah Montana', email: 'hannah@example.com', status: 'Active', role: 'User' },
-  { id: '11', name: 'Ivan Petrov', email: 'ivan@example.com', status: 'Inactive', role: 'Admin' },
-  { id: '12', name: 'Julia Roberts', email: 'julia@example.com', status: 'Active', role: 'Manager' },
-  { id: '13', name: 'Kevin Hart', email: 'kevin@example.com', status: 'Active', role: 'User' },
-  { id: '14', name: 'Laura Palmer', email: 'laura@example.com', status: 'Inactive', role: 'User' },
-  { id: '15', name: 'Mike Tyson', email: 'mike@example.com', status: 'Active', role: 'Manager' },
-];
-
-const columns: DataTableColumn<User>[] = [
-  { id: 'name', header: 'Name', accessorKey: 'name', sortable: true },
-  { id: 'email', header: 'Email', accessorKey: 'email', sortable: true },
-  { id: 'status', header: 'Status', accessorKey: 'status', sortable: true, filterable: true, filterValues: ['Active', 'Inactive'] },
-  { id: 'role', header: 'Role', accessorKey: 'role', sortable: true, filterable: true, filterValues: ['Admin', 'Manager', 'User'] },
-];
+import { sampleUsers, userColumnsWithSortAndFilter } from './stories/fixtures';
 
 const meta = {
   title: 'Components/DataTable',
@@ -88,13 +56,13 @@ export const Default: Story = {
     const pageSize = args.pageSize ?? 10;
 
     const result = useMemo(
-      () => queryData({ data: sampleData, page, pageSize }),
+      () => queryData({ data: sampleUsers, page, pageSize }),
       [page, pageSize]
     );
 
     return (
       <DataTable
-        columns={columns}
+        columns={userColumnsWithSortAndFilter}
         data={result.data}
         getRowId={(row) => row.id}
         page={page}
@@ -117,13 +85,11 @@ export const Playground: Story = {
     const [selectedRowIds, setSelectedRowIds] = useState<Set<string>>(new Set());
     const pageSize = args.pageSize ?? 10;
 
-    // Use mock service to sort, filter, and paginate data
     const result = useMemo(
-      () => queryData({ data: sampleData, page, pageSize, sortState, filterState }),
+      () => queryData({ data: sampleUsers, page, pageSize, sortState, filterState }),
       [page, pageSize, sortState, filterState]
     );
 
-    // Reset to page 1 when filters change
     const handleFilterChange = (newFilterState: FilterState) => {
       setFilterState(newFilterState);
       setPage(1);
@@ -134,10 +100,10 @@ export const Playground: Story = {
         <div className="text-sm text-muted-foreground space-y-1">
           <p>Status and Role columns have both sorting and filtering enabled.</p>
           <p><strong>Sort:</strong> {sortState ? `${sortState.columnId} (${sortState.direction})` : 'none'} | <strong>Filter:</strong> {filterState.length > 0 ? filterState.map(f => `${f.columnId}: ${f.values.join(', ')}`).join(' | ') : 'none'}</p>
-          <p><strong>Results:</strong> {result.totalCount} of {sampleData.length} users | <strong>Selected:</strong> {selectedRowIds.size > 0 ? Array.from(selectedRowIds).join(', ') : 'none'}</p>
+          <p><strong>Results:</strong> {result.totalCount} of {sampleUsers.length} users | <strong>Selected:</strong> {selectedRowIds.size > 0 ? Array.from(selectedRowIds).join(', ') : 'none'}</p>
         </div>
         <DataTable
-          columns={columns}
+          columns={userColumnsWithSortAndFilter}
           data={result.data}
           getRowId={(row) => row.id}
           page={page}

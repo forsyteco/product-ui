@@ -4,49 +4,14 @@ import DataTable from './data-table';
 import { ROW_INTERACTION } from './constants';
 import type { DataTableColumn, SortState, FilterState } from './types';
 import { queryData } from './stories/mock-data-service';
-
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  status: string;
-  role: string;
-};
-
-const sampleData: User[] = [
-  { id: '1', name: 'John Doe', email: 'john@example.com', status: 'Active', role: 'Admin' },
-  { id: '2', name: 'Jane Smith', email: 'jane@example.com', status: 'Active', role: 'User' },
-  { id: '3', name: 'Bob Johnson', email: 'bob@example.com', status: 'Inactive', role: 'User' },
-  { id: '4', name: 'Alice Brown', email: 'alice@example.com', status: 'Active', role: 'Manager' },
-  { id: '5', name: 'Charlie Wilson', email: 'charlie@example.com', status: 'Inactive', role: 'User' },
-  { id: '6', name: 'Diana Prince', email: 'diana@example.com', status: 'Active', role: 'Admin' },
-  { id: '7', name: 'Edward Norton', email: 'edward@example.com', status: 'Active', role: 'User' },
-  { id: '8', name: 'Fiona Apple', email: 'fiona@example.com', status: 'Inactive', role: 'Manager' },
-  { id: '9', name: 'George Lucas', email: 'george@example.com', status: 'Active', role: 'User' },
-  { id: '10', name: 'Hannah Montana', email: 'hannah@example.com', status: 'Active', role: 'User' },
-  { id: '11', name: 'Ivan Petrov', email: 'ivan@example.com', status: 'Inactive', role: 'Admin' },
-  { id: '12', name: 'Julia Roberts', email: 'julia@example.com', status: 'Active', role: 'Manager' },
-  { id: '13', name: 'Kevin Hart', email: 'kevin@example.com', status: 'Active', role: 'User' },
-  { id: '14', name: 'Laura Palmer', email: 'laura@example.com', status: 'Inactive', role: 'User' },
-  { id: '15', name: 'Mike Tyson', email: 'mike@example.com', status: 'Active', role: 'Manager' },
-  { id: '16', name: 'Nancy Drew', email: 'nancy@example.com', status: 'Active', role: 'User' },
-  { id: '17', name: 'Oscar Wilde', email: 'oscar@example.com', status: 'Inactive', role: 'Admin' },
-  { id: '18', name: 'Paula Abdul', email: 'paula@example.com', status: 'Active', role: 'Manager' },
-  { id: '19', name: 'Quinn Hughes', email: 'quinn@example.com', status: 'Active', role: 'User' },
-  { id: '20', name: 'Rachel Green', email: 'rachel@example.com', status: 'Inactive', role: 'User' },
-  { id: '21', name: 'Steve Rogers', email: 'steve@example.com', status: 'Active', role: 'Admin' },
-  { id: '22', name: 'Tina Turner', email: 'tina@example.com', status: 'Active', role: 'Manager' },
-  { id: '23', name: 'Uma Thurman', email: 'uma@example.com', status: 'Inactive', role: 'User' },
-  { id: '24', name: 'Victor Hugo', email: 'victor@example.com', status: 'Active', role: 'User' },
-  { id: '25', name: 'Wendy Darling', email: 'wendy@example.com', status: 'Active', role: 'Manager' },
-];
-
-const columns: DataTableColumn<User>[] = [
-  { id: 'name', header: 'Name', accessorKey: 'name', sortable: true },
-  { id: 'email', header: 'Email', accessorKey: 'email', sortable: true },
-  { id: 'status', header: 'Status', accessorKey: 'status', filterable: true, filterValues: ['Active', 'Inactive'] },
-  { id: 'role', header: 'Role', accessorKey: 'role', filterable: true, filterValues: ['Admin', 'Manager', 'User'] },
-];
+import {
+  type User,
+  type UserExpandedData,
+  sampleUsers,
+  userColumns,
+  userColumnsWithSortAndFilter,
+  getExpandedUserData,
+} from './stories/fixtures';
 
 const meta = {
   title: 'Components/DataTable/Features',
@@ -71,9 +36,8 @@ export const Sorting: Story = {
     const [sortState, setSortState] = useState<SortState>({ columnId: 'name', direction: 'asc' });
     const pageSize = args.pageSize ?? 10;
 
-    // Use mock service to sort and paginate data
     const result = useMemo(
-      () => queryData({ data: sampleData, page, pageSize, sortState }),
+      () => queryData({ data: sampleUsers, page, pageSize, sortState }),
       [page, pageSize, sortState]
     );
 
@@ -83,7 +47,7 @@ export const Sorting: Story = {
           Click on "Name" or "Email" column headers to sort. Current sort: {sortState ? `${sortState.columnId} (${sortState.direction})` : 'none'}
         </p>
         <DataTable
-          columns={columns}
+          columns={userColumns}
           data={result.data}
           getRowId={(row) => row.id}
           page={page}
@@ -107,13 +71,11 @@ export const Filtering: Story = {
     const [filterState, setFilterState] = useState<FilterState>([]);
     const pageSize = args.pageSize ?? 10;
 
-    // Use mock service to filter and paginate data
     const result = useMemo(
-      () => queryData({ data: sampleData, page, pageSize, filterState }),
+      () => queryData({ data: sampleUsers, page, pageSize, filterState }),
       [page, pageSize, filterState]
     );
 
-    // Reset to page 1 when filters change
     const handleFilterChange = (newFilterState: FilterState) => {
       setFilterState(newFilterState);
       setPage(1);
@@ -124,10 +86,10 @@ export const Filtering: Story = {
         <p className="text-sm text-muted-foreground">
           Click on the filter icon in "Status" or "Role" columns to filter.
           Active filters: {filterState.length > 0 ? filterState.map(f => `${f.columnId}: ${f.values.join(', ')}`).join(' | ') : 'none'}
-          {filterState.length > 0 && ` (showing ${result.totalCount} of ${sampleData.length} users)`}
+          {filterState.length > 0 && ` (showing ${result.totalCount} of ${sampleUsers.length} users)`}
         </p>
         <DataTable
-          columns={columns}
+          columns={userColumns}
           data={result.data}
           getRowId={(row) => row.id}
           page={page}
@@ -152,7 +114,7 @@ export const RowSelection: Story = {
     const pageSize = args.pageSize ?? 10;
 
     const result = useMemo(
-      () => queryData({ data: sampleData, page, pageSize }),
+      () => queryData({ data: sampleUsers, page, pageSize }),
       [page, pageSize]
     );
 
@@ -162,7 +124,7 @@ export const RowSelection: Story = {
           Select rows using checkboxes. Selected: {Array.from(selectedRowIds).join(', ') || 'none'}
         </p>
         <DataTable
-          columns={columns}
+          columns={userColumns}
           data={result.data}
           getRowId={(row) => row.id}
           page={page}
@@ -188,7 +150,7 @@ export const ClickableRows: Story = {
     const pageSize = args.pageSize ?? 10;
 
     const result = useMemo(
-      () => queryData({ data: sampleData, page, pageSize }),
+      () => queryData({ data: sampleUsers, page, pageSize }),
       [page, pageSize]
     );
 
@@ -198,7 +160,7 @@ export const ClickableRows: Story = {
           Click on any row to trigger an action. Last clicked: {clickedRow || 'none'}
         </p>
         <DataTable
-          columns={columns}
+          columns={userColumns}
           data={result.data}
           getRowId={(row) => row.id}
           page={page}
@@ -222,7 +184,7 @@ export const Pagination: Story = {
     const pageSize = args.pageSize ?? 10;
 
     const result = useMemo(
-      () => queryData({ data: sampleData, page, pageSize }),
+      () => queryData({ data: sampleUsers, page, pageSize }),
       [page, pageSize]
     );
 
@@ -232,7 +194,7 @@ export const Pagination: Story = {
           Navigate through pages. Current page: {page} of {result.totalPages}
         </p>
         <DataTable
-          columns={columns}
+          columns={userColumns}
           data={result.data}
           getRowId={(row) => row.id}
           page={page}
@@ -255,7 +217,7 @@ export const Loading: Story = {
 
     return (
       <DataTable
-        columns={columns}
+        columns={userColumns}
         data={[]}
         getRowId={(row) => row.id}
         page={page}
@@ -278,7 +240,7 @@ export const EmptyState: Story = {
 
     return (
       <DataTable
-        columns={columns}
+        columns={userColumns}
         data={[]}
         getRowId={(row) => row.id}
         page={page}
@@ -306,34 +268,25 @@ export const SortingAndFiltering: Story = {
     const [filterState, setFilterState] = useState<FilterState>([]);
     const pageSize = args.pageSize ?? 10;
 
-    // Use mock service to sort, filter, and paginate data
     const result = useMemo(
-      () => queryData({ data: sampleData, page, pageSize, sortState, filterState }),
+      () => queryData({ data: sampleUsers, page, pageSize, sortState, filterState }),
       [page, pageSize, sortState, filterState]
     );
 
-    // Reset to page 1 when filters change
     const handleFilterChange = (newFilterState: FilterState) => {
       setFilterState(newFilterState);
       setPage(1);
     };
-
-    const columnsWithBoth: DataTableColumn<User>[] = [
-      { id: 'name', header: 'Name', accessorKey: 'name', sortable: true },
-      { id: 'email', header: 'Email', accessorKey: 'email', sortable: true },
-      { id: 'status', header: 'Status', accessorKey: 'status', sortable: true, filterable: true, filterValues: ['Active', 'Inactive'] },
-      { id: 'role', header: 'Role', accessorKey: 'role', sortable: true, filterable: true, filterValues: ['Admin', 'Manager', 'User'] },
-    ];
 
     return (
       <div className="space-y-4">
         <div className="text-sm text-muted-foreground space-y-1">
           <p><strong>Sort:</strong> {sortState ? `${sortState.columnId} (${sortState.direction})` : 'none'}</p>
           <p><strong>Filter:</strong> {filterState.length > 0 ? filterState.map(f => `${f.columnId}: ${f.values.join(', ')}`).join(' | ') : 'none'}</p>
-          <p><strong>Results:</strong> {result.totalCount} of {sampleData.length} users</p>
+          <p><strong>Results:</strong> {result.totalCount} of {sampleUsers.length} users</p>
         </div>
         <DataTable
-          columns={columnsWithBoth}
+          columns={userColumnsWithSortAndFilter}
           data={result.data}
           getRowId={(row) => row.id}
           page={page}
@@ -353,15 +306,7 @@ export const SortingAndFiltering: Story = {
   },
 };
 
-// Types for expanded row content
-type UserExpandedData = {
-  bio: string;
-  joinDate: string;
-  lastLogin: string;
-  projects: string[];
-};
-
-// Mock expanded row content component
+// Expanded row content component
 const UserExpandedContent = ({
   row,
   rowId,
@@ -435,32 +380,13 @@ const UserExpandedContent = ({
   );
 };
 
-// Mock function to simulate fetching expanded row data with 300ms delay
-const getExpandedUserData = (row: User, rowId: string): Promise<UserExpandedData> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        bio: `${row.name} is a dedicated ${row.role.toLowerCase()} who has been contributing to the team since joining. Known for their expertise in various projects and collaborative spirit.`,
-        joinDate: `January ${2020 + parseInt(rowId, 10) % 5}`,
-        lastLogin: row.status === 'Active' ? 'Today at 9:30 AM' : '3 days ago',
-        projects: [
-          'Project Alpha',
-          'Dashboard Redesign',
-          `${row.name.split(' ')[0]}'s Initiative`,
-          'Q4 Planning',
-        ].slice(0, 2 + parseInt(rowId, 10) % 3),
-      });
-    }, 300);
-  });
-};
-
 export const ExpandableRows: Story = {
   render: (args) => {
     const [page, setPage] = useState(1);
     const pageSize = args.pageSize ?? 10;
 
     const result = useMemo(
-      () => queryData({ data: sampleData, page, pageSize }),
+      () => queryData({ data: sampleUsers, page, pageSize }),
       [page, pageSize]
     );
 
@@ -471,7 +397,7 @@ export const ExpandableRows: Story = {
           <p>Only one row can be expanded at a time. Click again to collapse.</p>
         </div>
         <DataTable
-          columns={columns}
+          columns={userColumns}
           data={result.data}
           getRowId={(row) => row.id}
           page={page}
@@ -497,7 +423,7 @@ export const CustomCellRenderer: Story = {
     const pageSize = args.pageSize ?? 10;
 
     const result = useMemo(
-      () => queryData({ data: sampleData, page, pageSize, sortState }),
+      () => queryData({ data: sampleUsers, page, pageSize, sortState }),
       [page, pageSize, sortState]
     );
 

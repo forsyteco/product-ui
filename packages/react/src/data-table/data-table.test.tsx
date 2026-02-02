@@ -5,39 +5,17 @@ import { act } from 'react';
 import DataTable from './data-table';
 import { ROW_INTERACTION } from './constants';
 import type { DataTableColumn, FilterState, CellRendererProps } from './types';
-
-// Mock data types
-type TestData = { id: string; name: string; email: string; status: string };
-
-// Mock data
-const mockColumns: DataTableColumn<TestData>[] = [
-  { id: 'name', header: 'Name', accessorKey: 'name', sortable: true },
-  { id: 'email', header: 'Email', accessorKey: 'email' },
-  {
-    id: 'status',
-    header: 'Status',
-    accessorKey: 'status',
-    filterable: true,
-    filterValues: ['Active', 'Inactive'],
-  },
-];
-
-const mockData: TestData[] = [
-  { id: '1', name: 'John Doe', email: 'john@example.com', status: 'Active' },
-  { id: '2', name: 'Jane Smith', email: 'jane@example.com', status: 'Inactive' },
-];
-
-// Default props factory
-const createDefaultProps = (overrides?: Partial<Parameters<typeof DataTable<TestData>>[0]>) => ({
-  columns: mockColumns,
-  data: mockData,
-  getRowId: (row: TestData) => row.id,
-  page: 1,
-  pageSize: 10,
-  totalCount: 2,
-  onPageChange: vi.fn(),
-  ...overrides,
-});
+import {
+  type TestData,
+  type ExpandedRowData,
+  mockColumns,
+  mockData,
+  MockExpandedRowContent,
+  createDeferredPromise,
+  openStatusFilterDropdown,
+  getFilterButton,
+  createDefaultProps,
+} from './data-table.test-utils';
 
 describe('DataTable', () => {
   describe('Basic Rendering', () => {
@@ -47,7 +25,6 @@ describe('DataTable', () => {
       const table = screen.getByRole('grid');
       expect(table).toBeInTheDocument();
 
-      // Check data is rendered
       expect(screen.getByText('John Doe')).toBeInTheDocument();
       expect(screen.getByText('Jane Smith')).toBeInTheDocument();
       expect(screen.getByText('john@example.com')).toBeInTheDocument();
@@ -95,7 +72,6 @@ describe('DataTable', () => {
       const table = screen.getByRole('grid');
       expect(table).toBeInTheDocument();
 
-      // Should not render actual data when loading
       expect(screen.queryByText('John Doe')).not.toBeInTheDocument();
       expect(screen.queryByText('Jane Smith')).not.toBeInTheDocument();
     });
@@ -119,7 +95,6 @@ describe('DataTable', () => {
     it('renders empty state when data is empty array', () => {
       render(<DataTable {...createDefaultProps({ data: [], totalCount: 0 })} />);
 
-      // Should show some form of empty state indication
       expect(screen.queryByText('John Doe')).not.toBeInTheDocument();
     });
 
@@ -139,10 +114,8 @@ describe('DataTable', () => {
     it('rows are not clickable by default', () => {
       const { container } = render(<DataTable {...createDefaultProps()} />);
 
-      // Find data rows (not header row)
       const rows = container.querySelectorAll('tbody tr, [role="row"]');
       rows.forEach((row) => {
-        // Rows should not have cursor-pointer class when interaction is NONE
         expect(row).not.toHaveClass('cursor-pointer');
       });
     });
@@ -170,19 +143,16 @@ describe('DataTable', () => {
   });
 
   describe('Row Interaction - SELECTION', () => {
+    const selectionProps = {
+      rowInteraction: ROW_INTERACTION.SELECTION,
+      selectedRowIds: new Set<string>(),
+      onSelectionChange: vi.fn(),
+    };
+
     it('renders selection checkboxes in header and each row', () => {
-      render(
-        <DataTable
-          {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.SELECTION,
-            selectedRowIds: new Set<string>(),
-            onSelectionChange: vi.fn(),
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps(selectionProps)} />);
 
       const checkboxes = screen.getAllByRole('checkbox');
-      // 1 header checkbox + 2 row checkboxes
       expect(checkboxes.length).toBeGreaterThanOrEqual(3);
     });
 
@@ -193,16 +163,13 @@ describe('DataTable', () => {
       render(
         <DataTable
           {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.SELECTION,
-            selectedRowIds: new Set<string>(),
+            ...selectionProps,
             onSelectionChange,
           })}
         />
       );
 
-      // Find row checkboxes (not the header checkbox)
       const checkboxes = screen.getAllByRole('checkbox');
-      // Click the first row checkbox (index 1, as 0 is header)
       await user.click(checkboxes[1]);
 
       expect(onSelectionChange).toHaveBeenCalledTimes(1);
@@ -218,14 +185,12 @@ describe('DataTable', () => {
       render(
         <DataTable
           {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.SELECTION,
-            selectedRowIds: new Set<string>(),
+            ...selectionProps,
             onSelectionChange,
           })}
         />
       );
 
-      // Header checkbox should be the first one
       const headerCheckbox = screen.getAllByRole('checkbox')[0];
       await user.click(headerCheckbox);
 
@@ -238,21 +203,11 @@ describe('DataTable', () => {
     });
 
     it('checkboxes have proper aria-labels', () => {
-      render(
-        <DataTable
-          {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.SELECTION,
-            selectedRowIds: new Set<string>(),
-            onSelectionChange: vi.fn(),
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps(selectionProps)} />);
 
-      // Check for header checkbox aria-label
       const headerCheckbox = screen.getByLabelText(/select all/i);
       expect(headerCheckbox).toBeInTheDocument();
 
-      // Check for row checkbox aria-labels
       const rowCheckboxes = screen.getAllByLabelText(/select row/i);
       expect(rowCheckboxes.length).toBeGreaterThanOrEqual(2);
     });
@@ -261,15 +216,13 @@ describe('DataTable', () => {
       render(
         <DataTable
           {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.SELECTION,
+            ...selectionProps,
             selectedRowIds: new Set(['1']),
-            onSelectionChange: vi.fn(),
           })}
         />
       );
 
       const checkboxes = screen.getAllByRole('checkbox');
-      // The checkbox for row with id '1' should be checked
       const checkedCheckboxes = checkboxes.filter(
         (cb) => (cb as HTMLInputElement).checked
       );
@@ -279,7 +232,7 @@ describe('DataTable', () => {
 
   describe('Row Interaction - LINK', () => {
     it('rows have cursor-pointer class', () => {
-      const { container } = render(
+      render(
         <DataTable
           {...createDefaultProps({
             rowInteraction: ROW_INTERACTION.LINK,
@@ -288,7 +241,6 @@ describe('DataTable', () => {
         />
       );
 
-      // Find data rows containing the actual data
       const johnRow = screen.getByText('John Doe').closest('tr, [role="row"]');
       expect(johnRow).toHaveClass('cursor-pointer');
     });
@@ -317,6 +269,11 @@ describe('DataTable', () => {
   });
 
   describe('Sorting', () => {
+    const sortProps = {
+      sortState: null as { columnId: string; direction: 'asc' | 'desc' } | null,
+      onSortChange: vi.fn(),
+    };
+
     it('shows sort indicator for sortable columns', () => {
       render(
         <DataTable
@@ -327,7 +284,6 @@ describe('DataTable', () => {
         />
       );
 
-      // The Name column header should have a sort indicator
       const nameHeader = screen.getByText('Name').closest('th, [role="columnheader"]');
       expect(nameHeader).toBeInTheDocument();
     });
@@ -336,16 +292,8 @@ describe('DataTable', () => {
       const user = userEvent.setup();
       const onSortChange = vi.fn();
 
-      render(
-        <DataTable
-          {...createDefaultProps({
-            sortState: null,
-            onSortChange,
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps({ ...sortProps, onSortChange })} />);
 
-      // Click on the Name header (which is sortable)
       const nameHeader = screen.getByText('Name');
       await user.click(nameHeader);
 
@@ -357,7 +305,6 @@ describe('DataTable', () => {
       const user = userEvent.setup();
       const onSortChange = vi.fn();
 
-      // Start with ascending sort
       const { rerender } = render(
         <DataTable
           {...createDefaultProps({
@@ -369,11 +316,9 @@ describe('DataTable', () => {
 
       const nameHeader = screen.getByText('Name');
 
-      // Click should toggle to desc
       await user.click(nameHeader);
       expect(onSortChange).toHaveBeenLastCalledWith({ columnId: 'name', direction: 'desc' });
 
-      // Rerender with desc state and click again
       rerender(
         <DataTable
           {...createDefaultProps({
@@ -391,67 +336,37 @@ describe('DataTable', () => {
       const user = userEvent.setup();
       const onSortChange = vi.fn();
 
-      render(
-        <DataTable
-          {...createDefaultProps({
-            sortState: null,
-            onSortChange,
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps({ ...sortProps, onSortChange })} />);
 
-      // Email column is not sortable
       const emailHeader = screen.getByText('Email');
       await user.click(emailHeader);
 
-      // Should not trigger sort for non-sortable column
       expect(onSortChange).not.toHaveBeenCalled();
     });
   });
 
   describe('Filtering', () => {
-    it('shows filter button for filterable columns', () => {
-      render(
-        <DataTable
-          {...createDefaultProps({
-            filterState: [],
-            onFilterChange: vi.fn(),
-          })}
-        />
-      );
+    const filterProps = {
+      filterState: [] as FilterState,
+      onFilterChange: vi.fn(),
+    };
 
-      // Status column is filterable
+    it('shows filter button for filterable columns', () => {
+      render(<DataTable {...createDefaultProps(filterProps)} />);
+
       const statusHeader = screen.getByText('Status').closest('th, [role="columnheader"]');
       expect(statusHeader).toBeInTheDocument();
 
-      // Should have a filter button
-      const filterButton = within(statusHeader as HTMLElement).getByRole('button', {
-        name: /filter/i,
-      });
+      const filterButton = getFilterButton('Status');
       expect(filterButton).toBeInTheDocument();
     });
 
     it('opens filter dropdown when filter button is clicked', async () => {
       const user = userEvent.setup();
 
-      render(
-        <DataTable
-          {...createDefaultProps({
-            filterState: [],
-            onFilterChange: vi.fn(),
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps(filterProps)} />);
 
-      const statusHeader = screen.getByText('Status').closest('th, [role="columnheader"]');
-      const filterButton = within(statusHeader as HTMLElement).getByRole('button', {
-        name: /filter/i,
-      });
-
-      await user.click(filterButton);
-
-      // Should show filter values in dropdown (use listbox to scope the search)
-      const dropdown = screen.getByRole('listbox');
+      const dropdown = await openStatusFilterDropdown(user);
       expect(within(dropdown).getByText('Active')).toBeInTheDocument();
       expect(within(dropdown).getByText('Inactive')).toBeInTheDocument();
     });
@@ -459,24 +374,9 @@ describe('DataTable', () => {
     it('shows filter values in dropdown', async () => {
       const user = userEvent.setup();
 
-      render(
-        <DataTable
-          {...createDefaultProps({
-            filterState: [],
-            onFilterChange: vi.fn(),
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps(filterProps)} />);
 
-      const statusHeader = screen.getByText('Status').closest('th, [role="columnheader"]');
-      const filterButton = within(statusHeader as HTMLElement).getByRole('button', {
-        name: /filter/i,
-      });
-
-      await user.click(filterButton);
-
-      // Both filter values should be visible
-      const dropdown = screen.getByRole('listbox') ?? screen.getByRole('menu');
+      const dropdown = await openStatusFilterDropdown(user);
       expect(within(dropdown).getByText('Active')).toBeInTheDocument();
       expect(within(dropdown).getByText('Inactive')).toBeInTheDocument();
     });
@@ -485,24 +385,9 @@ describe('DataTable', () => {
       const user = userEvent.setup();
       const onFilterChange = vi.fn();
 
-      render(
-        <DataTable
-          {...createDefaultProps({
-            filterState: [],
-            onFilterChange,
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps({ ...filterProps, onFilterChange })} />);
 
-      const statusHeader = screen.getByText('Status').closest('th, [role="columnheader"]');
-      const filterButton = within(statusHeader as HTMLElement).getByRole('button', {
-        name: /filter/i,
-      });
-
-      await user.click(filterButton);
-
-      // Click on a filter value (use exact match to avoid matching "Inactive")
-      const dropdown = screen.getByRole('listbox');
+      const dropdown = await openStatusFilterDropdown(user);
       const activeOption = within(dropdown).getByRole('option', { name: 'Active' });
       await user.click(activeOption);
 
@@ -517,23 +402,10 @@ describe('DataTable', () => {
     it('filter dropdown has search input', async () => {
       const user = userEvent.setup();
 
-      render(
-        <DataTable
-          {...createDefaultProps({
-            filterState: [],
-            onFilterChange: vi.fn(),
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps(filterProps)} />);
 
-      const statusHeader = screen.getByText('Status').closest('th, [role="columnheader"]');
-      const filterButton = within(statusHeader as HTMLElement).getByRole('button', {
-        name: /filter/i,
-      });
+      await openStatusFilterDropdown(user);
 
-      await user.click(filterButton);
-
-      // Should have a search input in the filter dropdown
       const searchInput = screen.getByRole('searchbox') ?? screen.getByPlaceholderText(/search/i);
       expect(searchInput).toBeInTheDocument();
     });
@@ -541,64 +413,31 @@ describe('DataTable', () => {
     it('filter dropdown renders in a portal to escape table overflow', async () => {
       const user = userEvent.setup();
 
-      render(
-        <DataTable
-          {...createDefaultProps({
-            filterState: [],
-            onFilterChange: vi.fn(),
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps(filterProps)} />);
 
-      const statusHeader = screen.getByText('Status').closest('th, [role="columnheader"]');
-      const filterButton = within(statusHeader as HTMLElement).getByRole('button', {
-        name: /filter/i,
-      });
-
-      await user.click(filterButton);
-
-      // The dropdown should be rendered in a portal (at document.body level, not inside the table)
-      const dropdown = screen.getByRole('listbox');
+      const dropdown = await openStatusFilterDropdown(user);
       const table = screen.getByRole('grid');
 
-      // The dropdown should NOT be a descendant of the table
       expect(table.contains(dropdown)).toBe(false);
     });
 
     it('search input stays fixed at top while filter list scrolls', async () => {
       const user = userEvent.setup();
 
-      render(
-        <DataTable
-          {...createDefaultProps({
-            filterState: [],
-            onFilterChange: vi.fn(),
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps(filterProps)} />);
 
-      const statusHeader = screen.getByText('Status').closest('th, [role="columnheader"]');
-      const filterButton = within(statusHeader as HTMLElement).getByRole('button', {
-        name: /filter/i,
-      });
+      await openStatusFilterDropdown(user);
 
-      await user.click(filterButton);
-
-      // The search input should NOT be inside the scrollable listbox
       const searchInput = screen.getByRole('searchbox');
       const listbox = screen.getByRole('listbox');
 
-      // Search input should not be a descendant of the listbox
       expect(listbox.contains(searchInput)).toBe(false);
-
-      // The listbox should have the scrollable styles, not the search container
       expect(listbox).toHaveClass('overflow-y-auto');
     });
 
     it('filter list has scrollable container for many items', async () => {
       const user = userEvent.setup();
 
-      // Create columns with many filter values
       const columnsWithManyFilters: DataTableColumn<TestData>[] = [
         { id: 'name', header: 'Name', accessorKey: 'name' },
         {
@@ -612,53 +451,26 @@ describe('DataTable', () => {
 
       render(
         <DataTable
-          columns={columnsWithManyFilters}
-          data={mockData}
-          getRowId={(row) => row.id}
-          page={1}
-          pageSize={10}
-          totalCount={mockData.length}
-          onPageChange={vi.fn()}
-          filterState={[]}
-          onFilterChange={vi.fn()}
+          {...createDefaultProps({
+            columns: columnsWithManyFilters,
+            ...filterProps,
+          })}
         />
       );
 
-      const statusHeader = screen.getByText('Status').closest('th, [role="columnheader"]');
-      const filterButton = within(statusHeader as HTMLElement).getByRole('button', {
-        name: /filter/i,
-      });
+      const dropdown = await openStatusFilterDropdown(user);
 
-      await user.click(filterButton);
-
-      // The listbox should have overflow-y-auto for scrolling
-      const listbox = screen.getByRole('listbox');
-      expect(listbox).toHaveClass('overflow-y-auto');
-
-      // The listbox should use flexbox pattern for constrained scrolling
-      // (flex-1 min-h-0 allows it to shrink within a max-height parent)
-      expect(listbox).toHaveClass('flex-1');
-      expect(listbox).toHaveClass('min-h-0');
+      expect(dropdown).toHaveClass('overflow-y-auto');
+      expect(dropdown).toHaveClass('flex-1');
+      expect(dropdown).toHaveClass('min-h-0');
     });
 
     it('shows "Select all" button when no filters are selected', async () => {
       const user = userEvent.setup();
 
-      render(
-        <DataTable
-          {...createDefaultProps({
-            filterState: [],
-            onFilterChange: vi.fn(),
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps(filterProps)} />);
 
-      const statusHeader = screen.getByText('Status').closest('th, [role="columnheader"]');
-      const filterButton = within(statusHeader as HTMLElement).getByRole('button', {
-        name: /filter/i,
-      });
-
-      await user.click(filterButton);
+      await openStatusFilterDropdown(user);
 
       expect(screen.getByRole('button', { name: /select all/i })).toBeInTheDocument();
       expect(screen.queryByRole('button', { name: /clear all/i })).not.toBeInTheDocument();
@@ -668,26 +480,13 @@ describe('DataTable', () => {
       const user = userEvent.setup();
       const onFilterChange = vi.fn();
 
-      render(
-        <DataTable
-          {...createDefaultProps({
-            filterState: [],
-            onFilterChange,
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps({ ...filterProps, onFilterChange })} />);
 
-      const statusHeader = screen.getByText('Status').closest('th, [role="columnheader"]');
-      const filterButton = within(statusHeader as HTMLElement).getByRole('button', {
-        name: /filter/i,
-      });
-
-      await user.click(filterButton);
+      await openStatusFilterDropdown(user);
 
       const selectAllButton = screen.getByRole('button', { name: /select all/i });
       await user.click(selectAllButton);
 
-      // Should call onFilterChange with all filter values
       expect(onFilterChange).toHaveBeenCalledWith([
         { columnId: 'status', values: ['Active', 'Inactive'] },
       ]);
@@ -705,12 +504,7 @@ describe('DataTable', () => {
         />
       );
 
-      const statusHeader = screen.getByText('Status').closest('th, [role="columnheader"]');
-      const filterButton = within(statusHeader as HTMLElement).getByRole('button', {
-        name: /filter/i,
-      });
-
-      await user.click(filterButton);
+      await openStatusFilterDropdown(user);
 
       expect(screen.getByRole('button', { name: /clear all/i })).toBeInTheDocument();
       expect(screen.queryByRole('button', { name: /select all/i })).not.toBeInTheDocument();
@@ -729,17 +523,11 @@ describe('DataTable', () => {
         />
       );
 
-      const statusHeader = screen.getByText('Status').closest('th, [role="columnheader"]');
-      const filterButton = within(statusHeader as HTMLElement).getByRole('button', {
-        name: /filter/i,
-      });
-
-      await user.click(filterButton);
+      await openStatusFilterDropdown(user);
 
       const clearAllButton = screen.getByRole('button', { name: /clear all/i });
       await user.click(clearAllButton);
 
-      // Should call onFilterChange with empty values for this column
       expect(onFilterChange).toHaveBeenCalledWith([]);
     });
   });
@@ -756,7 +544,6 @@ describe('DataTable', () => {
         />
       );
 
-      // Should show pagination info text (25 items / 10 per page = 3 pages)
       expect(screen.getByText(/page 1 of 3/i)).toBeInTheDocument();
     });
 
@@ -915,7 +702,7 @@ describe('DataTable', () => {
       expect(screen.getAllByLabelText(/select row/i).length).toBeGreaterThanOrEqual(2);
     });
 
-    it('filter buttons have aria-labels', () => {
+    it('filter buttons have aria-labels', async () => {
       render(
         <DataTable
           {...createDefaultProps({
@@ -925,10 +712,7 @@ describe('DataTable', () => {
         />
       );
 
-      const statusHeader = screen.getByText('Status').closest('th, [role="columnheader"]');
-      const filterButton = within(statusHeader as HTMLElement).getByRole('button', {
-        name: /filter/i,
-      });
+      const filterButton = getFilterButton('Status');
       expect(filterButton).toHaveAccessibleName();
     });
 
@@ -963,9 +747,7 @@ describe('DataTable', () => {
         { id: 'email', header: 'Email', accessorKey: 'email' },
       ];
 
-      const { container } = render(
-        <DataTable {...createDefaultProps({ columns: columnsWithWidth })} />
-      );
+      render(<DataTable {...createDefaultProps({ columns: columnsWithWidth })} />);
 
       const nameHeader = screen.getByText('Name').closest('th, [role="columnheader"]');
       expect(nameHeader).toHaveStyle({ width: '200px' });
@@ -979,7 +761,6 @@ describe('DataTable', () => {
 
       render(<DataTable {...createDefaultProps({ columns: columnsWithAlign })} />);
 
-      // Cells should have appropriate text alignment classes
       const nameCells = screen.getAllByText(/John Doe|Jane Smith/);
       nameCells.forEach((cell) => {
         const td = cell.closest('td, [role="gridcell"]');
@@ -1060,7 +841,6 @@ describe('DataTable', () => {
         />
       );
 
-      // Find the checked checkbox (for row 1)
       const checkboxes = screen.getAllByRole('checkbox');
       const row1Checkbox = checkboxes.find(
         (cb) => (cb as HTMLInputElement).checked && cb !== checkboxes[0]
@@ -1099,72 +879,24 @@ describe('DataTable', () => {
   });
 
   describe('Expandable Rows', () => {
-    // Types for expanded row data
-    type ExpandedRowData = { details: string; metadata: { count: number } };
-
-    // Mock expanded row content component for testing
-    const MockExpandedRowContent = ({
-      row,
-      rowId,
-      data,
-      loading,
-    }: {
-      row: TestData;
-      rowId: string;
-      data: ExpandedRowData | null;
-      loading: boolean;
-    }) => (
-      <div data-testid="expanded-content">
-        <span data-testid="expanded-row-id">{rowId}</span>
-        <span data-testid="expanded-row-name">{row.name}</span>
-        <span data-testid="expanded-loading">{loading.toString()}</span>
-        {data && (
-          <span data-testid="expanded-data">{data.details}</span>
-        )}
-      </div>
-    );
-
-    // Helper to create a controlled Promise for testing async behavior
-    const createDeferredPromise = <T,>() => {
-      let resolve: (value: T) => void;
-      let reject: (reason?: unknown) => void;
-      const promise = new Promise<T>((res, rej) => {
-        resolve = res;
-        reject = rej;
-      });
-      return { promise, resolve: resolve!, reject: reject! };
+    const expandableProps = {
+      rowInteraction: ROW_INTERACTION.EXPANDABLE,
+      expandedRowContent: MockExpandedRowContent,
+      getExpandedRowData: vi.fn().mockResolvedValue({ details: 'test', metadata: { count: 1 } }),
     };
 
     it('renders chevron icon in left column when rowInteraction is EXPANDABLE', () => {
-      render(
-        <DataTable
-          {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.EXPANDABLE,
-            expandedRowContent: MockExpandedRowContent,
-            getExpandedRowData: vi.fn(),
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps(expandableProps)} />);
 
-      // Find chevron buttons (one per row, not in header)
       const chevronButtons = screen.getAllByRole('button', { name: /expand/i });
-      expect(chevronButtons).toHaveLength(2); // One for each row
+      expect(chevronButtons).toHaveLength(2);
     });
 
     it('chevron points right (collapsed state) by default', () => {
-      render(
-        <DataTable
-          {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.EXPANDABLE,
-            expandedRowContent: MockExpandedRowContent,
-            getExpandedRowData: vi.fn(),
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps(expandableProps)} />);
 
       const chevronButtons = screen.getAllByRole('button', { name: /expand/i });
 
-      // All chevrons should have aria-expanded="false" by default
       chevronButtons.forEach((button) => {
         expect(button).toHaveAttribute('aria-expanded', 'false');
       });
@@ -1172,48 +904,25 @@ describe('DataTable', () => {
 
     it('clicking a row expands it and chevron points down', async () => {
       const user = userEvent.setup();
-      const getExpandedRowData = vi.fn().mockResolvedValue({ details: 'test', metadata: { count: 1 } });
 
-      render(
-        <DataTable
-          {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.EXPANDABLE,
-            expandedRowContent: MockExpandedRowContent,
-            getExpandedRowData,
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps(expandableProps)} />);
 
-      // Click on the first row's chevron button
       const chevronButtons = screen.getAllByRole('button', { name: /expand/i });
       await user.click(chevronButtons[0]);
 
-      // Chevron should now indicate expanded state
       expect(chevronButtons[0]).toHaveAttribute('aria-expanded', 'true');
     });
 
     it('expanded content component is rendered when row is expanded', async () => {
       const user = userEvent.setup();
-      const getExpandedRowData = vi.fn().mockResolvedValue({ details: 'Test details', metadata: { count: 5 } });
 
-      render(
-        <DataTable
-          {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.EXPANDABLE,
-            expandedRowContent: MockExpandedRowContent,
-            getExpandedRowData,
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps(expandableProps)} />);
 
-      // Initially, no expanded content should be visible
       expect(screen.queryByTestId('expanded-content')).not.toBeInTheDocument();
 
-      // Click on the first row's chevron button
       const chevronButtons = screen.getAllByRole('button', { name: /expand/i });
       await user.click(chevronButtons[0]);
 
-      // Expanded content should now be visible
       await waitFor(() => {
         expect(screen.getByTestId('expanded-content')).toBeInTheDocument();
       });
@@ -1226,18 +935,15 @@ describe('DataTable', () => {
       render(
         <DataTable
           {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.EXPANDABLE,
-            expandedRowContent: MockExpandedRowContent,
+            ...expandableProps,
             getExpandedRowData,
           })}
         />
       );
 
-      // Click on the first row's chevron button
       const chevronButtons = screen.getAllByRole('button', { name: /expand/i });
       await user.click(chevronButtons[0]);
 
-      // getExpandedRowData should be called with the row data and rowId
       expect(getExpandedRowData).toHaveBeenCalledTimes(1);
       expect(getExpandedRowData).toHaveBeenCalledWith(mockData[0], '1');
     });
@@ -1250,24 +956,20 @@ describe('DataTable', () => {
       render(
         <DataTable
           {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.EXPANDABLE,
-            expandedRowContent: MockExpandedRowContent,
+            ...expandableProps,
             getExpandedRowData,
           })}
         />
       );
 
-      // Click on the first row's chevron button
       const chevronButtons = screen.getAllByRole('button', { name: /expand/i });
       await user.click(chevronButtons[0]);
 
-      // Initially, content should show loading state
       await waitFor(() => {
         expect(screen.getByTestId('expanded-loading')).toHaveTextContent('true');
       });
       expect(screen.queryByTestId('expanded-data')).not.toBeInTheDocument();
 
-      // Resolve the promise to clean up
       await act(async () => {
         resolve({ details: 'Resolved data', metadata: { count: 10 } });
       });
@@ -1281,28 +983,23 @@ describe('DataTable', () => {
       render(
         <DataTable
           {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.EXPANDABLE,
-            expandedRowContent: MockExpandedRowContent,
+            ...expandableProps,
             getExpandedRowData,
           })}
         />
       );
 
-      // Click on the first row's chevron button
       const chevronButtons = screen.getAllByRole('button', { name: /expand/i });
       await user.click(chevronButtons[0]);
 
-      // Wait for loading state
       await waitFor(() => {
         expect(screen.getByTestId('expanded-loading')).toHaveTextContent('true');
       });
 
-      // Resolve the promise
       await act(async () => {
         resolve({ details: 'Loaded data content', metadata: { count: 42 } });
       });
 
-      // After resolution, should show data and loading=false
       await waitFor(() => {
         expect(screen.getByTestId('expanded-loading')).toHaveTextContent('false');
         expect(screen.getByTestId('expanded-data')).toHaveTextContent('Loaded data content');
@@ -1311,36 +1008,22 @@ describe('DataTable', () => {
 
     it('clicking an expanded row collapses it', async () => {
       const user = userEvent.setup();
-      const getExpandedRowData = vi.fn().mockResolvedValue({ details: 'Test', metadata: { count: 1 } });
 
-      render(
-        <DataTable
-          {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.EXPANDABLE,
-            expandedRowContent: MockExpandedRowContent,
-            getExpandedRowData,
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps(expandableProps)} />);
 
-      // Click on the first row's chevron button to expand
       const chevronButtons = screen.getAllByRole('button', { name: /expand/i });
       await user.click(chevronButtons[0]);
 
-      // Wait for expanded content to appear
       await waitFor(() => {
         expect(screen.getByTestId('expanded-content')).toBeInTheDocument();
       });
 
-      // Click the same chevron again to collapse
       await user.click(chevronButtons[0]);
 
-      // Expanded content should be hidden
       await waitFor(() => {
         expect(screen.queryByTestId('expanded-content')).not.toBeInTheDocument();
       });
 
-      // Chevron should indicate collapsed state
       expect(chevronButtons[0]).toHaveAttribute('aria-expanded', 'false');
     });
 
@@ -1353,8 +1036,7 @@ describe('DataTable', () => {
       render(
         <DataTable
           {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.EXPANDABLE,
-            expandedRowContent: MockExpandedRowContent,
+            ...expandableProps,
             getExpandedRowData,
           })}
         />
@@ -1362,21 +1044,17 @@ describe('DataTable', () => {
 
       const chevronButtons = screen.getAllByRole('button', { name: /expand/i });
 
-      // Expand the first row
       await user.click(chevronButtons[0]);
 
       await waitFor(() => {
         expect(screen.getByTestId('expanded-row-name')).toHaveTextContent('John Doe');
       });
 
-      // First row should be expanded
       expect(chevronButtons[0]).toHaveAttribute('aria-expanded', 'true');
       expect(chevronButtons[1]).toHaveAttribute('aria-expanded', 'false');
 
-      // Click the second row's chevron
       await user.click(chevronButtons[1]);
 
-      // Second row should now be expanded, first row should be collapsed
       await waitFor(() => {
         expect(screen.getByTestId('expanded-row-name')).toHaveTextContent('Jane Smith');
       });
@@ -1394,8 +1072,7 @@ describe('DataTable', () => {
       render(
         <DataTable
           {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.EXPANDABLE,
-            expandedRowContent: MockExpandedRowContent,
+            ...expandableProps,
             getExpandedRowData,
           })}
         />
@@ -1403,40 +1080,27 @@ describe('DataTable', () => {
 
       const chevronButtons = screen.getAllByRole('button', { name: /expand/i });
 
-      // Expand the first row
       await user.click(chevronButtons[0]);
 
       await waitFor(() => {
         expect(screen.getByTestId('expanded-content')).toBeInTheDocument();
       });
 
-      // Expand the second row
       await user.click(chevronButtons[1]);
 
       await waitFor(() => {
         expect(screen.getByTestId('expanded-row-name')).toHaveTextContent('Jane Smith');
       });
 
-      // Should only have one expanded content element
       const expandedContents = screen.getAllByTestId('expanded-content');
       expect(expandedContents).toHaveLength(1);
     });
 
     it('expanded content has proper aria attributes', async () => {
       const user = userEvent.setup();
-      const getExpandedRowData = vi.fn().mockResolvedValue({ details: 'Test', metadata: { count: 1 } });
 
-      render(
-        <DataTable
-          {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.EXPANDABLE,
-            expandedRowContent: MockExpandedRowContent,
-            getExpandedRowData,
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps(expandableProps)} />);
 
-      // Click on the first row's chevron button
       const chevronButtons = screen.getAllByRole('button', { name: /expand/i });
       await user.click(chevronButtons[0]);
 
@@ -1444,39 +1108,23 @@ describe('DataTable', () => {
         expect(screen.getByTestId('expanded-content')).toBeInTheDocument();
       });
 
-      // The expanded content row should have proper ARIA attributes
       const expandedContent = screen.getByTestId('expanded-content');
       const expandedRow = expandedContent.closest('tr, [role="row"]');
 
-      // Should have aria-labelledby or aria-describedby referencing the parent row
-      // or the expanded region should have role="region"
       expect(expandedRow).toBeInTheDocument();
-
-      // The chevron button should have aria-controls pointing to the expanded content
       expect(chevronButtons[0]).toHaveAttribute('aria-controls');
     });
 
     it('chevron has aria-expanded attribute that reflects state', async () => {
       const user = userEvent.setup();
-      const getExpandedRowData = vi.fn().mockResolvedValue({ details: 'Test', metadata: { count: 1 } });
 
-      render(
-        <DataTable
-          {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.EXPANDABLE,
-            expandedRowContent: MockExpandedRowContent,
-            getExpandedRowData,
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps(expandableProps)} />);
 
       const chevronButtons = screen.getAllByRole('button', { name: /expand/i });
 
-      // Initially collapsed
       expect(chevronButtons[0]).toHaveAttribute('aria-expanded', 'false');
       expect(chevronButtons[1]).toHaveAttribute('aria-expanded', 'false');
 
-      // Expand first row
       await user.click(chevronButtons[0]);
 
       await waitFor(() => {
@@ -1484,7 +1132,6 @@ describe('DataTable', () => {
       });
       expect(chevronButtons[1]).toHaveAttribute('aria-expanded', 'false');
 
-      // Collapse first row
       await user.click(chevronButtons[0]);
 
       await waitFor(() => {
@@ -1494,19 +1141,9 @@ describe('DataTable', () => {
 
     it('expanded content spans full table width', async () => {
       const user = userEvent.setup();
-      const getExpandedRowData = vi.fn().mockResolvedValue({ details: 'Test', metadata: { count: 1 } });
 
-      render(
-        <DataTable
-          {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.EXPANDABLE,
-            expandedRowContent: MockExpandedRowContent,
-            getExpandedRowData,
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps(expandableProps)} />);
 
-      // Click on the first row's chevron button
       const chevronButtons = screen.getAllByRole('button', { name: /expand/i });
       await user.click(chevronButtons[0]);
 
@@ -1514,26 +1151,15 @@ describe('DataTable', () => {
         expect(screen.getByTestId('expanded-content')).toBeInTheDocument();
       });
 
-      // The expanded content should be in a cell that spans all columns
       const expandedContent = screen.getByTestId('expanded-content');
       const expandedCell = expandedContent.closest('td, [role="gridcell"]');
 
-      // Should have colspan attribute equal to total columns (3 data columns + 1 chevron column = 4)
       expect(expandedCell).toHaveAttribute('colspan');
     });
 
     it('does not render checkboxes when rowInteraction is EXPANDABLE', () => {
-      render(
-        <DataTable
-          {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.EXPANDABLE,
-            expandedRowContent: MockExpandedRowContent,
-            getExpandedRowData: vi.fn(),
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps(expandableProps)} />);
 
-      // Should not have any checkboxes
       const checkboxes = screen.queryAllByRole('checkbox');
       expect(checkboxes).toHaveLength(0);
     });
@@ -1541,42 +1167,27 @@ describe('DataTable', () => {
     it('rows are not clickable as links when rowInteraction is EXPANDABLE', async () => {
       const user = userEvent.setup();
       const onRowClick = vi.fn();
-      const getExpandedRowData = vi.fn().mockResolvedValue({ details: 'Test', metadata: { count: 1 } });
 
       render(
         <DataTable
           {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.EXPANDABLE,
-            expandedRowContent: MockExpandedRowContent,
-            getExpandedRowData,
-            onRowClick, // This should not be called when interaction is EXPANDABLE
+            ...expandableProps,
+            onRowClick,
           })}
         />
       );
 
-      // Click on a data cell (not the chevron)
       const johnCell = screen.getByText('John Doe');
       await user.click(johnCell);
 
-      // onRowClick should not be called for EXPANDABLE interaction
       expect(onRowClick).not.toHaveBeenCalled();
     });
 
     it('passes correct rowId to expandedRowContent', async () => {
       const user = userEvent.setup();
-      const getExpandedRowData = vi.fn().mockResolvedValue({ details: 'Test', metadata: { count: 1 } });
 
-      render(
-        <DataTable
-          {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.EXPANDABLE,
-            expandedRowContent: MockExpandedRowContent,
-            getExpandedRowData,
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps(expandableProps)} />);
 
-      // Click on the second row's chevron button
       const chevronButtons = screen.getAllByRole('button', { name: /expand/i });
       await user.click(chevronButtons[1]);
 
@@ -1587,19 +1198,9 @@ describe('DataTable', () => {
 
     it('passes correct row data to expandedRowContent', async () => {
       const user = userEvent.setup();
-      const getExpandedRowData = vi.fn().mockResolvedValue({ details: 'Test', metadata: { count: 1 } });
 
-      render(
-        <DataTable
-          {...createDefaultProps({
-            rowInteraction: ROW_INTERACTION.EXPANDABLE,
-            expandedRowContent: MockExpandedRowContent,
-            getExpandedRowData,
-          })}
-        />
-      );
+      render(<DataTable {...createDefaultProps(expandableProps)} />);
 
-      // Click on the second row's chevron button
       const chevronButtons = screen.getAllByRole('button', { name: /expand/i });
       await user.click(chevronButtons[1]);
 

@@ -7,6 +7,7 @@ import { queryData } from './stories/mock-data-service';
 import DateCell from './components/date-cell';
 import NameCell from './components/name-cell';
 import RiskLevelCell from './components/risk-level-cell';
+import CountryCell from './components/country-cell';
 
 const meta = {
   title: 'Components/DataTable/Examples',
@@ -181,7 +182,7 @@ export const ClientsTable: Story = {
       { id: 'reference', header: 'Reference', accessorKey: 'reference', sortable: true },
       { id: 'type', header: 'Type', accessorKey: 'type', sortable: true, filterable: true, filterValues: ['Individual', 'Company'] },
       { id: 'owner', header: 'Owner', accessorKey: 'owner', sortable: true, filterable: true, filterValues: ['Jane Pritchard', 'Kayleigh Smale', 'Navya Nataraja', 'Tracey Longbottom'] },
-      { id: 'country', header: 'Residence country', accessorKey: 'country', sortable: true, filterable: true, filterValues: ['United Kingdom', 'France', 'Germany', 'Norway', 'Spain', 'Italy', 'Poland', 'United States'] },
+      { id: 'country', header: 'Residence country', accessorKey: 'country', cell: CountryCell, sortable: true, filterable: true, filterValues: ['United Kingdom', 'France', 'Germany', 'Norway', 'Spain', 'Italy', 'Poland', 'United States'] },
       { id: 'created', header: 'Created', accessorKey: 'created', cell: DateCell, sortable: true },
     ];
 

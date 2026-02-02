@@ -6,6 +6,7 @@ import type { DataTableColumn, SortState, FilterState } from './types';
 import { queryData } from './stories/mock-data-service';
 import DateCell from './components/date-cell';
 import NameCell from './components/name-cell';
+import RiskLevelCell from './components/risk-level-cell';
 
 const meta = {
   title: 'Components/DataTable/Examples',
@@ -269,17 +270,6 @@ export const RiskAssessmentsTable: Story = {
       setPage(1);
     };
 
-    const RiskBadge = ({ value }: { value: string }) => (
-      <span className="inline-flex items-center gap-1 text-sm">
-        <span className={`h-2 w-2 rounded-full ${
-          value === 'High' ? 'bg-red-500' :
-          value === 'Medium' ? 'bg-amber-500' :
-          'bg-green-500'
-        }`} />
-        {value}
-      </span>
-    );
-
     const StatusBadge = ({ value }: { value: string }) => (
       <span
         className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
@@ -295,7 +285,7 @@ export const RiskAssessmentsTable: Story = {
     const columns: DataTableColumn<RiskAssessment>[] = [
       { id: 'client', header: 'Client', accessorKey: 'client', sortable: true },
       { id: 'matter', header: 'Matter', accessorKey: 'matter', width: '300px' },
-      { id: 'riskLevel', header: 'Risk level', accessorKey: 'riskLevel', cell: RiskBadge, sortable: true, filterable: true, filterValues: ['Low', 'Medium', 'High'] },
+      { id: 'riskLevel', header: 'Risk level', accessorKey: 'riskLevel', cell: RiskLevelCell, sortable: true, filterable: true, filterValues: ['Low', 'Medium', 'High'] },
       { id: 'status', header: 'Status', accessorKey: 'status', cell: StatusBadge, sortable: true, filterable: true, filterValues: ['In progress', 'Complete', 'Not started'] },
       { id: 'assignedTo', header: 'Assigned to', accessorKey: 'assignedTo', sortable: true, filterable: true, filterValues: ['Jane Pritchard', 'Kayleigh Smale', 'Navya Nataraja', 'Rebecca Thomas'] },
       { id: 'updated', header: 'Updated', accessorKey: 'updated', cell: DateCell, sortable: true },

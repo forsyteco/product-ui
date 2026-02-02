@@ -86,7 +86,7 @@ export {
 export { ThemeProvider, useTheme } from './theme'
 export type { ThemeProviderProps, ColourScheme, ThemeMode, ThemeContextValue } from './theme'
 
-export { DataTable, DateCell, NameCell, ROW_INTERACTION } from './data-table'
+export { DataTable, DateCell, NameCell, RiskLevelCell, ROW_INTERACTION } from './data-table'
 export type {
   DataTableProps,
   DataTableColumn,
@@ -99,4 +99,5 @@ export type {
   ExpandedRowContentProps,
   DateCellProps,
   NameCellProps,
+  RiskLevelCellProps,
 } from './data-table'

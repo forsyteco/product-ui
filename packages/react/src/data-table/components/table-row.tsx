@@ -77,8 +77,8 @@ function TableRow<TData>({
             aria-controls={isExpanded ? expandedContentId : undefined}
             aria-label="Expand row"
             className={cn(
-              'h-6 w-6 [&_svg]:transition-transform [&_svg]:duration-300',
-              isExpanded && '[&_svg]:rotate-90'
+              'h-6 w-6 transition-colors duration-300 [&_svg]:transition-transform [&_svg]:duration-300',
+              isExpanded && 'bg-accent hover:bg-accent [&_svg]:rotate-90'
             )}
           />
         </td>

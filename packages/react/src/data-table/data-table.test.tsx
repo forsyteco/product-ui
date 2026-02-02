@@ -1203,5 +1203,40 @@ describe('DataTable', () => {
         expect(screen.getByTestId('expanded-row-name')).toHaveTextContent('Jane Smith');
       });
     });
+
+    it('expand button has yellow background (bg-accent) when row is expanded', async () => {
+      const user = userEvent.setup();
+
+      render(<DataTable {...createDefaultProps(expandableProps)} />);
+
+      const chevronButtons = screen.getAllByRole('button', { name: /expand/i });
+
+      expect(chevronButtons[0]).not.toHaveClass('bg-accent');
+
+      await user.click(chevronButtons[0]);
+
+      await waitFor(() => {
+        expect(chevronButtons[0]).toHaveClass('bg-accent');
+      });
+    });
+
+    it('expand button loses yellow background when row is collapsed', async () => {
+      const user = userEvent.setup();
+
+      render(<DataTable {...createDefaultProps(expandableProps)} />);
+
+      const chevronButtons = screen.getAllByRole('button', { name: /expand/i });
+      await user.click(chevronButtons[0]);
+
+      await waitFor(() => {
+        expect(chevronButtons[0]).toHaveClass('bg-accent');
+      });
+
+      await user.click(chevronButtons[0]);
+
+      await waitFor(() => {
+        expect(chevronButtons[0]).not.toHaveClass('bg-accent');
+      });
+    });
   });
 });

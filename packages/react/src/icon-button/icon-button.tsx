@@ -156,4 +156,5 @@ const IconButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, IconButtonP
 })
 
 export { IconButton, iconButtonVariants }
+export default IconButton
 

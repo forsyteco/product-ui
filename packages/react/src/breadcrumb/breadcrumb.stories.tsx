@@ -9,8 +9,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from './breadcrumb';
-import Button from '../button';
-import DropdownMenu, { DropdownMenuItem } from '../dropdown-menu/dropdown-menu';
+import { Button } from '../button';
+import { DropdownMenu, DropdownMenuItem } from '../dropdown-menu/dropdown-menu';
 
 const meta = {
   title: 'Components/Breadcrumb',

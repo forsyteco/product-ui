@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Listbox from './listbox';
+import { Listbox } from './listbox';
 import type { ListboxOption } from './listbox';
 
 const meta = {

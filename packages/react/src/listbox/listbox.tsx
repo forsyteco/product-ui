@@ -92,5 +92,5 @@ function Listbox({
   );
 }
 
-export default Listbox;
+export { Listbox };
 

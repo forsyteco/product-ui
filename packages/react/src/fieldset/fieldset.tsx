@@ -38,5 +38,5 @@ function Fieldset({ legend, children, variant, className, ...props }: FieldsetPr
   );
 }
 
-export default Fieldset;
+export { Fieldset };
 

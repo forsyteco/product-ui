@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import Button from '../button';
-import CounterLabel from './counter-label';
+import { Button } from '../button';
+import { CounterLabel } from './counter-label';
 
 const meta = {
   title: 'Components/CounterLabel/Features',

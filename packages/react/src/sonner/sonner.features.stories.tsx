@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { toast } from 'sonner';
 
-import Button from '../button';
-import Sonner from './sonner';
+import { Button } from '../button';
+import { Sonner } from './sonner';
 
 const meta = {
   title: 'Components/Sonner/Features',

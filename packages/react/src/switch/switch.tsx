@@ -93,5 +93,5 @@ function Switch({
   );
 }
 
-export default Switch;
+export { Switch };
 

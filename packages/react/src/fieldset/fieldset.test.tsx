@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import Fieldset from './fieldset';
+import { Fieldset } from './fieldset';
 
 describe('Fieldset', () => {
   it('renders the fieldset component', () => {

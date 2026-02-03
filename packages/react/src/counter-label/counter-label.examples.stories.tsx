@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Card, CardContent, CardHeader, CardTitle } from '../card';
-import CounterLabel from './counter-label';
+import { CounterLabel } from './counter-label';
 
 const meta = {
   title: 'Components/CounterLabel/Examples',

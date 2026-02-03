@@ -21,5 +21,3 @@ export const createComponent = <I extends HTMLElement, E extends EventNames = {}
 
   return component
 }
-
-export default createComponent

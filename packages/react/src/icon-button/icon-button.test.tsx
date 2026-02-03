@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 
-import IconButton from './icon-button'
+import { IconButton } from './icon-button';
 
 const HeartIcon = ({ className }: { className?: string }) => (
   <svg data-testid="icon" aria-hidden className={className} />

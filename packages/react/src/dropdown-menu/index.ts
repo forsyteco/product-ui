@@ -1,4 +1,3 @@
-export { default } from './dropdown-menu';
-export { DropdownMenuItem, DropdownMenuButton } from './dropdown-menu';
+export { DropdownMenu, DropdownMenuItem, DropdownMenuButton } from './dropdown-menu';
 export type { DropdownMenuProps, DropdownMenuItemProps, DropdownMenuButtonProps } from './dropdown-menu';
 

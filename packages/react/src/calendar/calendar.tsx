@@ -13,7 +13,7 @@ import {
 } from 'react-day-picker';
 
 import { cn } from '../utils/tailwind';
-import Button, { buttonVariants } from '../button';
+import { Button, buttonVariants } from '../button';
 
 type CalendarChevronProps = React.ComponentProps<typeof ChevronLeftIcon> & {
   orientation?: 'left' | 'right' | string;

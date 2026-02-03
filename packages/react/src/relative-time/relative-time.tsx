@@ -15,4 +15,4 @@ function RelativeTime({ date, datetime, children, noTitle, ...props }: RelativeT
 }
 
 export type RelativeTimeProps = ComponentProps<typeof RelativeTimeComponent>
-export default RelativeTime
+export { RelativeTime }

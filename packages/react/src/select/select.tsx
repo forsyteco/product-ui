@@ -60,5 +60,5 @@ function Select({ options, placeholder, error, className, ...props }: SelectProp
   );
 }
 
-export default Select;
+export { Select };
 

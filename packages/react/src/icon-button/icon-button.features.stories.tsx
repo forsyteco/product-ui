@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Heart, Inbox, Bell } from 'lucide-react'
 
-import IconButton from './icon-button'
+import { IconButton } from './icon-button';
 
 const meta = {
   title: 'Components/IconButton/Features',

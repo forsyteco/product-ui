@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { toast } from 'sonner';
-import Sonner from './sonner';
+import { Sonner } from './sonner';
 
 describe('Sonner', () => {
   it('renders toasts', async () => {

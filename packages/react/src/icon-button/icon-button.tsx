@@ -8,7 +8,7 @@ import {
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '../utils/tailwind'
-import Spinner from '../spinner'
+import { Spinner } from '../spinner'
 import { VisuallyHidden } from '../visually-hidden'
 
 const iconButtonVariants = cva(

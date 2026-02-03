@@ -58,4 +58,4 @@ const CounterLabel = forwardRef<HTMLSpanElement, CounterLabelProps>(function Cou
 
 CounterLabel.displayName = 'CounterLabel';
 
-export default CounterLabel;
+export { CounterLabel };

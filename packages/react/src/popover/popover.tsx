@@ -53,4 +53,5 @@ export function PopoverPanel({ children, className }: PopoverPanelProps) {
 }
 
 export { Popover };
+export default Popover;
 

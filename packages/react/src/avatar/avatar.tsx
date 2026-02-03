@@ -137,3 +137,4 @@ function AvatarFallback(props: AvatarFallbackProps) {
 }
 
 export { Avatar, AvatarFallback, AvatarImage };
+export default Avatar;

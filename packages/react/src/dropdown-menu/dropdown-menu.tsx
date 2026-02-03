@@ -84,4 +84,5 @@ export function DropdownMenuButton({ children, className, ...props }: DropdownMe
 }
 
 export { DropdownMenu };
+export default DropdownMenu;
 

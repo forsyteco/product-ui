@@ -1,0 +1,13 @@
+import{j as i,R as n}from"./iframe-DCut3pB0.js";import{R as o}from"./relative-time-CmDH5iff.js";import{B as s}from"./button-UjEabEsX.js";import"./preload-helper-DEha_CyH.js";import"./index-cXaQtA9H.js";import"./tailwind-CDN07tui.js";const h={title:"Components/RelativeTime/Examples",component:o},t=()=>{const[e,m]=n.useState(!1);return i.jsxs("div",{children:[i.jsx("div",{children:i.jsxs(s,{onClick:()=>m(!e),"aria-describedby":"relative-time",children:["Show ",e?"short":"exact"," date"]})}),i.jsx("div",{children:i.jsx(o,{id:"relative-time",date:new Date("2020-01-01T00:00:00Z"),minute:e?"2-digit":void 0,hour:e?"numeric":void 0,day:e?"2-digit":void 0,month:e?"short":void 0,year:e?"numeric":void 0,timeZoneName:e?"short":void 0,prefix:"",noTitle:!0})})]})},a=()=>i.jsx(o,{date:new Date("2020-01-01T00:00:00Z"),minute:"2-digit",hour:"numeric",day:"2-digit",month:"short",year:"numeric",timeZoneName:"short",prefix:"",noTitle:!0}),r=()=>i.jsx(o,{date:new Date("2020-01-01T00:00:00Z"),noTitle:!0});t.__docgenInfo={description:"",methods:[],displayName:"DynamicRelativeTime"};a.__docgenInfo={description:"",methods:[],displayName:"LongDate"};r.__docgenInfo={description:"",methods:[],displayName:"RelativeTimeExample"};t.parameters={...t.parameters,docs:{...t.parameters?.docs,source:{originalSource:`() => {
+  const [time, setTime] = React.useState(false);
+  return <div>
+            <div>
+                <Button onClick={() => setTime(!time)} aria-describedby="relative-time">
+                    Show {time ? 'short' : 'exact'} date
+                </Button>
+            </div>
+            <div>
+                <RelativeTime id="relative-time" date={new Date('2020-01-01T00:00:00Z')} minute={time ? '2-digit' : undefined} hour={time ? 'numeric' : undefined} day={time ? '2-digit' : undefined} month={time ? 'short' : undefined} year={time ? 'numeric' : undefined} timeZoneName={time ? 'short' : undefined} prefix="" noTitle />
+            </div>
+        </div>;
+}`,...t.parameters?.docs?.source}}};a.parameters={...a.parameters,docs:{...a.parameters?.docs,source:{originalSource:`() => <RelativeTime date={new Date('2020-01-01T00:00:00Z')} minute="2-digit" hour="numeric" day="2-digit" month="short" year="numeric" timeZoneName="short" prefix="" noTitle />`,...a.parameters?.docs?.source}}};r.parameters={...r.parameters,docs:{...r.parameters?.docs,source:{originalSource:"() => <RelativeTime date={new Date('2020-01-01T00:00:00Z')} noTitle={true} />",...r.parameters?.docs?.source}}};const T=["DynamicRelativeTime","LongDate","RelativeTimeExample"];export{t as DynamicRelativeTime,a as LongDate,r as RelativeTimeExample,T as __namedExportsOrder,h as default};

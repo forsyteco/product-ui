@@ -85,3 +85,23 @@ export {
 
 export { ThemeProvider, useTheme } from './theme'
 export type { ThemeProviderProps, ColourScheme, ThemeMode, ThemeContextValue } from './theme'
+
+export { DataTable, DateCell, NameCell, RiskLevelCell, CountryCell, CopyableCell, StatusCell, STATUS, ROW_INTERACTION } from './data-table'
+export type {
+  DataTableProps,
+  DataTableColumn,
+  SortState,
+  SortDirection,
+  FilterState,
+  ColumnFilterState,
+  CellRendererProps,
+  RowInteractionMode,
+  ExpandedRowContentProps,
+  DateCellProps,
+  NameCellProps,
+  RiskLevelCellProps,
+  CountryCellProps,
+  CopyableCellProps,
+  StatusCellProps,
+  Status,
+} from './data-table'

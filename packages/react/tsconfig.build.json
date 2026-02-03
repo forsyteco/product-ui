@@ -12,6 +12,7 @@
       "src/utils/story-helpers.tsx",
       "**/*.stories.tsx",
       "**/*.test.tsx",
+      "**/*.test-utils.tsx",
       "**/*.figma.tsx",
       "script/**/*.ts",
       "src/__tests__/",

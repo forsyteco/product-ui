@@ -342,6 +342,180 @@ describe('DataTable', () => {
     });
   });
 
+  describe('Filter and Sort Independence', () => {
+    const sortableAndFilterableColumns: DataTableColumn<TestData>[] = [
+      { id: 'name', header: 'Name', accessorKey: 'name', sortable: true },
+      { id: 'email', header: 'Email', accessorKey: 'email' },
+      {
+        id: 'status',
+        header: 'Status',
+        accessorKey: 'status',
+        sortable: true,
+        filterable: true,
+        filterValues: ['Active', 'Inactive'],
+      },
+    ];
+
+    it('does not call onSortChange when filter value is selected', async () => {
+      const user = userEvent.setup();
+      const onSortChange = vi.fn();
+      const onFilterChange = vi.fn();
+
+      render(
+        <DataTable
+          {...createDefaultProps({
+            columns: sortableAndFilterableColumns,
+            sortState: null,
+            onSortChange,
+            filterState: [],
+            onFilterChange,
+          })}
+        />
+      );
+
+      // Open filter dropdown and select a value
+      await openStatusFilterDropdown(user);
+      const activeCheckbox = screen.getByLabelText('Active');
+      await user.click(activeCheckbox);
+
+      // Filter should have been called
+      expect(onFilterChange).toHaveBeenCalledTimes(1);
+      // Sort should NOT have been called
+      expect(onSortChange).not.toHaveBeenCalled();
+    });
+
+    it('does not call onSortChange when filter value is deselected', async () => {
+      const user = userEvent.setup();
+      const onSortChange = vi.fn();
+      const onFilterChange = vi.fn();
+
+      render(
+        <DataTable
+          {...createDefaultProps({
+            columns: sortableAndFilterableColumns,
+            sortState: { columnId: 'status', direction: 'asc' },
+            onSortChange,
+            filterState: [{ columnId: 'status', values: ['Active'] }],
+            onFilterChange,
+          })}
+        />
+      );
+
+      // Open filter dropdown and deselect a value
+      await openStatusFilterDropdown(user);
+      const activeCheckbox = screen.getByLabelText('Active');
+      await user.click(activeCheckbox);
+
+      // Filter should have been called
+      expect(onFilterChange).toHaveBeenCalledTimes(1);
+      // Sort should NOT have been called
+      expect(onSortChange).not.toHaveBeenCalled();
+    });
+
+    it('does not call onSortChange when clicking the filter button on a sortable column', async () => {
+      const user = userEvent.setup();
+      const onSortChange = vi.fn();
+      const onFilterChange = vi.fn();
+
+      render(
+        <DataTable
+          {...createDefaultProps({
+            columns: sortableAndFilterableColumns,
+            sortState: null,
+            onSortChange,
+            filterState: [],
+            onFilterChange,
+          })}
+        />
+      );
+
+      // Click the filter button
+      const filterButton = getFilterButton('Status');
+      await user.click(filterButton);
+
+      // Sort should NOT have been called just from opening the filter
+      expect(onSortChange).not.toHaveBeenCalled();
+    });
+
+    it('does not call onFilterChange when clicking sortable column header to sort', async () => {
+      const user = userEvent.setup();
+      const onSortChange = vi.fn();
+      const onFilterChange = vi.fn();
+
+      render(
+        <DataTable
+          {...createDefaultProps({
+            columns: sortableAndFilterableColumns,
+            sortState: null,
+            onSortChange,
+            filterState: [],
+            onFilterChange,
+          })}
+        />
+      );
+
+      // Click the column header text to trigger sort
+      const statusHeader = screen.getByText('Status');
+      await user.click(statusHeader);
+
+      // Sort should have been called
+      expect(onSortChange).toHaveBeenCalledTimes(1);
+      expect(onSortChange).toHaveBeenCalledWith({ columnId: 'status', direction: 'asc' });
+      // Filter should NOT have been called
+      expect(onFilterChange).not.toHaveBeenCalled();
+    });
+
+    it('does not call onSortChange when using Select all in filter dropdown', async () => {
+      const user = userEvent.setup();
+      const onSortChange = vi.fn();
+      const onFilterChange = vi.fn();
+
+      render(
+        <DataTable
+          {...createDefaultProps({
+            columns: sortableAndFilterableColumns,
+            sortState: null,
+            onSortChange,
+            filterState: [],
+            onFilterChange,
+          })}
+        />
+      );
+
+      await openStatusFilterDropdown(user);
+      const selectAllButton = screen.getByRole('button', { name: /select all/i });
+      await user.click(selectAllButton);
+
+      expect(onFilterChange).toHaveBeenCalledTimes(1);
+      expect(onSortChange).not.toHaveBeenCalled();
+    });
+
+    it('does not call onSortChange when using Clear all in filter dropdown', async () => {
+      const user = userEvent.setup();
+      const onSortChange = vi.fn();
+      const onFilterChange = vi.fn();
+
+      render(
+        <DataTable
+          {...createDefaultProps({
+            columns: sortableAndFilterableColumns,
+            sortState: null,
+            onSortChange,
+            filterState: [{ columnId: 'status', values: ['Active', 'Inactive'] }],
+            onFilterChange,
+          })}
+        />
+      );
+
+      await openStatusFilterDropdown(user);
+      const clearAllButton = screen.getByRole('button', { name: /clear all/i });
+      await user.click(clearAllButton);
+
+      expect(onFilterChange).toHaveBeenCalledTimes(1);
+      expect(onSortChange).not.toHaveBeenCalled();
+    });
+  });
+
   describe('Filtering', () => {
     const filterProps: { filterState: FilterState; onFilterChange: ReturnType<typeof vi.fn> } = {
       filterState: [],

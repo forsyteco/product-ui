@@ -356,7 +356,8 @@ describe('DataTable', () => {
       },
     ];
 
-    it('does not call onSortChange when filter value is selected', async () => {
+    it('when a filter value is selected, does not trigger onSortChange', async () => {
+      // Arrange
       const user = userEvent.setup();
       const onSortChange = vi.fn();
       const onFilterChange = vi.fn();
@@ -373,18 +374,18 @@ describe('DataTable', () => {
         />
       );
 
-      // Open filter dropdown and select a value
+      // Act
       await openStatusFilterDropdown(user);
       const activeCheckbox = screen.getByLabelText('Active');
       await user.click(activeCheckbox);
 
-      // Filter should have been called
+      // Assert
       expect(onFilterChange).toHaveBeenCalledTimes(1);
-      // Sort should NOT have been called
       expect(onSortChange).not.toHaveBeenCalled();
     });
 
-    it('does not call onSortChange when filter value is deselected', async () => {
+    it('when a filter value is deselected, does not trigger onSortChange', async () => {
+      // Arrange
       const user = userEvent.setup();
       const onSortChange = vi.fn();
       const onFilterChange = vi.fn();
@@ -401,18 +402,18 @@ describe('DataTable', () => {
         />
       );
 
-      // Open filter dropdown and deselect a value
+      // Act
       await openStatusFilterDropdown(user);
       const activeCheckbox = screen.getByLabelText('Active');
       await user.click(activeCheckbox);
 
-      // Filter should have been called
+      // Assert
       expect(onFilterChange).toHaveBeenCalledTimes(1);
-      // Sort should NOT have been called
       expect(onSortChange).not.toHaveBeenCalled();
     });
 
-    it('does not call onSortChange when clicking the filter button on a sortable column', async () => {
+    it('when the filter button is clicked on a sortable column, does not trigger onSortChange', async () => {
+      // Arrange
       const user = userEvent.setup();
       const onSortChange = vi.fn();
       const onFilterChange = vi.fn();
@@ -429,15 +430,16 @@ describe('DataTable', () => {
         />
       );
 
-      // Click the filter button
+      // Act
       const filterButton = getFilterButton('Status');
       await user.click(filterButton);
 
-      // Sort should NOT have been called just from opening the filter
+      // Assert
       expect(onSortChange).not.toHaveBeenCalled();
     });
 
-    it('does not call onFilterChange when clicking sortable column header to sort', async () => {
+    it('when the column header is clicked to sort, does not trigger onFilterChange', async () => {
+      // Arrange
       const user = userEvent.setup();
       const onSortChange = vi.fn();
       const onFilterChange = vi.fn();
@@ -454,18 +456,18 @@ describe('DataTable', () => {
         />
       );
 
-      // Click the column header text to trigger sort
+      // Act
       const statusHeader = screen.getByText('Status');
       await user.click(statusHeader);
 
-      // Sort should have been called
+      // Assert
       expect(onSortChange).toHaveBeenCalledTimes(1);
       expect(onSortChange).toHaveBeenCalledWith({ columnId: 'status', direction: 'asc' });
-      // Filter should NOT have been called
       expect(onFilterChange).not.toHaveBeenCalled();
     });
 
-    it('does not call onSortChange when using Select all in filter dropdown', async () => {
+    it('when Select all is clicked in the filter dropdown, does not trigger onSortChange', async () => {
+      // Arrange
       const user = userEvent.setup();
       const onSortChange = vi.fn();
       const onFilterChange = vi.fn();
@@ -482,15 +484,18 @@ describe('DataTable', () => {
         />
       );
 
+      // Act
       await openStatusFilterDropdown(user);
       const selectAllButton = screen.getByRole('button', { name: /select all/i });
       await user.click(selectAllButton);
 
+      // Assert
       expect(onFilterChange).toHaveBeenCalledTimes(1);
       expect(onSortChange).not.toHaveBeenCalled();
     });
 
-    it('does not call onSortChange when using Clear all in filter dropdown', async () => {
+    it('when Clear all is clicked in the filter dropdown, does not trigger onSortChange', async () => {
+      // Arrange
       const user = userEvent.setup();
       const onSortChange = vi.fn();
       const onFilterChange = vi.fn();
@@ -507,10 +512,12 @@ describe('DataTable', () => {
         />
       );
 
+      // Act
       await openStatusFilterDropdown(user);
       const clearAllButton = screen.getByRole('button', { name: /clear all/i });
       await user.click(clearAllButton);
 
+      // Assert
       expect(onFilterChange).toHaveBeenCalledTimes(1);
       expect(onSortChange).not.toHaveBeenCalled();
     });

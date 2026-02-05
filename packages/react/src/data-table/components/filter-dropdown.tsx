@@ -71,6 +71,7 @@ function FilterDropdown({
           <HeadlessPopover.Panel
             anchor={{ to: 'bottom end', gap: 8 }}
             className="z-50 w-56 max-h-80 flex flex-col rounded-md bg-background shadow-lg ring-1 ring-border focus:outline-none"
+            onClick={(e: React.MouseEvent) => e.stopPropagation()}
           >
           <div className="p-2 flex flex-col min-h-0 flex-1">
             <div className="mb-2 flex-shrink-0">

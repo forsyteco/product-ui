@@ -108,10 +108,11 @@ export {
 export { ThemeProvider, useTheme } from './theme'
 export type { ThemeProviderProps, ColourScheme, ThemeMode, ThemeContextValue } from './theme'
 
-export { DataTable, DateCell, NameCell, RiskLevelCell, CountryCell, CopyableCell, StatusCell, STATUS, ROW_INTERACTION } from './data-table'
+export { DataTable, DateCell, NameCell, RiskLevelCell, CountryCell, CopyableCell, StatusCell, STATUS, ROW_INTERACTION, DEFAULT_COLOR_CONFIG } from './data-table'
 export type {
   DataTableProps,
   DataTableColumn,
+  DataTableColorConfig,
   SortState,
   SortDirection,
   FilterState,

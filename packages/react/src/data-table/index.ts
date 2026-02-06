@@ -7,6 +7,7 @@ export { default as CopyableCell } from './components/copyable-cell';
 export { default as StatusCell, STATUS } from './components/status-cell';
 export { ROW_INTERACTION } from './constants';
 export type { RowInteractionMode } from './constants';
+export { DEFAULT_COLOR_CONFIG } from './types';
 export type {
   DataTableProps,
   DataTableColumn,

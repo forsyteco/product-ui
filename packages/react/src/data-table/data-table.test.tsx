@@ -1201,15 +1201,70 @@ describe('DataTable', () => {
       expect(pagination).toHaveStyle({ color: '#666666' });
     });
 
-    it('uses default styling when colorConfig is not provided', () => {
+    it('applies default color config when colorConfig is not provided', () => {
       render(<DataTable {...createDefaultProps()} />);
 
+      // Header should have default black background
       const headerRow = screen.getByRole('row', { name: /name/i });
-      // Should not have inline backgroundColor style (uses CSS class instead)
-      expect(headerRow).not.toHaveAttribute('style');
+      expect(headerRow).toHaveStyle({ backgroundColor: '#000000' });
+
+      // Header text should be white
+      const nameHeader = screen.getByText('Name').closest('th');
+      expect(nameHeader).toHaveStyle({ color: '#ffffff' });
+
+      // Row should have default white background
+      const johnRow = screen.getByText('John Doe').closest('tr');
+      expect(johnRow).toHaveStyle({ backgroundColor: '#ffffff' });
+
+      // Pagination should have default colors
+      const pagination = screen.getByRole('navigation', { name: /pagination/i });
+      expect(pagination).toHaveStyle({ backgroundColor: '#ffffff' });
+      expect(pagination).toHaveStyle({ color: '#000000' });
     });
 
-    it('uses default styling for omitted color properties', () => {
+    it('applies default border color when colorConfig is not provided', () => {
+      const { container } = render(<DataTable {...createDefaultProps()} />);
+
+      const tableContainer = container.firstChild;
+      expect(tableContainer).toHaveStyle({ borderColor: '#cbd5e1' });
+    });
+
+    it('applies default selected row background when colorConfig is not provided', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            rowInteraction: ROW_INTERACTION.SELECTION,
+            selectedRowIds: new Set(['1']),
+            onSelectionChange: vi.fn(),
+          })}
+        />
+      );
+
+      const johnRow = screen.getByText('John Doe').closest('tr');
+      expect(johnRow).toHaveStyle({ backgroundColor: '#fef9c3' });
+    });
+
+    it('applies default active icon colors when colorConfig is not provided', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            sortState: { columnId: 'name', direction: 'asc' },
+            onSortChange: vi.fn(),
+          })}
+        />
+      );
+
+      const nameHeader = screen.getByText('Name').closest('th');
+      const sortIcon = nameHeader?.querySelector('svg');
+      const sortIndicator = sortIcon?.parentElement;
+
+      // Default yellow background
+      expect(sortIndicator).toHaveStyle({ backgroundColor: '#ffde13' });
+      // Default black foreground
+      expect(sortIcon).toHaveStyle({ color: '#000000' });
+    });
+
+    it('overrides specific default colors when partial colorConfig is provided', () => {
       render(
         <DataTable
           {...createDefaultProps({
@@ -1218,14 +1273,13 @@ describe('DataTable', () => {
         />
       );
 
-      // Header has custom color
+      // Header has custom color (overridden)
       const headerRow = screen.getByRole('row', { name: /name/i });
       expect(headerRow).toHaveStyle({ backgroundColor: '#ff0000' });
 
-      // Row should not have inline backgroundColor style (uses default class-based styling)
+      // Row should use default white background (not overridden)
       const johnRow = screen.getByText('John Doe').closest('tr');
-      const style = johnRow?.getAttribute('style');
-      expect(style).toBeNull();
+      expect(johnRow).toHaveStyle({ backgroundColor: '#ffffff' });
     });
 
     it('applies custom active background color to sort icon when sorted', () => {

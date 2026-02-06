@@ -16,9 +16,9 @@ export type SortIndicatorProps = Readonly<{
 function SortIndicator({ direction, color, activeBackground, activeForeground }: SortIndicatorProps) {
   const isActive = direction !== null;
 
-  // When active, use activeForeground if provided, otherwise fall back to default
+  // When active, use activeForeground if provided, otherwise fall back to color (header text)
   // When inactive, use color (header text color) if provided
-  const iconColor = isActive ? activeForeground : color;
+  const iconColor = isActive ? (activeForeground ?? color) : color;
   const iconStyle = iconColor ? { color: iconColor } : undefined;
 
   // Container style for active background
@@ -41,7 +41,7 @@ function SortIndicator({ direction, color, activeBackground, activeForeground }:
         <ArrowDown className={cn('h-3 w-3', !iconColor && 'text-foreground')} style={iconStyle} />
       )}
       {direction === null && (
-        <ArrowUpDown className={cn('h-3 w-3 opacity-50', !iconColor && 'text-foreground')} style={iconStyle} />
+        <ArrowUpDown className={cn('h-3 w-3', !iconColor && 'opacity-50 text-foreground')} style={iconStyle} />
       )}
     </span>
   );

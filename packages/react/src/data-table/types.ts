@@ -51,6 +51,21 @@ export type DataTableColorConfig = {
 };
 
 /**
+ * Default color configuration for DataTable
+ */
+export const DEFAULT_COLOR_CONFIG: DataTableColorConfig = {
+  headerBackground: '#000000',
+  headerText: '#ffffff',
+  headerIconActiveBackground: '#ffde13',
+  headerIconActiveForeground: '#000000',
+  rowBackground: '#ffffff',
+  selectedRowBackground: '#fef9c3',
+  borderColor: '#cbd5e1',
+  paginationBackground: '#ffffff',
+  paginationText: '#000000',
+};
+
+/**
  * Props passed to custom cell renderer components
  */
 export type CellRendererProps<TData, TValue = unknown> = {

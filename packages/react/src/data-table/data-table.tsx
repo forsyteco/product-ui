@@ -1,6 +1,7 @@
 import { useMemo, useState, useCallback } from 'react';
 import { cn } from '../utils/tailwind';
 import type { DataTableProps } from './types';
+import { DEFAULT_COLOR_CONFIG } from './types';
 import { ROW_INTERACTION } from './constants';
 import TableHeader from './components/table-header';
 import TableBody from './components/table-body';
@@ -27,8 +28,11 @@ function DataTable<TData, TExpandedData = unknown>({
   loading = false,
   emptyState,
   className,
-  colorConfig,
+  colorConfig: colorConfigProp,
 }: DataTableProps<TData, TExpandedData>) {
+  // Merge with default color config (user values override defaults)
+  const colorConfig = { ...DEFAULT_COLOR_CONFIG, ...colorConfigProp };
+
   const allRowIds = useMemo(() => data.map(getRowId), [data, getRowId]);
 
   // Expandable row state

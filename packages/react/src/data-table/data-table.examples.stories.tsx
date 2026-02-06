@@ -321,23 +321,24 @@ export const RiskAssessmentsTable: Story = {
   render: () => <RiskAssessmentsTableStory />,
 };
 
-// ============ Custom Colors Example ============
+// ============ Custom Colors Override Example ============
 
 import type { DataTableColorConfig } from './types';
 
-const customColorConfig: DataTableColorConfig = {
+// Example showing how to override the default color config with a blue theme
+const blueThemeColorConfig: DataTableColorConfig = {
   headerBackground: '#1e3a5f',
   headerText: '#ffffff',
-  headerIconActiveBackground: '#3b82f6',
-  headerIconActiveForeground: '#ffffff',
-  rowBackground: '#ffffff',
-  selectedRowBackground: '#dbeafe',
-  borderColor: '#cbd5e1',
-  paginationBackground: '#f1f5f9',
-  paginationText: '#475569',
+  headerIconActiveBackground: '#60a5fa',
+  headerIconActiveForeground: '#1e3a5f',
+  rowBackground: '#f0f9ff',
+  selectedRowBackground: '#bfdbfe',
+  borderColor: '#93c5fd',
+  paginationBackground: '#f0f9ff',
+  paginationText: '#1e3a5f',
 };
 
-// Checkerboard pattern style to show that rows are opaque white, not transparent
+// Checkerboard pattern style to show that rows are opaque, not transparent
 const patternBackgroundStyle = {
   backgroundImage: `
     linear-gradient(45deg, #e0e0e0 25%, transparent 25%),
@@ -372,10 +373,11 @@ function CustomColorsTableStory() {
   return (
     <div className="space-y-4">
       <div>
-        <h2 className="text-2xl font-bold">Custom Colors Example</h2>
+        <h2 className="text-2xl font-bold">Custom Colors Override Example</h2>
         <p className="text-muted-foreground">
-          This table demonstrates custom color configuration with a dark blue header, white rows, and light blue selection.
-          The checkerboard background shows that the rows have an opaque white background, not transparent.
+          This table demonstrates how to override the default color configuration with a custom blue theme.
+          The default theme (black header, white text, yellow active icons) is automatically applied to all tables.
+          The checkerboard pattern shows that rows have an opaque background color.
         </p>
       </div>
       <div style={patternBackgroundStyle}>
@@ -394,13 +396,13 @@ function CustomColorsTableStory() {
           rowInteraction={ROW_INTERACTION.SELECTION}
           selectedRowIds={selectedRowIds}
           onSelectionChange={setSelectedRowIds}
-          colorConfig={customColorConfig}
+          colorConfig={blueThemeColorConfig}
         />
       </div>
     </div>
   );
 }
 
-export const CustomColorsTable: Story = {
+export const CustomColorsOverride: Story = {
   render: () => <CustomColorsTableStory />,
 };

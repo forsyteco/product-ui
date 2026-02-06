@@ -67,9 +67,9 @@ function FilterDropdown({
 
   const isActive = selectedValues.length > 0;
 
-  // When active, use activeForeground if provided, otherwise fall back to default
+  // When active, use activeForeground if provided, otherwise fall back to iconColor (header text)
   // When inactive, use iconColor (header text color) if provided
-  const currentIconColor = isActive ? activeForeground : iconColor;
+  const currentIconColor = isActive ? (activeForeground ?? iconColor) : iconColor;
 
   // Container style for active background
   const buttonStyle = isActive && activeBackground

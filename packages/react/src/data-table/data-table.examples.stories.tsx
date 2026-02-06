@@ -328,6 +328,8 @@ import type { DataTableColorConfig } from './types';
 const customColorConfig: DataTableColorConfig = {
   headerBackground: '#1e3a5f',
   headerText: '#ffffff',
+  headerIconActiveBackground: '#3b82f6',
+  headerIconActiveForeground: '#ffffff',
   rowBackground: '#ffffff',
   selectedRowBackground: '#dbeafe',
   borderColor: '#cbd5e1',

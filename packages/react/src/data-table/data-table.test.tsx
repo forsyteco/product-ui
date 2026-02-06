@@ -1227,6 +1227,159 @@ describe('DataTable', () => {
       const style = johnRow?.getAttribute('style');
       expect(style).toBeNull();
     });
+
+    it('applies custom active background color to sort icon when sorted', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            sortState: { columnId: 'name', direction: 'asc' },
+            onSortChange: vi.fn(),
+            colorConfig: { headerIconActiveBackground: '#0000ff' },
+          })}
+        />
+      );
+
+      const nameHeader = screen.getByText('Name').closest('th');
+      // The sort indicator is the span that contains the SVG icon
+      const sortIcon = nameHeader?.querySelector('svg');
+      const sortIndicator = sortIcon?.parentElement;
+      expect(sortIndicator).toHaveStyle({ backgroundColor: '#0000ff' });
+    });
+
+    it('applies custom active foreground color to sort icon when sorted', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            sortState: { columnId: 'name', direction: 'asc' },
+            onSortChange: vi.fn(),
+            colorConfig: { headerIconActiveForeground: '#ffffff' },
+          })}
+        />
+      );
+
+      const nameHeader = screen.getByText('Name').closest('th');
+      const sortIcon = nameHeader?.querySelector('svg');
+      expect(sortIcon).toHaveStyle({ color: '#ffffff' });
+    });
+
+    it('applies custom active background color to filter icon when filters are applied', async () => {
+      const user = userEvent.setup();
+
+      render(
+        <DataTable
+          {...createDefaultProps({
+            filterState: [{ columnId: 'status', values: ['Active'] }],
+            onFilterChange: vi.fn(),
+            colorConfig: { headerIconActiveBackground: '#ff00ff' },
+          })}
+        />
+      );
+
+      const filterButton = getFilterButton('Status');
+      expect(filterButton).toHaveStyle({ backgroundColor: '#ff00ff' });
+    });
+
+    it('applies custom active foreground color to filter icon when filters are applied', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            filterState: [{ columnId: 'status', values: ['Active'] }],
+            onFilterChange: vi.fn(),
+            colorConfig: { headerIconActiveForeground: '#00ffff' },
+          })}
+        />
+      );
+
+      const filterButton = getFilterButton('Status');
+      const filterIcon = filterButton.querySelector('svg');
+      expect(filterIcon).toHaveStyle({ color: '#00ffff' });
+    });
+
+    it('applies custom active colors to header checkbox when checked', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            rowInteraction: ROW_INTERACTION.SELECTION,
+            selectedRowIds: new Set(['1', '2']),
+            onSelectionChange: vi.fn(),
+            colorConfig: {
+              headerIconActiveBackground: '#123456',
+              headerIconActiveForeground: '#fedcba',
+            },
+          })}
+        />
+      );
+
+      const headerCheckbox = screen.getByLabelText(/select all/i);
+      expect(headerCheckbox).toHaveStyle({ backgroundColor: '#123456' });
+      expect(headerCheckbox).toHaveStyle({ color: '#fedcba' });
+    });
+
+    it('applies custom active colors to row checkbox when checked', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            rowInteraction: ROW_INTERACTION.SELECTION,
+            selectedRowIds: new Set(['1']),
+            onSelectionChange: vi.fn(),
+            colorConfig: {
+              headerIconActiveBackground: '#abcdef',
+              headerIconActiveForeground: '#654321',
+            },
+          })}
+        />
+      );
+
+      const rowCheckboxes = screen.getAllByLabelText(/select row/i) as HTMLInputElement[];
+      const checkedCheckbox = rowCheckboxes.find((cb) => cb.checked);
+      expect(checkedCheckbox).toHaveStyle({ backgroundColor: '#abcdef' });
+      expect(checkedCheckbox).toHaveStyle({ color: '#654321' });
+    });
+
+    it('applies custom active colors to filter dropdown checkboxes when checked', async () => {
+      const user = userEvent.setup();
+
+      render(
+        <DataTable
+          {...createDefaultProps({
+            filterState: [{ columnId: 'status', values: ['Active'] }],
+            onFilterChange: vi.fn(),
+            colorConfig: {
+              headerIconActiveBackground: '#112233',
+              headerIconActiveForeground: '#445566',
+            },
+          })}
+        />
+      );
+
+      await openStatusFilterDropdown(user);
+
+      const activeCheckbox = screen.getByLabelText('Active') as HTMLInputElement;
+      expect(activeCheckbox.checked).toBe(true);
+      expect(activeCheckbox).toHaveStyle({ backgroundColor: '#112233' });
+      expect(activeCheckbox).toHaveStyle({ color: '#445566' });
+    });
+
+    it('does not apply active colors to unchecked checkboxes', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            rowInteraction: ROW_INTERACTION.SELECTION,
+            selectedRowIds: new Set(['1']),
+            onSelectionChange: vi.fn(),
+            colorConfig: {
+              headerIconActiveBackground: '#abcdef',
+              headerIconActiveForeground: '#654321',
+            },
+          })}
+        />
+      );
+
+      const rowCheckboxes = screen.getAllByLabelText(/select row/i) as HTMLInputElement[];
+      const uncheckedCheckbox = rowCheckboxes.find((cb) => !cb.checked);
+      // Unchecked checkbox should not have inline styles
+      expect(uncheckedCheckbox?.getAttribute('style')).toBeNull();
+    });
   });
 
   describe('Expandable Rows', () => {

@@ -34,6 +34,10 @@ export type DataTableColorConfig = {
   headerBackground?: CSSProperties['backgroundColor'];
   /** Text color for header cells */
   headerText?: CSSProperties['color'];
+  /** Background color for header icons when active/selected (e.g., when sorted or filtered) */
+  headerIconActiveBackground?: CSSProperties['backgroundColor'];
+  /** Icon color for header icons when active/selected */
+  headerIconActiveForeground?: CSSProperties['color'];
   /** Background color for data rows */
   rowBackground?: CSSProperties['backgroundColor'];
   /** Background color for selected rows */
@@ -74,6 +78,8 @@ export type DataTableColumn<TData, TValue = unknown> = {
   filterable?: boolean;
   /** Distinct values for filter dropdown (required if filterable is true) */
   filterValues?: string[];
+  /** Show "Select all" option in filter dropdown (default: true) */
+  filterSelectAll?: boolean;
   /** Custom cell renderer component */
   cell?: ComponentType<CellRendererProps<TData, TValue>>;
   /** Column width (CSS value, e.g., '200px', '20%') */

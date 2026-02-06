@@ -110,6 +110,8 @@ function TableRow<TData>({
             onClick={(e) => e.stopPropagation()}
             aria-label="Select row"
             className="h-3 w-3"
+            checkedBackground={colorConfig?.headerIconActiveBackground}
+            checkedForeground={colorConfig?.headerIconActiveForeground}
           />
         </td>
       )}

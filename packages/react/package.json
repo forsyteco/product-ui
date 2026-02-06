@@ -1,6 +1,6 @@
 {
   "name": "@forsyteco/product-ui",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "An implementation of Forsyte's product design system using React 🐝",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",

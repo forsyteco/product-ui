@@ -320,3 +320,89 @@ function RiskAssessmentsTableStory() {
 export const RiskAssessmentsTable: Story = {
   render: () => <RiskAssessmentsTableStory />,
 };
+
+// ============ Custom Colors Override Example ============
+
+import type { DataTableColorConfig } from './types';
+
+// Example showing how to override the default color config with a blue theme
+const blueThemeColorConfig: DataTableColorConfig = {
+  headerBackground: '#1e3a5f',
+  headerText: '#ffffff',
+  headerIconActiveBackground: '#60a5fa',
+  headerIconActiveForeground: '#1e3a5f',
+  rowBackground: '#f0f9ff',
+  selectedRowBackground: '#bfdbfe',
+  borderColor: '#93c5fd',
+  paginationBackground: '#f0f9ff',
+  paginationText: '#1e3a5f',
+};
+
+// Checkerboard pattern style to show that rows are opaque, not transparent
+const patternBackgroundStyle = {
+  backgroundImage: `
+    linear-gradient(45deg, #e0e0e0 25%, transparent 25%),
+    linear-gradient(-45deg, #e0e0e0 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #e0e0e0 75%),
+    linear-gradient(-45deg, transparent 75%, #e0e0e0 75%)
+  `,
+  backgroundSize: '20px 20px',
+  backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
+  backgroundColor: '#f0f0f0',
+  padding: '2rem',
+  borderRadius: '0.5rem',
+};
+
+function CustomColorsTableStory() {
+  const [page, setPage] = useState(1);
+  const [sortState, setSortState] = useState<SortState>(null);
+  const [filterState, setFilterState] = useState<FilterState>([]);
+  const [selectedRowIds, setSelectedRowIds] = useState<Set<string>>(new Set());
+  const pageSize = 6;
+
+  const result = useMemo(
+    () => queryData({ data: clientsData, page, pageSize, sortState, filterState }),
+    [page, sortState, filterState]
+  );
+
+  const handleFilterChange = (newFilterState: FilterState) => {
+    setFilterState(newFilterState);
+    setPage(1);
+  };
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <h2 className="text-2xl font-bold">Custom Colors Override Example</h2>
+        <p className="text-muted-foreground">
+          This table demonstrates how to override the default color configuration with a custom blue theme.
+          The default theme (black header, white text, yellow active icons) is automatically applied to all tables.
+          The checkerboard pattern shows that rows have an opaque background color.
+        </p>
+      </div>
+      <div style={patternBackgroundStyle}>
+        <DataTable
+          columns={clientColumns}
+          data={result.data}
+          getRowId={(row) => row.id}
+          page={page}
+          pageSize={pageSize}
+          totalCount={result.totalCount}
+          onPageChange={setPage}
+          sortState={sortState}
+          onSortChange={setSortState}
+          filterState={filterState}
+          onFilterChange={handleFilterChange}
+          rowInteraction={ROW_INTERACTION.SELECTION}
+          selectedRowIds={selectedRowIds}
+          onSelectionChange={setSelectedRowIds}
+          colorConfig={blueThemeColorConfig}
+        />
+      </div>
+    </div>
+  );
+}
+
+export const CustomColorsOverride: Story = {
+  render: () => <CustomColorsTableStory />,
+};

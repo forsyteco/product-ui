@@ -1,6 +1,7 @@
 import { useMemo, useState, useCallback } from 'react';
 import { cn } from '../utils/tailwind';
 import type { DataTableProps } from './types';
+import { DEFAULT_COLOR_CONFIG } from './types';
 import { ROW_INTERACTION } from './constants';
 import TableHeader from './components/table-header';
 import TableBody from './components/table-body';
@@ -27,7 +28,11 @@ function DataTable<TData, TExpandedData = unknown>({
   loading = false,
   emptyState,
   className,
+  colorConfig: colorConfigProp,
 }: DataTableProps<TData, TExpandedData>) {
+  // Merge with default color config (user values override defaults)
+  const colorConfig = { ...DEFAULT_COLOR_CONFIG, ...colorConfigProp };
+
   const allRowIds = useMemo(() => data.map(getRowId), [data, getRowId]);
 
   // Expandable row state
@@ -85,8 +90,15 @@ function DataTable<TData, TExpandedData = unknown>({
     onSelectionChange(newSelectedIds);
   };
 
+  const containerStyle = colorConfig?.borderColor
+    ? { borderColor: colorConfig.borderColor }
+    : undefined;
+
   return (
-    <div className={cn('overflow-hidden rounded-lg border border-border', className)}>
+    <div
+      className={cn('overflow-hidden rounded-lg border border-border', className)}
+      style={containerStyle}
+    >
       <div className="overflow-x-auto">
         <table
           aria-busy={loading}
@@ -102,6 +114,7 @@ function DataTable<TData, TExpandedData = unknown>({
             allRowIds={allRowIds}
             selectedRowIds={selectedRowIds}
             onSelectionChange={onSelectionChange}
+            colorConfig={colorConfig}
           />
           <TableBody
             columns={columns}
@@ -119,6 +132,7 @@ function DataTable<TData, TExpandedData = unknown>({
             isLoadingExpanded={isLoadingExpanded}
             onExpandRow={handleExpandRow}
             expandedRowContent={expandedRowContent}
+            colorConfig={colorConfig}
           />
         </table>
       </div>
@@ -128,6 +142,7 @@ function DataTable<TData, TExpandedData = unknown>({
         totalCount={totalCount}
         onPageChange={onPageChange}
         className="border-t border-border"
+        colorConfig={colorConfig}
       />
     </div>
   );

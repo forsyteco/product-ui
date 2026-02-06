@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '../../utils/tailwind';
 import { ROW_INTERACTION, type RowInteractionMode } from '../constants';
+import type { DataTableColorConfig } from '../types';
 import Checkbox from '../../checkbox';
 import IconButton from '../../icon-button';
 
@@ -17,6 +18,7 @@ export type TableRowProps<TData> = Readonly<{
   isExpanded?: boolean;
   onExpandRow?: (row: TData, rowId: string) => void;
   expandedContentId?: string;
+  colorConfig?: DataTableColorConfig;
 }>;
 
 function TableRow<TData>({
@@ -30,6 +32,7 @@ function TableRow<TData>({
   isExpanded = false,
   onExpandRow,
   expandedContentId,
+  colorConfig,
 }: TableRowProps<TData>) {
   const isClickable = rowInteraction === ROW_INTERACTION.LINK;
   const isSelectable = rowInteraction === ROW_INTERACTION.SELECTION;
@@ -54,6 +57,21 @@ function TableRow<TData>({
     }
   };
 
+  // Determine the row background color based on selection state and colorConfig
+  const getRowBackgroundColor = () => {
+    if (isSelected && colorConfig?.selectedRowBackground) {
+      return colorConfig.selectedRowBackground;
+    }
+    if (colorConfig?.rowBackground) {
+      return colorConfig.rowBackground;
+    }
+    return undefined;
+  };
+
+  const rowStyle = getRowBackgroundColor()
+    ? { backgroundColor: getRowBackgroundColor() }
+    : undefined;
+
   return (
     <tr
       role="row"
@@ -61,9 +79,10 @@ function TableRow<TData>({
         'border-b border-border last:border-b-0 transition-colors duration-300',
         isClickable && 'cursor-pointer hover:bg-muted/50',
         isSelectable && 'hover:bg-muted/30',
-        isSelected && 'bg-accent/10',
+        isSelected && !colorConfig?.selectedRowBackground && 'bg-accent/10',
         isExpanded && 'border-b-0'
       )}
+      style={rowStyle}
       onClick={handleClick}
     >
       {isExpandable && (
@@ -91,6 +110,8 @@ function TableRow<TData>({
             onClick={(e) => e.stopPropagation()}
             aria-label="Select row"
             className="h-3 w-3"
+            checkedBackground={colorConfig?.headerIconActiveBackground}
+            checkedForeground={colorConfig?.headerIconActiveForeground}
           />
         </td>
       )}

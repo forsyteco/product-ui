@@ -1,5 +1,5 @@
 import { Fragment, type ComponentType, type ReactNode, useState, useEffect, useRef } from 'react';
-import type { DataTableColumn, ExpandedRowContentProps } from '../types';
+import type { DataTableColumn, ExpandedRowContentProps, DataTableColorConfig } from '../types';
 import type { RowInteractionMode } from '../constants';
 import { ROW_INTERACTION } from '../constants';
 import TableRow from './table-row';
@@ -25,6 +25,7 @@ export type TableBodyProps<TData, TExpandedData = unknown> = Readonly<{
   isLoadingExpanded?: boolean;
   onExpandRow?: (row: TData, rowId: string) => void;
   expandedRowContent?: ComponentType<ExpandedRowContentProps<TData, TExpandedData>>;
+  colorConfig?: DataTableColorConfig;
 }>;
 
 function TableBody<TData, TExpandedData = unknown>({
@@ -43,6 +44,7 @@ function TableBody<TData, TExpandedData = unknown>({
   isLoadingExpanded = false,
   onExpandRow,
   expandedRowContent: ExpandedRowContent,
+  colorConfig,
 }: TableBodyProps<TData, TExpandedData>) {
   const isSelectable = rowInteraction === ROW_INTERACTION.SELECTION;
   const isExpandable = rowInteraction === ROW_INTERACTION.EXPANDABLE;
@@ -112,6 +114,7 @@ function TableBody<TData, TExpandedData = unknown>({
               isExpanded={isExpanded}
               onExpandRow={onExpandRow}
               expandedContentId={expandedContentId}
+              colorConfig={colorConfig}
             >
               {columns.map((column) => {
                 const getValue = () => {

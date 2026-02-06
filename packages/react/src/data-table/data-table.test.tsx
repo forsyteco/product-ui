@@ -1195,6 +1195,388 @@ describe('DataTable', () => {
     });
   });
 
+  describe('Color Configuration', () => {
+    it('applies custom header background color when provided', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            colorConfig: { headerBackground: '#ff0000' },
+          })}
+        />
+      );
+
+      const headerRow = screen.getByRole('row', { name: /name/i });
+      expect(headerRow).toHaveStyle({ backgroundColor: '#ff0000' });
+    });
+
+    it('applies custom header text color when provided', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            colorConfig: { headerText: '#00ff00' },
+          })}
+        />
+      );
+
+      const nameHeader = screen.getByText('Name').closest('th');
+      expect(nameHeader).toHaveStyle({ color: '#00ff00' });
+    });
+
+    it('applies custom row background color when provided', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            colorConfig: { rowBackground: '#0000ff' },
+          })}
+        />
+      );
+
+      const johnRow = screen.getByText('John Doe').closest('tr');
+      expect(johnRow).toHaveStyle({ backgroundColor: '#0000ff' });
+    });
+
+    it('applies custom border color when provided', () => {
+      const { container } = render(
+        <DataTable
+          {...createDefaultProps({
+            colorConfig: { borderColor: '#purple' },
+          })}
+        />
+      );
+
+      const tableContainer = container.firstChild;
+      expect(tableContainer).toHaveStyle({ borderColor: '#purple' });
+    });
+
+    it('applies custom pagination background color when provided', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            colorConfig: { paginationBackground: '#cccccc' },
+          })}
+        />
+      );
+
+      const pagination = screen.getByRole('navigation', { name: /pagination/i });
+      expect(pagination).toHaveStyle({ backgroundColor: '#cccccc' });
+    });
+
+    it('applies custom pagination text color when provided', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            colorConfig: { paginationText: '#333333' },
+          })}
+        />
+      );
+
+      const pagination = screen.getByRole('navigation', { name: /pagination/i });
+      expect(pagination).toHaveStyle({ color: '#333333' });
+    });
+
+    it('applies custom selected row background color when row is selected', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            rowInteraction: ROW_INTERACTION.SELECTION,
+            selectedRowIds: new Set(['1']),
+            onSelectionChange: vi.fn(),
+            colorConfig: { selectedRowBackground: '#ffff00' },
+          })}
+        />
+      );
+
+      const johnRow = screen.getByText('John Doe').closest('tr');
+      expect(johnRow).toHaveStyle({ backgroundColor: '#ffff00' });
+    });
+
+    it('does not apply selected row background to unselected rows', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            rowInteraction: ROW_INTERACTION.SELECTION,
+            selectedRowIds: new Set(['1']),
+            onSelectionChange: vi.fn(),
+            colorConfig: {
+              rowBackground: '#ffffff',
+              selectedRowBackground: '#ffff00',
+            },
+          })}
+        />
+      );
+
+      const janeRow = screen.getByText('Jane Smith').closest('tr');
+      expect(janeRow).toHaveStyle({ backgroundColor: '#ffffff' });
+    });
+
+    it('applies multiple color configurations together', () => {
+      const { container } = render(
+        <DataTable
+          {...createDefaultProps({
+            colorConfig: {
+              headerBackground: '#111111',
+              headerText: '#222222',
+              rowBackground: '#333333',
+              borderColor: '#444444',
+              paginationBackground: '#555555',
+              paginationText: '#666666',
+            },
+          })}
+        />
+      );
+
+      const headerRow = screen.getByRole('row', { name: /name/i });
+      expect(headerRow).toHaveStyle({ backgroundColor: '#111111' });
+
+      const nameHeader = screen.getByText('Name').closest('th');
+      expect(nameHeader).toHaveStyle({ color: '#222222' });
+
+      const johnRow = screen.getByText('John Doe').closest('tr');
+      expect(johnRow).toHaveStyle({ backgroundColor: '#333333' });
+
+      const tableContainer = container.firstChild;
+      expect(tableContainer).toHaveStyle({ borderColor: '#444444' });
+
+      const pagination = screen.getByRole('navigation', { name: /pagination/i });
+      expect(pagination).toHaveStyle({ backgroundColor: '#555555' });
+      expect(pagination).toHaveStyle({ color: '#666666' });
+    });
+
+    it('applies default color config when colorConfig is not provided', () => {
+      render(<DataTable {...createDefaultProps()} />);
+
+      // Header should have default black background
+      const headerRow = screen.getByRole('row', { name: /name/i });
+      expect(headerRow).toHaveStyle({ backgroundColor: '#000000' });
+
+      // Header text should be white
+      const nameHeader = screen.getByText('Name').closest('th');
+      expect(nameHeader).toHaveStyle({ color: '#ffffff' });
+
+      // Row should have default white background
+      const johnRow = screen.getByText('John Doe').closest('tr');
+      expect(johnRow).toHaveStyle({ backgroundColor: '#ffffff' });
+
+      // Pagination should have default colors
+      const pagination = screen.getByRole('navigation', { name: /pagination/i });
+      expect(pagination).toHaveStyle({ backgroundColor: '#ffffff' });
+      expect(pagination).toHaveStyle({ color: '#000000' });
+    });
+
+    it('applies default border color when colorConfig is not provided', () => {
+      const { container } = render(<DataTable {...createDefaultProps()} />);
+
+      const tableContainer = container.firstChild;
+      expect(tableContainer).toHaveStyle({ borderColor: '#cbd5e1' });
+    });
+
+    it('applies default selected row background when colorConfig is not provided', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            rowInteraction: ROW_INTERACTION.SELECTION,
+            selectedRowIds: new Set(['1']),
+            onSelectionChange: vi.fn(),
+          })}
+        />
+      );
+
+      const johnRow = screen.getByText('John Doe').closest('tr');
+      expect(johnRow).toHaveStyle({ backgroundColor: '#fef9c3' });
+    });
+
+    it('applies default active icon colors when colorConfig is not provided', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            sortState: { columnId: 'name', direction: 'asc' },
+            onSortChange: vi.fn(),
+          })}
+        />
+      );
+
+      const nameHeader = screen.getByText('Name').closest('th');
+      const sortIcon = nameHeader?.querySelector('svg');
+      const sortIndicator = sortIcon?.parentElement;
+
+      // Default yellow background
+      expect(sortIndicator).toHaveStyle({ backgroundColor: '#ffde13' });
+      // Default black foreground
+      expect(sortIcon).toHaveStyle({ color: '#000000' });
+    });
+
+    it('overrides specific default colors when partial colorConfig is provided', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            colorConfig: { headerBackground: '#ff0000' },
+          })}
+        />
+      );
+
+      // Header has custom color (overridden)
+      const headerRow = screen.getByRole('row', { name: /name/i });
+      expect(headerRow).toHaveStyle({ backgroundColor: '#ff0000' });
+
+      // Row should use default white background (not overridden)
+      const johnRow = screen.getByText('John Doe').closest('tr');
+      expect(johnRow).toHaveStyle({ backgroundColor: '#ffffff' });
+    });
+
+    it('applies custom active background color to sort icon when sorted', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            sortState: { columnId: 'name', direction: 'asc' },
+            onSortChange: vi.fn(),
+            colorConfig: { headerIconActiveBackground: '#0000ff' },
+          })}
+        />
+      );
+
+      const nameHeader = screen.getByText('Name').closest('th');
+      // The sort indicator is the span that contains the SVG icon
+      const sortIcon = nameHeader?.querySelector('svg');
+      const sortIndicator = sortIcon?.parentElement;
+      expect(sortIndicator).toHaveStyle({ backgroundColor: '#0000ff' });
+    });
+
+    it('applies custom active foreground color to sort icon when sorted', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            sortState: { columnId: 'name', direction: 'asc' },
+            onSortChange: vi.fn(),
+            colorConfig: { headerIconActiveForeground: '#ffffff' },
+          })}
+        />
+      );
+
+      const nameHeader = screen.getByText('Name').closest('th');
+      const sortIcon = nameHeader?.querySelector('svg');
+      expect(sortIcon).toHaveStyle({ color: '#ffffff' });
+    });
+
+    it('applies custom active background color to filter icon when filters are applied', async () => {
+      const user = userEvent.setup();
+
+      render(
+        <DataTable
+          {...createDefaultProps({
+            filterState: [{ columnId: 'status', values: ['Active'] }],
+            onFilterChange: vi.fn(),
+            colorConfig: { headerIconActiveBackground: '#ff00ff' },
+          })}
+        />
+      );
+
+      const filterButton = getFilterButton('Status');
+      expect(filterButton).toHaveStyle({ backgroundColor: '#ff00ff' });
+    });
+
+    it('applies custom active foreground color to filter icon when filters are applied', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            filterState: [{ columnId: 'status', values: ['Active'] }],
+            onFilterChange: vi.fn(),
+            colorConfig: { headerIconActiveForeground: '#00ffff' },
+          })}
+        />
+      );
+
+      const filterButton = getFilterButton('Status');
+      const filterIcon = filterButton.querySelector('svg');
+      expect(filterIcon).toHaveStyle({ color: '#00ffff' });
+    });
+
+    it('applies custom active colors to header checkbox when checked', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            rowInteraction: ROW_INTERACTION.SELECTION,
+            selectedRowIds: new Set(['1', '2']),
+            onSelectionChange: vi.fn(),
+            colorConfig: {
+              headerIconActiveBackground: '#123456',
+              headerIconActiveForeground: '#fedcba',
+            },
+          })}
+        />
+      );
+
+      const headerCheckbox = screen.getByLabelText(/select all/i);
+      expect(headerCheckbox).toHaveStyle({ backgroundColor: '#123456' });
+      expect(headerCheckbox).toHaveStyle({ color: '#fedcba' });
+    });
+
+    it('applies custom active colors to row checkbox when checked', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            rowInteraction: ROW_INTERACTION.SELECTION,
+            selectedRowIds: new Set(['1']),
+            onSelectionChange: vi.fn(),
+            colorConfig: {
+              headerIconActiveBackground: '#abcdef',
+              headerIconActiveForeground: '#654321',
+            },
+          })}
+        />
+      );
+
+      const rowCheckboxes = screen.getAllByLabelText(/select row/i) as HTMLInputElement[];
+      const checkedCheckbox = rowCheckboxes.find((cb) => cb.checked);
+      expect(checkedCheckbox).toHaveStyle({ backgroundColor: '#abcdef' });
+      expect(checkedCheckbox).toHaveStyle({ color: '#654321' });
+    });
+
+    it('applies custom active colors to filter dropdown checkboxes when checked', async () => {
+      const user = userEvent.setup();
+
+      render(
+        <DataTable
+          {...createDefaultProps({
+            filterState: [{ columnId: 'status', values: ['Active'] }],
+            onFilterChange: vi.fn(),
+            colorConfig: {
+              headerIconActiveBackground: '#112233',
+              headerIconActiveForeground: '#445566',
+            },
+          })}
+        />
+      );
+
+      await openStatusFilterDropdown(user);
+
+      const activeCheckbox = screen.getByLabelText('Active') as HTMLInputElement;
+      expect(activeCheckbox.checked).toBe(true);
+      expect(activeCheckbox).toHaveStyle({ backgroundColor: '#112233' });
+      expect(activeCheckbox).toHaveStyle({ color: '#445566' });
+    });
+
+    it('does not apply active colors to unchecked checkboxes', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            rowInteraction: ROW_INTERACTION.SELECTION,
+            selectedRowIds: new Set(['1']),
+            onSelectionChange: vi.fn(),
+            colorConfig: {
+              headerIconActiveBackground: '#abcdef',
+              headerIconActiveForeground: '#654321',
+            },
+          })}
+        />
+      );
+
+      const rowCheckboxes = screen.getAllByLabelText(/select row/i) as HTMLInputElement[];
+      const uncheckedCheckbox = rowCheckboxes.find((cb) => !cb.checked);
+      // Unchecked checkbox should not have inline styles
+      expect(uncheckedCheckbox?.getAttribute('style')).toBeNull();
+    });
+  });
+
   describe('Expandable Rows', () => {
     const expandableProps = {
       rowInteraction: ROW_INTERACTION.EXPANDABLE,

@@ -1,4 +1,4 @@
-import type { ComponentType, ReactNode } from 'react';
+import type { ComponentType, ReactNode, CSSProperties } from 'react';
 
 /**
  * Sorting direction type
@@ -25,6 +25,45 @@ export type ColumnFilterState = {
  * Filter state passed to parent
  */
 export type FilterState = ColumnFilterState[];
+
+/**
+ * Color configuration for DataTable styling
+ */
+export type DataTableColorConfig = {
+  /** Background color for the header row */
+  headerBackground?: CSSProperties['backgroundColor'];
+  /** Text color for header cells */
+  headerText?: CSSProperties['color'];
+  /** Background color for header icons when active/selected (e.g., when sorted or filtered) */
+  headerIconActiveBackground?: CSSProperties['backgroundColor'];
+  /** Icon color for header icons when active/selected */
+  headerIconActiveForeground?: CSSProperties['color'];
+  /** Background color for data rows */
+  rowBackground?: CSSProperties['backgroundColor'];
+  /** Background color for selected rows */
+  selectedRowBackground?: CSSProperties['backgroundColor'];
+  /** Border color for the table container and cells */
+  borderColor?: CSSProperties['borderColor'];
+  /** Background color for the pagination area */
+  paginationBackground?: CSSProperties['backgroundColor'];
+  /** Text color for pagination */
+  paginationText?: CSSProperties['color'];
+};
+
+/**
+ * Default color configuration for DataTable
+ */
+export const DEFAULT_COLOR_CONFIG: DataTableColorConfig = {
+  headerBackground: '#000000',
+  headerText: '#ffffff',
+  headerIconActiveBackground: '#ffde13',
+  headerIconActiveForeground: '#000000',
+  rowBackground: '#ffffff',
+  selectedRowBackground: '#fef9c3',
+  borderColor: '#cbd5e1',
+  paginationBackground: '#ffffff',
+  paginationText: '#000000',
+};
 
 /**
  * Props passed to custom cell renderer components
@@ -138,4 +177,6 @@ export type DataTableProps<TData, TExpandedData = unknown> = Readonly<{
   // === Styling ===
   /** Additional class name for the table container */
   className?: string;
+  /** Color configuration for customizing table colors */
+  colorConfig?: DataTableColorConfig;
 }>;

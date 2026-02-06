@@ -21,12 +21,15 @@ export type FilterDropdownProps = Readonly<{
   onFilterChange: (columnId: string, values: string[]) => void;
   /** Show "Select all" option (default: true) */
   showSelectAll?: boolean;
+<<<<<<< HEAD
   /** Icon color when inactive (matches header text) */
   iconColor?: CSSProperties['color'];
   /** Background color when active/has filters */
   activeBackground?: CSSProperties['backgroundColor'];
   /** Icon color when active/has filters */
   activeForeground?: CSSProperties['color'];
+=======
+>>>>>>> release/0.0.8
 }>;
 
 function FilterDropdown({
@@ -35,9 +38,12 @@ function FilterDropdown({
   selectedValues,
   onFilterChange,
   showSelectAll = true,
+<<<<<<< HEAD
   iconColor,
   activeBackground,
   activeForeground,
+=======
+>>>>>>> release/0.0.8
 }: FilterDropdownProps) {
   const [searchTerm, setSearchTerm] = useState('');
 

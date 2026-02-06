@@ -135,6 +135,7 @@ function TableHeader<TData>({
                     filterValues={column.filterValues}
                     selectedValues={getColumnFilterValues(column.id)}
                     onFilterChange={handleFilterChange}
+                    showSelectAll={column.filterSelectAll !== false}
                   />
                 )}
               </div>

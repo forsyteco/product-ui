@@ -19,6 +19,8 @@ export type FilterDropdownProps = Readonly<{
   filterValues: string[];
   selectedValues: string[];
   onFilterChange: (columnId: string, values: string[]) => void;
+  /** Show "Select all" option (default: true) */
+  showSelectAll?: boolean;
 }>;
 
 function FilterDropdown({
@@ -26,6 +28,7 @@ function FilterDropdown({
   filterValues,
   selectedValues,
   onFilterChange,
+  showSelectAll = true,
 }: FilterDropdownProps) {
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -85,35 +88,47 @@ function FilterDropdown({
                 startElement={<Search className="h-4 w-4" />}
               />
             </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={selectedValues.length > 0 ? handleClearAll : handleSelectAll}
-              className="mb-2 flex-shrink-0 justify-center px-0 text-muted-foreground hover:text-foreground relative h-5 overflow-hidden"
-            >
-              <span
-                aria-hidden={selectedValues.length > 0}
-                className={cn(
-                  'inline-block transition-all duration-200',
-                  selectedValues.length > 0
-                    ? '-translate-y-full opacity-0'
-                    : 'translate-y-0 opacity-100'
-                )}
+            {showSelectAll ? (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={selectedValues.length > 0 ? handleClearAll : handleSelectAll}
+                className="mb-2 flex-shrink-0 justify-center px-0 text-muted-foreground hover:text-foreground relative h-5 overflow-hidden"
               >
-                Select all
-              </span>
-              <span
-                aria-hidden={selectedValues.length === 0}
-                className={cn(
-                  'absolute inset-0 flex items-center justify-center transition-all duration-200',
-                  selectedValues.length > 0
-                    ? 'translate-y-0 opacity-100'
-                    : 'translate-y-full opacity-0'
-                )}
+                <span
+                  aria-hidden={selectedValues.length > 0}
+                  className={cn(
+                    'inline-block transition-all duration-200',
+                    selectedValues.length > 0
+                      ? '-translate-y-full opacity-0'
+                      : 'translate-y-0 opacity-100'
+                  )}
+                >
+                  Select all
+                </span>
+                <span
+                  aria-hidden={selectedValues.length === 0}
+                  className={cn(
+                    'absolute inset-0 flex items-center justify-center transition-all duration-200',
+                    selectedValues.length > 0
+                      ? 'translate-y-0 opacity-100'
+                      : 'translate-y-full opacity-0'
+                  )}
+                >
+                  Clear all
+                </span>
+              </Button>
+            ) : (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleClearAll}
+                disabled={selectedValues.length === 0}
+                className="mb-2 flex-shrink-0 justify-center px-0 text-muted-foreground hover:text-foreground h-5"
               >
                 Clear all
-              </span>
-            </Button>
+              </Button>
+            )}
             <div data-testid="filter-options" className="overflow-y-auto flex-1 min-h-0">
               {filteredValues.map((value) => {
                 const isSelected = selectedValues.includes(value);

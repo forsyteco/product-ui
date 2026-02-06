@@ -45,7 +45,7 @@ const allEmails = sampleUsers.map((user) => user.email);
 
 export const userColumns: DataTableColumn<User>[] = [
   { id: 'name', header: 'Name', accessorKey: 'name', sortable: true },
-  { id: 'email', header: 'Email', accessorKey: 'email', sortable: true, filterable: true, filterValues: allEmails },
+  { id: 'email', header: 'Email', accessorKey: 'email', sortable: true, filterable: true, filterSelectAll: false, filterValues: allEmails },
   { id: 'status', header: 'Status', accessorKey: 'status', filterable: true, filterValues: ['Active', 'Inactive'] },
   { id: 'role', header: 'Role', accessorKey: 'role', filterable: true, filterValues: ['Admin', 'Manager', 'User'] },
 ];

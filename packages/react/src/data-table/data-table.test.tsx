@@ -708,6 +708,147 @@ describe('DataTable', () => {
 
       expect(onFilterChange).toHaveBeenCalledWith([]);
     });
+
+    describe('filterSelectAll option', () => {
+      const columnsWithSelectAllDisabled: DataTableColumn<TestData>[] = [
+        { id: 'name', header: 'Name', accessorKey: 'name' },
+        {
+          id: 'status',
+          header: 'Status',
+          accessorKey: 'status',
+          filterable: true,
+          filterValues: ['Active', 'Inactive'],
+          filterSelectAll: false,
+        },
+      ];
+
+      it('hides "Select all" button when filterSelectAll is false', async () => {
+        const user = userEvent.setup();
+
+        render(
+          <DataTable
+            {...createDefaultProps({
+              columns: columnsWithSelectAllDisabled,
+              filterState: [],
+              onFilterChange: vi.fn(),
+            })}
+          />
+        );
+
+        await openStatusFilterDropdown(user);
+
+        expect(screen.queryByRole('button', { name: /select all/i })).not.toBeInTheDocument();
+      });
+
+      it('shows static "Clear all" button when filterSelectAll is false and no selections', async () => {
+        const user = userEvent.setup();
+
+        render(
+          <DataTable
+            {...createDefaultProps({
+              columns: columnsWithSelectAllDisabled,
+              filterState: [],
+              onFilterChange: vi.fn(),
+            })}
+          />
+        );
+
+        await openStatusFilterDropdown(user);
+
+        const clearAllButton = screen.getByRole('button', { name: /clear all/i });
+        expect(clearAllButton).toBeInTheDocument();
+        expect(clearAllButton).toBeDisabled();
+      });
+
+      it('enables "Clear all" button when filterSelectAll is false and has selections', async () => {
+        const user = userEvent.setup();
+
+        render(
+          <DataTable
+            {...createDefaultProps({
+              columns: columnsWithSelectAllDisabled,
+              filterState: [{ columnId: 'status', values: ['Active'] }],
+              onFilterChange: vi.fn(),
+            })}
+          />
+        );
+
+        await openStatusFilterDropdown(user);
+
+        const clearAllButton = screen.getByRole('button', { name: /clear all/i });
+        expect(clearAllButton).toBeInTheDocument();
+        expect(clearAllButton).not.toBeDisabled();
+      });
+
+      it('clicking "Clear all" clears selections when filterSelectAll is false', async () => {
+        const user = userEvent.setup();
+        const onFilterChange = vi.fn();
+
+        render(
+          <DataTable
+            {...createDefaultProps({
+              columns: columnsWithSelectAllDisabled,
+              filterState: [{ columnId: 'status', values: ['Active', 'Inactive'] }],
+              onFilterChange,
+            })}
+          />
+        );
+
+        await openStatusFilterDropdown(user);
+
+        const clearAllButton = screen.getByRole('button', { name: /clear all/i });
+        await user.click(clearAllButton);
+
+        expect(onFilterChange).toHaveBeenCalledWith([]);
+      });
+
+      it('shows "Select all" button by default when filterSelectAll is not specified', async () => {
+        const user = userEvent.setup();
+
+        render(
+          <DataTable
+            {...createDefaultProps({
+              filterState: [],
+              onFilterChange: vi.fn(),
+            })}
+          />
+        );
+
+        await openStatusFilterDropdown(user);
+
+        expect(screen.getByRole('button', { name: /select all/i })).toBeInTheDocument();
+      });
+
+      it('shows "Select all" button when filterSelectAll is explicitly true', async () => {
+        const user = userEvent.setup();
+
+        const columnsWithSelectAllEnabled: DataTableColumn<TestData>[] = [
+          { id: 'name', header: 'Name', accessorKey: 'name' },
+          {
+            id: 'status',
+            header: 'Status',
+            accessorKey: 'status',
+            filterable: true,
+            filterValues: ['Active', 'Inactive'],
+            filterSelectAll: true,
+          },
+        ];
+
+        render(
+          <DataTable
+            {...createDefaultProps({
+              columns: columnsWithSelectAllEnabled,
+              filterState: [],
+              onFilterChange: vi.fn(),
+            })}
+          />
+        );
+
+        await openStatusFilterDropdown(user);
+
+        expect(screen.getByRole('button', { name: /select all/i })).toBeInTheDocument();
+      });
+    });
   });
 
   describe('Pagination', () => {

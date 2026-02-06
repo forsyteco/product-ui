@@ -112,6 +112,8 @@ function TableHeader<TData>({
               onChange={handleSelectAll}
               aria-label="Select all rows"
               className="h-3 w-3"
+              checkedBackground={colorConfig?.headerIconActiveBackground}
+              checkedForeground={colorConfig?.headerIconActiveForeground}
             />
           </th>
         )}
@@ -138,7 +140,12 @@ function TableHeader<TData>({
               <div className="flex items-center gap-2">
                 <span>{column.header as ReactNode}</span>
                 {column.sortable && (
-                  <SortIndicator direction={sortDirection} color={colorConfig?.headerText} />
+                  <SortIndicator
+                    direction={sortDirection}
+                    color={colorConfig?.headerText}
+                    activeBackground={colorConfig?.headerIconActiveBackground}
+                    activeForeground={colorConfig?.headerIconActiveForeground}
+                  />
                 )}
                 {column.filterable && column.filterValues && onFilterChange && (
                   <FilterDropdown
@@ -148,6 +155,8 @@ function TableHeader<TData>({
                     onFilterChange={handleFilterChange}
                     showSelectAll={column.filterSelectAll !== false}
                     iconColor={colorConfig?.headerText}
+                    activeBackground={colorConfig?.headerIconActiveBackground}
+                    activeForeground={colorConfig?.headerIconActiveForeground}
                   />
                 )}
               </div>

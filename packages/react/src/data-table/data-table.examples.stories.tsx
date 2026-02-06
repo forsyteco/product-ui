@@ -320,3 +320,85 @@ function RiskAssessmentsTableStory() {
 export const RiskAssessmentsTable: Story = {
   render: () => <RiskAssessmentsTableStory />,
 };
+
+// ============ Custom Colors Example ============
+
+import type { DataTableColorConfig } from './types';
+
+const customColorConfig: DataTableColorConfig = {
+  headerBackground: '#1e3a5f',
+  headerText: '#ffffff',
+  rowBackground: '#ffffff',
+  selectedRowBackground: '#dbeafe',
+  borderColor: '#cbd5e1',
+  paginationBackground: '#f1f5f9',
+  paginationText: '#475569',
+};
+
+// Checkerboard pattern style to show that rows are opaque white, not transparent
+const patternBackgroundStyle = {
+  backgroundImage: `
+    linear-gradient(45deg, #e0e0e0 25%, transparent 25%),
+    linear-gradient(-45deg, #e0e0e0 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #e0e0e0 75%),
+    linear-gradient(-45deg, transparent 75%, #e0e0e0 75%)
+  `,
+  backgroundSize: '20px 20px',
+  backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
+  backgroundColor: '#f0f0f0',
+  padding: '2rem',
+  borderRadius: '0.5rem',
+};
+
+function CustomColorsTableStory() {
+  const [page, setPage] = useState(1);
+  const [sortState, setSortState] = useState<SortState>(null);
+  const [filterState, setFilterState] = useState<FilterState>([]);
+  const [selectedRowIds, setSelectedRowIds] = useState<Set<string>>(new Set());
+  const pageSize = 6;
+
+  const result = useMemo(
+    () => queryData({ data: clientsData, page, pageSize, sortState, filterState }),
+    [page, sortState, filterState]
+  );
+
+  const handleFilterChange = (newFilterState: FilterState) => {
+    setFilterState(newFilterState);
+    setPage(1);
+  };
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <h2 className="text-2xl font-bold">Custom Colors Example</h2>
+        <p className="text-muted-foreground">
+          This table demonstrates custom color configuration with a dark blue header, white rows, and light blue selection.
+          The checkerboard background shows that the rows have an opaque white background, not transparent.
+        </p>
+      </div>
+      <div style={patternBackgroundStyle}>
+        <DataTable
+          columns={clientColumns}
+          data={result.data}
+          getRowId={(row) => row.id}
+          page={page}
+          pageSize={pageSize}
+          totalCount={result.totalCount}
+          onPageChange={setPage}
+          sortState={sortState}
+          onSortChange={setSortState}
+          filterState={filterState}
+          onFilterChange={handleFilterChange}
+          rowInteraction={ROW_INTERACTION.SELECTION}
+          selectedRowIds={selectedRowIds}
+          onSelectionChange={setSelectedRowIds}
+          colorConfig={customColorConfig}
+        />
+      </div>
+    </div>
+  );
+}
+
+export const CustomColorsTable: Story = {
+  render: () => <CustomColorsTableStory />,
+};

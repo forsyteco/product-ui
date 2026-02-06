@@ -10,6 +10,7 @@ export type { RowInteractionMode } from './constants';
 export type {
   DataTableProps,
   DataTableColumn,
+  DataTableColorConfig,
   SortState,
   SortDirection,
   FilterState,

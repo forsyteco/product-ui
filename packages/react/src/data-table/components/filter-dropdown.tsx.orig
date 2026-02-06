@@ -19,10 +19,13 @@ export type FilterDropdownProps = Readonly<{
   filterValues: string[];
   selectedValues: string[];
   onFilterChange: (columnId: string, values: string[]) => void;
+<<<<<<< Updated upstream
+=======
   /** Show "Select all" option (default: true) */
   showSelectAll?: boolean;
   /** Custom icon color */
   iconColor?: CSSProperties['color'];
+>>>>>>> Stashed changes
 }>;
 
 function FilterDropdown({
@@ -30,8 +33,11 @@ function FilterDropdown({
   filterValues,
   selectedValues,
   onFilterChange,
+<<<<<<< Updated upstream
+=======
   showSelectAll = true,
   iconColor,
+>>>>>>> Stashed changes
 }: FilterDropdownProps) {
   const [searchTerm, setSearchTerm] = useState('');
 

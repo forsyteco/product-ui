@@ -1,13 +1,16 @@
+import type { CSSProperties } from 'react';
 import { ArrowUp, ArrowDown, ArrowUpDown } from 'lucide-react';
 import { cn } from '../../utils/tailwind';
 import type { SortDirection } from '../types';
 
 export type SortIndicatorProps = Readonly<{
   direction: SortDirection | null;
+  color?: CSSProperties['color'];
 }>;
 
-function SortIndicator({ direction }: SortIndicatorProps) {
+function SortIndicator({ direction, color }: SortIndicatorProps) {
   const isActive = direction !== null;
+  const iconStyle = color ? { color } : undefined;
 
   return (
     <span
@@ -17,13 +20,13 @@ function SortIndicator({ direction }: SortIndicatorProps) {
       )}
     >
       {direction === 'asc' && (
-        <ArrowUp className="h-3 w-3 text-foreground" />
+        <ArrowUp className={cn('h-3 w-3', !color && 'text-foreground')} style={iconStyle} />
       )}
       {direction === 'desc' && (
-        <ArrowDown className="h-3 w-3 text-foreground" />
+        <ArrowDown className={cn('h-3 w-3', !color && 'text-foreground')} style={iconStyle} />
       )}
       {direction === null && (
-        <ArrowUpDown className="h-3 w-3 text-foreground opacity-50" />
+        <ArrowUpDown className={cn('h-3 w-3 opacity-50', !color && 'text-foreground')} style={iconStyle} />
       )}
     </span>
   );

@@ -1054,6 +1054,181 @@ describe('DataTable', () => {
     });
   });
 
+  describe('Color Configuration', () => {
+    it('applies custom header background color when provided', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            colorConfig: { headerBackground: '#ff0000' },
+          })}
+        />
+      );
+
+      const headerRow = screen.getByRole('row', { name: /name/i });
+      expect(headerRow).toHaveStyle({ backgroundColor: '#ff0000' });
+    });
+
+    it('applies custom header text color when provided', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            colorConfig: { headerText: '#00ff00' },
+          })}
+        />
+      );
+
+      const nameHeader = screen.getByText('Name').closest('th');
+      expect(nameHeader).toHaveStyle({ color: '#00ff00' });
+    });
+
+    it('applies custom row background color when provided', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            colorConfig: { rowBackground: '#0000ff' },
+          })}
+        />
+      );
+
+      const johnRow = screen.getByText('John Doe').closest('tr');
+      expect(johnRow).toHaveStyle({ backgroundColor: '#0000ff' });
+    });
+
+    it('applies custom border color when provided', () => {
+      const { container } = render(
+        <DataTable
+          {...createDefaultProps({
+            colorConfig: { borderColor: '#purple' },
+          })}
+        />
+      );
+
+      const tableContainer = container.firstChild;
+      expect(tableContainer).toHaveStyle({ borderColor: '#purple' });
+    });
+
+    it('applies custom pagination background color when provided', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            colorConfig: { paginationBackground: '#cccccc' },
+          })}
+        />
+      );
+
+      const pagination = screen.getByRole('navigation', { name: /pagination/i });
+      expect(pagination).toHaveStyle({ backgroundColor: '#cccccc' });
+    });
+
+    it('applies custom pagination text color when provided', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            colorConfig: { paginationText: '#333333' },
+          })}
+        />
+      );
+
+      const pagination = screen.getByRole('navigation', { name: /pagination/i });
+      expect(pagination).toHaveStyle({ color: '#333333' });
+    });
+
+    it('applies custom selected row background color when row is selected', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            rowInteraction: ROW_INTERACTION.SELECTION,
+            selectedRowIds: new Set(['1']),
+            onSelectionChange: vi.fn(),
+            colorConfig: { selectedRowBackground: '#ffff00' },
+          })}
+        />
+      );
+
+      const johnRow = screen.getByText('John Doe').closest('tr');
+      expect(johnRow).toHaveStyle({ backgroundColor: '#ffff00' });
+    });
+
+    it('does not apply selected row background to unselected rows', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            rowInteraction: ROW_INTERACTION.SELECTION,
+            selectedRowIds: new Set(['1']),
+            onSelectionChange: vi.fn(),
+            colorConfig: {
+              rowBackground: '#ffffff',
+              selectedRowBackground: '#ffff00',
+            },
+          })}
+        />
+      );
+
+      const janeRow = screen.getByText('Jane Smith').closest('tr');
+      expect(janeRow).toHaveStyle({ backgroundColor: '#ffffff' });
+    });
+
+    it('applies multiple color configurations together', () => {
+      const { container } = render(
+        <DataTable
+          {...createDefaultProps({
+            colorConfig: {
+              headerBackground: '#111111',
+              headerText: '#222222',
+              rowBackground: '#333333',
+              borderColor: '#444444',
+              paginationBackground: '#555555',
+              paginationText: '#666666',
+            },
+          })}
+        />
+      );
+
+      const headerRow = screen.getByRole('row', { name: /name/i });
+      expect(headerRow).toHaveStyle({ backgroundColor: '#111111' });
+
+      const nameHeader = screen.getByText('Name').closest('th');
+      expect(nameHeader).toHaveStyle({ color: '#222222' });
+
+      const johnRow = screen.getByText('John Doe').closest('tr');
+      expect(johnRow).toHaveStyle({ backgroundColor: '#333333' });
+
+      const tableContainer = container.firstChild;
+      expect(tableContainer).toHaveStyle({ borderColor: '#444444' });
+
+      const pagination = screen.getByRole('navigation', { name: /pagination/i });
+      expect(pagination).toHaveStyle({ backgroundColor: '#555555' });
+      expect(pagination).toHaveStyle({ color: '#666666' });
+    });
+
+    it('uses default styling when colorConfig is not provided', () => {
+      render(<DataTable {...createDefaultProps()} />);
+
+      const headerRow = screen.getByRole('row', { name: /name/i });
+      // Should not have inline backgroundColor style (uses CSS class instead)
+      expect(headerRow).not.toHaveAttribute('style');
+    });
+
+    it('uses default styling for omitted color properties', () => {
+      render(
+        <DataTable
+          {...createDefaultProps({
+            colorConfig: { headerBackground: '#ff0000' },
+          })}
+        />
+      );
+
+      // Header has custom color
+      const headerRow = screen.getByRole('row', { name: /name/i });
+      expect(headerRow).toHaveStyle({ backgroundColor: '#ff0000' });
+
+      // Row should not have inline backgroundColor style (uses default class-based styling)
+      const johnRow = screen.getByText('John Doe').closest('tr');
+      const style = johnRow?.getAttribute('style');
+      expect(style).toBeNull();
+    });
+  });
+
   describe('Expandable Rows', () => {
     const expandableProps = {
       rowInteraction: ROW_INTERACTION.EXPANDABLE,

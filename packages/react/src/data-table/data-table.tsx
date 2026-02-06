@@ -27,6 +27,7 @@ function DataTable<TData, TExpandedData = unknown>({
   loading = false,
   emptyState,
   className,
+  colorConfig,
 }: DataTableProps<TData, TExpandedData>) {
   const allRowIds = useMemo(() => data.map(getRowId), [data, getRowId]);
 
@@ -85,8 +86,15 @@ function DataTable<TData, TExpandedData = unknown>({
     onSelectionChange(newSelectedIds);
   };
 
+  const containerStyle = colorConfig?.borderColor
+    ? { borderColor: colorConfig.borderColor }
+    : undefined;
+
   return (
-    <div className={cn('overflow-hidden rounded-lg border border-border', className)}>
+    <div
+      className={cn('overflow-hidden rounded-lg border border-border', className)}
+      style={containerStyle}
+    >
       <div className="overflow-x-auto">
         <table
           aria-busy={loading}
@@ -102,6 +110,7 @@ function DataTable<TData, TExpandedData = unknown>({
             allRowIds={allRowIds}
             selectedRowIds={selectedRowIds}
             onSelectionChange={onSelectionChange}
+            colorConfig={colorConfig}
           />
           <TableBody
             columns={columns}
@@ -119,6 +128,7 @@ function DataTable<TData, TExpandedData = unknown>({
             isLoadingExpanded={isLoadingExpanded}
             onExpandRow={handleExpandRow}
             expandedRowContent={expandedRowContent}
+            colorConfig={colorConfig}
           />
         </table>
       </div>
@@ -128,6 +138,7 @@ function DataTable<TData, TExpandedData = unknown>({
         totalCount={totalCount}
         onPageChange={onPageChange}
         className="border-t border-border"
+        colorConfig={colorConfig}
       />
     </div>
   );

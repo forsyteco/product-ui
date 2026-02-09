@@ -15,4 +15,4 @@ function EmptyState({ children, colSpan }: EmptyStateProps) {
   );
 }
 
-export default EmptyState;
+export { EmptyState };

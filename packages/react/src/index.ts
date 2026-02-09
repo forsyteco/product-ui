@@ -10,8 +10,8 @@ export type { DisclosureProps, DisclosureButtonProps, DisclosurePanelProps } fro
 export { Dialog, DialogPanel, DialogTitle, DialogDescription } from './dialog'
 export type { DialogProps, DialogPanelProps, DialogTitleProps, DialogDescriptionProps } from './dialog'
 
-export { Popover, PopoverButton, PopoverPanel } from './popover'
-export type { PopoverProps, PopoverButtonProps, PopoverPanelProps } from './popover'
+export { Popover, PopoverTrigger, PopoverContent } from './popover'
+export type { PopoverProps, PopoverTriggerProps, PopoverContentProps } from './popover'
 
 export { Tabs, TabList, Tab, TabPanels, TabPanel } from './tabs'
 export type { TabsProps, TabListProps, TabProps, TabPanelsProps, TabPanelProps } from './tabs'

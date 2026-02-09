@@ -38,7 +38,7 @@ function getRelativeTime(date: dayjs.Dayjs, now: dayjs.Dayjs): string {
  * Top line: Formatted date (default: DD/MM/YYYY British format)
  * Bottom line: Relative time with clock icon (e.g., "today", "yesterday", "5 days ago", "in 3 days")
  */
-function DateCell({ value, dateFormat = 'DD/MM/YYYY' }: DateCellProps) {
+export function DateCell({ value, dateFormat = 'DD/MM/YYYY' }: DateCellProps) {
   const date = dayjs(value);
   const now = dayjs();
 
@@ -56,4 +56,3 @@ function DateCell({ value, dateFormat = 'DD/MM/YYYY' }: DateCellProps) {
   );
 }
 
-export default DateCell;

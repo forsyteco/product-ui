@@ -99,5 +99,4 @@ export function TabPanel({ children, className }: TabPanelProps) {
 }
 
 export { Tabs };
-export default Tabs;
 

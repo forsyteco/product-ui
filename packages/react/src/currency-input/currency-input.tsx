@@ -103,7 +103,7 @@ export function CurrencyInput({
   const fractionDigitsRef = useRef(0);
 
   useEffect(() => {
-    if (isEditing) return;
+    if (isEditing || value == null) return;
 
     const valueChanged = lastValueRef.current !== value;
     if (valueChanged) {
@@ -144,7 +144,8 @@ export function CurrencyInput({
       value={displayValue}
       onBlur={(event) => {
         setIsEditing(false);
-        const { parsed, decimals } = normalizeRaw(displayValue, decimalScale);
+        const rawValue = event.currentTarget.value;
+        const { parsed, decimals } = normalizeRaw(rawValue, decimalScale);
 
         if (parsed === undefined) {
           setDisplayValue('');

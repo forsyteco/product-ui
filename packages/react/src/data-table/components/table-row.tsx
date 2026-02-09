@@ -3,8 +3,8 @@ import { ChevronRight } from 'lucide-react';
 import { cn } from '../../utils/tailwind';
 import { ROW_INTERACTION, type RowInteractionMode } from '../constants';
 import type { DataTableColorConfig } from '../types';
-import Checkbox from '../../checkbox';
-import IconButton from '../../icon-button';
+import { Checkbox } from '../../checkbox';
+import { IconButton } from '../../icon-button';
 
 export type TableRowProps<TData> = Readonly<{
   row: TData;
@@ -120,4 +120,4 @@ function TableRow<TData>({
   );
 }
 
-export default TableRow;
+export { TableRow };

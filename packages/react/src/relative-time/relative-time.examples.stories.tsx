@@ -1,6 +1,6 @@
 import React from 'react'
 import { RelativeTime } from './relative-time';
-import Button from '../button'
+import { Button } from '../button'
 
 export default {
     title: 'Components/RelativeTime/Examples',

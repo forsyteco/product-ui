@@ -16,7 +16,7 @@ export type CountryCellProps = Readonly<{
  * // In column definition:
  * { id: 'country', header: 'Country', accessorKey: 'country', cell: CountryCell }
  */
-function CountryCell({ value }: CountryCellProps) {
+export function CountryCell({ value }: CountryCellProps) {
   const [hasError, setHasError] = useState(false);
 
   const countryCode = getCountryCode(value);
@@ -43,4 +43,3 @@ function CountryCell({ value }: CountryCellProps) {
   );
 }
 
-export default CountryCell;

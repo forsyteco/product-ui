@@ -2,9 +2,9 @@ import { useState, useMemo, type CSSProperties } from 'react';
 import { Popover as HeadlessPopover, Portal } from '@headlessui/react';
 import { Filter, Search } from 'lucide-react';
 import { cn } from '../../utils/tailwind';
-import Input from '../../input';
-import Button from '../../button';
-import Checkbox from '../../checkbox';
+import { Input } from '../../input';
+import { Button } from '../../button';
+import { Checkbox } from '../../checkbox';
 
 /**
  * Formats a filter value for display (converts snake_case to Sentence case).
@@ -181,4 +181,4 @@ function FilterDropdown({
   );
 }
 
-export default FilterDropdown;
+export { FilterDropdown };

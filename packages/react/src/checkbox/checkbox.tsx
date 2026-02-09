@@ -73,5 +73,4 @@ function Checkbox({ label, size, className, id, checked, checkedBackground, chec
 }
 
 export { Checkbox };
-export default Checkbox;
 

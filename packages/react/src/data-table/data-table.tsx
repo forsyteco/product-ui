@@ -3,9 +3,9 @@ import { cn } from '../utils/tailwind';
 import type { DataTableProps } from './types';
 import { DEFAULT_COLOR_CONFIG } from './types';
 import { ROW_INTERACTION } from './constants';
-import TableHeader from './components/table-header';
-import TableBody from './components/table-body';
-import Pagination from './components/pagination';
+import { TableHeader } from './components/table-header';
+import { TableBody } from './components/table-body';
+import { Pagination } from './components/pagination';
 
 function DataTable<TData, TExpandedData = unknown>({
   columns,
@@ -148,4 +148,4 @@ function DataTable<TData, TExpandedData = unknown>({
   );
 }
 
-export default DataTable;
+export { DataTable };

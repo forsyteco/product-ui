@@ -67,5 +67,4 @@ export function DialogDescription({ children, className }: DialogDescriptionProp
 }
 
 export { Dialog };
-export default Dialog;
 

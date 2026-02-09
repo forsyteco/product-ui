@@ -20,7 +20,7 @@ export type NameCellProps<TData extends WithEmail = WithEmail> = Readonly<{
  * // In column definition:
  * { id: 'name', header: 'Name', accessorKey: 'name', cell: NameCell }
  */
-function NameCell<TData extends WithEmail>({ value, row }: NameCellProps<TData>) {
+export function NameCell<TData extends WithEmail>({ value, row }: NameCellProps<TData>) {
   return (
     <div className="flex flex-col">
       <span className="font-medium text-foreground">{value}</span>
@@ -29,4 +29,3 @@ function NameCell<TData extends WithEmail>({ value, row }: NameCellProps<TData>)
   );
 }
 
-export default NameCell;

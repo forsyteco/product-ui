@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '../../utils/tailwind';
-import IconButton from '../../icon-button';
+import { IconButton } from '../../icon-button';
 import type { DataTableColorConfig } from '../types';
 
 export type PaginationProps = Readonly<{
@@ -62,4 +62,4 @@ function Pagination({
   );
 }
 
-export default Pagination;
+export { Pagination };

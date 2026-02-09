@@ -1,15 +1,15 @@
 import { useState, useMemo } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import DataTable from './data-table';
+import { DataTable } from './data-table';
 import { ROW_INTERACTION } from './constants';
 import type { DataTableColumn, SortState, FilterState } from './types';
 import { queryData } from './stories/mock-data-service';
-import DateCell from './components/date-cell';
-import NameCell from './components/name-cell';
-import RiskLevelCell from './components/risk-level-cell';
-import CountryCell from './components/country-cell';
-import CopyableCell from './components/copyable-cell';
-import StatusCell, { STATUS, type Status } from './components/status-cell';
+import { DateCell } from './components/date-cell';
+import { NameCell } from './components/name-cell';
+import { RiskLevelCell } from './components/risk-level-cell';
+import { CountryCell } from './components/country-cell';
+import { CopyableCell } from './components/copyable-cell';
+import { StatusCell, STATUS, type Status } from './components/status-cell';
 
 const meta = {
   title: 'Components/DataTable/Examples',

@@ -62,4 +62,4 @@ function ExpandedRow({ id, colSpan, children, isCollapsing = false }: ExpandedRo
   );
 }
 
-export default ExpandedRow;
+export { ExpandedRow };

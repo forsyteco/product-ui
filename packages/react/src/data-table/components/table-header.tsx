@@ -2,9 +2,9 @@ import type { ReactNode } from 'react';
 import { cn } from '../../utils/tailwind';
 import type { DataTableColumn, SortState, FilterState, SortDirection, DataTableColorConfig } from '../types';
 import { ROW_INTERACTION, type RowInteractionMode } from '../constants';
-import SortIndicator from './sort-indicator';
-import FilterDropdown from './filter-dropdown';
-import Checkbox from '../../checkbox';
+import { SortIndicator } from './sort-indicator';
+import { FilterDropdown } from './filter-dropdown';
+import { Checkbox } from '../../checkbox';
 
 export type TableHeaderProps<TData> = Readonly<{
   columns: DataTableColumn<TData>[];
@@ -168,4 +168,4 @@ function TableHeader<TData>({
   );
 }
 
-export default TableHeader;
+export { TableHeader };

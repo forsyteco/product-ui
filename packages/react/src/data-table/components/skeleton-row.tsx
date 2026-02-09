@@ -1,4 +1,4 @@
-import Skeleton from '../../skeleton';
+import { Skeleton } from '../../skeleton';
 import type { DataTableColumn } from '../types';
 import type { RowInteractionMode } from '../constants';
 import { ROW_INTERACTION } from '../constants';
@@ -37,4 +37,4 @@ function SkeletonRow<TData>({ columns, rowInteraction }: SkeletonRowProps<TData>
   );
 }
 
-export default SkeletonRow;
+export { SkeletonRow };

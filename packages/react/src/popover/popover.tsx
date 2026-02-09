@@ -8,9 +8,9 @@ export type PopoverProps = {
   className?: string;
 };
 
-export type PopoverButtonProps = ButtonProps;
+export type PopoverTriggerProps = ButtonProps;
 
-export type PopoverPanelProps = {
+export type PopoverContentProps = {
   children: ReactNode;
   className?: string;
 };
@@ -25,7 +25,7 @@ function Popover({ children, className }: PopoverProps) {
   );
 }
 
-export function PopoverButton({ children, className, variant = 'outline', size, ...props }: PopoverButtonProps) {
+export function PopoverTrigger({ children, className, variant = 'outline', size, ...props }: PopoverTriggerProps) {
   return (
     <HeadlessPopover.Button
       as={Button}
@@ -39,7 +39,7 @@ export function PopoverButton({ children, className, variant = 'outline', size, 
   );
 }
 
-export function PopoverPanel({ children, className }: PopoverPanelProps) {
+export function PopoverContent({ children, className }: PopoverContentProps) {
   return (
     <HeadlessPopover.Panel
       className={cn(
@@ -53,5 +53,4 @@ export function PopoverPanel({ children, className }: PopoverPanelProps) {
 }
 
 export { Popover };
-export default Popover;
 

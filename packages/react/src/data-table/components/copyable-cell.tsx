@@ -5,7 +5,7 @@ export type CopyableCellProps = Readonly<{
   value: string;
 }>;
 
-export default function CopyableCell({ value }: CopyableCellProps) {
+export function CopyableCell({ value }: CopyableCellProps) {
   const handleCopy = () => {
     navigator.clipboard.writeText(value);
   };

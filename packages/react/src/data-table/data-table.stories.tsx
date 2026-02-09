@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import DataTable from './data-table';
+import { DataTable } from './data-table';
 import { ROW_INTERACTION } from './constants';
 import type { SortState, FilterState } from './types';
 import { queryData } from './stories/mock-data-service';

@@ -2,11 +2,11 @@ import { Fragment, type ComponentType, type ReactNode, useState, useEffect, useR
 import type { DataTableColumn, ExpandedRowContentProps, DataTableColorConfig } from '../types';
 import type { RowInteractionMode } from '../constants';
 import { ROW_INTERACTION } from '../constants';
-import TableRow from './table-row';
-import TableCell from './table-cell';
-import SkeletonRow from './skeleton-row';
-import EmptyState from './empty-state';
-import ExpandedRow from './expanded-row';
+import { TableRow } from './table-row';
+import { TableCell } from './table-cell';
+import { SkeletonRow } from './skeleton-row';
+import { EmptyState } from './empty-state';
+import { ExpandedRow } from './expanded-row';
 
 export type TableBodyProps<TData, TExpandedData = unknown> = Readonly<{
   columns: DataTableColumn<TData>[];
@@ -168,4 +168,4 @@ function TableBody<TData, TExpandedData = unknown>({
   );
 }
 
-export default TableBody;
+export { TableBody };

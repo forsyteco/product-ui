@@ -56,7 +56,7 @@ function formatStatusDisplay(status: Status): string {
  * A cell component for displaying status with optional version information.
  * Shows a badge-style status with version text below when applicable.
  */
-export default function StatusCell({ value, version }: StatusCellProps) {
+export function StatusCell({ value, version }: StatusCellProps) {
   const showVersion = version !== false && version !== undefined && version !== 'unknown';
   const colorClasses = getStatusColors(value);
   const displayValue = formatStatusDisplay(value);

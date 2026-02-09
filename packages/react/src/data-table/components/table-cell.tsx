@@ -38,4 +38,4 @@ function TableCell<TData, TValue = unknown>({
   );
 }
 
-export default TableCell;
+export { TableCell };

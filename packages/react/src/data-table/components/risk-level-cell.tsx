@@ -42,7 +42,7 @@ function capitalizeFirst(str: string): string {
  * // In column definition:
  * { id: 'risk', header: 'Risk Level', accessorKey: 'riskLevel', cell: RiskLevelCell }
  */
-function RiskLevelCell({ value }: RiskLevelCellProps) {
+export function RiskLevelCell({ value }: RiskLevelCellProps) {
   const colorClasses = getRiskLevelColors(value);
   const displayValue = capitalizeFirst(value);
 
@@ -53,4 +53,3 @@ function RiskLevelCell({ value }: RiskLevelCellProps) {
   );
 }
 
-export default RiskLevelCell;

@@ -49,5 +49,4 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
 });
 
 export { Button };
-export default Button;
 

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Popover, PopoverButton, PopoverPanel } from './popover';
+import { Popover, PopoverContent, PopoverTrigger } from './popover';
 
 const meta = {
   title: 'Components/Popover',
@@ -21,11 +21,11 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: () => (
     <Popover>
-      <PopoverButton>Open Popover</PopoverButton>
-      <PopoverPanel>
+      <PopoverTrigger>Open Popover</PopoverTrigger>
+      <PopoverContent>
         <h3 className="text-base font-medium text-gray-900 mb-2">Popover Title</h3>
         <p className="text-base text-gray-600">This is the popover content.</p>
-      </PopoverPanel>
+      </PopoverContent>
     </Popover>
   ),
 };
@@ -33,11 +33,11 @@ export const Default: Story = {
 export const Playground: Story = {
   render: (args) => (
     <Popover {...args}>
-      <PopoverButton>Toggle Popover</PopoverButton>
-      <PopoverPanel>
+      <PopoverTrigger>Toggle Popover</PopoverTrigger>
+      <PopoverContent>
         <h3 className="text-base font-medium text-gray-900 mb-2">Custom Popover</h3>
         <p className="text-base text-gray-600">You can customize the content and styling.</p>
-      </PopoverPanel>
+      </PopoverContent>
     </Popover>
   ),
   args: {},

@@ -1,3 +1,3 @@
-export { Popover, PopoverButton, PopoverPanel } from './popover';
-export type { PopoverProps, PopoverButtonProps, PopoverPanelProps } from './popover';
+export { Popover, PopoverTrigger, PopoverContent } from './popover';
+export type { PopoverProps, PopoverTriggerProps, PopoverContentProps } from './popover';
 

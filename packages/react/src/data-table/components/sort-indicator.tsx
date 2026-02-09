@@ -47,4 +47,4 @@ function SortIndicator({ direction, color, activeBackground, activeForeground }:
   );
 }
 
-export default SortIndicator;
+export { SortIndicator };

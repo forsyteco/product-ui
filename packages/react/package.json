@@ -56,6 +56,16 @@
         "default": "./dist/calendar/index.cjs"
       }
     },
+    "./date-picker": {
+      "import": {
+        "types": "./dist/date-picker/index.d.ts",
+        "default": "./dist/date-picker/index.mjs"
+      },
+      "require": {
+        "types": "./dist/date-picker/index.d.ts",
+        "default": "./dist/date-picker/index.cjs"
+      }
+    },
     "./card": {
       "import": {
         "types": "./dist/card/index.d.ts",
@@ -94,6 +104,26 @@
       "require": {
         "types": "./dist/counter-label/index.d.ts",
         "default": "./dist/counter-label/index.cjs"
+      }
+    },
+    "./currency-input": {
+      "import": {
+        "types": "./dist/currency-input/index.d.ts",
+        "default": "./dist/currency-input/index.mjs"
+      },
+      "require": {
+        "types": "./dist/currency-input/index.d.ts",
+        "default": "./dist/currency-input/index.cjs"
+      }
+    },
+    "./data-table": {
+      "import": {
+        "types": "./dist/data-table/index.d.ts",
+        "default": "./dist/data-table/index.mjs"
+      },
+      "require": {
+        "types": "./dist/data-table/index.d.ts",
+        "default": "./dist/data-table/index.cjs"
       }
     },
     "./dialog": {
@@ -174,6 +204,16 @@
       "require": {
         "types": "./dist/popover/index.d.ts",
         "default": "./dist/popover/index.cjs"
+      }
+    },
+    "./page-layout": {
+      "import": {
+        "types": "./dist/page-layout/index.d.ts",
+        "default": "./dist/page-layout/index.mjs"
+      },
+      "require": {
+        "types": "./dist/page-layout/index.d.ts",
+        "default": "./dist/page-layout/index.cjs"
       }
     },
     "./radio-group": {

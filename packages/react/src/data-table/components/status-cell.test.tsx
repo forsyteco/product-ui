@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import StatusCell, { STATUS } from './status-cell';
+import { StatusCell, STATUS } from './status-cell';
 
 describe('StatusCell', () => {
   describe('Status Badge Rendering', () => {

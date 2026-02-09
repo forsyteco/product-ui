@@ -1,13 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
-import Popover, { PopoverButton, PopoverPanel } from './popover';
+import { Popover, PopoverContent, PopoverTrigger } from './popover';
 
 describe('Popover', () => {
   it('renders the popover component', () => {
     render(
       <Popover>
-        <PopoverButton>Open</PopoverButton>
-        <PopoverPanel>Content</PopoverPanel>
+        <PopoverTrigger>Open</PopoverTrigger>
+        <PopoverContent>Content</PopoverContent>
       </Popover>
     );
     expect(screen.getByText('Open')).toBeInTheDocument();
@@ -16,8 +16,8 @@ describe('Popover', () => {
   it('renders panel content', () => {
     render(
       <Popover>
-        <PopoverButton>Open</PopoverButton>
-        <PopoverPanel>Popover content</PopoverPanel>
+        <PopoverTrigger>Open</PopoverTrigger>
+        <PopoverContent>Popover content</PopoverContent>
       </Popover>
     );
 

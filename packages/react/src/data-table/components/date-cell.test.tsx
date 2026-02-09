@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import DateCell from './date-cell';
+import { DateCell } from './date-cell';
 
 describe('DateCell', () => {
   // Use a fixed "now" date for consistent test results

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import RiskLevelCell from './risk-level-cell';
+import { RiskLevelCell } from './risk-level-cell';
 
 describe('RiskLevelCell', () => {
   describe('High Risk Level', () => {

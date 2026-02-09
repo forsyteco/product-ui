@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, act } from '@testing-library/react';
-import Dialog, { DialogPanel, DialogTitle, DialogDescription } from './dialog';
+import { Dialog, DialogPanel, DialogTitle, DialogDescription } from './dialog';
 
 describe('Dialog', () => {
   it('renders when open', async () => {

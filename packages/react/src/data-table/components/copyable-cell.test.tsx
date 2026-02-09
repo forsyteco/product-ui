@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import CopyableCell from './copyable-cell';
+import { CopyableCell } from './copyable-cell';
 
 describe('CopyableCell', () => {
   const mockWriteText = vi.fn();

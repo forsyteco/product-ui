@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
-import CountryCell from './country-cell';
+import { CountryCell } from './country-cell';
 
 describe('CountryCell', () => {
   describe('Country Name Rendering', () => {

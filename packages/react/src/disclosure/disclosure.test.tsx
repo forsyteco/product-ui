@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import Disclosure, { DisclosureButton, DisclosurePanel } from './disclosure';
+import { Disclosure, DisclosureButton, DisclosurePanel } from './disclosure';
 
 describe('Disclosure', () => {
   it('renders the disclosure component', () => {

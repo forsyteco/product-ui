@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
-import DropdownMenu, { DropdownMenuItem, DropdownMenuButton } from './dropdown-menu';
+import { DropdownMenu, DropdownMenuItem, DropdownMenuButton } from './dropdown-menu';
 
 describe('DropdownMenu', () => {
   it('renders the dropdown menu component', () => {

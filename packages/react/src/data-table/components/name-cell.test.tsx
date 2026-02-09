@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import NameCell from './name-cell';
+import { NameCell } from './name-cell';
 
 describe('NameCell', () => {
   const mockRow = { email: 'john@example.com' };

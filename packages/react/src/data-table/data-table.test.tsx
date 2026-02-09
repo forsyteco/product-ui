@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen, within, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react';
-import DataTable from './data-table';
+import { DataTable } from './data-table';
 import { ROW_INTERACTION } from './constants';
 import type { DataTableColumn, FilterState, CellRendererProps } from './types';
 import {

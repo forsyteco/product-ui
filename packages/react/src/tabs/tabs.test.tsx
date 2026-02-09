@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import Tabs, { TabList, Tab, TabPanels, TabPanel } from './tabs';
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from './tabs';
 
 describe('Tabs', () => {
   it('renders the tabs component', () => {

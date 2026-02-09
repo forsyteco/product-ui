@@ -71,6 +71,7 @@ function Calendar({
     return (
       <nav className={cn('flex items-center gap-1', className)}>
         <Button
+          type="button"
           variant={buttonVariant}
           size="icon"
           className="size-(--cell-size) bg-transparent p-0 opacity-80 hover:bg-transparent hover:opacity-100"
@@ -83,6 +84,7 @@ function Calendar({
         </Button>
 
         <Button
+          type="button"
           variant={buttonVariant}
           size="icon"
           className="size-(--cell-size) bg-transparent p-0 opacity-80 hover:bg-transparent hover:opacity-100"
@@ -198,6 +200,7 @@ function Calendar({
           return (
             <div
               data-slot="calendar"
+              data-calendar-submit-ignore="true"
               ref={rootRef}
               className={cn(className)}
               {...props}
@@ -245,10 +248,9 @@ function CalendarDayButton({
         month: 'long',
         day: 'numeric',
       })}
-      className={cn(
-        className
-      )}
       {...props}
+      type="button"
+      className={cn(className)}
     />
   );
 }

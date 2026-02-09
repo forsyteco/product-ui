@@ -38,6 +38,7 @@ function DatePicker({
   buttonClassName,
   calendarProps,
 }: DatePickerProps) {
+  const popoverRef = React.useRef<HTMLDivElement | null>(null);
   const [internalValue, setInternalValue] = React.useState<Date | undefined>(defaultValue);
   const isControlled = value !== undefined;
   const selected = isControlled ? value : internalValue;
@@ -64,8 +65,30 @@ function DatePicker({
     onValueChange?.(date);
   };
 
+  const handleSubmitCapture = (event: React.FormEvent<HTMLDivElement>) => {
+    const nativeEvent = event.nativeEvent as SubmitEvent;
+    const submitter = nativeEvent.submitter as HTMLElement | null;
+    const activeElement = document.activeElement as HTMLElement | null;
+    const popoverElement = popoverRef.current;
+
+    const shouldIgnoreSubmit = (element: HTMLElement | null) =>
+      Boolean(
+        element &&
+          (popoverElement?.contains(element) ||
+            element.closest('[data-calendar-submit-ignore="true"]'))
+      );
+
+    if (shouldIgnoreSubmit(submitter) || shouldIgnoreSubmit(activeElement)) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  };
+
   return (
-    <HeadlessPopover className={cn('relative inline-flex w-full', className)}>
+    <HeadlessPopover
+      className={cn('relative inline-flex w-full', className)}
+      onSubmitCapture={handleSubmitCapture}
+    >
       {({ close, open }) => (
         <>
           <HeadlessPopover.Button
@@ -88,7 +111,9 @@ function DatePicker({
 
           <Portal>
             <HeadlessPopover.Panel
+              ref={popoverRef}
               data-slot="popover-content"
+              data-calendar-submit-ignore="true"
               className="z-50 mt-2 w-fit rounded-md bg-popover shadow-lg ring-1 ring-border focus:outline-none"
             >
               <Calendar

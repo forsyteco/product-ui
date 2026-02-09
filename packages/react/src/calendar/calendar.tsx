@@ -69,12 +69,12 @@ function Calendar({
     };
 
     return (
-      <nav className={cn('flex items-center', className)}>
+      <nav className={cn('flex items-center gap-1', className)}>
         <Button
           variant={buttonVariant}
           size="icon"
-          className="absolute left-0 size-(--cell-size) bg-transparent p-0 opacity-80 hover:bg-transparent hover:opacity-100"
-          tabIndex={isPreviousDisabled ? undefined : -1}
+          className="size-(--cell-size) bg-transparent p-0 opacity-80 hover:bg-transparent hover:opacity-100"
+          tabIndex={isPreviousDisabled ? -1 : undefined}
           disabled={isPreviousDisabled}
           aria-label={labelPrevious(previousMonth)}
           onClick={handlePreviousClick}
@@ -85,8 +85,8 @@ function Calendar({
         <Button
           variant={buttonVariant}
           size="icon"
-          className="absolute right-0 size-(--cell-size) bg-transparent p-0 opacity-80 hover:bg-transparent hover:opacity-100"
-          tabIndex={isNextDisabled ? undefined : -1}
+          className="size-(--cell-size) bg-transparent p-0 opacity-80 hover:bg-transparent hover:opacity-100"
+          tabIndex={isNextDisabled ? -1 : undefined}
           disabled={isNextDisabled}
           aria-label={labelNext(nextMonth)}
           onClick={handleNextClick}
@@ -239,6 +239,12 @@ function CalendarDayButton({
       ref={ref}
       variant="ghost"
       data-day={day.date.toLocaleDateString()}
+      aria-label={day.date.toLocaleDateString('en', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })}
       className={cn(
         className
       )}

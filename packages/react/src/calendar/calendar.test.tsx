@@ -45,6 +45,21 @@ describe('Calendar', () => {
     expect(next).toBeDisabled();
   });
 
+  it('removes disabled nav buttons from tab order', () => {
+    render(
+      <Calendar
+        initialMonth={new Date(2024, 0, 1)}
+        disableNavigation
+      />
+    );
+
+    const prev = screen.getByLabelText(/previous month/i);
+    const next = screen.getByLabelText(/next month/i);
+
+    expect(prev).toHaveAttribute('tabindex', '-1');
+    expect(next).toHaveAttribute('tabindex', '-1');
+  });
+
   it('applies custom month formatter when using dropdown caption', () => {
     render(
       <Calendar
@@ -79,6 +94,29 @@ describe('Calendar', () => {
 
     const focused = document.activeElement as HTMLElement | null;
     expect(focused?.dataset.day).toBe(new Date('2024-01-01').toLocaleDateString());
+  });
+
+  it('adds an accessible label to day buttons', () => {
+    render(
+      <CalendarDayButton
+        day={{
+          date: new Date('2024-01-01'),
+          displayIndex: 0,
+          displayMonth: new Date('2024-01-01'),
+        }}
+        modifiers={{ focused: false }}
+      />
+    );
+
+    expect(screen.getByRole('button')).toHaveAttribute(
+      'aria-label',
+      new Date('2024-01-01').toLocaleDateString('en', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+    );
   });
 
   it('renders chevron fallback for non-left/right orientations', () => {

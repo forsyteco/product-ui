@@ -142,7 +142,7 @@ const preview: Preview = {
     },
 
     viewport: {
-      viewports: storybookViewports,
+      options: storybookViewports,
     },
 
     docs: {

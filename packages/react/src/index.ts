@@ -78,6 +78,8 @@ export type {
 export { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './card'
 
 export { Calendar, CalendarDayButton } from './calendar'
+export { DatePicker } from './date-picker'
+export type { DatePickerProps } from './date-picker'
 
 export { Sonner } from './sonner'
 export type { SonnerProps } from './sonner'

@@ -1,19 +1,18 @@
 import * as React from 'react';
 import {
-  Combobox as HeadlessCombobox,
-  ComboboxButton,
+  Combobox,
   ComboboxInput,
-  ComboboxOption as HeadlessComboboxOption,
+  ComboboxOption,
   ComboboxOptions,
 } from '@headlessui/react';
 import { cn } from '../utils/tailwind';
-import type { ComboboxOption } from './types';
+import type { AutocompleteOption } from './types';
 
 type Ctx = {
-  options: ComboboxOption[];
-  filteredOptions: ComboboxOption[];
-  value: ComboboxOption | null;
-  setValue: (next: ComboboxOption | null) => void;
+  options: AutocompleteOption[];
+  filteredOptions: AutocompleteOption[];
+  value: AutocompleteOption | null;
+  setValue: (next: AutocompleteOption | null) => void;
 
   query: string;
   setQuery: (next: string) => void;
@@ -27,36 +26,39 @@ type Ctx = {
 
   clearable: boolean;
 
-  /** Ref to the root container; used to avoid closing on blur when focus moves inside (e.g. toggle or option). */
-  rootRef: React.RefObject<HTMLDivElement | null>;
+  minQueryLength: number;
 
-  filterFn: (option: ComboboxOption, query: string) => boolean;
+  filterFn: (option: AutocompleteOption, query: string) => boolean;
   renderOption?: (
-    option: ComboboxOption,
+    option: AutocompleteOption,
     state: { active: boolean; selected: boolean; disabled: boolean }
   ) => React.ReactNode;
+
+  loading: boolean;
+  emptyBeforeThresholdText: (min: number) => string;
+  emptyAfterThresholdText: string;
 };
 
-const ComboboxCtx = React.createContext<Ctx | null>(null);
+const AutocompleteCtx = React.createContext<Ctx | null>(null);
 
-function useComboboxCtx() {
-  const ctx = React.useContext(ComboboxCtx);
-  if (!ctx) throw new globalThis.Error('Combobox.* must be used within <Combobox.Root>.');
+function useAutocompleteCtx() {
+  const ctx = React.useContext(AutocompleteCtx);
+  if (!ctx) throw new globalThis.Error('Autocomplete.* must be used within <Autocomplete.Root>.');
   return ctx;
 }
 
-function defaultFilterFn(option: ComboboxOption, query: string) {
+function defaultFilterFn(option: AutocompleteOption, query: string) {
   const q = query.trim().toLowerCase();
   if (!q) return true;
   return option.label.toLowerCase().includes(q);
 }
 
-export type ComboboxRootProps = {
-  options: ComboboxOption[];
+export type AutocompleteRootProps = {
+  options: AutocompleteOption[];
 
-  value?: ComboboxOption | null;
-  defaultValue?: ComboboxOption | null;
-  onChange?: (value: ComboboxOption | null) => void;
+  value?: AutocompleteOption | null;
+  defaultValue?: AutocompleteOption | null;
+  onChange?: (value: AutocompleteOption | null) => void;
 
   query?: string;
   defaultQuery?: string;
@@ -67,11 +69,17 @@ export type ComboboxRootProps = {
   invalid?: boolean;
   clearable?: boolean;
 
-  /** Override filtering (fuzzy etc.) */
-  filterFn?: (option: ComboboxOption, query: string) => boolean;
+  /** Default 1 – options open on first character typed */
+  minQueryLength?: number;
 
-  /** Customize option rendering */
+  loading?: boolean;
+
+  filterFn?: (option: AutocompleteOption, query: string) => boolean;
+
   renderOption?: Ctx['renderOption'];
+
+  emptyBeforeThresholdText?: (min: number) => string;
+  emptyAfterThresholdText?: string;
 
   className?: string;
   children: React.ReactNode;
@@ -88,30 +96,34 @@ function Root({
   defaultQuery = '',
   onQueryChange,
 
-  placeholder = 'Select an option…',
+  placeholder = 'Search…',
   disabled = false,
   invalid = false,
   clearable = true,
 
+  minQueryLength = 1,
+  loading = false,
+
   filterFn,
   renderOption,
 
+  emptyBeforeThresholdText = (min) => `Type ${min}+ characters…`,
+  emptyAfterThresholdText = 'No results',
+
   className,
   children,
-}: ComboboxRootProps) {
-  // selection (controlled/uncontrolled)
-  const [internalValue, setInternalValue] = React.useState<ComboboxOption | null>(defaultValue);
+}: AutocompleteRootProps) {
+  const [internalValue, setInternalValue] = React.useState<AutocompleteOption | null>(defaultValue);
   const value = valueProp !== undefined ? valueProp : internalValue;
 
   const setValue = React.useCallback(
-    (next: ComboboxOption | null) => {
+    (next: AutocompleteOption | null) => {
       if (valueProp === undefined) setInternalValue(next);
       onChange?.(next);
     },
     [onChange, valueProp]
   );
 
-  // query (controlled/uncontrolled)
   const [internalQuery, setInternalQuery] = React.useState(defaultQuery);
   const query = queryProp !== undefined ? queryProp : internalQuery;
 
@@ -123,9 +135,7 @@ function Root({
     [onQueryChange, queryProp]
   );
 
-  // open/close (local); only used for syncing (e.g. onClose). Visibility is controlled by Headless.
   const [isOpen, setIsOpen] = React.useState(false);
-  const rootRef = React.useRef<HTMLDivElement>(null);
 
   const effectiveFilterFn = filterFn ?? defaultFilterFn;
 
@@ -148,9 +158,12 @@ function Root({
       isOpen,
       setIsOpen,
       clearable,
-      rootRef,
+      minQueryLength,
       filterFn: effectiveFilterFn,
       renderOption,
+      loading,
+      emptyBeforeThresholdText,
+      emptyAfterThresholdText,
     }),
     [
       options,
@@ -164,29 +177,29 @@ function Root({
       invalid,
       isOpen,
       clearable,
+      minQueryLength,
       effectiveFilterFn,
       renderOption,
+      loading,
+      emptyBeforeThresholdText,
+      emptyAfterThresholdText,
     ]
   );
 
   return (
-    <ComboboxCtx.Provider value={ctx}>
-      <div ref={rootRef} className={cn('relative', className)}>
-        <HeadlessCombobox
+    <AutocompleteCtx.Provider value={ctx}>
+      <div className={cn('relative', className)}>
+        <Combobox
           by="id"
           value={value}
-          onChange={(next) => {
-            setValue(next);
-            setIsOpen(false);
-          }}
-          onClose={() => setIsOpen(false)}
+          onChange={(next) => setValue(next)}
           disabled={disabled}
           nullable
         >
           {children}
-        </HeadlessCombobox>
+        </Combobox>
       </div>
-    </ComboboxCtx.Provider>
+    </AutocompleteCtx.Provider>
   );
 }
 
@@ -209,14 +222,41 @@ function Control({
   return <div {...props} className={cn('relative', className)} />;
 }
 
+function LeadingIcon({
+  className,
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
+  const icon =
+    children ?? (
+      <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path
+          fillRule="evenodd"
+          d="M9 3a6 6 0 1 0 3.476 10.892l3.316 3.316a1 1 0 0 0 1.414-1.414l-3.316-3.316A6 6 0 0 0 9 3Zm-4 6a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z"
+          clipRule="evenodd"
+        />
+      </svg>
+    );
+
+  return (
+    <div
+      {...props}
+      className={cn(
+        'pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground',
+        className
+      )}
+    >
+      {icon}
+    </div>
+  );
+}
+
 type InputProps = Omit<
   React.ComponentProps<typeof ComboboxInput>,
   'displayValue' | 'onChange'
 > & {
-  displayValue?: (option: ComboboxOption | null) => string;
+  displayValue?: (option: AutocompleteOption | null) => string;
   onValueTextChange?: (text: string) => void;
-  /** Defaults true for Combobox */
-  openOnFocus?: boolean;
   placeholder?: string;
 };
 
@@ -226,12 +266,11 @@ function Input({
   onValueTextChange,
   onFocus,
   onBlur,
-  openOnFocus = true,
   ...props
 }: InputProps) {
-  const ctx = useComboboxCtx();
+  const ctx = useAutocompleteCtx();
 
-  const displayValueFn = displayValue ?? ((opt: ComboboxOption | null) => opt?.label ?? '');
+  const displayValueFn = displayValue ?? ((opt: AutocompleteOption | null) => opt?.label ?? '');
   const placeholderValue = props.placeholder ?? ctx.placeholder;
   const inputProps = {
     ...props,
@@ -242,7 +281,7 @@ function Input({
     <ComboboxInput
       {...inputProps}
       className={cn(
-        'w-full rounded-md border bg-background py-2 pl-3 pr-20 text-base leading-5 text-foreground',
+        'w-full rounded-md border bg-background py-2 pl-9 pr-10 text-base leading-5 text-foreground',
         'border-input focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background',
         ctx.invalid && 'border-destructive focus:ring-destructive',
         ctx.disabled && 'cursor-not-allowed opacity-50',
@@ -252,13 +291,19 @@ function Input({
         const next = e.target.value;
         ctx.setQuery(next);
         onValueTextChange?.(next);
-        if (!ctx.disabled) ctx.setIsOpen(true);
+
+        if (!ctx.disabled) {
+          const qLen = next.trim().length;
+          ctx.setIsOpen(qLen >= ctx.minQueryLength);
+        }
       }}
       onFocus={(e: React.FocusEvent<HTMLInputElement>) => {
-        if (!ctx.disabled && openOnFocus) ctx.setIsOpen(true);
         onFocus?.(e);
       }}
-      onBlur={onBlur}
+      onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
+        if (!ctx.disabled) ctx.setIsOpen(false);
+        onBlur?.(e);
+      }}
     />
   );
 }
@@ -269,7 +314,7 @@ function ClearButton({
   onClick,
   ...props
 }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
-  const ctx = useComboboxCtx();
+  const ctx = useAutocompleteCtx();
   const visible = ctx.clearable && !!ctx.value && !ctx.disabled;
 
   if (!visible) return null;
@@ -280,7 +325,7 @@ function ClearButton({
       {...props}
       aria-label={ariaLabel ?? 'Clear selection'}
       className={cn(
-        'absolute inset-y-0 right-7 flex items-center px-2 text-muted-foreground hover:text-foreground',
+        'absolute inset-y-0 right-0 flex items-center px-3 text-muted-foreground hover:text-foreground',
         className
       )}
       onClick={(e) => {
@@ -302,60 +347,35 @@ function ClearButton({
   );
 }
 
-function ToggleButton({
-  className,
-  children,
-  onClick,
-  ...props
-}: React.ComponentProps<typeof ComboboxButton>) {
-  const ctx = useComboboxCtx();
-
-  return (
-    <ComboboxButton
-      {...props}
-      aria-label={props['aria-label'] ?? 'Toggle options'}
-      className={cn(
-        'absolute inset-y-0 right-0 flex items-center pr-2 text-muted-foreground',
-        ctx.disabled && 'cursor-not-allowed opacity-50',
-        className
-      )}
-      onClick={onClick}
-    >
-      {children ?? (
-        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      )}
-    </ComboboxButton>
-  );
-}
-
 function Options({
   className,
   children,
   ...props
 }: Omit<React.ComponentProps<typeof ComboboxOptions>, 'children'> & {
-  /** If omitted, renders filtered options */
   children?: React.ReactNode;
 }) {
-  const ctx = useComboboxCtx();
-  if (ctx.disabled) return null;
+  const ctx = useAutocompleteCtx();
+
+  const qLen = ctx.query.trim().length;
+  const meetsThreshold = qLen >= ctx.minQueryLength;
+
+  if (!ctx.isOpen || ctx.disabled || !meetsThreshold) return null;
 
   const hasResults = ctx.filteredOptions.length > 0;
 
   return (
     <ComboboxOptions
       {...props}
-      anchor="bottom start"
       className={cn(
-        'z-10 max-h-60 w-[var(--input-width)] overflow-auto rounded-md bg-background py-1 text-base shadow-lg',
-        'invisible empty:invisible data-open:visible',
+        'absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-background py-1 text-base shadow-lg',
         'ring-1 ring-border focus:outline-none',
         className
       )}
     >
       {children ? (
         children
+      ) : ctx.loading ? (
+        <Loading />
       ) : hasResults ? (
         ctx.filteredOptions.map((opt) => <Option key={opt.id} option={opt} />)
       ) : (
@@ -365,13 +385,29 @@ function Options({
   );
 }
 
-function Empty({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+function Loading({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       {...props}
       className={cn('cursor-default select-none px-4 py-2 text-muted-foreground', className)}
     >
-      Nothing found.
+      Loading…
+    </div>
+  );
+}
+
+function Empty({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  const ctx = useAutocompleteCtx();
+  const qLen = ctx.query.trim().length;
+
+  return (
+    <div
+      {...props}
+      className={cn('cursor-default select-none px-4 py-2 text-muted-foreground', className)}
+    >
+      {qLen < ctx.minQueryLength
+        ? ctx.emptyBeforeThresholdText(ctx.minQueryLength)
+        : ctx.emptyAfterThresholdText}
     </div>
   );
 }
@@ -381,14 +417,14 @@ function Option({
   className,
   children,
   ...props
-}: Omit<React.ComponentProps<typeof HeadlessComboboxOption>, 'value' | 'children'> & {
-  option: ComboboxOption;
+}: Omit<React.ComponentProps<typeof ComboboxOption>, 'value' | 'children'> & {
+  option: AutocompleteOption;
   children?: React.ReactNode;
 }) {
-  const ctx = useComboboxCtx();
+  const ctx = useAutocompleteCtx();
 
   return (
-    <HeadlessComboboxOption
+    <ComboboxOption
       {...props}
       value={option}
       disabled={option.disabled}
@@ -428,7 +464,7 @@ function Option({
             : option.label;
         return <>{content}</>;
       }}
-    </HeadlessComboboxOption>
+    </ComboboxOption>
   );
 }
 
@@ -446,16 +482,17 @@ function Error({
   return <p {...props} className={cn('mt-1 text-sm text-destructive', className)} />;
 }
 
-export const Combobox = {
+export const Autocomplete = {
   Root,
   Label,
   Control,
+  LeadingIcon,
   Input,
   ClearButton,
-  ToggleButton,
   Options,
   Option,
   Empty,
+  Loading,
   Hint,
   Error,
 } as const;

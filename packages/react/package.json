@@ -86,6 +86,16 @@
         "default": "./dist/checkbox/index.cjs"
       }
     },
+    "./autocomplete": {
+      "import": {
+        "types": "./dist/autocomplete/index.d.ts",
+        "default": "./dist/autocomplete/index.mjs"
+      },
+      "require": {
+        "types": "./dist/autocomplete/index.d.ts",
+        "default": "./dist/autocomplete/index.cjs"
+      }
+    },
     "./combobox": {
       "import": {
         "types": "./dist/combobox/index.d.ts",

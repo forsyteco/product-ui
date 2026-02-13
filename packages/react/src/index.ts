@@ -28,7 +28,10 @@ export { Checkbox } from './checkbox'
 export type { CheckboxProps } from './checkbox'
 
 export { Combobox } from './combobox'
-export type { ComboboxProps, ComboboxOption } from './combobox'
+export type { ComboboxRootProps, ComboboxOption } from './combobox'
+
+export { Autocomplete } from './autocomplete'
+export type { AutocompleteRootProps, AutocompleteOption } from './autocomplete'
 
 export { Fieldset } from './fieldset'
 export type { FieldsetProps } from './fieldset'

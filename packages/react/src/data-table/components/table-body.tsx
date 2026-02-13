@@ -52,26 +52,37 @@ function TableBody<TData, TExpandedData = unknown>({
 
   // Track the collapsing row for exit animation
   const [collapsingRowId, setCollapsingRowId] = useState<string | null>(null);
-  const [collapsingRowData, setCollapsingRowData] = useState<TData | null>(null);
-  const prevExpandedRowId = useRef<string | null>(null);
+  const [collapsingExpandedData, setCollapsingExpandedData] = useState<TExpandedData | null>(null);
+  const [prevExpandedRowId, setPrevExpandedRowId] = useState<string | null>(null);
+  const expandedDataRef = useRef<TExpandedData | null>(null);
 
-  useEffect(() => {
-    // When expanded row changes, trigger collapse animation for previous row
-    if (prevExpandedRowId.current && prevExpandedRowId.current !== expandedRowId) {
-      const prevRow = data.find((row) => getRowId(row) === prevExpandedRowId.current);
-      if (prevRow) {
-        setCollapsingRowId(prevExpandedRowId.current);
-        setCollapsingRowData(prevRow);
-        // Clear after animation completes
-        const timer = setTimeout(() => {
-          setCollapsingRowId(null);
-          setCollapsingRowData(null);
-        }, 300);
-        return () => clearTimeout(timer);
-      }
+  // Keep a snapshot of the latest expanded data so we can preserve content during collapse
+  if (expandedData != null) {
+    expandedDataRef.current = expandedData;
+  }
+
+  // Detect expandedRowId change during render so the collapsing row is set
+  // before children render — this keeps the same ExpandedRow instance mounted
+  // and avoids the content disappearing before the collapse animation starts.
+  if (expandedRowId !== prevExpandedRowId) {
+    setPrevExpandedRowId(expandedRowId ?? null);
+    if (prevExpandedRowId) {
+      setCollapsingRowId(prevExpandedRowId);
+      setCollapsingExpandedData(expandedDataRef.current);
+      expandedDataRef.current = null;
     }
-    prevExpandedRowId.current = expandedRowId ?? null;
-  }, [expandedRowId, data, getRowId]);
+  }
+
+  // Remove the collapsing row from the DOM after the animation completes
+  useEffect(() => {
+    if (collapsingRowId) {
+      const timer = setTimeout(() => {
+        setCollapsingRowId(null);
+        setCollapsingExpandedData(null);
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [collapsingRowId]);
 
   if (loading) {
     return (
@@ -100,6 +111,7 @@ function TableBody<TData, TExpandedData = unknown>({
       {data.map((row) => {
         const rowId = getRowId(row);
         const isExpanded = expandedRowId === rowId;
+        const isCollapsingRow = collapsingRowId === rowId;
         const expandedContentId = `expanded-content-${rowId}`;
 
         return (
@@ -134,30 +146,17 @@ function TableBody<TData, TExpandedData = unknown>({
                 );
               })}
             </TableRow>
-            {isExpanded && ExpandedRowContent && (
+            {(isExpanded || isCollapsingRow) && ExpandedRowContent && (
               <ExpandedRow
                 id={expandedContentId}
                 colSpan={colSpan}
+                isCollapsing={isCollapsingRow && !isExpanded}
               >
                 <ExpandedRowContent
                   row={row}
                   rowId={rowId}
-                  data={expandedData ?? null}
-                  loading={isLoadingExpanded}
-                />
-              </ExpandedRow>
-            )}
-            {collapsingRowId === rowId && collapsingRowData && ExpandedRowContent && (
-              <ExpandedRow
-                id={`expanded-content-${rowId}-collapsing`}
-                colSpan={colSpan}
-                isCollapsing
-              >
-                <ExpandedRowContent
-                  row={collapsingRowData}
-                  rowId={rowId}
-                  data={null}
-                  loading={false}
+                  data={isExpanded ? (expandedData ?? null) : (collapsingExpandedData ?? null)}
+                  loading={isExpanded ? isLoadingExpanded : false}
                 />
               </ExpandedRow>
             )}

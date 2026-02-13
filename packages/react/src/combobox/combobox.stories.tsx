@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Combobox } from './combobox';
-import type { ComboboxOption } from './combobox';
+import type { ComboboxOption } from './types';
 
 const meta = {
   title: 'Components/Combobox',
-  component: Combobox,
+  component: Combobox.Root,
   parameters: {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A combobox component with searchable dropdown. Built with Headless UI for accessibility and keyboard navigation.',
+        component:
+          'A combobox component with searchable dropdown. Built with Headless UI for accessibility and keyboard navigation. Use compound parts: Root, Control, Input, ClearButton, ToggleButton, Options.',
       },
     },
   },
@@ -25,7 +26,7 @@ const meta = {
     },
   },
   tags: ['autodocs'],
-} satisfies Meta<typeof Combobox>;
+} satisfies Meta<typeof Combobox.Root>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -43,12 +44,14 @@ export const Default: Story = {
     const [selected, setSelected] = useState<ComboboxOption | null>(null);
     return (
       <div className="w-64">
-        <Combobox
-          options={options}
-          value={selected}
-          onChange={setSelected}
-          placeholder="Select a fruit..."
-        />
+        <Combobox.Root options={options} value={selected} onChange={setSelected} placeholder="Select a fruit...">
+          <Combobox.Control>
+            <Combobox.Input />
+            <Combobox.ClearButton />
+            <Combobox.ToggleButton />
+          </Combobox.Control>
+          <Combobox.Options />
+        </Combobox.Root>
       </div>
     );
   },
@@ -59,12 +62,14 @@ export const Playground: Story = {
     const [selected, setSelected] = useState<ComboboxOption | null>(null);
     return (
       <div className="w-64">
-        <Combobox
-          {...args}
-          options={options}
-          value={selected}
-          onChange={setSelected}
-        />
+        <Combobox.Root {...args} options={options} value={selected} onChange={setSelected}>
+          <Combobox.Control>
+            <Combobox.Input />
+            <Combobox.ClearButton />
+            <Combobox.ToggleButton />
+          </Combobox.Control>
+          <Combobox.Options />
+        </Combobox.Root>
       </div>
     );
   },
@@ -73,4 +78,3 @@ export const Playground: Story = {
     disabled: false,
   },
 };
-

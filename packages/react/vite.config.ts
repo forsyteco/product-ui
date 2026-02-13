@@ -15,6 +15,7 @@ const dirname =
 
 const componentEntries = [
   'avatar',
+  'autocomplete',
   'breadcrumb',
   'button',
   'calendar',

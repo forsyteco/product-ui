@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Combobox } from './combobox';
-import type { ComboboxOption } from './combobox';
+import type { ComboboxOption } from './types';
 
 const meta = {
   title: 'Components/Combobox/Examples',
-  component: Combobox,
+  component: Combobox.Root,
   parameters: {
     layout: 'padded',
   },
-} satisfies Meta<typeof Combobox>;
+} satisfies Meta<typeof Combobox.Root>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -28,22 +28,24 @@ export const CountrySelector: Story = {
     const [selected, setSelected] = useState<ComboboxOption | null>(null);
     return (
       <div className="p-6 max-w-md">
-        <label className="block text-base font-medium text-gray-700 mb-2">
-          Country
-        </label>
-        <Combobox
+        <Combobox.Root
           options={countries}
           value={selected}
           onChange={setSelected}
           placeholder="Search for a country..."
-        />
+        >
+          <Combobox.Label>Country</Combobox.Label>
+          <Combobox.Control>
+            <Combobox.Input />
+            <Combobox.ClearButton />
+            <Combobox.ToggleButton />
+          </Combobox.Control>
+          <Combobox.Options />
+        </Combobox.Root>
         {selected && (
-          <p className="mt-4 text-base text-gray-600">
-            Selected: {selected.label}
-          </p>
+          <p className="mt-4 text-base text-muted-foreground">Selected: {selected.label}</p>
         )}
       </div>
     );
   },
 };
-

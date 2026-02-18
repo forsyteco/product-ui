@@ -1,4 +1,4 @@
-import { cn } from '../../utils/tailwind';
+import { RiskLevelPill, RISK_LEVEL, type RiskLevel } from "../../pill";
 
 export type RiskLevelCellProps = Readonly<{
   /** The risk level to display */
@@ -6,19 +6,10 @@ export type RiskLevelCellProps = Readonly<{
 }>;
 
 /**
- * Returns the appropriate color classes based on the risk level.
+ * Checks if a string is a valid RiskLevel.
  */
-function getRiskLevelColors(level: string): string {
-  switch (level.toLowerCase()) {
-    case 'high':
-      return 'bg-red-100 text-red-800';
-    case 'medium':
-      return 'bg-yellow-100 text-yellow-800';
-    case 'low':
-      return 'bg-green-100 text-green-800';
-    default:
-      return 'bg-gray-100 text-gray-800';
-  }
+function isRiskLevel(value: string): value is RiskLevel {
+  return Object.values(RISK_LEVEL).includes(value.toLowerCase() as RiskLevel);
 }
 
 /**
@@ -36,20 +27,23 @@ function capitalizeFirst(str: string): string {
  * - "high": Red badge
  * - "medium": Yellow badge
  * - "low": Green badge
- * - Unknown values: Gray badge
+ * - Unknown values: Gray badge (falls back to a plain span)
  *
  * @example
  * // In column definition:
  * { id: 'risk', header: 'Risk Level', accessorKey: 'riskLevel', cell: RiskLevelCell }
  */
 export function RiskLevelCell({ value }: RiskLevelCellProps) {
-  const colorClasses = getRiskLevelColors(value);
-  const displayValue = capitalizeFirst(value);
+  const normalized = value.toLowerCase();
 
+  if (isRiskLevel(normalized)) {
+    return <RiskLevelPill level={normalized as RiskLevel} />;
+  }
+
+  // Fallback for unknown values — gray badge matching the old behaviour
   return (
-    <span className={cn('rounded px-2 py-1 text-xs font-medium', colorClasses)}>
-      {displayValue}
+    <span className="inline-flex items-center rounded px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800">
+      {capitalizeFirst(value)}
     </span>
   );
 }
-

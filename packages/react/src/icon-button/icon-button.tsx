@@ -7,7 +7,7 @@ import {
 } from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import { cn } from '../utils/cn'
+import { clsx } from 'clsx';
 import { Spinner } from '../spinner'
 import { VisuallyHidden } from '../visually-hidden'
 import styles from './icon-button.module.css'
@@ -105,13 +105,13 @@ const IconButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, IconButtonP
   const title = keybindingHint ? `${tooltipText} (${keybindingHint})` : tooltipText
   const resolvedSize: IconButtonSize = (size ?? 'medium') as IconButtonSize
   const iconClassName = iconSizes[resolvedSize]
-  const sharedClassName = cn(iconButtonVariants({ variant, size, shape }), inactive && styles.inactive, className)
+  const sharedClassName = clsx(iconButtonVariants({ variant, size, shape }), inactive && styles.inactive, className)
   const screenReaderText = description ?? (typeof children === 'string' ? children : undefined)
   const content =
     loading === true ? (
       <Spinner size={18} colors={['currentColor']} />
     ) : (
-      <Icon aria-hidden className={cn(styles.icon, iconClassName)} />
+      <Icon aria-hidden className={clsx(styles.icon, iconClassName)} />
     )
 
   if (Component === 'a') {

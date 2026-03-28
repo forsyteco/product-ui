@@ -1,7 +1,7 @@
 import { Fragment, type ReactNode } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { Button, type ButtonProps } from '../button';
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import styles from './dropdown-menu.module.css';
 
 export type DropdownMenuProps = {
@@ -25,7 +25,7 @@ export type DropdownMenuButtonProps = {
 
 function DropdownMenu({ trigger, children, className, align = 'right' }: DropdownMenuProps) {
   return (
-    <Menu as="div" className={cn(styles.root, className)}>
+    <Menu as="div" className={clsx(styles.root, className)}>
       <Menu.Button as={Fragment}>{trigger}</Menu.Button>
       <Transition
         enter="transition ease-out duration-100"
@@ -36,7 +36,7 @@ function DropdownMenu({ trigger, children, className, align = 'right' }: Dropdow
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items
-          className={cn(
+          className={clsx(
             styles.menuItems,
             align === 'left' ? styles.alignLeft : styles.alignRight
           )}
@@ -57,7 +57,7 @@ export function DropdownMenuItem({ children, onClick, disabled, className }: Dro
           variant="ghost"
           onClick={onClick}
           disabled={disabled}
-          className={cn(
+          className={clsx(
             styles.item,
             active ? styles.itemActive : styles.itemInactive,
             className
@@ -75,7 +75,7 @@ export function DropdownMenuButton({ children, className, ...props }: DropdownMe
     <Menu.Button
       as={Button}
       variant="outline"
-      className={cn(styles.button, className)}
+      className={clsx(styles.button, className)}
       {...props}
     >
       {children}

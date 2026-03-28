@@ -25,7 +25,7 @@ type Story = StoryObj<typeof meta>;
 
 export const PageHeader: Story = {
   render: () => (
-    <div className="flex items-center justify-between gap-6">
+    <div className="sbRowBetween sbGap6">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -42,7 +42,7 @@ export const PageHeader: Story = {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <div className="flex items-center gap-2">
+      <div className="sbRow sbGap2">
         <Button variant="outline">Share</Button>
         <Button>New</Button>
       </div>
@@ -66,9 +66,9 @@ export const DeepHierarchy: Story = {
           <DropdownMenu
             align="left"
             trigger={
-              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                <BreadcrumbEllipsis className="h-4 w-4" />
-                <span className="sr-only">Open breadcrumb menu</span>
+              <Button variant="ghost" size="sm" className="sbBreadcrumbTrigger">
+                <BreadcrumbEllipsis className="sbIcon4" />
+                <span className="sbSrOnly">Open breadcrumb menu</span>
               </Button>
             }
           >

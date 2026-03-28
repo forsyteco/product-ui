@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 import { Transition as HeadlessTransition } from '@headlessui/react';
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import styles from './transition.module.css';
 
 export type TransitionProps = {
@@ -29,14 +29,14 @@ function Transition({
   return (
     <HeadlessTransition
       show={show}
-      enter={cn(enter)}
-      enterFrom={cn(enterFrom)}
-      enterTo={cn(enterTo)}
-      leave={cn(leave)}
-      leaveFrom={cn(leaveFrom)}
-      leaveTo={cn(leaveTo)}
+      enter={clsx(enter)}
+      enterFrom={clsx(enterFrom)}
+      enterTo={clsx(enterTo)}
+      leave={clsx(leave)}
+      leaveFrom={clsx(leaveFrom)}
+      leaveTo={clsx(leaveTo)}
     >
-      <div className={cn(className)}>{children}</div>
+      <div className={clsx(className)}>{children}</div>
     </HeadlessTransition>
   );
 }

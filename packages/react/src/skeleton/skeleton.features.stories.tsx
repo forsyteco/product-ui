@@ -15,21 +15,21 @@ type Story = StoryObj<typeof meta>;
 
 export const TextLines: Story = {
   render: () => (
-    <div className="w-[360px] space-y-2">
-      <Skeleton className="h-4 w-3/5" />
-      <Skeleton className="h-4 w-full" />
-      <Skeleton className="h-4 w-4/5" />
+    <div className="sbW360 sbStack2">
+      <Skeleton className="sbSkH4 sbSkW60p" />
+      <Skeleton className="sbSkH4 sbSkWFull" />
+      <Skeleton className="sbSkH4 sbSkW80p" />
     </div>
   ),
 };
 
 export const AvatarWithText: Story = {
   render: () => (
-    <div className="flex items-center gap-3">
-      <Skeleton className="h-10 w-10 rounded-full" />
-      <div className="space-y-2">
-        <Skeleton className="h-4 w-40" />
-        <Skeleton className="h-4 w-56" />
+    <div className="sbRow sbGap3">
+      <Skeleton className="sbSkAvatar10" />
+      <div className="sbStack2">
+        <Skeleton className="sbSkH4 sbSkW40" />
+        <Skeleton className="sbSkH4 sbSkW56" />
       </div>
     </div>
   ),

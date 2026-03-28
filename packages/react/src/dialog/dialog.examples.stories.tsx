@@ -20,18 +20,18 @@ export const ConfirmationDialog: Story = {
     const [confirmed, setConfirmed] = useState(false);
 
     return (
-      <div className="p-6">
+      <div className="sbP6">
         <Button variant="destructive" onClick={() => setIsOpen(true)}>
           Delete Item
         </Button>
-        {confirmed && <p className="mt-4 text-green-600">Item deleted!</p>}
+        {confirmed && <p className="sbMt4 sbSuccessText">Item deleted!</p>}
         <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
           <DialogPanel>
             <DialogTitle>Delete Item</DialogTitle>
             <DialogDescription>
               Are you sure you want to delete this item? This action cannot be undone.
             </DialogDescription>
-            <div className="mt-6 flex justify-end gap-3">
+            <div className="sbDialogActionsLoose">
               <Button variant="outline" onClick={() => setIsOpen(false)}>
                 Cancel
               </Button>

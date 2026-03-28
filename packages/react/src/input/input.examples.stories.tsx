@@ -15,21 +15,21 @@ type Story = StoryObj<typeof meta>;
 
 export const LoginForm: Story = {
   render: () => (
-    <div className="p-6 max-w-md">
-      <form className="space-y-4">
+    <div className="sbDemoNarrow">
+      <form className="sbStack4">
         <div>
-          <label className="block text-base font-medium text-gray-700 mb-1">
+          <label className="sbFormLabel">
             Email
           </label>
           <Input type="email" placeholder="you@example.com" />
         </div>
         <div>
-          <label className="block text-base font-medium text-gray-700 mb-1">
+          <label className="sbFormLabel">
             Password
           </label>
           <Input type="password" placeholder="••••••••" />
         </div>
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="sbWFull">
           Sign In
         </Button>
       </form>
@@ -39,21 +39,21 @@ export const LoginForm: Story = {
 
 export const FormWithValidation: Story = {
   render: () => (
-    <div className="p-6 max-w-md">
-      <form className="space-y-4">
+    <div className="sbDemoNarrow">
+      <form className="sbStack4">
         <div>
-          <label className="block text-base font-medium text-gray-700 mb-1">
+          <label className="sbFormLabel">
             Username
           </label>
           <Input placeholder="Enter username" />
-          <p className="mt-1 text-base text-gray-500">Must be at least 3 characters</p>
+          <p className="sbMt1 sbTextBase sbHelpText">Must be at least 3 characters</p>
         </div>
         <div>
-          <label className="block text-base font-medium text-gray-700 mb-1">
+          <label className="sbFormLabel">
             Email
           </label>
           <Input type="email" placeholder="Enter email" error />
-          <p className="mt-1 text-base text-red-600">Please enter a valid email address</p>
+          <p className="sbMt1 sbTextBase sbErrorText">Please enter a valid email address</p>
         </div>
       </form>
     </div>

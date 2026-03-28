@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { cn } from '../../utils/cn';
+import { clsx } from 'clsx';
 import { IconButton } from '../../icon-button';
 import type { DataTableColorConfig } from '../types';
 import styles from './data-table.module.css';
@@ -35,7 +35,7 @@ function Pagination({
     <nav
       role="navigation"
       aria-label="Pagination"
-      className={cn(styles.paginationNav, className)}
+      className={clsx(styles.paginationNav, className)}
       style={Object.keys(paginationStyle).length > 0 ? paginationStyle : undefined}
     >
       <div className={styles.paginationText}>

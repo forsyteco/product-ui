@@ -26,22 +26,22 @@ type Story = StoryObj<typeof meta>;
 
 export const Alignments: Story = {
   render: () => (
-    <div className="flex gap-8">
-      <div className="flex flex-col items-center gap-2">
+    <div className="sbRow sbGap8">
+      <div className="sbColCenter sbGap2">
         <DropdownMenu trigger={<Button>Left Aligned</Button>} align="left">
           <DropdownMenuItem>Item 1</DropdownMenuItem>
           <DropdownMenuItem>Item 2</DropdownMenuItem>
           <DropdownMenuItem>Item 3</DropdownMenuItem>
         </DropdownMenu>
-        <span className="text-xs text-gray-600">Left</span>
+        <span className="sbTextXs sbMutedText">Left</span>
       </div>
-      <div className="flex flex-col items-center gap-2">
+      <div className="sbColCenter sbGap2">
         <DropdownMenu trigger={<Button>Right Aligned</Button>} align="right">
           <DropdownMenuItem>Item 1</DropdownMenuItem>
           <DropdownMenuItem>Item 2</DropdownMenuItem>
           <DropdownMenuItem>Item 3</DropdownMenuItem>
         </DropdownMenu>
-        <span className="text-xs text-gray-600">Right</span>
+        <span className="sbTextXs sbMutedText">Right</span>
       </div>
     </div>
   ),

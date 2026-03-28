@@ -43,7 +43,7 @@ export const Default: Story = {
   render: () => {
     const [selected, setSelected] = useState<ComboboxOption | null>(null);
     return (
-      <div className="w-64">
+      <div className="sbW64">
         <Combobox.Root options={options} value={selected} onChange={setSelected} placeholder="Select a fruit...">
           <Combobox.Control>
             <Combobox.Input />
@@ -61,7 +61,7 @@ export const Playground: Story = {
   render: (args) => {
     const [selected, setSelected] = useState<ComboboxOption | null>(null);
     return (
-      <div className="w-64">
+      <div className="sbW64">
         <Combobox.Root {...args} options={options} value={selected} onChange={setSelected}>
           <Combobox.Control>
             <Combobox.Input />

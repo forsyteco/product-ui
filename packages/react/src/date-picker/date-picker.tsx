@@ -3,7 +3,7 @@ import { Popover as HeadlessPopover, Portal } from '@headlessui/react';
 import { CalendarDays } from 'lucide-react';
 import { Calendar } from '../calendar';
 import { Button } from '../button';
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import styles from './date-picker.module.css';
 
 const defaultFormatDate = (date: Date) =>
@@ -87,7 +87,7 @@ function DatePicker({
 
   return (
     <HeadlessPopover
-      className={cn(styles.root, className)}
+      className={clsx(styles.root, className)}
       onSubmitCapture={handleSubmitCapture}
     >
       {({ close, open }) => (
@@ -100,7 +100,7 @@ function DatePicker({
             aria-expanded={open}
             aria-haspopup="dialog"
             aria-label={selected ? `Selected date: ${label}` : placeholder}
-            className={cn(
+            className={clsx(
               styles.trigger,
               !selected && styles.triggerEmpty,
               buttonClassName

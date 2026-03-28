@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import * as React from 'react';
 
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import styles from './input.module.css';
 
 const inputVariants = cva(
@@ -67,9 +67,9 @@ function Input({
   const pad = sizeToPadding[size ?? 'default'];
 
   return (
-    <div className={cn(inputVariants({ size }), className)}>
+    <div className={clsx(inputVariants({ size }), className)}>
       {startElement ? (
-        <div className={cn(styles.slot, pad.slot)}>{startElement}</div>
+        <div className={clsx(styles.slot, pad.slot)}>{startElement}</div>
       ) : null}
 
       <input
@@ -77,7 +77,7 @@ function Input({
         ref={ref}
         type={type}
         data-slot="input"
-        className={cn(
+        className={clsx(
           styles.input,
           startElement ? styles.inputPadNoneLeft : pad.input,
           endElement ? styles.inputPadNoneRight : pad.input,
@@ -86,7 +86,7 @@ function Input({
       />
 
       {endElement ? (
-        <div className={cn(styles.slot, pad.slot)}>{endElement}</div>
+        <div className={clsx(styles.slot, pad.slot)}>{endElement}</div>
       ) : null}
     </div>
   );

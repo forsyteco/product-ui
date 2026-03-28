@@ -30,14 +30,14 @@ export const Default: Story = {
 
 export const Playground: Story = {
   render: () => (
-    <div className="flex items-center gap-3">
+    <div className="sbRow sbGap3">
       <Avatar>
         <AvatarFallback variant="initials" name="Ada Lovelace" />
       </Avatar>
       <Avatar>
         <AvatarFallback variant="boring" name="Grace Hopper" />
       </Avatar>
-      <Avatar className="size-12">
+      <Avatar className="sbSize12">
         <AvatarFallback variant="boring" name="Alan Turing" />
       </Avatar>
     </div>

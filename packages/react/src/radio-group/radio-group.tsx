@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 import { RadioGroup as HeadlessRadioGroup } from '@headlessui/react';
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import styles from './radio-group.module.css';
 
 export type RadioGroupOption = {
@@ -31,14 +31,14 @@ function RadioGroup({
   disabled = false,
 }: RadioGroupProps) {
   return (
-    <div className={cn(styles.root, className)}>
+    <div className={clsx(styles.root, className)}>
       <HeadlessRadioGroup value={value} onChange={onChange} disabled={disabled}>
         {options.map((option) => (
           <HeadlessRadioGroup.Option
             key={option.id}
             value={option.value}
             className={({ checked, disabled: optionDisabled }) =>
-              cn(
+              clsx(
                 styles.option,
                 checked && styles.optionChecked,
                 (disabled || optionDisabled) && styles.optionDisabled
@@ -49,13 +49,13 @@ function RadioGroup({
               <div className={styles.row}>
                 <div className={styles.labelWrap}>
                   <div className={styles.text}>
-                    <HeadlessRadioGroup.Label as="p" className={cn(styles.label, checked && styles.labelChecked)}>
+                    <HeadlessRadioGroup.Label as="p" className={clsx(styles.label, checked && styles.labelChecked)}>
                       {option.label}
                     </HeadlessRadioGroup.Label>
                     {option.description && (
                       <HeadlessRadioGroup.Description
                         as="span"
-                        className={cn(styles.description, checked && styles.descriptionChecked)}
+                        className={clsx(styles.description, checked && styles.descriptionChecked)}
                       >
                         {option.description}
                       </HeadlessRadioGroup.Description>

@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 import { Disclosure as HeadlessDisclosure } from '@headlessui/react';
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import styles from './disclosure.module.css';
 
 export type DisclosureProps = {
@@ -21,7 +21,7 @@ export type DisclosurePanelProps = {
 
 function Disclosure({ children, defaultOpen = false, className }: DisclosureProps) {
   return (
-    <div className={cn(styles.root, className)}>
+    <div className={clsx(styles.root, className)}>
       <HeadlessDisclosure defaultOpen={defaultOpen}>
         {children}
       </HeadlessDisclosure>
@@ -32,7 +32,7 @@ function Disclosure({ children, defaultOpen = false, className }: DisclosureProp
 export function DisclosureButton({ children, className }: DisclosureButtonProps) {
   return (
     <HeadlessDisclosure.Button
-      className={cn(
+      className={clsx(
         styles.button,
         className
       )}
@@ -45,7 +45,7 @@ export function DisclosureButton({ children, className }: DisclosureButtonProps)
 export function DisclosurePanel({ children, className }: DisclosurePanelProps) {
   return (
     <HeadlessDisclosure.Panel
-      className={cn(styles.panel, className)}
+      className={clsx(styles.panel, className)}
     >
       {children}
     </HeadlessDisclosure.Panel>

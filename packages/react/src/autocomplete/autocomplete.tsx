@@ -5,7 +5,7 @@ import {
   ComboboxOption,
   ComboboxOptions,
 } from '@headlessui/react';
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import type { AutocompleteOption } from './types';
 import styles from './autocomplete.module.css';
 
@@ -189,7 +189,7 @@ function Root({
 
   return (
     <AutocompleteCtx.Provider value={ctx}>
-      <div className={cn(styles.root, className)}>
+      <div className={clsx(styles.root, className)}>
         <Combobox
           by="id"
           value={value}
@@ -211,7 +211,7 @@ function Label({
   return (
     <label
       {...props}
-      className={cn(styles.label, className)}
+      className={clsx(styles.label, className)}
     />
   );
 }
@@ -220,7 +220,7 @@ function Control({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div {...props} className={cn(styles.control, className)} />;
+  return <div {...props} className={clsx(styles.control, className)} />;
 }
 
 function LeadingIcon({
@@ -242,7 +242,7 @@ function LeadingIcon({
   return (
     <div
       {...props}
-      className={cn(
+      className={clsx(
         styles.leadingIcon,
         className
       )}
@@ -281,7 +281,7 @@ function Input({
   return (
     <ComboboxInput
       {...inputProps}
-      className={cn(
+      className={clsx(
         styles.input,
         ctx.invalid && styles.inputInvalid,
         ctx.disabled && styles.inputDisabled,
@@ -324,7 +324,7 @@ function ClearButton({
       type="button"
       {...props}
       aria-label={ariaLabel ?? 'Clear selection'}
-      className={cn(
+      className={clsx(
         styles.clearButton,
         className
       )}
@@ -366,7 +366,7 @@ function Options({
   return (
     <ComboboxOptions
       {...props}
-      className={cn(
+      className={clsx(
         styles.options,
         className
       )}
@@ -388,7 +388,7 @@ function Loading({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) 
   return (
     <div
       {...props}
-      className={cn(styles.loading, className)}
+      className={clsx(styles.loading, className)}
     >
       Loading…
     </div>
@@ -402,7 +402,7 @@ function Empty({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       {...props}
-      className={cn(styles.empty, className)}
+      className={clsx(styles.empty, className)}
     >
       {qLen < ctx.minQueryLength
         ? ctx.emptyBeforeThresholdText(ctx.minQueryLength)
@@ -436,7 +436,7 @@ function Option({
         selected: boolean;
         disabled: boolean;
       }) =>
-        cn(
+        clsx(
           styles.option,
           optDisabled ? styles.optionDisabled : styles.optionEnabled,
           active ? styles.optionActive : styles.optionInactive,
@@ -471,14 +471,14 @@ function Hint({
   className,
   ...props
 }: React.HTMLAttributes<HTMLParagraphElement>) {
-  return <p {...props} className={cn(styles.hint, className)} />;
+  return <p {...props} className={clsx(styles.hint, className)} />;
 }
 
 function Error({
   className,
   ...props
 }: React.HTMLAttributes<HTMLParagraphElement>) {
-  return <p {...props} className={cn(styles.error, className)} />;
+  return <p {...props} className={clsx(styles.error, className)} />;
 }
 
 export const Autocomplete = {

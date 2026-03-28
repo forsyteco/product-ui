@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { cn } from '../utils/cn'
+import { clsx } from 'clsx';
 import styles from './page-layout.module.css'
 
 /* -------------------------------------------------------------------------------------------------
@@ -96,7 +96,7 @@ export function PageLayout({
 }: PageLayoutProps) {
   return (
     <PageLayoutContext.Provider value={{ containerWidth, padding, columnGap, rowGap }}>
-      <div className={cn(styles.wFull, className)}>{children}</div>
+      <div className={clsx(styles.wFull, className)}>{children}</div>
     </PageLayoutContext.Provider>
   )
 }
@@ -131,7 +131,7 @@ export function PageLayoutSection({
 
   return (
     <section
-      className={cn(
+      className={clsx(
         styles.mxAuto,
         styles.wFull,
         containerWidthClass[resolvedWidth],
@@ -156,7 +156,7 @@ type HeaderFooterProps = A11yProps &
 
 function DividerBar({ divider }: { divider: Divider }) {
   if (divider === 'none') return null
-  return <div className={cn(styles.dividerBar, dividerElClass[divider])} aria-hidden="true" />
+  return <div className={clsx(styles.dividerBar, dividerElClass[divider])} aria-hidden="true" />
 }
 
 export function PageLayoutHeader({
@@ -175,7 +175,7 @@ export function PageLayoutHeader({
     <header
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledby}
-      className={cn(styles.headerFooterBase, containerWidthClass[ctx.containerWidth], paddingClass[p], className)}
+      className={clsx(styles.headerFooterBase, containerWidthClass[ctx.containerWidth], paddingClass[p], className)}
       {...rest}
     >
       <DividerBar divider={divider} />
@@ -200,7 +200,7 @@ export function PageLayoutFooter({
     <footer
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledby}
-      className={cn(styles.headerFooterBase, containerWidthClass[ctx.containerWidth], paddingClass[p], className)}
+      className={clsx(styles.headerFooterBase, containerWidthClass[ctx.containerWidth], paddingClass[p], className)}
       {...rest}
     >
       <DividerBar divider={divider} />
@@ -243,7 +243,7 @@ export function PageLayoutBody({
 
   return (
     <div
-      className={cn(
+      className={clsx(
         styles.mxAuto,
         styles.wFull,
         containerWidthClass[cw],
@@ -290,7 +290,7 @@ export function PageLayoutContent<E extends React.ElementType = 'main'>(
     <Component
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledby}
-      className={cn(
+      className={clsx(
         styles.colSpan12,
         styles.minW0,
         styles.wFull,
@@ -420,7 +420,7 @@ export const PageLayoutPane = React.forwardRef<HTMLDivElement, PageLayoutPanePro
     return (
       <div
         ref={ref}
-        className={cn(
+        className={clsx(
           gridPos,
           styles.relative,
           styles.minW0,
@@ -446,7 +446,7 @@ export const PageLayoutPane = React.forwardRef<HTMLDivElement, PageLayoutPanePro
           <div
             role="separator"
             aria-orientation="vertical"
-            className={cn(
+            className={clsx(
               styles.resizer,
               position === 'end' ? styles.resizerEnd : styles.resizerStart
             )}

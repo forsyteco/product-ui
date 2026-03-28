@@ -1,4 +1,4 @@
-import { cn } from '../../utils/cn';
+import { clsx } from 'clsx';
 import styles from './data-table.module.css';
 
 export type RiskLevelCellProps = Readonly<{
@@ -48,7 +48,7 @@ export function RiskLevelCell({ value }: RiskLevelCellProps) {
   const displayValue = capitalizeFirst(value);
 
   return (
-    <span className={cn(styles.riskBadge, colorClasses)}>
+    <span className={clsx(styles.riskBadge, colorClasses)}>
       {displayValue}
     </span>
   );

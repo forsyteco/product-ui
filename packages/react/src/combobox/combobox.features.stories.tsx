@@ -36,7 +36,7 @@ export const Basic: Story = {
   render: () => {
     const [selected, setSelected] = useState<ComboboxOption | null>(null);
     return (
-      <div className="w-64">
+      <div className="sbW64">
         <Combobox.Root options={options} value={selected} onChange={setSelected} placeholder="Select a fruit...">
           <Combobox.Control>
             <Combobox.Input />
@@ -54,7 +54,7 @@ export const WithInitialValue: Story = {
   render: () => {
     const [selected, setSelected] = useState<ComboboxOption | null>(options[1]);
     return (
-      <div className="w-64">
+      <div className="sbW64">
         <Combobox.Root options={options} value={selected} onChange={setSelected}>
           <Combobox.Control>
             <Combobox.Input />
@@ -70,7 +70,7 @@ export const WithInitialValue: Story = {
 
 export const Disabled: Story = {
   render: () => (
-    <div className="w-64">
+    <div className="sbW64">
       <Combobox.Root options={options} disabled placeholder="Disabled combobox">
         <Combobox.Control>
           <Combobox.Input />

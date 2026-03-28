@@ -2,7 +2,7 @@ import { ChevronRight, MoreHorizontal } from 'lucide-react';
 import { Slot as SlotPrimitive } from 'radix-ui';
 import * as React from 'react';
 
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import styles from './breadcrumb.module.css';
 
 function Breadcrumb({ ...props }: React.ComponentProps<'nav'>) {
@@ -13,7 +13,7 @@ function BreadcrumbList({ className, ...props }: React.ComponentProps<'ol'>) {
   return (
     <ol
       data-slot="breadcrumb-list"
-      className={cn(
+      className={clsx(
         styles.list,
         className
       )}
@@ -26,7 +26,7 @@ function BreadcrumbItem({ className, ...props }: React.ComponentProps<'li'>) {
   return (
     <li
       data-slot="breadcrumb-item"
-      className={cn(styles.item, className)}
+      className={clsx(styles.item, className)}
       {...props}
     />
   );
@@ -44,7 +44,7 @@ function BreadcrumbLink({
   return (
     <Comp
       data-slot="breadcrumb-link"
-      className={cn(styles.link, className)}
+      className={clsx(styles.link, className)}
       {...props}
     />
   );
@@ -57,7 +57,7 @@ function BreadcrumbPage({ className, ...props }: React.ComponentProps<'span'>) {
       role="link"
       aria-disabled="true"
       aria-current="page"
-      className={cn(styles.page, className)}
+      className={clsx(styles.page, className)}
       {...props}
     />
   );
@@ -73,7 +73,7 @@ function BreadcrumbSeparator({
       data-slot="breadcrumb-separator"
       role="presentation"
       aria-hidden="true"
-      className={cn(styles.separator, className)}
+      className={clsx(styles.separator, className)}
       {...props}
     >
       {children ?? <ChevronRight />}
@@ -90,7 +90,7 @@ function BreadcrumbEllipsis({
       data-slot="breadcrumb-ellipsis"
       role="presentation"
       aria-hidden="true"
-      className={cn(styles.ellipsis, className)}
+      className={clsx(styles.ellipsis, className)}
       {...props}
     >
       <MoreHorizontal className={styles.ellipsisIcon} />

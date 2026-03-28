@@ -55,17 +55,17 @@ const policiesData: Policy[] = [
   { id: '18', name: 'Environmental Policy', type: 'Draft', created: '2024-01-10', lastUpdated: '2024-02-15', version: 'v1.0', author: 'Tracey Longbottom' },
 ];
 
-function getTypeBadgeClasses(value: string): string {
-  if (value === 'Active') return 'border-green-200 bg-green-50 text-green-700';
-  if (value === 'Draft') return 'border-amber-200 bg-amber-50 text-amber-700';
-  return 'border-gray-200 bg-gray-50 text-gray-600';
+function getTypeBadgeTone(value: string): string {
+  if (value === 'Active') return 'sbTypeBadgeActive';
+  if (value === 'Draft') return 'sbTypeBadgeDraft';
+  return 'sbTypeBadgeArchived';
 }
 
 type TypeBadgeProps = Readonly<{ value: string }>;
 
 function TypeBadge({ value }: TypeBadgeProps) {
   return (
-    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getTypeBadgeClasses(value)}`}>
+    <span className={`sbPillBorder ${getTypeBadgeTone(value)}`}>
       {value}
     </span>
   );
@@ -97,10 +97,10 @@ function PoliciesTableStory() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="sbStack4">
       <div>
-        <h2 className="text-2xl font-bold">Policies</h2>
-        <p className="text-muted-foreground">Manage your firm's policies advanced versioning and compliance features.</p>
+        <h2 className="sbText2xl sbFontBold">Policies</h2>
+        <p className="sbMutedText">Manage your firm's policies advanced versioning and compliance features.</p>
       </div>
       <DataTable
         columns={policyColumns}
@@ -192,10 +192,10 @@ function ClientsTableStory() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="sbStack4">
       <div>
-        <h2 className="text-2xl font-bold">Clients</h2>
-        <p className="text-muted-foreground">Manage your clients ({result.totalCount} of {clientsData.length} shown)</p>
+        <h2 className="sbText2xl sbFontBold">Clients</h2>
+        <p className="sbMutedText">Manage your clients ({result.totalCount} of {clientsData.length} shown)</p>
       </div>
       <DataTable
         columns={clientColumns}
@@ -293,10 +293,10 @@ function RiskAssessmentsTableStory() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="sbStack4">
       <div>
-        <h2 className="text-2xl font-bold">Risk assessments</h2>
-        <p className="text-muted-foreground">Manage your risk assessments ({result.totalCount} of {riskData.length} shown)</p>
+        <h2 className="sbText2xl sbFontBold">Risk assessments</h2>
+        <p className="sbMutedText">Manage your risk assessments ({result.totalCount} of {riskData.length} shown)</p>
       </div>
       <DataTable
         columns={riskColumns}
@@ -371,10 +371,10 @@ function CustomColorsTableStory() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="sbStack4">
       <div>
-        <h2 className="text-2xl font-bold">Custom Colors Override Example</h2>
-        <p className="text-muted-foreground">
+        <h2 className="sbText2xl sbFontBold">Custom Colors Override Example</h2>
+        <p className="sbMutedText">
           This table demonstrates how to override the default color configuration with a custom blue theme.
           The default theme (black header, white text, yellow active icons) is automatically applied to all tables.
           The checkerboard pattern shows that rows have an opaque background color.

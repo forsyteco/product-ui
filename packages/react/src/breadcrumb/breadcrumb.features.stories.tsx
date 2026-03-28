@@ -55,9 +55,9 @@ export const CollapsedWithDropdown: Story = {
           <DropdownMenu
             align="left"
             trigger={
-              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                <BreadcrumbEllipsis className="h-4 w-4" />
-                <span className="sr-only">Toggle menu</span>
+              <Button variant="ghost" size="sm" className="sbBreadcrumbTrigger">
+                <BreadcrumbEllipsis className="sbIcon4" />
+                <span className="sbSrOnly">Toggle menu</span>
               </Button>
             }
           >

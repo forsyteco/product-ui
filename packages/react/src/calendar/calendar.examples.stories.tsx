@@ -29,11 +29,11 @@ export const RangePickerInCard: Story = {
           : 'Select a date range';
 
     return (
-      <Card className="w-fit">
+      <Card className="sbWFit">
         <CardHeader>
           <CardTitle>Booking dates</CardTitle>
         </CardHeader>
-        <CardContent className="p-0">
+        <CardContent className="sbP0">
           <Calendar
             mode="range"
             selected={range}
@@ -42,8 +42,8 @@ export const RangePickerInCard: Story = {
             numberOfMonths={2}
           />
         </CardContent>
-        <CardFooter className="justify-between gap-2">
-          <div className="text-base text-muted-foreground">{label}</div>
+        <CardFooter className="sbCardFooterSpread">
+          <div className="sbTextBase sbMutedText">{label}</div>
           <Button variant="outline" size="sm">
             Clear
           </Button>

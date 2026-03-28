@@ -1,7 +1,7 @@
 import type React from 'react';
 import type { HTMLAttributes } from 'react';
 
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import styles from './visually-hidden.module.css';
 
 /**
@@ -17,7 +17,7 @@ import styles from './visually-hidden.module.css';
 export const VisuallyHidden = ({className, children, ...rest}: VisuallyHiddenProps) => {
   return (
     <span
-      className={cn(
+      className={clsx(
         styles.root,
         className
       )}

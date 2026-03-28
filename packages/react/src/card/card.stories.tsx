@@ -22,17 +22,17 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
-    <Card className="w-[360px]">
+    <Card className="sbW360">
       <CardHeader>
         <CardTitle>Card title</CardTitle>
         <CardDescription>Short supporting text goes here.</CardDescription>
       </CardHeader>
       <CardContent>
-        <p className="text-base text-muted-foreground">
+        <p className="sbTextBase sbMutedText">
           This is the main content area. Use it for body copy, forms, or other components.
         </p>
       </CardContent>
-      <CardFooter className="justify-end gap-2">
+      <CardFooter className="sbCardFooterActions">
         <Button variant="outline">Cancel</Button>
         <Button>Save</Button>
       </CardFooter>
@@ -43,15 +43,15 @@ export const Default: Story = {
 export const Playground: Story = {
   args: {},
   render: () => (
-    <Card className="w-[360px]">
+    <Card className="sbW360">
       <CardHeader>
         <CardTitle>Playground</CardTitle>
         <CardDescription>Try composing the card slots.</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="h-16 rounded-md bg-muted" />
+        <div className="sbCardWell" />
       </CardContent>
-      <CardFooter className="justify-end">
+      <CardFooter className="sbCardFooterEnd">
         <Button variant="outline">Action</Button>
       </CardFooter>
     </Card>

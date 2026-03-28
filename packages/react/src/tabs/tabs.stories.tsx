@@ -26,7 +26,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
-    <div className="w-full max-w-md">
+    <div className="sbWFullMaxWmd">
       <Tabs>
         <TabList>
           <Tab>Account</Tab>
@@ -35,16 +35,16 @@ export const Default: Story = {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <h3 className="font-semibold mb-2">Account Settings</h3>
-            <p className="text-base text-gray-600">Manage your account preferences here.</p>
+            <h3 className="sbFontSemibold sbMb2">Account Settings</h3>
+            <p className="sbTextBase sbMutedText">Manage your account preferences here.</p>
           </TabPanel>
           <TabPanel>
-            <h3 className="font-semibold mb-2">Password Settings</h3>
-            <p className="text-base text-gray-600">Update your password and security settings.</p>
+            <h3 className="sbFontSemibold sbMb2">Password Settings</h3>
+            <p className="sbTextBase sbMutedText">Update your password and security settings.</p>
           </TabPanel>
           <TabPanel>
-            <h3 className="font-semibold mb-2">Notification Settings</h3>
-            <p className="text-base text-gray-600">Configure how you receive notifications.</p>
+            <h3 className="sbFontSemibold sbMb2">Notification Settings</h3>
+            <p className="sbTextBase sbMutedText">Configure how you receive notifications.</p>
           </TabPanel>
         </TabPanels>
       </Tabs>
@@ -54,7 +54,7 @@ export const Default: Story = {
 
 export const Playground: Story = {
   render: (args) => (
-    <div className="w-full max-w-md">
+    <div className="sbWFullMaxWmd">
       <Tabs {...args}>
         <TabList>
           <Tab>Tab 1</Tab>

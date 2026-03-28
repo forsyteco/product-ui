@@ -25,7 +25,7 @@ export const Default: Story = {
 
 export const Playground: Story = {
   render: () => (
-    <div className="flex items-center gap-2">
+    <div className="sbRow sbGap2">
       <CounterLabel variant="secondary">3</CounterLabel>
       <CounterLabel variant="primary">24</CounterLabel>
       <CounterLabel variant="secondary">128</CounterLabel>

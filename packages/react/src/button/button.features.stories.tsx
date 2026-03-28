@@ -30,7 +30,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Variants: Story = {
   render: () => (
-    <div className="flex gap-4">
+    <div className="sbRow sbGap4">
       <Button variant="primary">Primary</Button>
       <Button variant="secondary">Secondary</Button>
       <Button variant="outline">Outline</Button>
@@ -41,7 +41,7 @@ export const Variants: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <div className="flex items-center gap-4">
+    <div className="sbRow sbGap4">
       <Button size="sm">Small</Button>
       <Button size="md">Medium</Button>
       <Button size="lg">Large</Button>
@@ -51,7 +51,7 @@ export const Sizes: Story = {
 
 export const Disabled: Story = {
   render: () => (
-    <div className="flex gap-4">
+    <div className="sbRow sbGap4">
       <Button disabled>Disabled Primary</Button>
       <Button variant="secondary" disabled>
         Disabled Secondary

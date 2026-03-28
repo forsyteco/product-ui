@@ -29,7 +29,7 @@ export const CountrySearch: Story = {
   render: () => {
     const [selected, setSelected] = useState<AutocompleteOption | null>(null);
     return (
-      <div className="p-6 max-w-md">
+      <div className="sbDemoNarrow">
         <Autocomplete.Root
           options={countries}
           value={selected}
@@ -45,7 +45,7 @@ export const CountrySearch: Story = {
           <Autocomplete.Options />
         </Autocomplete.Root>
         {selected && (
-          <p className="mt-4 text-base text-muted-foreground">Selected: {selected.label}</p>
+          <p className="sbMt4 sbTextBase sbMutedText">Selected: {selected.label}</p>
         )}
       </div>
     );

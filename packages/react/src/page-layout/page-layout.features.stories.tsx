@@ -20,11 +20,11 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-function Card({ title, children }: { title: string; children?: React.ReactNode }) {
+function Card({ title, children }: { readonly title: string; readonly children?: React.ReactNode }) {
     return (
-        <div className="rounded-lg border bg-background p-4">
-            <div className="mb-2 text-sm font-medium">{title}</div>
-            <div className="text-sm text-muted-foreground">{children}</div>
+        <div className="sbPanel">
+            <div className="sbMb2 sbTextSm sbFontMedium">{title}</div>
+            <div className="sbTextSm sbMutedText">{children}</div>
         </div>
     )
 }
@@ -39,31 +39,34 @@ export const StickyPane: Story = {
     },
     render: () => (
         <PageLayout containerWidth="xlarge" padding="normal" columnGap="normal" rowGap="normal">
-            <PageLayoutHeader divider="line" className="sticky top-0 z-10 bg-background/80 backdrop-blur">
-                <div className="flex h-14 items-center justify-between">
-                    <div className="text-lg font-semibold">Sticky header</div>
-                    <div className="text-sm text-muted-foreground">Scroll</div>
+            <PageLayoutHeader divider="line" className="sbStickyHeader">
+                <div className="sbRowBetween sbH14">
+                    <div className="sbTextLg sbFontSemibold">Sticky header</div>
+                    <div className="sbTextSm sbMutedText">Scroll</div>
                 </div>
             </PageLayoutHeader>
 
             <PageLayoutBody>
-                <PageLayoutContent className="lg:col-span-8">
-                    <div className="grid gap-4">
-                        {Array.from({ length: 12 }).map((_, i) => (
-                            <Card key={i} title={`Content ${i + 1}`}>
-                                Lots of content to enable scrolling.
-                            </Card>
-                        ))}
+                <PageLayoutContent className="sbLgColSpan8">
+                    <div className="sbGrid sbGridGap4">
+                        {Array.from({ length: 12 }).map((_, i) => {
+                            const title = `Content ${i + 1}`;
+                            return (
+                                <Card key={title} title={title}>
+                                    Lots of content to enable scrolling.
+                                </Card>
+                            );
+                        })}
                     </div>
                 </PageLayoutContent>
 
                 <PageLayoutPane
-                    className="lg:col-span-4"
+                    className="sbLgColSpan4"
                     position="end"
                     sticky
-                    offsetHeader={56} // matches h-14
+                    offsetHeader={56} // matches sticky header bar height (3.5rem)
                 >
-                    <div className="grid gap-4">
+                    <div className="sbGrid sbGridGap4">
                         <Card title="Sticky pane">This stays visible while you scroll.</Card>
                         <Card title="Filters">Put filter controls here.</Card>
                     </div>
@@ -84,31 +87,34 @@ export const ResizablePane: Story = {
     render: () => (
         <PageLayout containerWidth="xlarge" padding="normal" columnGap="normal" rowGap="normal">
             <PageLayoutHeader divider="none">
-                <div className="flex items-center justify-between">
-                    <div className="text-lg font-semibold">Resizable pane</div>
-                    <div className="text-sm text-muted-foreground">Drag the gutter</div>
+                <div className="sbRowBetween">
+                    <div className="sbTextLg sbFontSemibold">Resizable pane</div>
+                    <div className="sbTextSm sbMutedText">Drag the gutter</div>
                 </div>
             </PageLayoutHeader>
 
             <PageLayoutBody>
-                <PageLayoutContent className="lg:col-span-8">
-                    <div className="grid gap-4">
-                        {Array.from({ length: 6 }).map((_, i) => (
-                            <Card key={i} title={`Main ${i + 1}`}>
-                                Resize the pane on the right (desktop widths).
-                            </Card>
-                        ))}
+                <PageLayoutContent className="sbLgColSpan8">
+                    <div className="sbGrid sbGridGap4">
+                        {Array.from({ length: 6 }).map((_, i) => {
+                            const title = `Main ${i + 1}`;
+                            return (
+                                <Card key={title} title={title}>
+                                    Resize the pane on the right (desktop widths).
+                                </Card>
+                            );
+                        })}
                     </div>
                 </PageLayoutContent>
 
                 <PageLayoutPane
-                    className="lg:col-span-4"
+                    className="sbLgColSpan4"
                     position="end"
                     resizable
                     minWidth={260}
                     widthStorageKey="storybook:pageLayout:rightPaneWidth"
                 >
-                    <div className="grid gap-4">
+                    <div className="sbGrid sbGridGap4">
                         <Card title="Resizable pane">Width persists via localStorage.</Card>
                         <Card title="Notes">Great for details panels.</Card>
                     </div>

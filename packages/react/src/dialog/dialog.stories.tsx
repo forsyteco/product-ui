@@ -40,7 +40,7 @@ export const Default: Story = {
             <DialogDescription>
               Are you sure you want to proceed? This action cannot be undone.
             </DialogDescription>
-            <div className="mt-4 flex justify-end gap-2">
+            <div className="sbDialogActions">
               <Button variant="outline" onClick={() => setIsOpen(false)}>
                 Cancel
               </Button>
@@ -69,7 +69,7 @@ export const Playground: Story = {
             <DialogDescription>
               This is a dialog description. You can customize the content here.
             </DialogDescription>
-            <div className="mt-4 flex justify-end gap-2">
+            <div className="sbDialogActions">
               <Button variant="outline" onClick={() => setIsOpen(false)}>
                 Cancel
               </Button>

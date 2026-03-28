@@ -16,29 +16,29 @@ type Story = StoryObj<typeof meta>;
 
 export const ProductCard: Story = {
   render: () => (
-    <div className="max-w-md">
+    <div className="sbWFull sbMaxWmd">
       <Card>
         <CardHeader>
           <CardTitle>Forsyteco Starter</CardTitle>
           <CardDescription>Everything you need to get started quickly.</CardDescription>
         </CardHeader>
         <CardContent>
-          <ul className="space-y-2 text-base">
-            <li className="flex items-center justify-between">
-              <span className="text-muted-foreground">Projects</span>
+          <ul className="sbStack2 sbTextBase">
+            <li className="sbRowBetween">
+              <span className="sbMutedText">Projects</span>
               <span>Unlimited</span>
             </li>
-            <li className="flex items-center justify-between">
-              <span className="text-muted-foreground">Support</span>
+            <li className="sbRowBetween">
+              <span className="sbMutedText">Support</span>
               <span>Standard</span>
             </li>
-            <li className="flex items-center justify-between">
-              <span className="text-muted-foreground">Users</span>
+            <li className="sbRowBetween">
+              <span className="sbMutedText">Users</span>
               <span>10</span>
             </li>
           </ul>
         </CardContent>
-        <CardFooter className="justify-end gap-2">
+        <CardFooter className="sbCardFooterActions">
           <Button variant="outline">Learn more</Button>
           <Button>Choose plan</Button>
         </CardFooter>
@@ -49,7 +49,7 @@ export const ProductCard: Story = {
 
 export const StatGrid: Story = {
   render: () => (
-    <div className="grid gap-4 md:grid-cols-3">
+    <div className="sbGridMd3">
       {[
         { label: 'Revenue', value: '$42,300' },
         { label: 'Active users', value: '1,284' },
@@ -61,7 +61,7 @@ export const StatGrid: Story = {
             <CardTitle>{stat.value}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-10 rounded-md bg-muted" />
+            <div className="sbCardWellSm" />
           </CardContent>
         </Card>
       ))}

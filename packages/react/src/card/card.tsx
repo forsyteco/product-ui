@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import styles from './card.module.css';
 
 function Card({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       data-slot="card"
-      className={cn(
+      className={clsx(
         styles.card,
         className
       )}
@@ -20,7 +20,7 @@ function CardHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       data-slot="card-header"
-      className={cn(
+      className={clsx(
         styles.header,
         className
       )}
@@ -33,7 +33,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       data-slot="card-title"
-      className={cn(styles.title, className)}
+      className={clsx(styles.title, className)}
       {...props}
     />
   );
@@ -43,7 +43,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       data-slot="card-description"
-      className={cn(styles.description, className)}
+      className={clsx(styles.description, className)}
       {...props}
     />
   );
@@ -53,7 +53,7 @@ function CardAction({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       data-slot="card-action"
-      className={cn(
+      className={clsx(
         styles.action,
         className
       )}
@@ -66,7 +66,7 @@ function CardContent({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       data-slot="card-content"
-      className={cn(styles.content, className)}
+      className={clsx(styles.content, className)}
       {...props}
     />
   );
@@ -76,7 +76,7 @@ function CardFooter({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       data-slot="card-footer"
-      className={cn(styles.footer, className)}
+      className={clsx(styles.footer, className)}
       {...props}
     />
   );

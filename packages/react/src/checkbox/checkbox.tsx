@@ -1,6 +1,6 @@
 import { type InputHTMLAttributes, type CSSProperties } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import styles from './checkbox.module.css';
 
 const checkboxVariants = cva(
@@ -51,7 +51,7 @@ function Checkbox({ label, size, className, id, checked, checkedBackground, chec
         type="checkbox"
         id={checkboxId}
         checked={checked}
-        className={cn(checkboxVariants({ size, useDefaultCheckedStyle: !hasCustomColors }), className)}
+        className={clsx(checkboxVariants({ size, useDefaultCheckedStyle: !hasCustomColors }), className)}
         style={customStyle}
         {...props}
       />

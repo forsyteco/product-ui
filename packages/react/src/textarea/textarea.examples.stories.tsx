@@ -15,30 +15,30 @@ type Story = StoryObj<typeof meta>;
 
 export const ContactForm: Story = {
   render: () => (
-    <div className="p-6 max-w-md">
-      <form className="space-y-4">
+    <div className="sbDemoNarrow">
+      <form className="sbStack4">
         <div>
-          <label className="block text-base font-medium text-gray-700 mb-1">
+          <label className="sbFormLabel">
             Name
           </label>
           <input
             type="text"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            className="sbNativeInput"
             placeholder="Your name"
           />
         </div>
         <div>
-          <label className="block text-base font-medium text-gray-700 mb-1">
+          <label className="sbFormLabel">
             Email
           </label>
           <input
             type="email"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            className="sbNativeInput"
             placeholder="you@example.com"
           />
         </div>
         <div>
-          <label className="block text-base font-medium text-gray-700 mb-1">
+          <label className="sbFormLabel">
             Message
           </label>
           <Textarea
@@ -46,7 +46,7 @@ export const ContactForm: Story = {
             placeholder="Enter your message..."
           />
         </div>
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="sbWFull">
           Send Message
         </Button>
       </form>
@@ -56,10 +56,10 @@ export const ContactForm: Story = {
 
 export const FormWithValidation: Story = {
   render: () => (
-    <div className="p-6 max-w-md">
-      <form className="space-y-4">
+    <div className="sbDemoNarrow">
+      <form className="sbStack4">
         <div>
-          <label className="block text-base font-medium text-gray-700 mb-1">
+          <label className="sbFormLabel">
             Description
           </label>
           <Textarea
@@ -67,7 +67,7 @@ export const FormWithValidation: Story = {
             placeholder="Enter description..."
             error
           />
-          <p className="mt-1 text-base text-red-600">
+          <p className="sbMt1 sbTextBase sbErrorText">
             Description must be at least 10 characters
           </p>
         </div>

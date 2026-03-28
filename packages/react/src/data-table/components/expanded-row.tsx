@@ -1,5 +1,5 @@
 import { type ReactNode, useState, useEffect, useRef } from 'react';
-import { cn } from '../../utils/cn';
+import { clsx } from 'clsx';
 import styles from './data-table.module.css';
 
 export type ExpandedRowProps = Readonly<{
@@ -46,7 +46,7 @@ function ExpandedRow({ id, colSpan, children, isCollapsing = false }: ExpandedRo
         className={styles.expandedCell}
       >
         <div
-          className={cn(
+          className={clsx(
             styles.expandedInner,
             isVisible ? styles.expandedVisible : styles.expandedHidden
           )}

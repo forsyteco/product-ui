@@ -1,7 +1,7 @@
 import { forwardRef, type ReactNode } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import { VisuallyHidden } from '../visually-hidden';
 import styles from './counter-label.module.css';
 
@@ -41,7 +41,7 @@ const CounterLabel = forwardRef<HTMLSpanElement, CounterLabelProps>(function Cou
         aria-hidden="true"
         data-slot="counter-label"
         data-variant={variant ?? 'secondary'}
-        className={cn(counterLabelVariants({ variant }), className)}
+        className={clsx(counterLabelVariants({ variant }), className)}
         {...props}
       >
         {children}

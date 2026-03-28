@@ -12,7 +12,7 @@ import {
   useDayPicker,
 } from 'react-day-picker';
 
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import { Button } from '../button';
 import styles from './calendar.module.css';
 
@@ -22,14 +22,14 @@ type CalendarChevronProps = React.ComponentProps<typeof ChevronLeftIcon> & {
 
 function CalendarChevron({ className, orientation, ...props }: CalendarChevronProps) {
   if (orientation === 'left') {
-    return <ChevronLeftIcon className={cn(styles.chevron, className)} {...props} />;
+    return <ChevronLeftIcon className={clsx(styles.chevron, className)} {...props} />;
   }
 
   if (orientation === 'right') {
-    return <ChevronRightIcon className={cn(styles.chevron, className)} {...props} />;
+    return <ChevronRightIcon className={clsx(styles.chevron, className)} {...props} />;
   }
 
-  return <ChevronDownIcon className={cn(styles.chevron, className)} {...props} />;
+  return <ChevronDownIcon className={clsx(styles.chevron, className)} {...props} />;
 }
 
 function Calendar({
@@ -70,7 +70,7 @@ function Calendar({
     };
 
     return (
-      <nav className={cn(styles.nav, className)}>
+      <nav className={clsx(styles.nav, className)}>
         <Button
           type="button"
           variant={buttonVariant}
@@ -103,7 +103,7 @@ function Calendar({
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
-      className={cn(
+      className={clsx(
         styles.rootCalendar,
         className
       )}
@@ -114,81 +114,81 @@ function Calendar({
         ...formatters,
       }}
       classNames={{
-        root: cn(styles.root, defaultClassNames.root),
-        months: cn(
+        root: clsx(styles.root, defaultClassNames.root),
+        months: clsx(
           styles.months,
           defaultClassNames.months
         ),
-        month: cn(styles.month, defaultClassNames.month),
-        nav: cn(defaultClassNames.nav),
-        button_previous: cn(styles.navButton, defaultClassNames.button_previous),
-        button_next: cn(styles.navButton, defaultClassNames.button_next),
-        month_caption: cn(
+        month: clsx(styles.month, defaultClassNames.month),
+        nav: clsx(defaultClassNames.nav),
+        button_previous: clsx(styles.navButton, defaultClassNames.button_previous),
+        button_next: clsx(styles.navButton, defaultClassNames.button_next),
+        month_caption: clsx(
           styles.caption,
           defaultClassNames.month_caption
         ),
-        dropdowns: cn(
+        dropdowns: clsx(
           styles.dropdowns,
           defaultClassNames.dropdowns
         ),
-        dropdown_root: cn(
+        dropdown_root: clsx(
           styles.dropdownRoot,
           defaultClassNames.dropdown_root
         ),
-        dropdown: cn(
+        dropdown: clsx(
           styles.dropdown,
           defaultClassNames.dropdown
         ),
-        caption_label: cn(
+        caption_label: clsx(
           styles.captionLabel,
           defaultClassNames.caption_label
         ),
         table: styles.table,
-        weekdays: cn(styles.weekdays, defaultClassNames.weekdays),
-        weekday: cn(
+        weekdays: clsx(styles.weekdays, defaultClassNames.weekdays),
+        weekday: clsx(
           styles.weekday,
           defaultClassNames.weekday
         ),
-        week: cn(styles.week, defaultClassNames.week),
-        week_number_header: cn(
+        week: clsx(styles.week, defaultClassNames.week),
+        week_number_header: clsx(
           styles.weekNumberHeader,
           defaultClassNames.week_number_header
         ),
-        week_number: cn(
+        week_number: clsx(
           styles.weekNumber,
           defaultClassNames.week_number
         ),
-        day: cn(
+        day: clsx(
           styles.day,
           defaultClassNames.day
         ),
-        day_button: cn(
+        day_button: clsx(
           styles.dayButton,
           defaultClassNames.day_button
         ),
-        range_start: cn(
+        range_start: clsx(
           styles.rangeStart,
           defaultClassNames.range_start
         ),
-        range_middle: cn(
+        range_middle: clsx(
           styles.rangeMiddle,
           defaultClassNames.range_middle
         ),
-        range_end: cn(
+        range_end: clsx(
           styles.rangeEnd,
           defaultClassNames.range_end
         ),
-        selected: cn(
+        selected: clsx(
           styles.selected,
           defaultClassNames.selected
         ),
-        today: cn(styles.today, defaultClassNames.today),
-        outside: cn(
+        today: clsx(styles.today, defaultClassNames.today),
+        outside: clsx(
           styles.outside,
           defaultClassNames.outside
         ),
-        disabled: cn(styles.disabled, defaultClassNames.disabled),
-        hidden: cn(styles.hidden, defaultClassNames.hidden),
+        disabled: clsx(styles.disabled, defaultClassNames.disabled),
+        hidden: clsx(styles.hidden, defaultClassNames.hidden),
         ...classNames,
       }}
       components={{
@@ -198,7 +198,7 @@ function Calendar({
               data-slot="calendar"
               data-calendar-submit-ignore="true"
               ref={rootRef}
-              className={cn(className)}
+              className={clsx(className)}
               {...props}
             />
           );
@@ -246,7 +246,7 @@ function CalendarDayButton({
       })}
       {...props}
       type="button"
-      className={cn(className)}
+      className={clsx(className)}
     />
   );
 }

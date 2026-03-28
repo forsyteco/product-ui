@@ -25,9 +25,9 @@ type Story = StoryObj<typeof meta>;
 export const WithLegend: Story = {
   render: () => (
     <Fieldset legend="Personal Information">
-      <div className="space-y-2">
-        <input type="text" placeholder="First Name" className="w-full px-3 py-2 border rounded" />
-        <input type="text" placeholder="Last Name" className="w-full px-3 py-2 border rounded" />
+      <div className="sbStack2">
+        <input type="text" placeholder="First Name" className="sbNativeInputSimple" />
+        <input type="text" placeholder="Last Name" className="sbNativeInputSimple" />
       </div>
     </Fieldset>
   ),
@@ -36,9 +36,9 @@ export const WithLegend: Story = {
 export const WithoutLegend: Story = {
   render: () => (
     <Fieldset>
-      <div className="space-y-2">
-        <input type="text" placeholder="Field 1" className="w-full px-3 py-2 border rounded" />
-        <input type="text" placeholder="Field 2" className="w-full px-3 py-2 border rounded" />
+      <div className="sbStack2">
+        <input type="text" placeholder="Field 1" className="sbNativeInputSimple" />
+        <input type="text" placeholder="Field 2" className="sbNativeInputSimple" />
       </div>
     </Fieldset>
   ),
@@ -47,9 +47,9 @@ export const WithoutLegend: Story = {
 export const Disabled: Story = {
   render: () => (
     <Fieldset legend="Disabled Fieldset" disabled>
-      <div className="space-y-2">
-        <input type="text" placeholder="Field 1" className="w-full px-3 py-2 border rounded" disabled />
-        <input type="text" placeholder="Field 2" className="w-full px-3 py-2 border rounded" disabled />
+      <div className="sbStack2">
+        <input type="text" placeholder="Field 1" className="sbNativeInputSimple" disabled />
+        <input type="text" placeholder="Field 2" className="sbNativeInputSimple" disabled />
       </div>
     </Fieldset>
   ),

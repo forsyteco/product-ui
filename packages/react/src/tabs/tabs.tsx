@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 import { Tab as HeadlessTab } from '@headlessui/react';
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import styles from './tabs.module.css';
 
 export type TabsProps = {
@@ -33,7 +33,7 @@ export type TabPanelProps = {
 
 function Tabs({ children, defaultIndex, selectedIndex, onChange, className }: TabsProps) {
   return (
-    <div className={cn(styles.root, className)}>
+    <div className={clsx(styles.root, className)}>
       <HeadlessTab.Group
         defaultIndex={defaultIndex}
         selectedIndex={selectedIndex}
@@ -48,7 +48,7 @@ function Tabs({ children, defaultIndex, selectedIndex, onChange, className }: Ta
 export function TabList({ children, className }: TabListProps) {
   return (
     <HeadlessTab.List
-      className={cn(
+      className={clsx(
         styles.list,
         className
       )}
@@ -62,7 +62,7 @@ export function Tab({ children, className }: TabProps) {
   return (
     <HeadlessTab
       className={({ selected }) =>
-        cn(
+        clsx(
           styles.tab,
           selected
             ? styles.tabSelected
@@ -78,7 +78,7 @@ export function Tab({ children, className }: TabProps) {
 
 export function TabPanels({ children, className }: TabPanelsProps) {
   return (
-    <HeadlessTab.Panels className={cn(styles.panels, className)}>
+    <HeadlessTab.Panels className={clsx(styles.panels, className)}>
       {children}
     </HeadlessTab.Panels>
   );
@@ -87,7 +87,7 @@ export function TabPanels({ children, className }: TabPanelsProps) {
 export function TabPanel({ children, className }: TabPanelProps) {
   return (
     <HeadlessTab.Panel
-      className={cn(
+      className={clsx(
         styles.panel,
         className
       )}

@@ -16,8 +16,8 @@ type Story = StoryObj<typeof meta>;
 
 export const WithHeaderAction: Story = {
   render: () => (
-    <Card className="w-[420px]">
-      <CardHeader className="border-b border-border">
+    <Card className="sbW420">
+      <CardHeader className="sbBorderB">
         <div>
           <CardTitle>Team settings</CardTitle>
           <CardDescription>Manage your team configuration.</CardDescription>
@@ -29,18 +29,18 @@ export const WithHeaderAction: Story = {
         </CardAction>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-2 text-base">
-          <div className="flex items-center justify-between">
-            <span className="text-muted-foreground">Members</span>
-            <span className="text-foreground">12</span>
+        <div className="sbGrid sbGridGap2 sbTextBase">
+          <div className="sbRowBetween">
+            <span className="sbMutedText">Members</span>
+            <span className="sbForegroundText">12</span>
           </div>
-          <div className="flex items-center justify-between">
-            <span className="text-muted-foreground">Plan</span>
-            <span className="text-foreground">Pro</span>
+          <div className="sbRowBetween">
+            <span className="sbMutedText">Plan</span>
+            <span className="sbForegroundText">Pro</span>
           </div>
         </div>
       </CardContent>
-      <CardFooter className="border-t border-border justify-end gap-2">
+      <CardFooter className="sbBorderT sbCardFooterActions">
         <Button variant="outline">Cancel</Button>
         <Button>Save changes</Button>
       </CardFooter>
@@ -50,9 +50,9 @@ export const WithHeaderAction: Story = {
 
 export const Minimal: Story = {
   render: () => (
-    <Card className="w-[360px]">
+    <Card className="sbW360">
       <CardContent>
-        <p className="text-base text-foreground">A minimal card with only content.</p>
+        <p className="sbTextBase sbForegroundText">A minimal card with only content.</p>
       </CardContent>
     </Card>
   ),

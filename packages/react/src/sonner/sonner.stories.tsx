@@ -33,9 +33,9 @@ export const Default: Story = {
 export const Playground: Story = {
   args: {},
   render: () => (
-    <div className="flex flex-col gap-3">
+    <div className="sbStackGap3">
       <Sonner />
-      <div className="flex flex-wrap gap-2">
+      <div className="sbFlexWrapGap2">
         <Button variant="outline" onClick={() => toast('Default toast')}>
           Default
         </Button>

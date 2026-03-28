@@ -34,7 +34,7 @@ export const Basic: Story = {
             <DialogDescription>
               Are you sure you want to proceed? This action cannot be undone.
             </DialogDescription>
-            <div className="mt-4 flex justify-end gap-2">
+            <div className="sbDialogActions">
               <Button variant="outline" onClick={() => setIsOpen(false)}>
                 Cancel
               </Button>
@@ -63,22 +63,22 @@ export const WithForm: Story = {
             <DialogDescription>
               Fill in the details below to create a new item.
             </DialogDescription>
-            <form className="mt-4 space-y-4">
+            <form className="sbMt4 sbStack4">
               <div>
-                <label className="block text-base font-medium text-gray-700">Name</label>
+                <label className="sbFormLabelInline">Name</label>
                 <input
                   type="text"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                  className="sbNativeField"
                 />
               </div>
               <div>
-                <label className="block text-base font-medium text-gray-700">Description</label>
+                <label className="sbFormLabelInline">Description</label>
                 <textarea
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                  className="sbNativeField"
                   rows={3}
                 />
               </div>
-              <div className="flex justify-end gap-2">
+              <div className="sbCardFooterActions">
                 <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>
                   Cancel
                 </Button>

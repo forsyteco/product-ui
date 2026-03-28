@@ -40,7 +40,7 @@ const options = [
 
 export const Default: Story = {
   render: () => (
-    <div className="w-64">
+    <div className="sbW64">
       <Select options={options} placeholder="Select an option..." />
     </div>
   ),
@@ -48,7 +48,7 @@ export const Default: Story = {
 
 export const Playground: Story = {
   render: (args) => (
-    <div className="w-64">
+    <div className="sbW64">
       <Select {...args} options={options} />
     </div>
   ),

@@ -16,7 +16,7 @@ type Story = StoryObj<typeof meta>
 
 export const Toolbar: Story = {
   render: () => (
-    <div className="flex items-center gap-3">
+    <div className="sbRow sbGap3">
       <IconButton icon={Heart} aria-label="Favorite" />
       <IconButton icon={Inbox} aria-label="Notifications" description="View notifications" />
       <IconButton icon={Bell} aria-label="Alerts" variant="primary" />
@@ -27,7 +27,7 @@ export const Toolbar: Story = {
 
 export const WithKeybindingHints: Story = {
   render: () => (
-    <div className="flex items-center gap-3">
+    <div className="sbRow sbGap3">
       <IconButton icon={Inbox} aria-label="Notifications" description="Open inbox" keybindingHint="G+I" />
       <IconButton icon={Bell} aria-label="Alerts" description="Open alerts" keybindingHint="G+A" />
     </div>

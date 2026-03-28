@@ -1,10 +1,10 @@
-﻿# Repository Guidelines
+# Repository Guidelines
 
 ## Project Structure & Module Organization
 - Monorepo managed by Turborepo; shared configs live at `pnpm-workspace.yaml`, `turbo.json`, and `tsconfig.base.json`.
-- `packages/react`: Vite-based React component library using Tailwind CSS 4; entrypoint is `src/index.ts` with utilities in `src/utils` and components in feature folders (e.g., `spinner/`).
+- `packages/react`: Vite-based React component library using CSS modules and design tokens; entrypoint is `src/index.ts` with utilities in `src/utils` and components in feature folders (e.g., `spinner/`).
 - `packages/mcp`: Model Context Protocol server scaffold; `src/server.ts` defines the MCP server instance, re-exported from `src/index.ts`.
-- Styles sit in `packages/react/src/globals.css`; colocate stories next to components (see `spinner/spinner.stories.tsx`).
+- Styles sit in `packages/react/styles.css`; colocate stories next to components (see `spinner/spinner.stories.tsx`).
 
 ## Build, Test, and Development Commands
 - `pnpm install` (Node >=18, pnpm 9) to bootstrap dependencies.
@@ -17,7 +17,7 @@
 ## Coding Style & Naming Conventions
 - TypeScript-first; prefer functional React components with props types named `*Props`.
 - Default to 2-space indentation and Prettier formatting; keep imports sorted logically (external, internal utils, styles).
-- Components/files use PascalCase (`Spinner.tsx`); helpers use camelCase (`cn`). Keep Tailwind strings concise and merge with `cn`.
+- Components/files use PascalCase (`Spinner.tsx`); helpers use camelCase (`cn`). Prefer CSS-module classes and concise semantic Storybook helper classes for demo-only layout.
 
 ## Testing Guidelines
 - Use Vitest for unit tests near the code as `*.test.ts`/`*.test.tsx`; assert behaviors over implementation details.

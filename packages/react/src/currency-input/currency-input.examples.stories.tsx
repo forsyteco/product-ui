@@ -20,11 +20,11 @@ export const PaymentForm: Story = {
     const [amount, setAmount] = useState<number | undefined>();
 
     return (
-      <div className="p-6 max-w-md space-y-4">
-        <h2 className="text-lg font-semibold">Send payment</h2>
-        <form className="space-y-4">
+      <div className="sbDemoNarrow sbStack4">
+        <h2 className="sbTextLg sbFontSemibold">Send payment</h2>
+        <form className="sbStack4">
           <div>
-            <label className="block text-base font-medium text-gray-700 mb-1">
+            <label className="sbFormLabel">
               Amount
             </label>
             <CurrencyInput
@@ -35,11 +35,11 @@ export const PaymentForm: Story = {
               decimalScale={2}
               currencySymbol="£"
             />
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="sbMt1 sbTextSm sbMutedText">
               Supports commas, partial decimals, and clamps to zero.
             </p>
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="sbWFull">
             Pay now
           </Button>
         </form>
@@ -54,11 +54,11 @@ export const WithPresetAndMax: Story = {
     const max = 5000;
 
     return (
-      <div className="p-6 max-w-md space-y-4">
-        <h2 className="text-lg font-semibold">Top up balance</h2>
-        <form className="space-y-4">
+      <div className="sbDemoNarrow sbStack4">
+        <h2 className="sbTextLg sbFontSemibold">Top up balance</h2>
+        <form className="sbStack4">
           <div>
-            <label className="block text-base font-medium text-gray-700 mb-1">
+            <label className="sbFormLabel">
               Amount (max {max.toLocaleString()})
             </label>
             <CurrencyInput
@@ -69,11 +69,11 @@ export const WithPresetAndMax: Story = {
               decimalScale={2}
               currencySymbol="$"
             />
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="sbMt1 sbTextSm sbMutedText">
               Value is clamped to the maximum allowed balance.
             </p>
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="sbWFull">
             Top up
           </Button>
         </form>

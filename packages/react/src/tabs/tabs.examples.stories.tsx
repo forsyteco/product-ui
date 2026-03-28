@@ -18,8 +18,8 @@ export const SettingsPage: Story = {
   render: () => {
     const [selectedIndex, setSelectedIndex] = useState(0);
     return (
-      <div className="max-w-2xl mx-auto p-6">
-        <h1 className="text-2xl font-bold mb-6">Settings</h1>
+      <div className="sbDemoTabsShell">
+        <h1 className="sbText2xl sbFontBold sbMb6">Settings</h1>
         <Tabs selectedIndex={selectedIndex} onChange={setSelectedIndex}>
           <TabList>
             <Tab>General</Tab>
@@ -29,61 +29,61 @@ export const SettingsPage: Story = {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <div className="space-y-4">
+              <div className="sbStack4">
                 <div>
-                  <label className="block text-base font-medium text-gray-700">Display Name</label>
+                  <label className="sbFormLabelInline">Display Name</label>
                   <input
                     type="text"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                    className="sbNativeField"
                     defaultValue="John Doe"
                   />
                 </div>
                 <div>
-                  <label className="block text-base font-medium text-gray-700">Email</label>
+                  <label className="sbFormLabelInline">Email</label>
                   <input
                     type="email"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                    className="sbNativeField"
                     defaultValue="john@example.com"
                   />
                 </div>
               </div>
             </TabPanel>
             <TabPanel>
-              <div className="space-y-4">
+              <div className="sbStack4">
                 <div>
-                  <label className="block text-base font-medium text-gray-700">Current Password</label>
-                  <input type="password" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
+                  <label className="sbFormLabelInline">Current Password</label>
+                  <input type="password" className="sbNativeField" />
                 </div>
                 <div>
-                  <label className="block text-base font-medium text-gray-700">New Password</label>
-                  <input type="password" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
+                  <label className="sbFormLabelInline">New Password</label>
+                  <input type="password" className="sbNativeField" />
                 </div>
                 <Button>Update Password</Button>
               </div>
             </TabPanel>
             <TabPanel>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
+              <div className="sbStack4">
+                <div className="sbRowBetween">
                   <div>
-                    <h3 className="text-base font-medium">Public Profile</h3>
-                    <p className="text-base text-gray-600">Make your profile visible to everyone</p>
+                    <h3 className="sbTextBase sbFontMedium">Public Profile</h3>
+                    <p className="sbTextBase sbMutedText">Make your profile visible to everyone</p>
                   </div>
-                  <input type="checkbox" className="rounded" />
+                  <input type="checkbox" className="sbCheckbox" />
                 </div>
-                <div className="flex items-center justify-between">
+                <div className="sbRowBetween">
                   <div>
-                    <h3 className="text-base font-medium">Email Notifications</h3>
-                    <p className="text-base text-gray-600">Receive email updates</p>
+                    <h3 className="sbTextBase sbFontMedium">Email Notifications</h3>
+                    <p className="sbTextBase sbMutedText">Receive email updates</p>
                   </div>
-                  <input type="checkbox" className="rounded" defaultChecked />
+                  <input type="checkbox" className="sbCheckbox" defaultChecked />
                 </div>
               </div>
             </TabPanel>
             <TabPanel>
-              <div className="space-y-4">
-                <div className="border border-gray-200 rounded-lg p-4">
-                  <h3 className="font-semibold mb-2">Current Plan</h3>
-                  <p className="text-base text-gray-600 mb-4">Pro Plan - $29/month</p>
+              <div className="sbStack4">
+                <div className="sbDocSurface">
+                  <h3 className="sbFontSemibold sbMb2">Current Plan</h3>
+                  <p className="sbTextBase sbMutedText sbMb4">Pro Plan - $29/month</p>
                   <Button>Change Plan</Button>
                 </div>
               </div>

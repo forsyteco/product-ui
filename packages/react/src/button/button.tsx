@@ -1,6 +1,6 @@
 import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '../utils/tailwind';
+import { clsx } from 'clsx';
 import styles from './button.module.css';
 
 export type ButtonProps = ComponentPropsWithoutRef<'button'> &
@@ -41,7 +41,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   return (
     <button
       ref={ref}
-      className={cn(buttonVariants({ variant, size }), className)}
+      className={clsx(buttonVariants({ variant, size }), className)}
       {...props}
     >
       {children}

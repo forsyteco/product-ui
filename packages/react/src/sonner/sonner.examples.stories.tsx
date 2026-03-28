@@ -18,18 +18,18 @@ type Story = StoryObj<typeof meta>;
 
 export const InlineCTA: Story = {
   render: () => (
-    <div className="max-w-md">
+    <div className="sbWFull sbMaxWmd">
       <Sonner />
       <Card>
         <CardHeader>
           <CardTitle>Notifications</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-base text-muted-foreground">
+          <p className="sbTextBase sbMutedText">
             Trigger toasts from anywhere; the toaster stays at the app root.
           </p>
         </CardContent>
-        <CardFooter className="justify-end gap-2">
+        <CardFooter className="sbCardFooterActions">
           <Button
             variant="outline"
             onClick={() => toast.message('Heads up', { description: 'This is a neutral toast.' })}

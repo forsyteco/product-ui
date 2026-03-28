@@ -1,6 +1,6 @@
 import { type SelectHTMLAttributes } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import styles from './select.module.css';
 
 export type SelectOption = {
@@ -33,7 +33,7 @@ function Select({ options, placeholder, error, className, ...props }: SelectProp
   return (
     <div className={styles.wrapper}>
       <select
-        className={cn(selectVariants({ error }), className)}
+        className={clsx(selectVariants({ error }), className)}
         {...props}
       >
         {placeholder && (

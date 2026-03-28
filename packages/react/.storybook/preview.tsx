@@ -1,4 +1,5 @@
 import '../styles.css';
+import './storybook-styles.css';
 import * as React from 'react';
 import type { Decorator, Preview } from '@storybook/react-vite';
 
@@ -40,9 +41,9 @@ const storybookViewports = (
 // Theme reset (optional; keep if you want Storybook always “fresh”)
 const storybookThemeStorageKey = 'forsyteco-theme-storybook';
 
-if (typeof window !== 'undefined') {
-  window.localStorage.removeItem(`${storybookThemeStorageKey}-colour-scheme`);
-  window.localStorage.removeItem(`${storybookThemeStorageKey}-mode`);
+if (globalThis.window !== undefined) {
+  globalThis.window.localStorage.removeItem(`${storybookThemeStorageKey}-colour-scheme`);
+  globalThis.window.localStorage.removeItem(`${storybookThemeStorageKey}-mode`);
 }
 
 /**

@@ -1,5 +1,5 @@
 import type { DataTableColumn } from '../types';
-import { cn } from '../../utils/cn';
+import { clsx } from 'clsx';
 import styles from './data-table.module.css';
 
 export type TableCellProps<TData, TValue = unknown> = Readonly<{
@@ -24,7 +24,7 @@ function TableCell<TData, TValue = unknown>({
   return (
     <td
       role="gridcell"
-      className={cn(styles.cell, alignmentClass)}
+      className={clsx(styles.cell, alignmentClass)}
       style={{
         width: column.width,
         minWidth: column.minWidth,

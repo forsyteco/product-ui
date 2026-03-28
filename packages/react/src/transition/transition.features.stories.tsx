@@ -25,11 +25,11 @@ export const Fade: Story = {
     const [show, setShow] = useState(false);
     return (
       <>
-        <Button variant="outline" onClick={() => setShow(!show)} className="mb-4">
+        <Button variant="outline" onClick={() => setShow(!show)} className="sbMb4">
           Toggle
         </Button>
         <Transition show={show}>
-          <div className="p-4 bg-gray-100 rounded">Fading content</div>
+          <div className="sbDemoInsetPad">Fading content</div>
         </Transition>
       </>
     );
@@ -41,19 +41,19 @@ export const Slide: Story = {
     const [show, setShow] = useState(false);
     return (
       <>
-        <Button variant="outline" onClick={() => setShow(!show)} className="mb-4">
+        <Button variant="outline" onClick={() => setShow(!show)} className="sbMb4">
           Toggle
         </Button>
         <Transition
           show={show}
-          enter="transition ease-out duration-300"
-          enterFrom="transform -translate-y-4 opacity-0"
-          enterTo="transform translate-y-0 opacity-100"
-          leave="transition ease-in duration-200"
-          leaveFrom="transform translate-y-0 opacity-100"
-          leaveTo="transform -translate-y-4 opacity-0"
+          enter="sbTransEaseOut300"
+          enterFrom="sbYMinus4Opacity0"
+          enterTo="sbY0Opacity1"
+          leave="sbTransEaseIn200"
+          leaveFrom="sbY0Opacity1"
+          leaveTo="sbYMinus4Opacity0"
         >
-          <div className="p-4 bg-gray-100 rounded">Sliding content</div>
+          <div className="sbDemoInsetPad">Sliding content</div>
         </Transition>
       </>
     );
@@ -65,19 +65,19 @@ export const Scale: Story = {
     const [show, setShow] = useState(false);
     return (
       <>
-        <Button variant="outline" onClick={() => setShow(!show)} className="mb-4">
+        <Button variant="outline" onClick={() => setShow(!show)} className="sbMb4">
           Toggle
         </Button>
         <Transition
           show={show}
-          enter="transition ease-out duration-200"
-          enterFrom="transform scale-95 opacity-0"
-          enterTo="transform scale-100 opacity-100"
-          leave="transition ease-in duration-150"
-          leaveFrom="transform scale-100 opacity-100"
-          leaveTo="transform scale-95 opacity-0"
+          enter="sbTransEaseOut200"
+          enterFrom="sbScale95Opacity0"
+          enterTo="sbScale100Opacity1"
+          leave="sbTransEaseIn150"
+          leaveFrom="sbScale100Opacity1"
+          leaveTo="sbScale95Opacity0"
         >
-          <div className="p-4 bg-gray-100 rounded">Scaling content</div>
+          <div className="sbDemoInsetPad">Scaling content</div>
         </Transition>
       </>
     );

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { cn } from '../../utils/cn';
+import { clsx } from 'clsx';
 import type { DataTableColumn, SortState, FilterState, SortDirection, DataTableColorConfig } from '../types';
 import { ROW_INTERACTION, type RowInteractionMode } from '../constants';
 import { SortIndicator } from './sort-indicator';
@@ -127,7 +127,7 @@ function TableHeader<TData>({
               key={column.id}
               role="columnheader"
               aria-sort={getAriaSort(column)}
-              className={cn(
+              className={clsx(
                 styles.headerCell,
                 column.sortable && styles.headerCellSortable
               )}

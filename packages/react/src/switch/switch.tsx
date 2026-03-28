@@ -1,5 +1,5 @@
 import { Field, Label, Description, Switch as HeadlessSwitch } from '@headlessui/react';
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import styles from './switch.module.css';
 
 type SwitchSize = 'sm' | 'md' | 'lg';
@@ -26,10 +26,10 @@ function Switch({
   const isDisabled = Boolean(disabled);
 
   return (
-    <Field className={cn(styles.field, className)}>
+    <Field className={clsx(styles.field, className)}>
       {label && (
         <Label
-          className={cn(
+          className={clsx(
             styles.label,
             isDisabled && styles.labelDisabled
           )}
@@ -39,7 +39,7 @@ function Switch({
       )}
       {description && (
         <Description
-          className={cn(
+          className={clsx(
             styles.description,
             isDisabled && styles.descriptionDisabled
           )}
@@ -51,14 +51,14 @@ function Switch({
         checked={checked}
         onChange={onChange}
         disabled={isDisabled}
-        className={cn(
+        className={clsx(
           styles.switch,
           size === 'sm' ? styles.switchSm : size === 'lg' ? styles.switchLg : styles.switchMd,
           isDisabled && styles.switchDisabled
         )}
       >
         <span
-          className={cn(
+          className={clsx(
             styles.thumb,
             size === 'sm' ? styles.thumbSm : size === 'lg' ? styles.thumbLg : styles.thumbMd
           )}

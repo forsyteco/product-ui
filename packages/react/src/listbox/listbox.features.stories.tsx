@@ -35,7 +35,7 @@ export const Basic: Story = {
   render: () => {
     const [selected, setSelected] = useState<ListboxOption | null>(null);
     return (
-      <div className="w-64">
+      <div className="sbW64">
         <Listbox
           options={options}
           value={selected}
@@ -50,7 +50,7 @@ export const WithInitialValue: Story = {
   render: () => {
     const [selected, setSelected] = useState<ListboxOption | null>(options[1]);
     return (
-      <div className="w-64">
+      <div className="sbW64">
         <Listbox
           options={options}
           value={selected}
@@ -63,7 +63,7 @@ export const WithInitialValue: Story = {
 
 export const Disabled: Story = {
   render: () => (
-    <div className="w-64">
+    <div className="sbW64">
       <Listbox options={options} disabled />
     </div>
   ),

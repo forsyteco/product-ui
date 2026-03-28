@@ -1,5 +1,5 @@
 import { Copy } from 'lucide-react';
-import { cn } from '../../utils/cn';
+import { clsx } from 'clsx';
 import styles from './data-table.module.css';
 
 export type CopyableCellProps = Readonly<{
@@ -12,11 +12,11 @@ export function CopyableCell({ value }: CopyableCellProps) {
   };
 
   return (
-    <span className={cn(styles.copyGroup)}>
+    <span className={clsx(styles.copyGroup)}>
       <span className={styles.copyValue}>{value}</span>
       <button
         onClick={handleCopy}
-        className={cn(styles.copyButton)}
+        className={clsx(styles.copyButton)}
         aria-label="Copy to clipboard"
       >
         <Copy className={styles.copyIcon} />

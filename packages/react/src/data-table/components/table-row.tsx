@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { ChevronRight } from 'lucide-react';
-import { cn } from '../../utils/cn';
+import { clsx } from 'clsx';
 import { ROW_INTERACTION, type RowInteractionMode } from '../constants';
 import type { DataTableColorConfig } from '../types';
 import { Checkbox } from '../../checkbox';
@@ -76,7 +76,7 @@ function TableRow<TData>({
   return (
     <tr
       role="row"
-      className={cn(
+      className={clsx(
         styles.row,
         isClickable && styles.rowClickable,
         isSelectable && styles.rowSelectable,
@@ -96,7 +96,7 @@ function TableRow<TData>({
             aria-expanded={isExpanded}
             aria-controls={isExpanded ? expandedContentId : undefined}
             aria-label="Expand row"
-            className={cn(
+            className={clsx(
               styles.expandButton,
               isExpanded && styles.expandButtonOpen
             )}

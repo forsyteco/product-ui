@@ -19,13 +19,13 @@ export const Controlled: Story = {
     const [value, setValue] = useState<number | undefined>();
 
     return (
-      <div className="space-y-2 w-64">
+      <div className="sbStack2 sbW64">
         <CurrencyInput
           placeholder="Enter amount"
           value={value}
           onValueChange={setValue}
         />
-        <div className="text-sm text-muted-foreground">
+        <div className="sbTextSm sbMutedText">
           Current value: {value ?? 'undefined'}
         </div>
       </div>
@@ -38,7 +38,7 @@ export const WithBounds: Story = {
     const [value, setValue] = useState<number | undefined>(5);
 
     return (
-      <div className="space-y-2 w-64">
+      <div className="sbStack2 sbW64">
         <CurrencyInput
           value={value}
           onValueChange={setValue}
@@ -46,7 +46,7 @@ export const WithBounds: Story = {
           max={10}
           decimalScale={2}
         />
-        <div className="text-sm text-muted-foreground">
+        <div className="sbTextSm sbMutedText">
           Clamped between 0 and 10
         </div>
       </div>

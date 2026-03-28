@@ -19,9 +19,9 @@ describe('Spinner', () => {
   });
 
   it('applies className to the wrapper', () => {
-    const { container } = render(<Spinner className="text-blue-500" />);
+    const { container } = render(<Spinner className="custom-spinner-class" />);
     const wrapper = container.querySelector('div');
-    expect(wrapper).toHaveClass('text-blue-500');
+    expect(wrapper).toHaveClass('custom-spinner-class');
   });
 
   it('cycles through colors over time', () => {

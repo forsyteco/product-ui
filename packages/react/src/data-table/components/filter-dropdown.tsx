@@ -1,7 +1,7 @@
 import { useState, useMemo, type CSSProperties } from 'react';
 import { Popover as HeadlessPopover, Portal } from '@headlessui/react';
 import { Filter, Search } from 'lucide-react';
-import { cn } from '../../utils/cn';
+import { clsx } from 'clsx';
 import { Input } from '../../input';
 import { Button } from '../../button';
 import { Checkbox } from '../../checkbox';
@@ -82,7 +82,7 @@ function FilterDropdown({
       <HeadlessPopover>
         <HeadlessPopover.Button
           aria-label={`Filter ${columnId}`}
-          className={cn(
+          className={clsx(
             styles.filterButton,
             isActive && !activeBackground && styles.filterButtonActiveDefault
           )}
@@ -90,7 +90,7 @@ function FilterDropdown({
           onClick={(e: React.MouseEvent) => e.stopPropagation()}
         >
           <Filter
-            className={cn(styles.filterIcon, !currentIconColor && styles.sortIconDefault)}
+            className={clsx(styles.filterIcon, !currentIconColor && styles.sortIconDefault)}
             style={currentIconColor ? { color: currentIconColor } : undefined}
           />
         </HeadlessPopover.Button>
@@ -122,7 +122,7 @@ function FilterDropdown({
               >
                 <span
                   aria-hidden={selectedValues.length > 0}
-                  className={cn(
+                  className={clsx(
                     styles.filterPrimaryText,
                     'inline-block transition-all duration-200',
                     selectedValues.length > 0
@@ -134,7 +134,7 @@ function FilterDropdown({
                 </span>
                 <span
                   aria-hidden={selectedValues.length === 0}
-                  className={cn(
+                  className={clsx(
                     styles.filterSecondaryText,
                     selectedValues.length > 0
                       ? styles.filterSecondaryShown

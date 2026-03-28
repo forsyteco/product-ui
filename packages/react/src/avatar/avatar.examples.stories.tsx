@@ -16,18 +16,18 @@ type Story = StoryObj<typeof meta>;
 
 export const MemberList: Story = {
   render: () => (
-    <div className="max-w-md">
+    <div className="sbWFull sbMaxWmd">
       <Card>
         <CardHeader>
           <CardTitle>Team</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="sbStackGap3">
           {['Ada Lovelace', 'Grace Hopper', 'Alan Turing'].map((name) => (
-            <div key={name} className="flex items-center gap-3">
+            <div key={name} className="sbRow sbGap3">
               <Avatar>
                 <AvatarFallback variant="boring" name={name} />
               </Avatar>
-              <div className="text-base">{name}</div>
+              <div className="sbTextBase">{name}</div>
             </div>
           ))}
         </CardContent>

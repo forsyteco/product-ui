@@ -18,8 +18,8 @@ export const Basic: Story = {
     <Popover>
       <PopoverTrigger>Open Popover</PopoverTrigger>
       <PopoverContent>
-        <h3 className="text-base font-medium text-gray-900 mb-2">Popover Title</h3>
-        <p className="text-base text-gray-600">This is the popover content.</p>
+        <h3 className="sbTextBase sbFontMedium sbForegroundText sbMb2">Popover Title</h3>
+        <p className="sbTextBase sbMutedText">This is the popover content.</p>
       </PopoverContent>
     </Popover>
   ),
@@ -30,20 +30,20 @@ export const WithForm: Story = {
     <Popover>
       <PopoverTrigger>Filter</PopoverTrigger>
       <PopoverContent>
-        <form className="space-y-4">
+        <form className="sbStack4">
           <div>
-            <label className="block text-base font-medium text-gray-700">Status</label>
-            <select className="mt-1 block w-full rounded-md border-gray-300">
+            <label className="sbFormLabelInline">Status</label>
+            <select className="sbNativeField">
               <option>All</option>
               <option>Active</option>
               <option>Inactive</option>
             </select>
           </div>
           <div>
-            <label className="block text-base font-medium text-gray-700">Date Range</label>
-            <input type="date" className="mt-1 block w-full rounded-md border-gray-300" />
+            <label className="sbFormLabelInline">Date Range</label>
+            <input type="date" className="sbNativeField" />
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="sbWFull">
             Apply
           </Button>
         </form>

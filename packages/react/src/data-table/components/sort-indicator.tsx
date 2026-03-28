@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 import { ArrowUp, ArrowDown, ArrowUpDown } from 'lucide-react';
-import { cn } from '../../utils/cn';
+import { clsx } from 'clsx';
 import type { SortDirection } from '../types';
 import styles from './data-table.module.css';
 
@@ -29,20 +29,20 @@ function SortIndicator({ direction, color, activeBackground, activeForeground }:
 
   return (
     <span
-      className={cn(
+      className={clsx(
         styles.sortWrap,
         isActive && !activeBackground && styles.sortActiveDefault
       )}
       style={containerStyle}
     >
       {direction === 'asc' && (
-        <ArrowUp className={cn(styles.sortIcon, !iconColor && styles.sortIconDefault)} style={iconStyle} />
+        <ArrowUp className={clsx(styles.sortIcon, !iconColor && styles.sortIconDefault)} style={iconStyle} />
       )}
       {direction === 'desc' && (
-        <ArrowDown className={cn(styles.sortIcon, !iconColor && styles.sortIconDefault)} style={iconStyle} />
+        <ArrowDown className={clsx(styles.sortIcon, !iconColor && styles.sortIconDefault)} style={iconStyle} />
       )}
       {direction === null && (
-        <ArrowUpDown className={cn(styles.sortIcon, !iconColor && styles.sortIconDefault, styles.sortIconInactive)} style={iconStyle} />
+        <ArrowUpDown className={clsx(styles.sortIcon, !iconColor && styles.sortIconDefault, styles.sortIconInactive)} style={iconStyle} />
       )}
     </span>
   );

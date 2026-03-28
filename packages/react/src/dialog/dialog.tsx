@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 import { Dialog as HeadlessDialog } from '@headlessui/react';
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import styles from './dialog.module.css';
 
 export type DialogProps = {
@@ -28,7 +28,7 @@ export type DialogPanelProps = {
 function Dialog({ open, onClose, children, className }: DialogProps) {
   return (
     <HeadlessDialog open={open} onClose={onClose}>
-      <div className={cn(styles.root, className)}>
+      <div className={clsx(styles.root, className)}>
         <div className={styles.overlay} aria-hidden="true" />
         <div className={styles.container}>
           {children}
@@ -41,7 +41,7 @@ function Dialog({ open, onClose, children, className }: DialogProps) {
 export function DialogPanel({ children, className }: DialogPanelProps) {
   return (
     <HeadlessDialog.Panel
-      className={cn(
+      className={clsx(
         styles.panel,
         className
       )}
@@ -53,7 +53,7 @@ export function DialogPanel({ children, className }: DialogPanelProps) {
 
 export function DialogTitle({ children, className }: DialogTitleProps) {
   return (
-    <HeadlessDialog.Title className={cn(styles.title, className)}>
+    <HeadlessDialog.Title className={clsx(styles.title, className)}>
       {children}
     </HeadlessDialog.Title>
   );
@@ -61,7 +61,7 @@ export function DialogTitle({ children, className }: DialogTitleProps) {
 
 export function DialogDescription({ children, className }: DialogDescriptionProps) {
   return (
-    <HeadlessDialog.Description className={cn(styles.description, className)}>
+    <HeadlessDialog.Description className={clsx(styles.description, className)}>
       {children}
     </HeadlessDialog.Description>
   );

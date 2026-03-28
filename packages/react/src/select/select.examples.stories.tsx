@@ -14,10 +14,10 @@ type Story = StoryObj<typeof meta>;
 
 export const CountrySelect: Story = {
   render: () => (
-    <div className="p-6 max-w-md">
-      <form className="space-y-4">
+    <div className="sbDemoNarrow">
+      <form className="sbStack4">
         <div>
-          <label className="block text-base font-medium text-gray-700 mb-1">
+          <label className="sbFormLabel">
             Country
           </label>
           <Select
@@ -31,7 +31,7 @@ export const CountrySelect: Story = {
           />
         </div>
         <div>
-          <label className="block text-base font-medium text-gray-700 mb-1">
+          <label className="sbFormLabel">
             State/Province
           </label>
           <Select

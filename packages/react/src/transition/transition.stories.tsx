@@ -31,11 +31,11 @@ export const Default: Story = {
     const [show, setShow] = useState(false);
     return (
       <>
-        <Button variant="outline" onClick={() => setShow(!show)} className="mb-4">
+        <Button variant="outline" onClick={() => setShow(!show)} className="sbMb4">
           Toggle
         </Button>
         <Transition show={show}>
-          <div className="p-4 bg-gray-100 rounded">Transitioning content</div>
+          <div className="sbDemoInsetPad">Transitioning content</div>
         </Transition>
       </>
     );
@@ -47,11 +47,11 @@ export const Playground: Story = {
     const [show, setShow] = useState(false);
     return (
       <>
-        <Button variant="outline" onClick={() => setShow(!show)} className="mb-4">
+        <Button variant="outline" onClick={() => setShow(!show)} className="sbMb4">
           Toggle
         </Button>
         <Transition {...args} show={show}>
-          <div className="p-4 bg-gray-100 rounded">Custom transition</div>
+          <div className="sbDemoInsetPad">Custom transition</div>
         </Transition>
       </>
     );

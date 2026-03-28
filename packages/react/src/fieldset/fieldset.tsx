@@ -1,6 +1,6 @@
 import { type FieldsetHTMLAttributes, type ReactNode } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import styles from './fieldset.module.css';
 
 const fieldsetVariants = cva(
@@ -26,7 +26,7 @@ export type FieldsetProps = FieldsetHTMLAttributes<HTMLFieldSetElement> & Varian
 function Fieldset({ legend, children, variant, className, ...props }: FieldsetProps) {
   return (
     <fieldset
-      className={cn(fieldsetVariants({ variant }), className)}
+      className={clsx(fieldsetVariants({ variant }), className)}
       {...props}
     >
       {legend && (

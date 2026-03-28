@@ -1,4 +1,4 @@
-import { cn } from '../../utils/cn';
+import { clsx } from 'clsx';
 import styles from './data-table.module.css';
 
 /**
@@ -65,7 +65,7 @@ export function StatusCell({ value, version }: StatusCellProps) {
   return (
     <div className={styles.statusWrap}>
       <span
-        className={cn(
+        className={clsx(
           styles.statusBadge,
           colorClasses
         )}

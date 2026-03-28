@@ -1,5 +1,5 @@
 import { useMemo, useState, useCallback } from 'react';
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import type { DataTableProps } from './types';
 import { DEFAULT_COLOR_CONFIG } from './types';
 import { ROW_INTERACTION } from './constants';
@@ -97,7 +97,7 @@ function DataTable<TData, TExpandedData = unknown>({
 
   return (
     <div
-      className={cn(styles.tableContainer, className)}
+      className={clsx(styles.tableContainer, className)}
       style={containerStyle}
     >
       <div className={styles.tableWrap}>

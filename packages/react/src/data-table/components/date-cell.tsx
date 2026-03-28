@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { Clock } from 'lucide-react';
-import { cn } from '../../utils/cn';
+import { clsx } from 'clsx';
 import styles from './data-table.module.css';
 
 export type DateCellProps = Readonly<{
@@ -49,7 +49,7 @@ export function DateCell({ value, dateFormat = 'DD/MM/YYYY' }: DateCellProps) {
   return (
     <div className={styles.dateWrap}>
       <span className={styles.dateMain}>{formattedDate}</span>
-      <span className={cn(styles.dateMeta)}>
+      <span className={clsx(styles.dateMeta)}>
         <Clock className={styles.clockIcon} />
         {relativeTime}
       </span>

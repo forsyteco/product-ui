@@ -4,7 +4,7 @@ import BoringAvatarComponent from 'boring-avatars';
 import { Avatar as AvatarPrimitive } from 'radix-ui';
 import * as React from 'react';
 
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import styles from './avatar.module.css';
 
 const BORING_AVATAR_COLORS = [
@@ -17,7 +17,7 @@ function Avatar({ className, ...props }: AvatarProps) {
   return (
     <AvatarPrimitive.Root
       data-slot="avatar"
-      className={cn(styles.root, className)}
+      className={clsx(styles.root, className)}
       {...props}
     />
   );
@@ -32,7 +32,7 @@ function AvatarImage({ className, ...props }: AvatarImageProps) {
     <AvatarPrimitive.Image asChild>
       <img
         data-slot="avatar-image"
-        className={cn(styles.image, className)}
+        className={clsx(styles.image, className)}
         {...props}
       />
     </AvatarPrimitive.Image>
@@ -82,7 +82,7 @@ function AvatarFallback(props: AvatarFallbackProps) {
       return (
         <AvatarPrimitive.Fallback
           data-slot="avatar-fallback"
-          className={cn(
+          className={clsx(
             styles.fallback,
             className
           )}
@@ -99,7 +99,7 @@ function AvatarFallback(props: AvatarFallbackProps) {
       return (
         <AvatarPrimitive.Fallback
           data-slot="avatar-fallback"
-          className={cn(
+          className={clsx(
             styles.fallback,
             className
           )}
@@ -116,7 +116,7 @@ function AvatarFallback(props: AvatarFallbackProps) {
       return (
         <AvatarPrimitive.Fallback
           data-slot="avatar-fallback"
-          className={cn(styles.fallbackBoring, className)}
+          className={clsx(styles.fallbackBoring, className)}
           asChild
           {...rest}
         >

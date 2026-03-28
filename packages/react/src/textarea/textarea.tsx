@@ -1,6 +1,6 @@
 import { type TextareaHTMLAttributes } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import styles from './textarea.module.css';
 
 const textareaVariants = cva(
@@ -23,7 +23,7 @@ export type TextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & Varian
 function Textarea({ error, className, ...props }: TextareaProps) {
   return (
     <textarea
-      className={cn(textareaVariants({ error }), className)}
+      className={clsx(textareaVariants({ error }), className)}
       {...props}
     />
   );

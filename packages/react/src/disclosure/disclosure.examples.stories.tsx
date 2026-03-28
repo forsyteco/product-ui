@@ -14,13 +14,13 @@ type Story = StoryObj<typeof meta>;
 
 export const FAQ: Story = {
   render: () => (
-    <div className="max-w-2xl mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
-      <div className="space-y-4">
+    <div className="sbDemoWide">
+      <h2 className="sbText2xl sbFontBold sbMb6">Frequently Asked Questions</h2>
+      <div className="sbStack4">
         <Disclosure>
           <DisclosureButton>
             <span>What is your refund policy?</span>
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="sbIcon5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
           </DisclosureButton>
@@ -31,7 +31,7 @@ export const FAQ: Story = {
         <Disclosure>
           <DisclosureButton>
             <span>Do you offer international shipping?</span>
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="sbIcon5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
           </DisclosureButton>
@@ -42,7 +42,7 @@ export const FAQ: Story = {
         <Disclosure>
           <DisclosureButton>
             <span>How can I track my order?</span>
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="sbIcon5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
           </DisclosureButton>

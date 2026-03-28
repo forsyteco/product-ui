@@ -21,9 +21,9 @@ export const Variants: Story = {
     const [valueLocale, setValueLocale] = useState<number | undefined>(1234.56);
 
     return (
-      <div className="space-y-4 w-72">
-        <div className="space-y-1">
-          <p className="text-sm text-muted-foreground">Default (2 decimals)</p>
+      <div className="sbStack4 sbW72">
+        <div className="sbStack1">
+          <p className="sbTextSm sbMutedText">Default (2 decimals)</p>
           <CurrencyInput
             placeholder="Enter amount"
             value={valueDefault}
@@ -32,8 +32,8 @@ export const Variants: Story = {
           />
         </div>
 
-        <div className="space-y-1">
-          <p className="text-sm text-muted-foreground">Clamped between 0 and 10</p>
+        <div className="sbStack1">
+          <p className="sbTextSm sbMutedText">Clamped between 0 and 10</p>
           <CurrencyInput
             value={valueClamped}
             onValueChange={setValueClamped}
@@ -44,8 +44,8 @@ export const Variants: Story = {
           />
         </div>
 
-        <div className="space-y-1">
-          <p className="text-sm text-muted-foreground">Different locale (fr-FR)</p>
+        <div className="sbStack1">
+          <p className="sbTextSm sbMutedText">Different locale (fr-FR)</p>
           <CurrencyInput
             value={valueLocale}
             onValueChange={setValueLocale}

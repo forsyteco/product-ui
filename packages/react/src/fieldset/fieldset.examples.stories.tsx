@@ -14,52 +14,52 @@ type Story = StoryObj<typeof meta>;
 
 export const ContactForm: Story = {
   render: () => (
-    <div className="p-6 max-w-md">
-      <form className="space-y-6">
+    <div className="sbDemoNarrow">
+      <form className="sbStack6">
         <Fieldset legend="Contact Information">
-          <div className="space-y-4">
+          <div className="sbStack4">
             <div>
-              <label className="block text-base font-medium text-gray-700 mb-1">Email</label>
+              <label className="sbFormLabel">Email</label>
               <input
                 type="email"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                className="sbNativeInput"
                 placeholder="you@example.com"
               />
             </div>
             <div>
-              <label className="block text-base font-medium text-gray-700 mb-1">Phone</label>
+              <label className="sbFormLabel">Phone</label>
               <input
                 type="tel"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                className="sbNativeInput"
                 placeholder="+1 (555) 000-0000"
               />
             </div>
           </div>
         </Fieldset>
         <Fieldset legend="Address">
-          <div className="space-y-4">
+          <div className="sbStack4">
             <div>
-              <label className="block text-base font-medium text-gray-700 mb-1">Street</label>
+              <label className="sbFormLabel">Street</label>
               <input
                 type="text"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                className="sbNativeInput"
                 placeholder="123 Main St"
               />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="sbGrid sbGridCols2 sbGridGap4">
               <div>
-                <label className="block text-base font-medium text-gray-700 mb-1">City</label>
+                <label className="sbFormLabel">City</label>
                 <input
                   type="text"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                  className="sbNativeInput"
                   placeholder="City"
                 />
               </div>
               <div>
-                <label className="block text-base font-medium text-gray-700 mb-1">ZIP</label>
+                <label className="sbFormLabel">ZIP</label>
                 <input
                   type="text"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                  className="sbNativeInput"
                   placeholder="12345"
                 />
               </div>
@@ -70,4 +70,3 @@ export const ContactForm: Story = {
     </div>
   ),
 };
-

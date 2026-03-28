@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 import { Listbox as HeadlessListbox } from '@headlessui/react';
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import styles from './listbox.module.css';
 
 export type ListboxOption = {
@@ -44,9 +44,9 @@ function Listbox({
 }: ListboxProps) {
   return (
     <HeadlessListbox value={value ?? undefined} onChange={onChange} disabled={disabled}>
-      <div className={cn(styles.root, className)}>
+      <div className={clsx(styles.root, className)}>
         <HeadlessListbox.Button
-          className={cn(
+          className={clsx(
             styles.button,
             disabled && styles.buttonDisabled
           )}
@@ -77,7 +77,7 @@ function Listbox({
               value={option}
               disabled={option.disabled}
               className={({ active, disabled }) =>
-                cn(
+                clsx(
                   styles.option,
                   active ? styles.optionActive : styles.optionInactive,
                   disabled && styles.optionDisabled

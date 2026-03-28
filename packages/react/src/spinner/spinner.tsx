@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { cn } from '../utils/cn';
+import { clsx } from 'clsx';
 import styles from './spinner.module.css';
 
 const DEFAULT_COLORS = ['var(--color-spinner-primary)', 'var(--color-spinner-secondary)', 'var(--color-spinner-tertiary)'];
@@ -30,11 +30,11 @@ function Spinner({
   const color = colors[colorIndex] || colors[0] || '#000000';
 
   return (
-    <div className={cn(styles.root, className)}>
+    <div className={clsx(styles.root, className)}>
       <svg
         viewBox="0 0 50 50"
         style={{ width: size, height: size }}
-        className={cn('animate-spinner-rotate', styles.svg)}
+        className={clsx('animate-spinner-rotate', styles.svg)}
       >
         <circle
           cx="25"
@@ -44,7 +44,7 @@ function Spinner({
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           style={{ stroke: color }}
-          className={cn('animate-spinner-dash', styles.circle)}
+          className={clsx('animate-spinner-dash', styles.circle)}
         />
       </svg>
     </div>

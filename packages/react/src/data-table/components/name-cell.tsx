@@ -1,6 +1,8 @@
 /**
  * Constraint type for rows that have an email field
  */
+import styles from './data-table.module.css';
+
 type WithEmail = { email: string };
 
 export type NameCellProps<TData extends WithEmail = WithEmail> = Readonly<{
@@ -22,9 +24,9 @@ export type NameCellProps<TData extends WithEmail = WithEmail> = Readonly<{
  */
 export function NameCell<TData extends WithEmail>({ value, row }: NameCellProps<TData>) {
   return (
-    <div className="flex flex-col">
-      <span className="font-medium text-foreground">{value}</span>
-      <span className="text-xs text-muted-foreground">{row.email}</span>
+    <div className={styles.nameWrap}>
+      <span className={styles.nameValue}>{value}</span>
+      <span className={styles.nameEmail}>{row.email}</span>
     </div>
   );
 }

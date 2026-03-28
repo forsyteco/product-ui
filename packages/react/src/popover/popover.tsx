@@ -1,7 +1,8 @@
 import { type ReactNode } from 'react';
 import { Popover as HeadlessPopover } from '@headlessui/react';
 import { Button, type ButtonProps } from '../button';
-import { cn } from '../utils/tailwind';
+import { cn } from '../utils/cn';
+import styles from './popover.module.css';
 
 export type PopoverProps = {
   children: ReactNode;
@@ -17,7 +18,7 @@ export type PopoverContentProps = {
 
 function Popover({ children, className }: PopoverProps) {
   return (
-    <div className={cn('relative', className)}>
+    <div className={cn(styles.root, className)}>
       <HeadlessPopover>
         {children}
       </HeadlessPopover>
@@ -43,11 +44,11 @@ export function PopoverContent({ children, className }: PopoverContentProps) {
   return (
     <HeadlessPopover.Panel
       className={cn(
-        'absolute z-10 mt-2 w-72 rounded-md bg-background shadow-lg ring-1 ring-border focus:outline-none',
+        styles.panel,
         className
       )}
     >
-      <div className="p-4">{children}</div>
+      <div className={styles.body}>{children}</div>
     </HeadlessPopover.Panel>
   );
 }

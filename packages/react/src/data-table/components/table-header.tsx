@@ -1,10 +1,11 @@
 import type { ReactNode } from 'react';
-import { cn } from '../../utils/tailwind';
+import { cn } from '../../utils/cn';
 import type { DataTableColumn, SortState, FilterState, SortDirection, DataTableColorConfig } from '../types';
 import { ROW_INTERACTION, type RowInteractionMode } from '../constants';
 import { SortIndicator } from './sort-indicator';
 import { FilterDropdown } from './filter-dropdown';
 import { Checkbox } from '../../checkbox';
+import styles from './data-table.module.css';
 
 export type TableHeaderProps<TData> = Readonly<{
   columns: DataTableColumn<TData>[];
@@ -101,17 +102,17 @@ function TableHeader<TData>({
 
   return (
     <thead>
-      <tr className="bg-muted border-b border-border" style={headerRowStyle}>
+      <tr className={styles.headerRow} style={headerRowStyle}>
         {isExpandable && (
-          <th className="w-10 px-4 py-3" aria-label="Expand" style={headerCellStyle} />
+          <th className={styles.headerCellExpand} aria-label="Expand" style={headerCellStyle} />
         )}
         {isSelectable && (
-          <th className="px-4 py-3 text-left" style={headerCellStyle}>
+          <th className={styles.headerCellSelect} style={headerCellStyle}>
             <Checkbox
               checked={allSelected}
               onChange={handleSelectAll}
               aria-label="Select all rows"
-              className="h-3 w-3"
+              className={styles.headerCheckbox}
               checkedBackground={colorConfig?.headerIconActiveBackground}
               checkedForeground={colorConfig?.headerIconActiveForeground}
             />
@@ -127,8 +128,8 @@ function TableHeader<TData>({
               role="columnheader"
               aria-sort={getAriaSort(column)}
               className={cn(
-                'px-4 py-3 text-left font-semibold text-foreground',
-                column.sortable && 'cursor-pointer select-none'
+                styles.headerCell,
+                column.sortable && styles.headerCellSortable
               )}
               style={{
                 width: column.width,
@@ -137,7 +138,7 @@ function TableHeader<TData>({
               }}
               onClick={() => handleSort(column)}
             >
-              <div className="flex items-center gap-2">
+              <div className={styles.headerCellInner}>
                 <span>{column.header as ReactNode}</span>
                 {column.sortable && (
                   <SortIndicator

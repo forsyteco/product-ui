@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { CopyableCell } from './copyable-cell';
+import styles from './data-table.module.css';
 
 describe('CopyableCell', () => {
   const mockWriteText = vi.fn();
@@ -35,38 +36,36 @@ describe('CopyableCell', () => {
   });
 
   describe('Copy Icon Visibility', () => {
-    it('copy icon is initially hidden (has opacity-0 class)', () => {
+    it('copy icon uses hidden-by-default copy button class', () => {
       const { container } = render(<CopyableCell value="Test value" />);
 
       // The copy button should have opacity-0 class when not hovered
       const copyButton = container.querySelector('button');
       expect(copyButton).toBeInTheDocument();
-      expect(copyButton).toHaveClass('opacity-0');
+      expect(copyButton).toHaveClass(styles.copyButton);
     });
 
-    it('copy icon has group-hover:opacity-100 class for hover visibility', () => {
+    it('copy icon is wrapped by hover-aware group container', () => {
       const { container } = render(<CopyableCell value="Test value" />);
 
-      const copyButton = container.querySelector('button');
-      expect(copyButton).toHaveClass('group-hover:opacity-100');
+      const wrapper = container.firstChild;
+      expect(wrapper).toHaveClass(styles.copyGroup);
     });
   });
 
   describe('Container Layout', () => {
-    it('container has proper layout classes (inline-flex, items-center, gap)', () => {
+    it('container has proper layout class', () => {
       const { container } = render(<CopyableCell value="Test value" />);
 
       const wrapper = container.firstChild;
-      expect(wrapper).toHaveClass('inline-flex');
-      expect(wrapper).toHaveClass('items-center');
-      expect(wrapper).toHaveClass('gap-1');
+      expect(wrapper).toHaveClass(styles.copyGroup);
     });
 
-    it('container has group class for hover interactions', () => {
+    it('container uses copy group styling', () => {
       const { container } = render(<CopyableCell value="Test value" />);
 
       const wrapper = container.firstChild;
-      expect(wrapper).toHaveClass('group');
+      expect(wrapper).toHaveClass(styles.copyGroup);
     });
   });
 
@@ -79,19 +78,18 @@ describe('CopyableCell', () => {
       expect(copyIcon).toBeInTheDocument();
     });
 
-    it('copy icon has correct size (small)', () => {
+    it('copy icon uses module sizing class', () => {
       const { container } = render(<CopyableCell value="Test value" />);
 
       const copyIcon = container.querySelector('svg.lucide-copy');
-      expect(copyIcon).toHaveClass('h-3');
-      expect(copyIcon).toHaveClass('w-3');
+      expect(copyIcon).toHaveClass(styles.copyIcon);
     });
 
-    it('copy button has cursor-pointer class', () => {
+    it('copy button uses module class', () => {
       const { container } = render(<CopyableCell value="Test value" />);
 
       const copyButton = container.querySelector('button');
-      expect(copyButton).toHaveClass('cursor-pointer');
+      expect(copyButton).toHaveClass(styles.copyButton);
     });
   });
 

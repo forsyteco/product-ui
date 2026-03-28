@@ -1,14 +1,15 @@
 import { type FieldsetHTMLAttributes, type ReactNode } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '../utils/tailwind';
+import { cn } from '../utils/cn';
+import styles from './fieldset.module.css';
 
 const fieldsetVariants = cva(
-  'border rounded-md p-4 bg-background',
+  styles.root,
   {
     variants: {
       variant: {
-        default: 'border-border',
-        error: 'border-destructive-border',
+        default: '',
+        error: styles.error,
       },
     },
     defaultVariants: {
@@ -29,7 +30,7 @@ function Fieldset({ legend, children, variant, className, ...props }: FieldsetPr
       {...props}
     >
       {legend && (
-        <legend className="px-2 text-base font-medium text-foreground">
+        <legend className={styles.legend}>
           {legend}
         </legend>
       )}

@@ -4,7 +4,8 @@ import BoringAvatarComponent from 'boring-avatars';
 import { Avatar as AvatarPrimitive } from 'radix-ui';
 import * as React from 'react';
 
-import { cn } from '../utils/tailwind';
+import { cn } from '../utils/cn';
+import styles from './avatar.module.css';
 
 const BORING_AVATAR_COLORS = [
     "#ff0000","#0000ff"
@@ -16,7 +17,7 @@ function Avatar({ className, ...props }: AvatarProps) {
   return (
     <AvatarPrimitive.Root
       data-slot="avatar"
-      className={cn('relative flex size-8 shrink-0 overflow-hidden rounded-full', className)}
+      className={cn(styles.root, className)}
       {...props}
     />
   );
@@ -31,7 +32,7 @@ function AvatarImage({ className, ...props }: AvatarImageProps) {
     <AvatarPrimitive.Image asChild>
       <img
         data-slot="avatar-image"
-        className={cn('aspect-square size-full', className)}
+        className={cn(styles.image, className)}
         {...props}
       />
     </AvatarPrimitive.Image>
@@ -82,7 +83,7 @@ function AvatarFallback(props: AvatarFallbackProps) {
         <AvatarPrimitive.Fallback
           data-slot="avatar-fallback"
           className={cn(
-            'flex size-full items-center justify-center rounded-full bg-muted text-xs font-medium uppercase text-foreground',
+            styles.fallback,
             className
           )}
           {...rest}
@@ -99,7 +100,7 @@ function AvatarFallback(props: AvatarFallbackProps) {
         <AvatarPrimitive.Fallback
           data-slot="avatar-fallback"
           className={cn(
-            'flex size-full items-center justify-center rounded-full bg-muted text-xs font-medium uppercase text-foreground',
+            styles.fallback,
             className
           )}
           {...rest}
@@ -115,18 +116,18 @@ function AvatarFallback(props: AvatarFallbackProps) {
       return (
         <AvatarPrimitive.Fallback
           data-slot="avatar-fallback"
-          className={cn('relative flex size-full items-center justify-center overflow-hidden rounded-full', className)}
+          className={cn(styles.fallbackBoring, className)}
           asChild
           {...rest}
         >
-          <div className="relative size-full">
+          <div className={styles.boringContainer}>
             <BoringAvatarComponent
               variant="beam"
               name={name}
-              className="size-full"
+              className={styles.boringAvatar}
               colors={[...BORING_AVATAR_COLORS]}
             />
-            <span className="absolute inset-0 flex items-center justify-center text-xs font-semibold uppercase text-foreground mix-blend-overlay">
+            <span className={styles.boringInitials}>
               {getInitials(name)}
             </span>
           </div>

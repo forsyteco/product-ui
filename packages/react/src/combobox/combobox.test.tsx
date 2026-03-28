@@ -76,6 +76,6 @@ describe('Combobox', () => {
   it('respects disabled state', () => {
     renderCombobox({ options, disabled: true });
     const input = screen.getByPlaceholderText('Select an option...');
-    expect(input).toHaveClass('opacity-50');
+    expect(input).toBeDisabled();
   });
 });

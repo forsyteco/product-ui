@@ -1,22 +1,17 @@
 import { forwardRef, type ReactNode } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 
-import { cn } from '../utils/tailwind';
+import { cn } from '../utils/cn';
 import { VisuallyHidden } from '../visually-hidden';
+import styles from './counter-label.module.css';
 
 const counterLabelVariants = cva(
-  [
-    'inline-flex items-center',
-    'rounded-full border border-border',
-    'px-3 py-0.5',
-    'text-xs font-semibold leading-none',
-    'empty:hidden',
-  ].join(' '),
+  styles.root,
   {
     variants: {
       variant: {
-        primary: 'bg-primary text-primary-foreground',
-        secondary: 'bg-muted text-foreground',
+        primary: styles.variantPrimary,
+        secondary: styles.variantSecondary,
       },
     },
     defaultVariants: {

@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { NameCell } from './name-cell';
+import styles from './data-table.module.css';
 
 describe('NameCell', () => {
   const mockRow = { email: 'john@example.com' };
@@ -12,11 +13,11 @@ describe('NameCell', () => {
       expect(screen.getByText('John Doe')).toBeInTheDocument();
     });
 
-    it('applies correct styling to name (font-medium)', () => {
+    it('applies name class to name text', () => {
       render(<NameCell value="Jane Smith" row={{ email: 'jane@example.com' }} />);
 
       const nameElement = screen.getByText('Jane Smith');
-      expect(nameElement).toHaveClass('font-medium');
+      expect(nameElement).toHaveClass(styles.nameValue);
     });
   });
 
@@ -27,12 +28,11 @@ describe('NameCell', () => {
       expect(screen.getByText('john@example.com')).toBeInTheDocument();
     });
 
-    it('applies correct styling to email (text-xs and text-muted-foreground)', () => {
+    it('applies email class to email text', () => {
       render(<NameCell value="Jane Smith" row={{ email: 'jane@example.com' }} />);
 
       const emailElement = screen.getByText('jane@example.com');
-      expect(emailElement).toHaveClass('text-xs');
-      expect(emailElement).toHaveClass('text-muted-foreground');
+      expect(emailElement).toHaveClass(styles.nameEmail);
     });
   });
 

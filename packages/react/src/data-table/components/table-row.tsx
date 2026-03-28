@@ -1,10 +1,11 @@
 import type { ReactNode } from 'react';
 import { ChevronRight } from 'lucide-react';
-import { cn } from '../../utils/tailwind';
+import { cn } from '../../utils/cn';
 import { ROW_INTERACTION, type RowInteractionMode } from '../constants';
 import type { DataTableColorConfig } from '../types';
 import { Checkbox } from '../../checkbox';
 import { IconButton } from '../../icon-button';
+import styles from './data-table.module.css';
 
 export type TableRowProps<TData> = Readonly<{
   row: TData;
@@ -76,17 +77,17 @@ function TableRow<TData>({
     <tr
       role="row"
       className={cn(
-        'border-b border-border last:border-b-0 transition-colors duration-300',
-        isClickable && 'cursor-pointer hover:bg-muted/50',
-        isSelectable && 'hover:bg-muted/30',
-        isSelected && !colorConfig?.selectedRowBackground && 'bg-accent/10',
-        isExpanded && 'border-b-0'
+        styles.row,
+        isClickable && styles.rowClickable,
+        isSelectable && styles.rowSelectable,
+        isSelected && !colorConfig?.selectedRowBackground && styles.rowSelected,
+        isExpanded && styles.rowExpanded
       )}
       style={rowStyle}
       onClick={handleClick}
     >
       {isExpandable && (
-        <td className="w-10 px-4 py-3">
+        <td className={styles.expandCell}>
           <IconButton
             icon={ChevronRight}
             variant="ghost"
@@ -96,20 +97,20 @@ function TableRow<TData>({
             aria-controls={isExpanded ? expandedContentId : undefined}
             aria-label="Expand row"
             className={cn(
-              'h-6 w-6 transition-colors duration-300 [&_svg]:transition-transform [&_svg]:duration-300',
-              isExpanded && 'bg-accent hover:bg-accent [&_svg]:rotate-90'
+              styles.expandButton,
+              isExpanded && styles.expandButtonOpen
             )}
           />
         </td>
       )}
       {isSelectable && (
-        <td className="px-4 py-3">
+        <td className={styles.selectCell}>
           <Checkbox
             checked={isSelected}
             onChange={handleCheckboxChange}
             onClick={(e) => e.stopPropagation()}
             aria-label="Select row"
-            className="h-3 w-3"
+            className={styles.rowCheckbox}
             checkedBackground={colorConfig?.headerIconActiveBackground}
             checkedForeground={colorConfig?.headerIconActiveForeground}
           />

@@ -1,6 +1,7 @@
 import { type ReactNode } from 'react';
 import { Transition as HeadlessTransition } from '@headlessui/react';
-import { cn } from '../utils/tailwind';
+import { cn } from '../utils/cn';
+import styles from './transition.module.css';
 
 export type TransitionProps = {
   show?: boolean;
@@ -18,12 +19,12 @@ function Transition({
   show,
   children,
   className,
-  enter = 'transition ease-out duration-200',
-  enterFrom = 'opacity-0',
-  enterTo = 'opacity-100',
-  leave = 'transition ease-in duration-150',
-  leaveFrom = 'opacity-100',
-  leaveTo = 'opacity-0',
+  enter = styles.enter,
+  enterFrom = styles.enterFrom,
+  enterTo = styles.enterTo,
+  leave = styles.leave,
+  leaveFrom = styles.leaveFrom,
+  leaveTo = styles.leaveTo,
 }: TransitionProps) {
   return (
     <HeadlessTransition

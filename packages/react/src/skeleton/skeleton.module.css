@@ -1,0 +1,17 @@
+.root {
+  display: block;
+  max-width: 100%;
+  border-radius: 0.125rem;
+  background-color: rgb(0 0 0 / 0.1);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+:global([data-colour-mode='dark']) .root {
+  background-color: rgb(255 255 255 / 0.2);
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}

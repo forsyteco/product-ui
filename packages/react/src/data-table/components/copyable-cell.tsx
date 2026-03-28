@@ -1,5 +1,6 @@
 import { Copy } from 'lucide-react';
-import { cn } from '../../utils/tailwind';
+import { cn } from '../../utils/cn';
+import styles from './data-table.module.css';
 
 export type CopyableCellProps = Readonly<{
   value: string;
@@ -11,16 +12,14 @@ export function CopyableCell({ value }: CopyableCellProps) {
   };
 
   return (
-    <span className={cn('group inline-flex items-center gap-1')}>
-      <span className="text-foreground">{value}</span>
+    <span className={cn(styles.copyGroup)}>
+      <span className={styles.copyValue}>{value}</span>
       <button
         onClick={handleCopy}
-        className={cn(
-          'opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity'
-        )}
+        className={cn(styles.copyButton)}
         aria-label="Copy to clipboard"
       >
-        <Copy className="h-3 w-3" />
+        <Copy className={styles.copyIcon} />
       </button>
     </span>
   );

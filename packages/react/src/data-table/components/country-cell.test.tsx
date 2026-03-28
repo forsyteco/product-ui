@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { CountryCell } from './country-cell';
+import styles from './data-table.module.css';
 
 describe('CountryCell', () => {
   describe('Country Name Rendering', () => {
@@ -16,11 +17,11 @@ describe('CountryCell', () => {
       expect(screen.getByText('France')).toBeInTheDocument();
     });
 
-    it('applies correct styling to country name (text-foreground)', () => {
+    it('applies country name class', () => {
       render(<CountryCell value="Germany" />);
 
       const nameElement = screen.getByText('Germany');
-      expect(nameElement).toHaveClass('text-foreground');
+      expect(nameElement).toHaveClass(styles.copyValue);
     });
   });
 
@@ -32,12 +33,11 @@ describe('CountryCell', () => {
       expect(img).toBeInTheDocument();
     });
 
-    it('renders flag image with correct dimensions (h-5 w-5)', () => {
+    it('renders flag image with expected class', () => {
       render(<CountryCell value="Canada" />);
 
       const img = screen.getByRole('img');
-      expect(img).toHaveClass('h-5');
-      expect(img).toHaveClass('w-5');
+      expect(img).toHaveClass(styles.countryFlag);
     });
 
     it('sets correct alt text on flag image', () => {
@@ -56,13 +56,11 @@ describe('CountryCell', () => {
   });
 
   describe('Container Styling', () => {
-    it('applies correct styling to container (inline-flex, items-center, gap)', () => {
+    it('applies expected container class', () => {
       const { container } = render(<CountryCell value="Australia" />);
 
       const wrapper = container.firstChild;
-      expect(wrapper).toHaveClass('inline-flex');
-      expect(wrapper).toHaveClass('items-center');
-      expect(wrapper).toHaveClass('gap-2');
+      expect(wrapper).toHaveClass(styles.country);
     });
   });
 

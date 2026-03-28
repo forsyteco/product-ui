@@ -5,8 +5,9 @@ import {
   ComboboxOption,
   ComboboxOptions,
 } from '@headlessui/react';
-import { cn } from '../utils/tailwind';
+import { cn } from '../utils/cn';
 import type { AutocompleteOption } from './types';
+import styles from './autocomplete.module.css';
 
 type Ctx = {
   options: AutocompleteOption[];
@@ -188,7 +189,7 @@ function Root({
 
   return (
     <AutocompleteCtx.Provider value={ctx}>
-      <div className={cn('relative', className)}>
+      <div className={cn(styles.root, className)}>
         <Combobox
           by="id"
           value={value}
@@ -210,7 +211,7 @@ function Label({
   return (
     <label
       {...props}
-      className={cn('mb-1 block text-sm font-medium text-foreground', className)}
+      className={cn(styles.label, className)}
     />
   );
 }
@@ -219,7 +220,7 @@ function Control({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div {...props} className={cn('relative', className)} />;
+  return <div {...props} className={cn(styles.control, className)} />;
 }
 
 function LeadingIcon({
@@ -229,7 +230,7 @@ function LeadingIcon({
 }: React.HTMLAttributes<HTMLDivElement>) {
   const icon =
     children ?? (
-      <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+      <svg className={styles.leadingIconSvg} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
         <path
           fillRule="evenodd"
           d="M9 3a6 6 0 1 0 3.476 10.892l3.316 3.316a1 1 0 0 0 1.414-1.414l-3.316-3.316A6 6 0 0 0 9 3Zm-4 6a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z"
@@ -242,7 +243,7 @@ function LeadingIcon({
     <div
       {...props}
       className={cn(
-        'pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground',
+        styles.leadingIcon,
         className
       )}
     >
@@ -281,10 +282,9 @@ function Input({
     <ComboboxInput
       {...inputProps}
       className={cn(
-        'w-full rounded-md border bg-background py-2 pl-9 pr-10 text-base leading-5 text-foreground',
-        'border-input focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background',
-        ctx.invalid && 'border-destructive focus:ring-destructive',
-        ctx.disabled && 'cursor-not-allowed opacity-50',
+        styles.input,
+        ctx.invalid && styles.inputInvalid,
+        ctx.disabled && styles.inputDisabled,
         className
       )}
       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -325,7 +325,7 @@ function ClearButton({
       {...props}
       aria-label={ariaLabel ?? 'Clear selection'}
       className={cn(
-        'absolute inset-y-0 right-0 flex items-center px-3 text-muted-foreground hover:text-foreground',
+        styles.clearButton,
         className
       )}
       onClick={(e) => {
@@ -336,7 +336,7 @@ function ClearButton({
         onClick?.(e);
       }}
     >
-      <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+      <svg className={styles.clearIcon} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
         <path
           fillRule="evenodd"
           d="M10 8.586 4.293 2.879A1 1 0 1 0 2.879 4.293L8.586 10l-5.707 5.707a1 1 0 1 0 1.414 1.414L10 11.414l5.707 5.707a1 1 0 0 0 1.414-1.414L11.414 10l5.707-5.707A1 1 0 0 0 15.707 2.88L10 8.586Z"
@@ -367,8 +367,7 @@ function Options({
     <ComboboxOptions
       {...props}
       className={cn(
-        'absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-background py-1 text-base shadow-lg',
-        'ring-1 ring-border focus:outline-none',
+        styles.options,
         className
       )}
     >
@@ -389,7 +388,7 @@ function Loading({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) 
   return (
     <div
       {...props}
-      className={cn('cursor-default select-none px-4 py-2 text-muted-foreground', className)}
+      className={cn(styles.loading, className)}
     >
       Loading…
     </div>
@@ -403,7 +402,7 @@ function Empty({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       {...props}
-      className={cn('cursor-default select-none px-4 py-2 text-muted-foreground', className)}
+      className={cn(styles.empty, className)}
     >
       {qLen < ctx.minQueryLength
         ? ctx.emptyBeforeThresholdText(ctx.minQueryLength)
@@ -438,10 +437,10 @@ function Option({
         disabled: boolean;
       }) =>
         cn(
-          'relative select-none py-2 pl-3 pr-4',
-          optDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-default',
-          active ? 'bg-accent text-accent-foreground' : 'text-foreground',
-          selected && 'font-medium',
+          styles.option,
+          optDisabled ? styles.optionDisabled : styles.optionEnabled,
+          active ? styles.optionActive : styles.optionInactive,
+          selected && styles.optionSelected,
           typeof className === 'function'
             ? className({ active, selected, disabled: optDisabled })
             : className
@@ -472,14 +471,14 @@ function Hint({
   className,
   ...props
 }: React.HTMLAttributes<HTMLParagraphElement>) {
-  return <p {...props} className={cn('mt-1 text-sm text-muted-foreground', className)} />;
+  return <p {...props} className={cn(styles.hint, className)} />;
 }
 
 function Error({
   className,
   ...props
 }: React.HTMLAttributes<HTMLParagraphElement>) {
-  return <p {...props} className={cn('mt-1 text-sm text-destructive', className)} />;
+  return <p {...props} className={cn(styles.error, className)} />;
 }
 
 export const Autocomplete = {

@@ -1,0 +1,22 @@
+.root {
+  display: block;
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid rgb(var(--input));
+  background-color: rgb(var(--background));
+  color: rgb(var(--foreground));
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+  outline: none;
+}
+
+.root:focus-visible {
+  box-shadow: 0 0 0 2px rgb(var(--ring)), 0 0 0 4px rgb(var(--background));
+}
+
+.error {
+  border-color: rgb(var(--destructive));
+}
+
+.error:focus-visible {
+  box-shadow: 0 0 0 2px rgb(var(--destructive)), 0 0 0 4px rgb(var(--background));
+}

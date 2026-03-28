@@ -1,0 +1,33 @@
+.root {
+  width: 100%;
+}
+
+.button {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  border-radius: 0.5rem;
+  background-color: rgb(var(--muted));
+  color: rgb(var(--foreground));
+  padding: 0.5rem 1rem;
+  text-align: left;
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
+  font-weight: 500;
+  outline: none;
+}
+
+.button:hover {
+  background-color: rgb(var(--border));
+}
+
+.button:focus-visible {
+  box-shadow: 0 0 0 2px rgb(var(--ring));
+}
+
+.panel {
+  padding: 1rem 1rem 0.5rem;
+  color: rgb(var(--muted-foreground));
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
+}

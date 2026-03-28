@@ -102,7 +102,7 @@ describe('Autocomplete', () => {
   it('respects disabled state', () => {
     renderAutocomplete({ options, disabled: true });
     const input = screen.getByPlaceholderText('Search…');
-    expect(input).toHaveClass('opacity-50');
+    expect(input).toBeDisabled();
   });
 
   it('shows loading state when loading', () => {

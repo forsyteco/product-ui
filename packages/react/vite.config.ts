@@ -1,6 +1,5 @@
 /// <reference types="vitest/config" />
 import { defineConfig } from 'vite';
-import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { posix as pathPosix, resolve } from 'path';
 import dts from 'vite-plugin-dts';
@@ -67,7 +66,6 @@ const withFileName = (entryName: string, format: ModuleFormat) => {
 export default defineConfig({
   plugins: [
     react({ jsxRuntime: 'automatic' }),
-    tailwindcss(),
     dts({
       include: ['src/**/*'],
       exclude: ['src/**/*.stories.tsx', 'src/**/*.test.tsx'],
@@ -109,7 +107,6 @@ export default defineConfig({
       {
         plugins: [
           react({ jsxRuntime: 'automatic' }),
-          tailwindcss(),
           storybookTest({ configDir: path.join(dirname, '.storybook') }),
         ],
         test: {

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import styles from './data-table.module.css';
 
 export type EmptyStateProps = Readonly<{
   children?: ReactNode;
@@ -8,7 +9,7 @@ export type EmptyStateProps = Readonly<{
 function EmptyState({ children, colSpan }: EmptyStateProps) {
   return (
     <tr>
-      <td colSpan={colSpan} className="px-4 py-12 text-center text-muted-foreground">
+      <td colSpan={colSpan} className={styles.emptyCell}>
         {children || 'No data available'}
       </td>
     </tr>

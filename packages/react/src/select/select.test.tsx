@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Select } from './select';
+import styles from './select.module.css';
 
 const options = [
   { value: '1', label: 'Option 1' },
@@ -22,7 +23,7 @@ describe('Select', () => {
   it('applies error styling', () => {
     const { container } = render(<Select options={options} error />);
     const select = container.querySelector('select');
-    expect(select).toHaveClass('border-destructive-border');
+    expect(select).toHaveClass(styles.error);
   });
 
   it('applies disabled state', () => {

@@ -7,29 +7,30 @@ import {
 } from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import { cn } from '../utils/tailwind'
+import { cn } from '../utils/cn'
 import { Spinner } from '../spinner'
 import { VisuallyHidden } from '../visually-hidden'
+import styles from './icon-button.module.css'
 
 const iconButtonVariants = cva(
-  'inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none',
+  styles.root,
   {
     variants: {
       variant: {
-        primary: 'bg-accent text-accent-foreground hover:opacity-90',
-        secondary: 'bg-primary text-primary-foreground hover:opacity-90',
-        outline: 'border border-border bg-background text-foreground hover:bg-muted',
-        ghost: 'text-foreground hover:bg-muted',
-        danger: 'bg-destructive text-destructive-foreground hover:opacity-90',
+        primary: styles.variantPrimary,
+        secondary: styles.variantSecondary,
+        outline: styles.variantOutline,
+        ghost: styles.variantGhost,
+        danger: styles.variantDanger,
       },
       shape: {
-        square: 'rounded-md',
-        circle: 'rounded-full',
+        square: styles.shapeSquare,
+        circle: styles.shapeCircle,
       },
       size: {
-        small: 'h-8 w-8 text-sm',
-        medium: 'h-9 w-9 text-base',
-        large: 'h-10 w-10 text-lg',
+        small: styles.sizeSmall,
+        medium: styles.sizeMedium,
+        large: styles.sizeLarge,
       },
     },
     defaultVariants: {
@@ -71,9 +72,9 @@ type IconButtonAsAnchor = BaseIconButtonProps &
 export type IconButtonProps = IconButtonAsButton | IconButtonAsAnchor
 
 const iconSizes = {
-  small: 'h-4 w-4',
-  medium: 'h-5 w-5',
-  large: 'h-6 w-6',
+  small: styles.iconSmall,
+  medium: styles.iconMedium,
+  large: styles.iconLarge,
 } as const
 
 type IconButtonSize = NonNullable<VariantProps<typeof iconButtonVariants>['size']>
@@ -104,13 +105,13 @@ const IconButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, IconButtonP
   const title = keybindingHint ? `${tooltipText} (${keybindingHint})` : tooltipText
   const resolvedSize: IconButtonSize = (size ?? 'medium') as IconButtonSize
   const iconClassName = iconSizes[resolvedSize]
-  const sharedClassName = cn(iconButtonVariants({ variant, size, shape }), inactive && 'opacity-60', className)
+  const sharedClassName = cn(iconButtonVariants({ variant, size, shape }), inactive && styles.inactive, className)
   const screenReaderText = description ?? (typeof children === 'string' ? children : undefined)
   const content =
     loading === true ? (
       <Spinner size={18} colors={['currentColor']} />
     ) : (
-      <Icon aria-hidden className={cn('shrink-0', iconClassName)} />
+      <Icon aria-hidden className={cn(styles.icon, iconClassName)} />
     )
 
   if (Component === 'a') {

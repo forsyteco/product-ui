@@ -3,7 +3,8 @@ import { Popover as HeadlessPopover, Portal } from '@headlessui/react';
 import { CalendarDays } from 'lucide-react';
 import { Calendar } from '../calendar';
 import { Button } from '../button';
-import { cn } from '../utils/tailwind';
+import { cn } from '../utils/cn';
+import styles from './date-picker.module.css';
 
 const defaultFormatDate = (date: Date) =>
   date.toLocaleDateString('en', {
@@ -86,7 +87,7 @@ function DatePicker({
 
   return (
     <HeadlessPopover
-      className={cn('relative inline-flex w-full', className)}
+      className={cn(styles.root, className)}
       onSubmitCapture={handleSubmitCapture}
     >
       {({ close, open }) => (
@@ -100,13 +101,13 @@ function DatePicker({
             aria-haspopup="dialog"
             aria-label={selected ? `Selected date: ${label}` : placeholder}
             className={cn(
-              'h-9 w-full justify-between gap-2 bg-background/80 px-3 text-left text-base font-normal',
-              !selected && 'text-muted-foreground',
+              styles.trigger,
+              !selected && styles.triggerEmpty,
               buttonClassName
             )}
           >
-            <span className="truncate">{label}</span>
-            <CalendarDays className="size-4 text-muted-foreground" />
+            <span className={styles.triggerLabel}>{label}</span>
+            <CalendarDays className={styles.triggerIcon} />
           </HeadlessPopover.Button>
 
           <Portal>
@@ -114,7 +115,7 @@ function DatePicker({
               ref={popoverRef}
               data-slot="popover-content"
               data-calendar-submit-ignore="true"
-              className="z-50 mt-2 w-fit rounded-md bg-popover shadow-lg ring-1 ring-border focus:outline-none"
+              className={styles.panel}
             >
               <Calendar
                 mode="single"

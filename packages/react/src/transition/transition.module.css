@@ -1,0 +1,23 @@
+.enter {
+  transition: opacity 200ms ease-out;
+}
+
+.enterFrom {
+  opacity: 0;
+}
+
+.enterTo {
+  opacity: 1;
+}
+
+.leave {
+  transition: opacity 150ms ease-in;
+}
+
+.leaveFrom {
+  opacity: 1;
+}
+
+.leaveTo {
+  opacity: 0;
+}

@@ -1,0 +1,103 @@
+.root {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 0.375rem;
+  border: 1px solid rgb(var(--input));
+  background-color: rgb(var(--background) / 0.8);
+  color: rgb(var(--foreground));
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.root:focus-within {
+  border-color: rgb(var(--ring));
+  box-shadow: 0 0 0 3px rgb(var(--ring) / 0.5);
+}
+
+.root:has(input[aria-invalid='true']) {
+  border-color: rgb(var(--destructive));
+  box-shadow: 0 0 0 3px rgb(var(--destructive) / 0.2);
+}
+
+.sizeDefault {
+  height: 2.25rem;
+}
+
+.sizeSm {
+  height: 2rem;
+}
+
+.sizeLg {
+  height: 2.5rem;
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
+}
+
+.slot {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  color: rgb(var(--muted-foreground));
+}
+
+.slot svg {
+  flex-shrink: 0;
+}
+
+.slotPadDefault {
+  padding: 0 0.625rem;
+}
+
+.slotPadSm {
+  padding: 0 0.5rem;
+}
+
+.slotPadLg {
+  padding: 0 0.75rem;
+}
+
+.input {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: inherit;
+}
+
+.input::placeholder {
+  color: rgb(var(--muted-foreground));
+}
+
+.input:disabled,
+.input:read-only {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.inputPadDefault {
+  padding: 0 0.75rem;
+}
+
+.inputPadSm {
+  padding: 0 0.625rem;
+}
+
+.inputPadLg {
+  padding: 0 1rem;
+}
+
+.inputPadNoneLeft {
+  padding-left: 0;
+}
+
+.inputPadNoneRight {
+  padding-right: 0;
+}

@@ -1,0 +1,20 @@
+.root {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  border: 1px solid rgb(var(--border));
+  padding: 0.125rem 0.75rem;
+  font-size: var(--text-xs);
+  line-height: 1;
+  font-weight: 600;
+}
+
+.variantPrimary {
+  background-color: rgb(var(--primary));
+  color: rgb(var(--primary-foreground));
+}
+
+.variantSecondary {
+  background-color: rgb(var(--muted));
+  color: rgb(var(--foreground));
+}

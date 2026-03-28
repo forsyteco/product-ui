@@ -15,6 +15,7 @@ import {
   getFilterButton,
   createDefaultProps,
 } from './data-table.test-utils';
+import styles from './components/data-table.module.css';
 
 describe('DataTable', () => {
   describe('Basic Rendering', () => {
@@ -239,7 +240,7 @@ describe('DataTable', () => {
       );
 
       const johnRow = screen.getByText('John Doe').closest('tr, [role="row"]');
-      expect(johnRow).toHaveClass('cursor-pointer');
+      expect(johnRow).toHaveClass(styles.rowClickable);
     });
 
     it('calls onRowClick with row data when row is clicked', async () => {
@@ -610,7 +611,7 @@ describe('DataTable', () => {
       const filterOptions = screen.getByTestId('filter-options');
 
       expect(filterOptions.contains(searchInput)).toBe(false);
-      expect(filterOptions).toHaveClass('overflow-y-auto');
+      expect(filterOptions).toHaveClass(styles.filterOptions);
     });
 
     it('filter list has scrollable container for many items', async () => {
@@ -638,9 +639,7 @@ describe('DataTable', () => {
 
       const dropdown = await openStatusFilterDropdown(user);
 
-      expect(dropdown).toHaveClass('overflow-y-auto');
-      expect(dropdown).toHaveClass('flex-1');
-      expect(dropdown).toHaveClass('min-h-0');
+      expect(dropdown).toHaveClass(styles.filterOptions);
     });
 
     it('shows "Select all" button when no filters are selected', async () => {
@@ -1083,7 +1082,7 @@ describe('DataTable', () => {
       const nameCells = screen.getAllByText(/John Doe|Jane Smith/);
       nameCells.forEach((cell) => {
         const td = cell.closest('td, [role="gridcell"]');
-        expect(td).toHaveClass('text-center');
+        expect(td).toHaveClass(styles.alignCenter);
       });
     });
 
@@ -1915,12 +1914,12 @@ describe('DataTable', () => {
 
       const chevronButtons = screen.getAllByRole('button', { name: /expand/i });
 
-      expect(chevronButtons[0]).not.toHaveClass('bg-accent');
+      expect(chevronButtons[0]).not.toHaveClass(styles.expandButtonOpen);
 
       await user.click(chevronButtons[0]);
 
       await waitFor(() => {
-        expect(chevronButtons[0]).toHaveClass('bg-accent');
+        expect(chevronButtons[0]).toHaveClass(styles.expandButtonOpen);
       });
     });
 
@@ -1933,13 +1932,13 @@ describe('DataTable', () => {
       await user.click(chevronButtons[0]);
 
       await waitFor(() => {
-        expect(chevronButtons[0]).toHaveClass('bg-accent');
+        expect(chevronButtons[0]).toHaveClass(styles.expandButtonOpen);
       });
 
       await user.click(chevronButtons[0]);
 
       await waitFor(() => {
-        expect(chevronButtons[0]).not.toHaveClass('bg-accent');
+        expect(chevronButtons[0]).not.toHaveClass(styles.expandButtonOpen);
       });
     });
   });

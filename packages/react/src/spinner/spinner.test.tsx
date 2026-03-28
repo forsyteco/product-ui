@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { act, render } from '@testing-library/react';
 import { Spinner } from './spinner';
+import styles from './spinner.module.css';
 
 describe('Spinner', () => {
   it('renders wrapper and svg', () => {
@@ -10,7 +11,7 @@ describe('Spinner', () => {
     const circle = container.querySelector('circle');
 
     expect(wrapper).toBeInTheDocument();
-    expect(wrapper).toHaveClass('inline-flex');
+    expect(wrapper).toHaveClass(styles.root);
     expect(svg).toBeInTheDocument();
     expect(svg).toHaveClass('animate-spinner-rotate');
     expect(circle).toBeInTheDocument();

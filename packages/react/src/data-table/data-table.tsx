@@ -1,11 +1,12 @@
 import { useMemo, useState, useCallback } from 'react';
-import { cn } from '../utils/tailwind';
+import { cn } from '../utils/cn';
 import type { DataTableProps } from './types';
 import { DEFAULT_COLOR_CONFIG } from './types';
 import { ROW_INTERACTION } from './constants';
 import { TableHeader } from './components/table-header';
 import { TableBody } from './components/table-body';
 import { Pagination } from './components/pagination';
+import styles from './components/data-table.module.css';
 
 function DataTable<TData, TExpandedData = unknown>({
   columns,
@@ -96,13 +97,13 @@ function DataTable<TData, TExpandedData = unknown>({
 
   return (
     <div
-      className={cn('overflow-hidden rounded-lg border border-border', className)}
+      className={cn(styles.tableContainer, className)}
       style={containerStyle}
     >
-      <div className="overflow-x-auto">
+      <div className={styles.tableWrap}>
         <table
           aria-busy={loading}
-          className="w-full border-collapse text-sm"
+          className={styles.table}
         >
           <TableHeader
             columns={columns}
@@ -141,7 +142,7 @@ function DataTable<TData, TExpandedData = unknown>({
         pageSize={pageSize}
         totalCount={totalCount}
         onPageChange={onPageChange}
-        className="border-t border-border"
+        className={styles.paginationBorder}
         colorConfig={colorConfig}
       />
     </div>

@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { RiskLevelCell } from './risk-level-cell';
+import styles from './data-table.module.css';
 
 describe('RiskLevelCell', () => {
   describe('High Risk Level', () => {
@@ -9,8 +10,7 @@ describe('RiskLevelCell', () => {
 
       const badge = screen.getByText('High');
       expect(badge).toBeInTheDocument();
-      expect(badge).toHaveClass('bg-red-100');
-      expect(badge).toHaveClass('text-red-800');
+      expect(badge).toHaveClass(styles.riskHigh);
     });
   });
 
@@ -20,8 +20,7 @@ describe('RiskLevelCell', () => {
 
       const badge = screen.getByText('Medium');
       expect(badge).toBeInTheDocument();
-      expect(badge).toHaveClass('bg-yellow-100');
-      expect(badge).toHaveClass('text-yellow-800');
+      expect(badge).toHaveClass(styles.riskMedium);
     });
   });
 
@@ -31,8 +30,7 @@ describe('RiskLevelCell', () => {
 
       const badge = screen.getByText('Low');
       expect(badge).toBeInTheDocument();
-      expect(badge).toHaveClass('bg-green-100');
-      expect(badge).toHaveClass('text-green-800');
+      expect(badge).toHaveClass(styles.riskLow);
     });
   });
 
@@ -57,15 +55,11 @@ describe('RiskLevelCell', () => {
   });
 
   describe('Base Styling', () => {
-    it('applies base styling classes (rounded, px-2, py-1, text-xs, font-medium)', () => {
+    it('applies base risk badge class', () => {
       render(<RiskLevelCell value="low" />);
 
       const badge = screen.getByText('Low');
-      expect(badge).toHaveClass('rounded');
-      expect(badge).toHaveClass('px-2');
-      expect(badge).toHaveClass('py-1');
-      expect(badge).toHaveClass('text-xs');
-      expect(badge).toHaveClass('font-medium');
+      expect(badge).toHaveClass(styles.riskBadge);
     });
   });
 
@@ -75,8 +69,7 @@ describe('RiskLevelCell', () => {
 
       const badge = screen.getByText('Unknown');
       expect(badge).toBeInTheDocument();
-      expect(badge).toHaveClass('bg-gray-100');
-      expect(badge).toHaveClass('text-gray-800');
+      expect(badge).toHaveClass(styles.riskUnknown);
     });
 
     it('handles empty string gracefully', () => {
@@ -84,8 +77,7 @@ describe('RiskLevelCell', () => {
 
       const badge = container.querySelector('span');
       expect(badge).toBeInTheDocument();
-      expect(badge).toHaveClass('bg-gray-100');
-      expect(badge).toHaveClass('text-gray-800');
+      expect(badge).toHaveClass(styles.riskUnknown);
     });
 
     it('handles random unknown value with proper capitalization', () => {
@@ -93,8 +85,7 @@ describe('RiskLevelCell', () => {
 
       const badge = screen.getByText('Critical');
       expect(badge).toBeInTheDocument();
-      expect(badge).toHaveClass('bg-gray-100');
-      expect(badge).toHaveClass('text-gray-800');
+      expect(badge).toHaveClass(styles.riskUnknown);
     });
   });
 });

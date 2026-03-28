@@ -1,4 +1,5 @@
-import { cn } from '../utils/tailwind';
+import { cn } from '../utils/cn';
+import styles from './skeleton.module.css';
 
 export type SkeletonProps = React.ComponentProps<'div'>;
 
@@ -7,7 +8,7 @@ function Skeleton({ className, ...props }: SkeletonProps) {
     <span
       data-slot="skeleton"
       className={cn(
-        'block max-w-full animate-pulse rounded-xs bg-black/10 dark:bg-white/20',
+        styles.root,
         className
       )}
       {...props}

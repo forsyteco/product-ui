@@ -1,5 +1,6 @@
 import { type ReactNode, useState, useEffect, useRef } from 'react';
-import { cn } from '../../utils/tailwind';
+import { cn } from '../../utils/cn';
+import styles from './data-table.module.css';
 
 export type ExpandedRowProps = Readonly<{
   id: string;
@@ -38,22 +39,22 @@ function ExpandedRow({ id, colSpan, children, isCollapsing = false }: ExpandedRo
   }, [children, isVisible, isCollapsing]);
 
   return (
-    <tr role="row" id={id} className="border-b border-border">
+    <tr role="row" id={id} className={styles.expandedRow}>
       <td
         colSpan={colSpan}
         role="gridcell"
-        className="border-t border-border bg-muted/20 p-0 overflow-hidden"
+        className={styles.expandedCell}
       >
         <div
           className={cn(
-            'transition-all duration-300 ease-in-out overflow-hidden',
-            isVisible ? 'opacity-100' : 'opacity-0'
+            styles.expandedInner,
+            isVisible ? styles.expandedVisible : styles.expandedHidden
           )}
           style={{
             maxHeight: isVisible ? `${height}px` : '0px',
           }}
         >
-          <div ref={contentRef} className="px-4 py-4">
+          <div ref={contentRef} className={styles.expandedContent}>
             {children}
           </div>
         </div>

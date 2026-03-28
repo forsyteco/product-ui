@@ -1,6 +1,6 @@
 # @forsyteco/product-ui
 
-React component library for Forsyte app, built with React 19, TypeScript, and Tailwind CSS 4.
+React component library for Forsyte app, built with React 19, TypeScript, and CSS Modules.
 
 ## Installation
 
@@ -14,33 +14,24 @@ yarn add @forsyteco/product-ui
 
 ## Peer Dependencies
 
-This package requires React 19.x and Tailwind CSS 4.x:
+This package requires React 19.x:
 
 ```bash
-npm install react@^19.2.1 react-dom@^19.2.1 tailwindcss@^4.1.17
+npm install react@^19.2.1 react-dom@^19.2.1
 ```
 
 ## Setup
 
-### 1. Import Tailwind base styles
+### 1. Import the design system stylesheet
 
-Make sure Tailwind CSS is imported in your application:
+Pull in the bundled component styles, design tokens, and fonts provided by the library:
 
 ```css
 /* src/index.css or your main CSS file */
-@import 'tailwindcss';
-```
-
-### 2. Import the design system styles
-
-Pull in the design tokens, fonts, and utilities provided by the library:
-
-```css
-/* src/index.css or your main CSS file, after tailwindcss */
 @import '@forsyteco/product-ui/styles.css';
 ```
 
-### 3. Import components
+### 2. Import components
 
 ```typescript
 import { Spinner } from '@forsyteco/product-ui'
@@ -63,7 +54,7 @@ function App() {
 
 ## Components
 
-All components use Tailwind CSS classes directly. Make sure Tailwind CSS is configured in your project.
+Components ship with bundled CSS and do not require Tailwind in the consuming application.
 
 ### Spinner
 
@@ -78,7 +69,7 @@ import { Spinner } from '@forsyteco/product-ui'
 // Full-width centered spinner
 <Spinner full />
 
-// Custom styling with Tailwind classes
+// Custom styling with your own classes
 <Spinner className="text-blue-500 w-8 h-8" />
 ```
 

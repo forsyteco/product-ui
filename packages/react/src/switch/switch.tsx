@@ -1,50 +1,16 @@
 import { Field, Label, Description, Switch as HeadlessSwitch } from '@headlessui/react';
-import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '../utils/tailwind';
+import { cn } from '../utils/cn';
+import styles from './switch.module.css';
 
-const switchVariants = cva(
-  'group ml-3 inline-flex items-center rounded-full bg-muted transition data-checked:bg-accent focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
-  {
-    variants: {
-      size: {
-        sm: 'h-5 w-9',
-        md: 'h-6 w-11',
-        lg: 'h-7 w-14',
-      },
-      disabled: {
-        true: 'opacity-50 cursor-not-allowed',
-        false: '',
-      },
-    },
-    defaultVariants: {
-      size: 'md',
-      disabled: false,
-    },
-  }
-);
+type SwitchSize = 'sm' | 'md' | 'lg';
 
-const switchThumbVariants = cva(
-  'pointer-events-none rounded-full bg-white transition',
-  {
-    variants: {
-      size: {
-        sm: 'size-3 translate-x-0.5 group-data-checked:translate-x-5',
-        md: 'size-4 translate-x-1 group-data-checked:translate-x-6',
-        lg: 'size-5 translate-x-1.5 group-data-checked:translate-x-8',
-      },
-    },
-    defaultVariants: {
-      size: 'md',
-    },
-  }
-);
-
-export type SwitchProps = Omit<VariantProps<typeof switchVariants>, 'disabled'> & {
+export type SwitchProps = {
   checked?: boolean;
   onChange?: (checked: boolean) => void;
   label?: string;
   description?: string;
   disabled?: boolean;
+  size?: SwitchSize;
   className?: string;
 };
 
@@ -60,12 +26,12 @@ function Switch({
   const isDisabled = Boolean(disabled);
 
   return (
-    <Field className={cn('flex items-center', className)}>
+    <Field className={cn(styles.field, className)}>
       {label && (
         <Label
           className={cn(
-            'text-base font-medium',
-            isDisabled ? 'text-muted-foreground opacity-50' : 'text-foreground'
+            styles.label,
+            isDisabled && styles.labelDisabled
           )}
         >
           {label}
@@ -74,8 +40,8 @@ function Switch({
       {description && (
         <Description
           className={cn(
-            'text-base',
-            isDisabled ? 'text-muted-foreground opacity-50' : 'text-muted-foreground'
+            styles.description,
+            isDisabled && styles.descriptionDisabled
           )}
         >
           {description}
@@ -85,9 +51,18 @@ function Switch({
         checked={checked}
         onChange={onChange}
         disabled={isDisabled}
-        className={switchVariants({ size, disabled: isDisabled })}
+        className={cn(
+          styles.switch,
+          size === 'sm' ? styles.switchSm : size === 'lg' ? styles.switchLg : styles.switchMd,
+          isDisabled && styles.switchDisabled
+        )}
       >
-        <span className={switchThumbVariants({ size })} />
+        <span
+          className={cn(
+            styles.thumb,
+            size === 'sm' ? styles.thumbSm : size === 'lg' ? styles.thumbLg : styles.thumbMd
+          )}
+        />
       </HeadlessSwitch>
     </Field>
   );

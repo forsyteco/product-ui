@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { getCountryCode, getFlagUrl } from './country-codes';
+import styles from './data-table.module.css';
 
 export type CountryCellProps = Readonly<{
   /** The country name to display (e.g., "United Kingdom", "France") */
@@ -27,18 +28,18 @@ export function CountryCell({ value }: CountryCellProps) {
   };
 
   return (
-    <div className="inline-flex items-center gap-2">
+    <div className={styles.country}>
       {hasError ? (
         <span>-</span>
       ) : (
         <img
           src={flagUrl}
           alt={`${value} flag`}
-          className="h-5 w-5"
+          className={styles.countryFlag}
           onError={handleImageError}
         />
       )}
-      <span className="text-foreground">{value}</span>
+      <span className={styles.copyValue}>{value}</span>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { type SelectHTMLAttributes } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '../utils/tailwind';
+import { cn } from '../utils/cn';
+import styles from './select.module.css';
 
 export type SelectOption = {
   value: string;
@@ -9,11 +10,11 @@ export type SelectOption = {
 };
 
 const selectVariants = cva(
-  'relative block w-full cursor-default rounded-md border border-input bg-background py-2 pl-3 pr-10 text-left text-base text-foreground shadow-sm ring-1 ring-inset ring-border focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background appearance-none disabled:cursor-not-allowed disabled:opacity-50',
+  styles.select,
   {
     variants: {
       error: {
-        true: 'border-destructive-border focus:border-destructive focus:ring-destructive',
+        true: styles.error,
         false: '',
       },
     },
@@ -30,7 +31,7 @@ export type SelectProps = Omit<SelectHTMLAttributes<HTMLSelectElement>, 'childre
 
 function Select({ options, placeholder, error, className, ...props }: SelectProps) {
   return (
-    <div className="relative">
+    <div className={styles.wrapper}>
       <select
         className={cn(selectVariants({ error }), className)}
         {...props}
@@ -46,9 +47,9 @@ function Select({ options, placeholder, error, className, ...props }: SelectProp
           </option>
         ))}
       </select>
-      <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+      <span className={styles.iconWrap}>
         <svg
-          className="h-5 w-5 text-muted-foreground"
+          className={styles.icon}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"

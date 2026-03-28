@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 
 import { IconButton } from './icon-button';
+import styles from './icon-button.module.css';
 
 const HeartIcon = ({ className }: { className?: string }) => (
   <svg data-testid="icon" aria-hidden className={className} />
@@ -19,9 +20,9 @@ describe('IconButton', () => {
       <IconButton icon={HeartIcon} variant="primary" size="large" shape="circle" aria-label="Favorite" />
     )
     const button = container.firstChild as HTMLElement
-    expect(button).toHaveClass('bg-accent')
-    expect(button).toHaveClass('h-10', 'w-10', 'rounded-full')
-    expect(screen.getByTestId('icon')).toHaveClass('h-6', 'w-6')
+    expect(button).toHaveClass(styles.variantPrimary)
+    expect(button).toHaveClass(styles.sizeLarge, styles.shapeCircle)
+    expect(screen.getByTestId('icon')).toHaveClass(styles.iconLarge)
   })
 
   it('supports loading state', () => {
@@ -41,7 +42,7 @@ describe('IconButton', () => {
     const button = screen.getByRole('button')
     button.click()
     expect(handleClick).toHaveBeenCalledTimes(1)
-    expect(button).toHaveClass('opacity-60')
+    expect(button).toHaveClass(styles.inactive)
   })
 })
 

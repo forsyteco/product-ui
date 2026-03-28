@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { StatusCell, STATUS } from './status-cell';
+import styles from './data-table.module.css';
 
 describe('StatusCell', () => {
   describe('Status Badge Rendering', () => {
@@ -28,13 +29,11 @@ describe('StatusCell', () => {
       expect(screen.getByText('Failed')).toBeInTheDocument();
     });
 
-    it('applies badge styling to status (rounded, text-xs, font-medium)', () => {
+    it('applies badge base class to status', () => {
       render(<StatusCell value={STATUS.IN_PROGRESS} />);
 
       const badge = screen.getByText('In progress');
-      expect(badge).toHaveClass('rounded');
-      expect(badge).toHaveClass('text-xs');
-      expect(badge).toHaveClass('font-medium');
+      expect(badge).toHaveClass(styles.statusBadge);
     });
   });
 
@@ -43,32 +42,28 @@ describe('StatusCell', () => {
       render(<StatusCell value={STATUS.COMPLETE} />);
 
       const badge = screen.getByText('Complete');
-      expect(badge).toHaveClass('bg-emerald-100');
-      expect(badge).toHaveClass('text-emerald-800');
+      expect(badge).toHaveClass(styles.statusComplete);
     });
 
     it('applies rose colors for do_not_act status', () => {
       render(<StatusCell value={STATUS.DO_NOT_ACT} />);
 
       const badge = screen.getByText('Do not act');
-      expect(badge).toHaveClass('bg-rose-100');
-      expect(badge).toHaveClass('text-rose-800');
+      expect(badge).toHaveClass(styles.statusDoNotAct);
     });
 
     it('applies red colors for failed status', () => {
       render(<StatusCell value={STATUS.FAILED} />);
 
       const badge = screen.getByText('Failed');
-      expect(badge).toHaveClass('bg-red-100');
-      expect(badge).toHaveClass('text-red-800');
+      expect(badge).toHaveClass(styles.statusFailed);
     });
 
     it('applies gray colors for in_progress status', () => {
       render(<StatusCell value={STATUS.IN_PROGRESS} />);
 
       const badge = screen.getByText('In progress');
-      expect(badge).toHaveClass('bg-gray-100');
-      expect(badge).toHaveClass('text-gray-800');
+      expect(badge).toHaveClass(styles.statusProgress);
     });
   });
 
@@ -126,7 +121,7 @@ describe('StatusCell', () => {
 
       const versionLabel = screen.getByText('Version:');
       // The class is on the parent span element
-      expect(versionLabel.parentElement).toHaveClass('text-muted-foreground');
+      expect(versionLabel.parentElement).toHaveClass(styles.statusVersion);
     });
   });
 
@@ -149,7 +144,7 @@ describe('StatusCell', () => {
 
       const versionLabel = screen.getByText('Version:');
       // The class is on the parent span element
-      expect(versionLabel.parentElement).toHaveClass('text-muted-foreground');
+      expect(versionLabel.parentElement).toHaveClass(styles.statusVersion);
     });
   });
 
@@ -158,15 +153,14 @@ describe('StatusCell', () => {
       const { container } = render(<StatusCell value={STATUS.IN_PROGRESS} version="1.0.0" />);
 
       const wrapper = container.firstChild;
-      expect(wrapper).toHaveClass('flex');
-      expect(wrapper).toHaveClass('flex-col');
+      expect(wrapper).toHaveClass(styles.statusWrap);
     });
 
     it('has appropriate gap between status and version', () => {
       const { container } = render(<StatusCell value={STATUS.IN_PROGRESS} version="1.0.0" />);
 
       const wrapper = container.firstChild;
-      expect(wrapper).toHaveClass('gap-1');
+      expect(wrapper).toHaveClass(styles.statusWrap);
     });
   });
 

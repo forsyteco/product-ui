@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Textarea } from './textarea';
+import styles from './textarea.module.css';
 
 describe('Textarea', () => {
   it('renders the textarea component', () => {
@@ -12,7 +13,7 @@ describe('Textarea', () => {
   it('applies error styling', () => {
     const { container } = render(<Textarea error />);
     const textarea = container.querySelector('textarea');
-    expect(textarea).toHaveClass('border-destructive-border');
+    expect(textarea).toHaveClass(styles.error);
   });
 
   it('applies disabled state', () => {

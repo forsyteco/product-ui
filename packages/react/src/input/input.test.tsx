@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Input } from './input';
+import styles from './input.module.css';
 
 describe('Input', () => {
   it('renders the input component', () => {
@@ -12,7 +13,9 @@ describe('Input', () => {
   it('applies error styling', () => {
     const { container } = render(<Input aria-invalid="true" />);
     const wrapper = container.firstChild;
-    expect(wrapper).toHaveClass('has-aria-invalid:border-destructive');
+    const input = screen.getByRole('textbox');
+    expect(wrapper).toHaveClass(styles.root);
+    expect(input).toHaveAttribute('aria-invalid', 'true');
   });
 
   it('applies disabled state', () => {

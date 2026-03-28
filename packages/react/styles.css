@@ -1,7 +1,3 @@
-@import "tailwindcss";
-
-@custom-variant dark (&:where([data-colour-mode="dark"]));
-
 @font-face {
   font-family: "Plus Jakarta Sans";
   src: url("./fonts/plus-jakarta-sans-[wght].woff2") format("woff2");
@@ -17,7 +13,7 @@
   font-display: swap;
 }
 
-@theme {
+:root {
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 
   --spacing: 0.25rem;
@@ -46,39 +42,6 @@
   --text-4xl: 1.953rem;             /* 31px */
   --text-4xl-line-height: 2.25rem;
 
-  --color-background: rgb(var(--background));
-  --color-foreground: rgb(var(--foreground));
-
-  --color-muted: rgb(var(--muted));
-  --color-muted-foreground: rgb(var(--muted-foreground));
-
-  --color-border: rgb(var(--border));
-  --color-input: rgb(var(--input));
-
-  --color-accent: rgb(var(--accent));
-  --color-accent-foreground: rgb(var(--accent-foreground));
-
-  --color-primary: rgb(var(--primary));
-  --color-primary-foreground: rgb(var(--primary-foreground));
-  --color-secondary: rgb(var(--secondary));
-  --color-secondary-foreground: rgb(var(--secondary-foreground));
-
-  --color-destructive: rgb(var(--destructive));
-  --color-destructive-foreground: rgb(var(--destructive-foreground));
-
-  --color-ring: rgb(var(--ring));
-
-  --color-card: rgb(var(--card));
-  --color-card-foreground: rgb(var(--card-foreground));
-  --color-popover: rgb(var(--popover));
-  --color-popover-foreground: rgb(var(--popover-foreground));
-
-  --color-spinner-primary: rgb(var(--accent));
-  --color-spinner-secondary: rgb(var(--neutral-200));
-  --color-spinner-tertiary: rgb(var(--brand-black));
-}
-
-:root {
   color-scheme: light;
 
   --brand-yellow: 255 222 19;
@@ -120,6 +83,29 @@
 
   --popover: var(--brand-white);
   --popover-foreground: var(--brand-black);
+
+  --color-background: rgb(var(--background));
+  --color-foreground: rgb(var(--foreground));
+  --color-muted: rgb(var(--muted));
+  --color-muted-foreground: rgb(var(--muted-foreground));
+  --color-border: rgb(var(--border));
+  --color-input: rgb(var(--input));
+  --color-accent: rgb(var(--accent));
+  --color-accent-foreground: rgb(var(--accent-foreground));
+  --color-primary: rgb(var(--primary));
+  --color-primary-foreground: rgb(var(--primary-foreground));
+  --color-secondary: rgb(var(--secondary));
+  --color-secondary-foreground: rgb(var(--secondary-foreground));
+  --color-destructive: rgb(var(--destructive));
+  --color-destructive-foreground: rgb(var(--destructive-foreground));
+  --color-ring: rgb(var(--ring));
+  --color-card: rgb(var(--card));
+  --color-card-foreground: rgb(var(--card-foreground));
+  --color-popover: rgb(var(--popover));
+  --color-popover-foreground: rgb(var(--popover-foreground));
+  --color-spinner-primary: rgb(var(--accent));
+  --color-spinner-secondary: rgb(var(--neutral-200));
+  --color-spinner-tertiary: rgb(var(--brand-black));
 }
 
 :root:where([data-colour-scheme="blue"]) {
@@ -170,10 +156,10 @@ body {
   100% { stroke-dasharray: 1, 150; stroke-dashoffset: -124; }
 }
 
-@utility animate-spinner-rotate {
+.animate-spinner-rotate {
   animation: spinner-rotate 1.5s linear infinite;
 }
 
-@utility animate-spinner-dash {
+.animate-spinner-dash {
   animation: spinner-dash 1.5s ease-in-out infinite;
 }

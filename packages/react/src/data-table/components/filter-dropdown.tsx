@@ -1,10 +1,11 @@
 import { useState, useMemo, type CSSProperties } from 'react';
 import { Popover as HeadlessPopover, Portal } from '@headlessui/react';
 import { Filter, Search } from 'lucide-react';
-import { cn } from '../../utils/tailwind';
+import { cn } from '../../utils/cn';
 import { Input } from '../../input';
 import { Button } from '../../button';
 import { Checkbox } from '../../checkbox';
+import styles from './data-table.module.css';
 
 /**
  * Formats a filter value for display (converts snake_case to Sentence case).
@@ -77,19 +78,19 @@ function FilterDropdown({
     : undefined;
 
   return (
-    <div className="relative inline-block">
+    <div className={styles.filterRoot}>
       <HeadlessPopover>
         <HeadlessPopover.Button
           aria-label={`Filter ${columnId}`}
           className={cn(
-            'inline-flex items-center justify-center rounded p-1',
-            isActive && !activeBackground && 'bg-accent'
+            styles.filterButton,
+            isActive && !activeBackground && styles.filterButtonActiveDefault
           )}
           style={buttonStyle}
           onClick={(e: React.MouseEvent) => e.stopPropagation()}
         >
           <Filter
-            className={cn('h-3 w-3', !currentIconColor && 'text-foreground')}
+            className={cn(styles.filterIcon, !currentIconColor && styles.sortIconDefault)}
             style={currentIconColor ? { color: currentIconColor } : undefined}
           />
         </HeadlessPopover.Button>
@@ -97,11 +98,11 @@ function FilterDropdown({
         <Portal>
           <HeadlessPopover.Panel
             anchor={{ to: 'bottom end', gap: 8 }}
-            className="z-50 w-56 max-h-80 flex flex-col rounded-md bg-background shadow-lg ring-1 ring-border focus:outline-none"
+            className={styles.filterPanel}
             onClick={(e: React.MouseEvent) => e.stopPropagation()}
           >
-          <div className="p-2 flex flex-col min-h-0 flex-1">
-            <div className="mb-2 flex-shrink-0">
+          <div className={styles.filterPanelInner}>
+            <div className={styles.filterSearchWrap}>
               <Input
                 type="search"
                 placeholder="Search..."
@@ -109,7 +110,7 @@ function FilterDropdown({
                 onChange={(e) => setSearchTerm(e.target.value)}
                 autoFocus
                 size="sm"
-                startElement={<Search className="h-4 w-4" />}
+                startElement={<Search className={styles.filterIcon} />}
               />
             </div>
             {showSelectAll ? (
@@ -117,15 +118,16 @@ function FilterDropdown({
                 variant="ghost"
                 size="sm"
                 onClick={selectedValues.length > 0 ? handleClearAll : handleSelectAll}
-                className="mb-2 flex-shrink-0 justify-center px-0 text-muted-foreground hover:text-foreground relative h-5 overflow-hidden"
+                className={styles.filterSelectAll}
               >
                 <span
                   aria-hidden={selectedValues.length > 0}
                   className={cn(
+                    styles.filterPrimaryText,
                     'inline-block transition-all duration-200',
                     selectedValues.length > 0
-                      ? '-translate-y-full opacity-0'
-                      : 'translate-y-0 opacity-100'
+                      ? styles.filterPrimaryTextHidden
+                      : styles.filterPrimaryTextShown
                   )}
                 >
                   Select all
@@ -133,10 +135,10 @@ function FilterDropdown({
                 <span
                   aria-hidden={selectedValues.length === 0}
                   className={cn(
-                    'absolute inset-0 flex items-center justify-center transition-all duration-200',
+                    styles.filterSecondaryText,
                     selectedValues.length > 0
-                      ? 'translate-y-0 opacity-100'
-                      : 'translate-y-full opacity-0'
+                      ? styles.filterSecondaryShown
+                      : styles.filterSecondaryHidden
                   )}
                 >
                   Clear all
@@ -148,19 +150,19 @@ function FilterDropdown({
                 size="sm"
                 onClick={handleClearAll}
                 disabled={selectedValues.length === 0}
-                className="mb-2 flex-shrink-0 justify-center px-0 text-muted-foreground hover:text-foreground h-5"
+                className={styles.filterClearFixed}
               >
                 Clear all
               </Button>
             )}
-            <div data-testid="filter-options" className="overflow-y-auto flex-1 min-h-0">
+            <div data-testid="filter-options" className={styles.filterOptions}>
               {filteredValues.map((value) => {
                 const isSelected = selectedValues.includes(value);
                 const displayLabel = formatFilterLabel(value);
                 return (
                   <label
                     key={value}
-                    className="flex cursor-pointer items-center rounded px-2 py-1.5 hover:bg-muted"
+                    className={styles.filterOptionLabel}
                   >
                     <Checkbox
                       checked={isSelected}

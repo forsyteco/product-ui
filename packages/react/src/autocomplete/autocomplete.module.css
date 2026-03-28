@@ -1,0 +1,54 @@
+.root { position: relative; }
+.label { margin-bottom: 0.25rem; display: block; font-size: var(--text-sm); font-weight: 500; color: rgb(var(--foreground)); }
+.control { position: relative; }
+.leadingIcon {
+  pointer-events: none;
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  padding-left: 0.75rem;
+  color: rgb(var(--muted-foreground));
+}
+.leadingIconSvg { width: 1rem; height: 1rem; }
+.input {
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid rgb(var(--input));
+  background: rgb(var(--background));
+  padding: 0.5rem 2.5rem 0.5rem 2.25rem;
+  color: rgb(var(--foreground));
+  font-size: var(--text-base);
+}
+.input:focus-visible { outline: none; box-shadow: 0 0 0 2px rgb(var(--ring)), 0 0 0 4px rgb(var(--background)); }
+.inputInvalid { border-color: rgb(var(--destructive)); }
+.inputDisabled { cursor: not-allowed; opacity: 0.5; }
+.clearButton {
+  position: absolute; inset-block: 0; right: 0; display: flex; align-items: center; padding: 0 0.75rem;
+  color: rgb(var(--muted-foreground));
+}
+.clearButton:hover { color: rgb(var(--foreground)); }
+.clearIcon { width: 1rem; height: 1rem; }
+.options {
+  position: absolute;
+  z-index: 10;
+  margin-top: 0.25rem;
+  max-height: 15rem;
+  width: 100%;
+  overflow: auto;
+  border-radius: 0.375rem;
+  background: rgb(var(--background));
+  border: 1px solid rgb(var(--border));
+  padding: 0.25rem 0;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.15), 0 4px 6px -4px rgb(0 0 0 / 0.15);
+}
+.loading, .empty { cursor: default; user-select: none; padding: 0.5rem 1rem; color: rgb(var(--muted-foreground)); }
+.option { position: relative; user-select: none; padding: 0.5rem 0.75rem; }
+.optionEnabled { cursor: default; }
+.optionDisabled { cursor: not-allowed; opacity: 0.5; }
+.optionActive { background: rgb(var(--accent)); color: rgb(var(--accent-foreground)); }
+.optionInactive { color: rgb(var(--foreground)); }
+.optionSelected { font-weight: 500; }
+.hint { margin-top: 0.25rem; font-size: var(--text-sm); color: rgb(var(--muted-foreground)); }
+.error { margin-top: 0.25rem; font-size: var(--text-sm); color: rgb(var(--destructive)); }

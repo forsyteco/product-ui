@@ -1,0 +1,55 @@
+.root {
+  width: 100%;
+}
+
+.list {
+  display: flex;
+  gap: 0.25rem;
+  border-radius: 0.75rem;
+  background-color: rgb(var(--muted));
+  padding: 0.25rem;
+}
+
+.tab {
+  width: 100%;
+  border-radius: 0.5rem;
+  padding: 0.625rem;
+  font-size: var(--text-base);
+  line-height: 1.25;
+  font-weight: 500;
+  outline: none;
+}
+
+.tab:focus-visible {
+  box-shadow: 0 0 0 2px rgb(var(--ring));
+}
+
+.tabSelected {
+  background-color: rgb(var(--background));
+  color: rgb(var(--foreground));
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+}
+
+.tabUnselected {
+  color: rgb(var(--muted-foreground));
+}
+
+.tabUnselected:hover {
+  background-color: rgb(255 255 255 / 0.12);
+  color: rgb(var(--foreground));
+}
+
+.panels {
+  margin-top: 0.5rem;
+}
+
+.panel {
+  border-radius: 0.75rem;
+  background-color: rgb(var(--background));
+  padding: 0.75rem;
+  outline: none;
+}
+
+.panel:focus-visible {
+  box-shadow: 0 0 0 2px rgb(var(--ring));
+}

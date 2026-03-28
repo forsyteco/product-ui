@@ -1,6 +1,7 @@
 import { type ReactNode } from 'react';
 import { Listbox as HeadlessListbox } from '@headlessui/react';
-import { cn } from '../utils/tailwind';
+import { cn } from '../utils/cn';
+import styles from './listbox.module.css';
 
 export type ListboxOption = {
   id: string | number;
@@ -43,19 +44,19 @@ function Listbox({
 }: ListboxProps) {
   return (
     <HeadlessListbox value={value ?? undefined} onChange={onChange} disabled={disabled}>
-      <div className={cn('relative', className)}>
+      <div className={cn(styles.root, className)}>
         <HeadlessListbox.Button
           className={cn(
-            'relative w-full cursor-default rounded-md bg-background py-2 pl-3 pr-10 text-left text-base text-foreground shadow-sm ring-1 ring-inset ring-border focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background',
-            disabled && 'cursor-not-allowed opacity-50'
+            styles.button,
+            disabled && styles.buttonDisabled
           )}
         >
-          <span className="block truncate">
+          <span className={styles.value}>
             {value?.label || placeholder}
           </span>
-          <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+          <span className={styles.iconWrap}>
             <svg
-              className="h-5 w-5 text-muted-foreground"
+              className={styles.icon}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -69,7 +70,7 @@ function Listbox({
             </svg>
           </span>
         </HeadlessListbox.Button>
-        <HeadlessListbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-background py-1 text-base shadow-lg ring-1 ring-border focus:outline-none">
+        <HeadlessListbox.Options className={styles.options}>
           {options.map((option) => (
             <HeadlessListbox.Option
               key={option.id}
@@ -77,9 +78,9 @@ function Listbox({
               disabled={option.disabled}
               className={({ active, disabled }) =>
                 cn(
-                  'relative cursor-default select-none py-2 pl-10 pr-4',
-                  active ? 'bg-accent text-accent-foreground' : 'text-foreground',
-                  disabled && 'cursor-not-allowed opacity-50'
+                  styles.option,
+                  active ? styles.optionActive : styles.optionInactive,
+                  disabled && styles.optionDisabled
                 )
               }
             >

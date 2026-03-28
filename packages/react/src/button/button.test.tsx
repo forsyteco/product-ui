@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Button } from './button';
+import styles from './button.module.css';
 
 describe('Button', () => {
   it('renders the button component', () => {
@@ -18,14 +19,13 @@ describe('Button', () => {
   it('applies variant classes', () => {
     const { container } = render(<Button variant="secondary">Button</Button>);
     const button = container.querySelector('button');
-    // secondary maps to brand primary styling in this library
-    expect(button).toHaveClass('bg-primary');
+    expect(button).toHaveClass(styles.variantSecondary);
   });
 
   it('applies size classes', () => {
     const { container } = render(<Button size="lg">Button</Button>);
     const button = container.querySelector('button');
-    expect(button).toHaveClass('px-6', 'py-3');
+    expect(button).toHaveClass(styles.sizeLg);
   });
 
   it('applies disabled state', () => {

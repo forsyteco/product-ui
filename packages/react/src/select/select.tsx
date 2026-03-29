@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { clsx } from 'clsx';
 import { Select as BaseSelect } from '@base-ui/react/select';
@@ -51,19 +50,12 @@ function Select({
 }: SelectProps) {
   const computedDefaultValue =
     defaultValue ?? (value === undefined && !placeholder ? options[0]?.value : undefined);
-  const [internalValue, setInternalValue] = React.useState<string | undefined>(computedDefaultValue);
-  const selectedValue = value ?? internalValue;
-  const selectedLabel = options.find((option) => option.value === selectedValue)?.label;
 
   return (
     <BaseSelect.Root
       value={value}
       defaultValue={computedDefaultValue}
       onValueChange={(next) => {
-        const nextValue = (next as string) ?? undefined;
-        if (value === undefined) {
-          setInternalValue(nextValue);
-        }
         onValueChange?.((next as string) ?? null);
       }}
       disabled={disabled}
@@ -73,9 +65,7 @@ function Select({
     >
       <div className={styles.wrapper}>
         <BaseSelect.Trigger className={clsx(selectVariants({ error }), className)}>
-          <BaseSelect.Value>
-            {selectedLabel ?? (placeholder ? <span>{placeholder}</span> : null)}
-          </BaseSelect.Value>
+          <BaseSelect.Value>{placeholder ? <span>{placeholder}</span> : null}</BaseSelect.Value>
         </BaseSelect.Trigger>
         <span className={styles['icon-wrap']}>
           <svg

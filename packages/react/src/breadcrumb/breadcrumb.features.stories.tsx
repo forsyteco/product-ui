@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Button } from '../button';
-import { DropdownMenu, DropdownMenuItem } from '../dropdown-menu/dropdown-menu';
+import { Menu, MenuItem } from '../menu/menu';
 import {
   Breadcrumb,
   BreadcrumbEllipsis,
@@ -52,7 +52,7 @@ export const CollapsedWithDropdown: Story = {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <DropdownMenu
+          <Menu
             align="left"
             trigger={
               <Button variant="ghost" size="sm" className="sb-breadcrumb-trigger">
@@ -61,10 +61,10 @@ export const CollapsedWithDropdown: Story = {
               </Button>
             }
           >
-            <DropdownMenuItem>Documentation</DropdownMenuItem>
-            <DropdownMenuItem>Themes</DropdownMenuItem>
-            <DropdownMenuItem>GitHub</DropdownMenuItem>
-          </DropdownMenu>
+            <MenuItem>Documentation</MenuItem>
+            <MenuItem>Themes</MenuItem>
+            <MenuItem>GitHub</MenuItem>
+          </Menu>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>

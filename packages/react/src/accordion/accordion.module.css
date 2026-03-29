@@ -1,0 +1,40 @@
+.root {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.item {
+  border-radius: 0.5rem;
+  border: 1px solid rgb(var(--border));
+  background-color: rgb(var(--background));
+}
+
+.header {
+  margin: 0;
+}
+
+.trigger {
+  width: 100%;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
+  font-weight: 500;
+  color: rgb(var(--foreground));
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.trigger:hover {
+  background-color: rgb(var(--muted) / 0.35);
+}
+
+.panel {
+  padding: 0 1rem 0.75rem;
+  color: rgb(var(--muted-foreground));
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-line-height);
+}

@@ -1,0 +1,30 @@
+.root {
+  display: contents;
+}
+
+.trigger {
+  display: inline-flex;
+}
+
+.positioner {
+  z-index: 50;
+}
+
+.popup {
+  border-radius: 0.375rem;
+  padding: 0.35rem 0.5rem;
+  font-size: var(--text-xs);
+  line-height: 1.25;
+  color: rgb(var(--primary-foreground));
+  background-color: rgb(var(--primary));
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+  max-width: 16rem;
+}
+
+.arrow {
+  fill: rgb(var(--primary));
+}
+
+.viewport {
+  display: block;
+}

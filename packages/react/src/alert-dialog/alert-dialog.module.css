@@ -1,0 +1,55 @@
+.root {
+  display: contents;
+}
+
+.trigger {
+  display: inline-flex;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgb(0 0 0 / 0.45);
+  z-index: 50;
+}
+
+.viewport {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.popup {
+  max-width: min(100%, 28rem);
+  border-radius: 0.5rem;
+  background-color: rgb(var(--background));
+  border: 1px solid rgb(var(--border));
+  padding: 1.25rem;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.15), 0 4px 6px -4px rgb(0 0 0 / 0.15);
+}
+
+.title {
+  margin: 0 0 0.5rem;
+  font-size: var(--text-lg);
+  line-height: var(--text-lg-line-height);
+  font-weight: 600;
+  color: rgb(var(--foreground));
+}
+
+.description {
+  margin: 0 0 1rem;
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-line-height);
+  color: rgb(var(--muted-foreground));
+}
+
+.close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+}

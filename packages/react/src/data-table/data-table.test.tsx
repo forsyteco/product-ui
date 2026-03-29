@@ -1579,41 +1579,34 @@ describe('DataTable', () => {
       expect(pagination).toHaveStyle({ color: '#666666' });
     });
 
-    it('should apply default color config when colorConfig is not provided', () => {
+    it('should use token-driven defaults when colorConfig is not provided', () => {
       // Arrange
       // Act
       render(<DataTable {...createDefaultProps()} />);
 
-      // Header should have default black background
       const headerRow = screen.getByRole('row', { name: /name/i });
-      // Assert
-      expect(headerRow).toHaveStyle({ backgroundColor: '#000000' });
-
-      // Header text should be white
       const nameHeader = screen.getByText('Name').closest('th');
-      expect(nameHeader).toHaveStyle({ color: '#ffffff' });
-
-      // Row should have default white background
       const johnRow = screen.getByText('John Doe').closest('tr');
-      expect(johnRow).toHaveStyle({ backgroundColor: '#ffffff' });
-
-      // Pagination should have default colors
       const pagination = screen.getByRole('navigation', { name: /pagination/i });
-      expect(pagination).toHaveStyle({ backgroundColor: '#ffffff' });
-      expect(pagination).toHaveStyle({ color: '#000000' });
+
+      // Assert
+      expect(headerRow).not.toHaveAttribute('style');
+      expect(nameHeader).not.toHaveAttribute('style');
+      expect(johnRow).not.toHaveAttribute('style');
+      expect(pagination).not.toHaveAttribute('style');
     });
 
-    it('should apply default border color when colorConfig is not provided', () => {
+    it('should keep border styling in CSS when colorConfig is not provided', () => {
       // Arrange
       // Act
       const { container } = render(<DataTable {...createDefaultProps()} />);
 
       const tableContainer = container.firstChild;
       // Assert
-      expect(tableContainer).toHaveStyle({ borderColor: '#cbd5e1' });
+      expect(tableContainer).not.toHaveAttribute('style');
     });
 
-    it('should apply default selected row background when colorConfig is not provided', () => {
+    it('should apply selected-row class styling when no selectedRowBackground override is provided', () => {
       // Arrange
       // Act
       render(
@@ -1628,10 +1621,11 @@ describe('DataTable', () => {
 
       const johnRow = screen.getByText('John Doe').closest('tr');
       // Assert
-      expect(johnRow).toHaveStyle({ backgroundColor: '#fef9c3' });
+      expect(johnRow).toHaveClass(styles['row-selected']);
+      expect(johnRow).not.toHaveAttribute('style');
     });
 
-    it('should apply default active icon colors when colorConfig is not provided', () => {
+    it('should apply default active icon classes when colorConfig is not provided', () => {
       // Arrange
       // Act
       render(
@@ -1647,14 +1641,12 @@ describe('DataTable', () => {
       const sortIcon = nameHeader?.querySelector('svg');
       const sortIndicator = sortIcon?.parentElement;
 
-      // Default yellow background
       // Assert
-      expect(sortIndicator).toHaveStyle({ backgroundColor: '#ffde13' });
-      // Default black foreground
-      expect(sortIcon).toHaveStyle({ color: '#000000' });
+      expect(sortIndicator).toHaveClass(styles['sort-active-default']);
+      expect(sortIcon).toHaveClass(styles['sort-icon-default']);
     });
 
-    it('should override specific default colors when partial colorConfig is provided', () => {
+    it('should override only configured colors when partial colorConfig is provided', () => {
       // Arrange
       // Act
       render(
@@ -1670,9 +1662,9 @@ describe('DataTable', () => {
       // Assert
       expect(headerRow).toHaveStyle({ backgroundColor: '#ff0000' });
 
-      // Row should use default white background (not overridden)
+      // Row styling remains token-driven when not explicitly configured
       const johnRow = screen.getByText('John Doe').closest('tr');
-      expect(johnRow).toHaveStyle({ backgroundColor: '#ffffff' });
+      expect(johnRow).not.toHaveAttribute('style');
     });
 
     it('should apply custom active background color to the sort icon when sorted', () => {

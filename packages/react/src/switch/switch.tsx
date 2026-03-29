@@ -4,6 +4,17 @@ import { clsx } from 'clsx';
 import styles from './switch.module.css';
 
 type SwitchSize = 'sm' | 'md' | 'lg';
+const ROOT_SIZE_CLASS: Record<SwitchSize, string> = {
+  sm: styles['switch-sm'],
+  md: styles['switch-md'],
+  lg: styles['switch-lg'],
+};
+
+const THUMB_SIZE_CLASS: Record<SwitchSize, string> = {
+  sm: styles['thumb-sm'],
+  md: styles['thumb-md'],
+  lg: styles['thumb-lg'],
+};
 
 export type SwitchProps = {
   checked?: boolean;
@@ -25,8 +36,9 @@ function Switch({
   disabled = false,
   size,
   className,
-}: SwitchProps) {
+}: Readonly<SwitchProps>) {
   const isDisabled = Boolean(disabled);
+  const resolvedSize = size ?? 'md';
 
   return (
     <Field.Root className={clsx(styles.field, className)}>
@@ -57,14 +69,14 @@ function Switch({
         disabled={isDisabled}
         className={clsx(
           styles.switch,
-          size === 'sm' ? styles['switch-sm'] : size === 'lg' ? styles['switch-lg'] : styles['switch-md'],
+          ROOT_SIZE_CLASS[resolvedSize],
           isDisabled && styles['switch-disabled']
         )}
       >
         <BaseSwitch.Thumb
           className={clsx(
             styles.thumb,
-            size === 'sm' ? styles['thumb-sm'] : size === 'lg' ? styles['thumb-lg'] : styles['thumb-md']
+            THUMB_SIZE_CLASS[resolvedSize]
           )}
         />
       </BaseSwitch.Root>

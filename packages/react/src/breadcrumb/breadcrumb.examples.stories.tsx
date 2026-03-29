@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Button } from '../button';
-import { DropdownMenu, DropdownMenuItem } from '../dropdown-menu/dropdown-menu';
+import { Menu, MenuItem } from '../menu/menu';
 import {
   Breadcrumb,
   BreadcrumbEllipsis,
@@ -63,7 +63,7 @@ export const DeepHierarchy: Story = {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <DropdownMenu
+          <Menu
             align="left"
             trigger={
               <Button variant="ghost" size="sm" className="sb-breadcrumb-trigger">
@@ -72,10 +72,10 @@ export const DeepHierarchy: Story = {
               </Button>
             }
           >
-            <DropdownMenuItem>Guides</DropdownMenuItem>
-            <DropdownMenuItem>API</DropdownMenuItem>
-            <DropdownMenuItem>Changelog</DropdownMenuItem>
-          </DropdownMenu>
+            <MenuItem>Guides</MenuItem>
+            <MenuItem>API</MenuItem>
+            <MenuItem>Changelog</MenuItem>
+          </Menu>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>

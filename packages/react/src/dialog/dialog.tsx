@@ -4,8 +4,10 @@ import { clsx } from 'clsx';
 import styles from './dialog.module.css';
 
 export type DialogProps = {
-  open: boolean;
-  onClose: () => void;
+  open?: boolean;
+  defaultOpen?: boolean;
+  onClose?: () => void;
+  onOpenChange?: (open: boolean) => void;
   children: ReactNode;
   className?: string;
 };
@@ -25,9 +27,16 @@ export type DialogPanelProps = {
   className?: string;
 };
 
-function Dialog({ open, onClose, children, className }: DialogProps) {
+function Dialog({ open, defaultOpen, onClose, onOpenChange, children, className }: Readonly<DialogProps>) {
   return (
-    <BaseDialog.Root open={open} onOpenChange={(next) => { if (!next) onClose(); }}>
+    <BaseDialog.Root
+      open={open}
+      defaultOpen={defaultOpen}
+      onOpenChange={(next) => {
+        onOpenChange?.(next);
+        if (!next) onClose?.();
+      }}
+    >
       <BaseDialog.Portal>
         <div className={clsx(styles.root, className)}>
           <BaseDialog.Backdrop className={styles.overlay} />
@@ -40,7 +49,7 @@ function Dialog({ open, onClose, children, className }: DialogProps) {
   );
 }
 
-export function DialogPanel({ children, className }: DialogPanelProps) {
+export function DialogPanel({ children, className }: Readonly<DialogPanelProps>) {
   return (
     <BaseDialog.Popup className={clsx(styles.panel, className)}>
       {children}
@@ -48,7 +57,7 @@ export function DialogPanel({ children, className }: DialogPanelProps) {
   );
 }
 
-export function DialogTitle({ children, className }: DialogTitleProps) {
+export function DialogTitle({ children, className }: Readonly<DialogTitleProps>) {
   return (
     <BaseDialog.Title className={clsx(styles.title, className)}>
       {children}
@@ -56,7 +65,7 @@ export function DialogTitle({ children, className }: DialogTitleProps) {
   );
 }
 
-export function DialogDescription({ children, className }: DialogDescriptionProps) {
+export function DialogDescription({ children, className }: Readonly<DialogDescriptionProps>) {
   return (
     <BaseDialog.Description className={clsx(styles.description, className)}>
       {children}

@@ -80,7 +80,7 @@ const iconSizes = {
 type IconButtonSize = NonNullable<VariantProps<typeof iconButtonVariants>['size']>
 
 const IconButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, IconButtonProps>(function IconButton(
-  props: IconButtonProps,
+  props: Readonly<IconButtonProps>,
   ref: ForwardedRef<HTMLButtonElement | HTMLAnchorElement>
 ) {
   const {

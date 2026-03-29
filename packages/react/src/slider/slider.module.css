@@ -1,0 +1,51 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 20rem;
+}
+
+.label {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: rgb(var(--foreground));
+}
+
+.control {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 1.25rem;
+  touch-action: none;
+  user-select: none;
+}
+
+.track {
+  position: relative;
+  flex-grow: 1;
+  height: 0.375rem;
+  border-radius: 9999px;
+  background-color: rgb(var(--muted));
+}
+
+.indicator {
+  position: absolute;
+  border-radius: inherit;
+  height: 100%;
+  background-color: rgb(var(--primary));
+}
+
+.thumb {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 9999px;
+  background-color: rgb(var(--background));
+  border: 2px solid rgb(var(--primary));
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.12);
+}
+
+.value {
+  font-size: var(--text-sm);
+  color: rgb(var(--muted-foreground));
+}

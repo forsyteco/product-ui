@@ -12,7 +12,6 @@
 
 .label-disabled {
   color: rgb(var(--muted-foreground));
-  opacity: 0.5;
 }
 
 .description {
@@ -22,7 +21,7 @@
 }
 
 .description-disabled {
-  opacity: 0.5;
+  color: rgb(var(--muted-foreground));
 }
 
 .switch {
@@ -30,13 +29,23 @@
   display: inline-flex;
   align-items: center;
   border-radius: 9999px;
-  background-color: rgb(var(--muted));
-  transition: background-color 0.15s ease, opacity 0.15s ease;
+  border: 1px solid rgb(var(--switch-track-border));
+  background-color: rgb(var(--switch-track-off));
+  transition: background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
   outline: none;
 }
 
+.switch:hover {
+  background-color: rgb(var(--switch-track-off-hover));
+}
+
 .switch[data-checked] {
-  background-color: rgb(var(--accent));
+  border-color: rgb(var(--switch-track-on));
+  background-color: rgb(var(--switch-track-on));
+}
+
+.switch[data-checked]:hover {
+  background-color: rgb(var(--switch-track-on-hover));
 }
 
 .switch:focus-visible {
@@ -45,7 +54,16 @@
 
 .switch-disabled {
   cursor: not-allowed;
-  opacity: 0.5;
+  border-color: rgb(var(--switch-track-disabled-border));
+  background-color: rgb(var(--switch-track-disabled));
+}
+
+.switch-disabled:hover {
+  background-color: rgb(var(--switch-track-disabled));
+}
+
+.switch-disabled .thumb {
+  background-color: rgb(var(--switch-thumb-disabled));
 }
 
 .switch-sm {
@@ -66,7 +84,7 @@
 .thumb {
   pointer-events: none;
   border-radius: 9999px;
-  background-color: rgb(var(--brand-white));
+  background-color: rgb(var(--switch-thumb));
   transition: transform 0.2s ease;
 }
 

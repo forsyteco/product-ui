@@ -1,0 +1,30 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.label {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-line-height);
+  font-weight: 500;
+  color: rgb(var(--foreground));
+}
+
+.description {
+  font-size: var(--text-sm);
+  color: rgb(var(--muted-foreground));
+}
+
+.error {
+  font-size: var(--text-sm);
+  color: rgb(var(--destructive));
+}
+
+.control {
+  display: contents;
+}
+
+.item {
+  display: contents;
+}

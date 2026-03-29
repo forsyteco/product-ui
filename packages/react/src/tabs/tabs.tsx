@@ -35,37 +35,26 @@ export type TabPanelProps = {
 
 type TabsValue = string | number;
 type TabsRegistrationContextValue = {
-  nextTabValue: () => number;
-  nextPanelValue: () => number;
+  nextValue: (kind: 'tab' | 'panel') => number;
 };
 
 const TabsRegistrationContext = createContext<TabsRegistrationContextValue | null>(null);
 
-function useTabValue(provided?: TabsValue) {
+function useRegisteredValue(kind: 'tab' | 'panel', provided?: TabsValue) {
   const ctx = useContext(TabsRegistrationContext);
   const valueRef = useRef<TabsValue | undefined>(provided);
   if (valueRef.current === undefined && ctx) {
-    valueRef.current = ctx.nextTabValue();
+    valueRef.current = ctx.nextValue(kind);
   }
   return valueRef.current ?? 0;
 }
 
-function usePanelValue(provided?: TabsValue) {
-  const ctx = useContext(TabsRegistrationContext);
-  const valueRef = useRef<TabsValue | undefined>(provided);
-  if (valueRef.current === undefined && ctx) {
-    valueRef.current = ctx.nextPanelValue();
-  }
-  return valueRef.current ?? 0;
-}
-
-function Tabs({ children, defaultIndex, selectedIndex, onChange, className }: TabsProps) {
+function Tabs({ children, defaultIndex, selectedIndex, onChange, className }: Readonly<TabsProps>) {
   const registrationContext = useMemo<TabsRegistrationContextValue>(() => {
     let tabCounter = 0;
     let panelCounter = 0;
     return {
-      nextTabValue: () => tabCounter++,
-      nextPanelValue: () => panelCounter++,
+      nextValue: (kind) => (kind === 'tab' ? tabCounter++ : panelCounter++),
     };
   }, []);
 
@@ -83,7 +72,7 @@ function Tabs({ children, defaultIndex, selectedIndex, onChange, className }: Ta
   );
 }
 
-export function TabList({ children, className }: TabListProps) {
+export function TabList({ children, className }: Readonly<TabListProps>) {
   return (
     <BaseTabs.List
       className={clsx(
@@ -96,8 +85,8 @@ export function TabList({ children, className }: TabListProps) {
   );
 }
 
-export function Tab({ children, className, value }: TabProps) {
-  const resolvedValue = useTabValue(value);
+export function Tab({ children, className, value }: Readonly<TabProps>) {
+  const resolvedValue = useRegisteredValue('tab', value);
   return (
     <BaseTabs.Tab
       value={resolvedValue}
@@ -116,7 +105,7 @@ export function Tab({ children, className, value }: TabProps) {
   );
 }
 
-export function TabPanels({ children, className }: TabPanelsProps) {
+export function TabPanels({ children, className }: Readonly<TabPanelsProps>) {
   return (
     <div className={clsx(styles.panels, className)}>
       {children}
@@ -124,8 +113,8 @@ export function TabPanels({ children, className }: TabPanelsProps) {
   );
 }
 
-export function TabPanel({ children, className, value }: TabPanelProps) {
-  const resolvedValue = usePanelValue(value);
+export function TabPanel({ children, className, value }: Readonly<TabPanelProps>) {
+  const resolvedValue = useRegisteredValue('panel', value);
   return (
     <BaseTabs.Panel
       value={resolvedValue}

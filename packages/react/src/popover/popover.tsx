@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import { type ReactElement, type ReactNode } from 'react';
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import { Button, type ButtonProps } from '../button';
 import { clsx } from 'clsx';
@@ -9,14 +9,17 @@ export type PopoverProps = {
   className?: string;
 };
 
-export type PopoverTriggerProps = ButtonProps;
+export type PopoverTriggerProps = Omit<ButtonProps, 'children'> & {
+  children: ReactNode;
+  render?: ReactElement;
+};
 
 export type PopoverContentProps = {
   children: ReactNode;
   className?: string;
 };
 
-function Popover({ children, className }: PopoverProps) {
+function Popover({ children, className }: Readonly<PopoverProps>) {
   return (
     <BasePopover.Root>
       <div className={clsx(styles.root, className)}>
@@ -26,15 +29,26 @@ function Popover({ children, className }: PopoverProps) {
   );
 }
 
-export function PopoverTrigger({ children, className, variant = 'default', size, ...props }: PopoverTriggerProps) {
+export function PopoverTrigger({
+  children,
+  className,
+  variant = 'default',
+  size,
+  render,
+  ...props
+}: Readonly<PopoverTriggerProps>) {
+  const triggerRender = render ?? (
+    <Button variant={variant} size={size} className={clsx(className)} />
+  );
+
   return (
-    <BasePopover.Trigger render={<Button variant={variant} size={size} className={clsx(className)} />} {...props}>
+    <BasePopover.Trigger render={triggerRender} {...props}>
       {children}
     </BasePopover.Trigger>
   );
 }
 
-export function PopoverContent({ children, className }: PopoverContentProps) {
+export function PopoverContent({ children, className }: Readonly<PopoverContentProps>) {
   return (
     <BasePopover.Portal>
       <BasePopover.Positioner sideOffset={8}>

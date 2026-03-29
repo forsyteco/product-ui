@@ -10,7 +10,7 @@ import {
   BreadcrumbSeparator,
 } from './breadcrumb';
 import { Button } from '../button';
-import { DropdownMenu, DropdownMenuItem } from '../dropdown-menu/dropdown-menu';
+import { Menu, MenuItem } from '../menu/menu';
 
 const meta = {
   title: 'Components/Breadcrumb',
@@ -28,7 +28,7 @@ export function Default() {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <DropdownMenu
+          <Menu
             align="left"
             trigger={
               <Button variant="ghost" size="sm" className="sb-breadcrumb-trigger">
@@ -37,10 +37,10 @@ export function Default() {
               </Button>
             }
           >
-            <DropdownMenuItem>Documentation</DropdownMenuItem>
-            <DropdownMenuItem>Themes</DropdownMenuItem>
-            <DropdownMenuItem>GitHub</DropdownMenuItem>
-          </DropdownMenu>
+            <MenuItem>Documentation</MenuItem>
+            <MenuItem>Themes</MenuItem>
+            <MenuItem>GitHub</MenuItem>
+          </Menu>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
@@ -72,7 +72,7 @@ export const Playground: Story = {
 
           {collapsed ? (
             <BreadcrumbItem>
-              <DropdownMenu
+              <Menu
                 align="left"
                 trigger={
                   <Button variant="ghost" size="sm" className="sb-breadcrumb-trigger">
@@ -81,10 +81,10 @@ export const Playground: Story = {
                   </Button>
                 }
               >
-                <DropdownMenuItem>Documentation</DropdownMenuItem>
-                <DropdownMenuItem>Themes</DropdownMenuItem>
-                <DropdownMenuItem>GitHub</DropdownMenuItem>
-              </DropdownMenu>
+                <MenuItem>Documentation</MenuItem>
+                <MenuItem>Themes</MenuItem>
+                <MenuItem>GitHub</MenuItem>
+              </Menu>
             </BreadcrumbItem>
           ) : (
             <BreadcrumbItem>

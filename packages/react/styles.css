@@ -179,6 +179,32 @@
   --data-table-row-selectable-active: rgb(var(--muted) / 0.5);
   --data-table-surface-hover: rgb(var(--muted));
   --data-table-surface-active: color-mix(in srgb, rgb(var(--muted)), black var(--interactive-active-darken));
+  --data-table-risk-high-bg: 254 226 226;
+  --data-table-risk-high-fg: 153 27 27;
+  --data-table-risk-medium-bg: 254 249 195;
+  --data-table-risk-medium-fg: 133 77 14;
+  --data-table-risk-low-bg: 220 252 231;
+  --data-table-risk-low-fg: 22 101 52;
+  --data-table-risk-unknown-bg: 243 244 246;
+  --data-table-risk-unknown-fg: 31 41 55;
+  --data-table-status-complete-bg: 209 250 229;
+  --data-table-status-complete-fg: 6 95 70;
+  --data-table-status-do-not-act-bg: 255 228 230;
+  --data-table-status-do-not-act-fg: 159 18 57;
+  --data-table-status-failed-bg: 254 226 226;
+  --data-table-status-failed-fg: 153 27 27;
+  --data-table-status-progress-bg: 243 244 246;
+  --data-table-status-progress-fg: 31 41 55;
+
+  --switch-track-off: 218 222 228;
+  --switch-track-off-hover: 206 212 220;
+  --switch-track-border: var(--neutral-200);
+  --switch-track-on: var(--accent);
+  --switch-track-on-hover: var(--accent);
+  --switch-track-disabled: 226 230 236;
+  --switch-track-disabled-border: 210 216 224;
+  --switch-thumb: var(--background);
+  --switch-thumb-disabled: 245 247 250;
 
   --calendar-cell-size: 2rem;
 
@@ -255,6 +281,30 @@
   --autocomplete-clear-active: color-mix(in srgb, rgb(var(--muted)), white var(--interactive-hover-lighten));
 
   --data-table-surface-active: color-mix(in srgb, rgb(var(--muted)), white var(--interactive-hover-lighten));
+  --data-table-risk-high-bg: 127 29 29;
+  --data-table-risk-high-fg: 254 226 226;
+  --data-table-risk-medium-bg: 113 63 18;
+  --data-table-risk-medium-fg: 254 249 195;
+  --data-table-risk-low-bg: 20 83 45;
+  --data-table-risk-low-fg: 220 252 231;
+  --data-table-risk-unknown-bg: var(--neutral-900);
+  --data-table-risk-unknown-fg: var(--neutral-200);
+  --data-table-status-complete-bg: 6 78 59;
+  --data-table-status-complete-fg: 209 250 229;
+  --data-table-status-do-not-act-bg: 131 24 67;
+  --data-table-status-do-not-act-fg: 255 228 230;
+  --data-table-status-failed-bg: 127 29 29;
+  --data-table-status-failed-fg: 254 226 226;
+  --data-table-status-progress-bg: var(--neutral-900);
+  --data-table-status-progress-fg: var(--neutral-100);
+
+  --switch-track-off: var(--neutral-700);
+  --switch-track-off-hover: var(--neutral-800);
+  --switch-track-border: var(--neutral-800);
+  --switch-track-disabled: var(--neutral-900);
+  --switch-track-disabled-border: var(--neutral-800);
+  --switch-thumb: var(--background);
+  --switch-thumb-disabled: var(--neutral-700);
 }
 
 *,

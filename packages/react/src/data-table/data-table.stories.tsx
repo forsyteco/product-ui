@@ -5,6 +5,7 @@ import { ROW_INTERACTION } from './constants';
 import type { SortState, FilterState } from './types';
 import { queryData } from './stories/mock-data-service';
 import { sampleUsers, userColumnsWithSortAndFilter } from './stories/fixtures';
+import { ThemeProvider } from '../theme';
 
 const meta = {
   title: 'Components/DataTable',
@@ -130,4 +131,20 @@ export const Playground: Story = {
   args: {
     pageSize: 10,
   },
+};
+
+export const ThemeLightYellow: Story = {
+  render: () => (
+    <ThemeProvider colourScheme="yellow" defaultMode="light" storageKey="data-table-light-yellow">
+      <DefaultStory pageSize={10} />
+    </ThemeProvider>
+  ),
+};
+
+export const ThemeDarkBlue: Story = {
+  render: () => (
+    <ThemeProvider colourScheme="blue" defaultMode="dark" storageKey="data-table-dark-blue">
+      <DefaultStory pageSize={10} />
+    </ThemeProvider>
+  ),
 };

@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react';
-import { Listbox as HeadlessListbox } from '@headlessui/react';
+import { Select as BaseSelect } from '@base-ui/react/select';
 import { clsx } from 'clsx';
 import styles from './listbox.module.css';
 
@@ -43,16 +43,29 @@ function Listbox({
   disabled = false,
 }: ListboxProps) {
   return (
-    <HeadlessListbox value={value ?? undefined} onChange={onChange} disabled={disabled}>
+    <BaseSelect.Root<ListboxOption>
+      value={value ?? undefined}
+      onValueChange={(next) => {
+        const resolved = typeof next === 'object'
+          ? (next as ListboxOption)
+          : options.find((option) => option.value === String(next));
+        if (resolved) {
+          onChange?.(resolved);
+        }
+      }}
+      disabled={disabled}
+      items={options.map((option) => ({ label: option.label, value: option }))}
+      itemToStringLabel={(option) => option.label}
+    >
       <div className={clsx(styles.root, className)}>
-        <HeadlessListbox.Button
+        <BaseSelect.Trigger
           className={clsx(
             styles.button,
             disabled && styles['button-disabled']
           )}
         >
           <span className={styles.value}>
-            {value?.label || placeholder}
+            {value?.label ?? placeholder}
           </span>
           <span className={styles['icon-wrap']}>
             <svg
@@ -69,27 +82,33 @@ function Listbox({
               />
             </svg>
           </span>
-        </HeadlessListbox.Button>
-        <HeadlessListbox.Options className={styles.options}>
+        </BaseSelect.Trigger>
+        <BaseSelect.Portal>
+          <BaseSelect.Positioner>
+            <BaseSelect.Popup className={styles.options}>
+              <BaseSelect.List>
           {options.map((option) => (
-            <HeadlessListbox.Option
+            <BaseSelect.Item
               key={option.id}
               value={option}
               disabled={option.disabled}
-              className={({ active, disabled }) =>
+              className={({ highlighted, disabled: optionDisabled }) =>
                 clsx(
                   styles.option,
-                  active ? styles['option-active'] : styles['option-inactive'],
-                  disabled && styles['option-disabled']
+                  highlighted ? styles['option-active'] : styles['option-inactive'],
+                  optionDisabled && styles['option-disabled']
                 )
               }
             >
               {option.label}
-            </HeadlessListbox.Option>
+            </BaseSelect.Item>
           ))}
-        </HeadlessListbox.Options>
+              </BaseSelect.List>
+            </BaseSelect.Popup>
+          </BaseSelect.Positioner>
+        </BaseSelect.Portal>
       </div>
-    </HeadlessListbox>
+    </BaseSelect.Root>
   );
 }
 

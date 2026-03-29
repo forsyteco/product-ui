@@ -1,11 +1,5 @@
 import * as React from 'react';
-import {
-  Combobox as HeadlessCombobox,
-  ComboboxButton,
-  ComboboxInput,
-  ComboboxOption as HeadlessComboboxOption,
-  ComboboxOptions,
-} from '@headlessui/react';
+import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 import { clsx } from 'clsx';
 import type { ComboboxOption } from './types';
 import styles from './combobox.module.css';
@@ -22,15 +16,9 @@ type Ctx = {
   placeholder: string;
   disabled: boolean;
   invalid: boolean;
-
+  clearable: boolean;
   isOpen: boolean;
   setIsOpen: (next: boolean) => void;
-
-  clearable: boolean;
-
-  /** Ref to the root container; used to avoid closing on blur when focus moves inside (e.g. toggle or option). */
-  rootRef: React.RefObject<HTMLDivElement | null>;
-
   filterFn: (option: ComboboxOption, query: string) => boolean;
   renderOption?: (
     option: ComboboxOption,
@@ -100,9 +88,10 @@ function Root({
   className,
   children,
 }: ComboboxRootProps) {
+  const isControlled = valueProp !== undefined;
   // selection (controlled/uncontrolled)
   const [internalValue, setInternalValue] = React.useState<ComboboxOption | null>(defaultValue);
-  const value = valueProp !== undefined ? valueProp : internalValue;
+  const value = isControlled ? valueProp : internalValue;
 
   const setValue = React.useCallback(
     (next: ComboboxOption | null) => {
@@ -115,6 +104,7 @@ function Root({
   // query (controlled/uncontrolled)
   const [internalQuery, setInternalQuery] = React.useState(defaultQuery);
   const query = queryProp !== undefined ? queryProp : internalQuery;
+  const [open, setOpen] = React.useState(false);
 
   const setQuery = React.useCallback(
     (next: string) => {
@@ -124,11 +114,16 @@ function Root({
     [onQueryChange, queryProp]
   );
 
-  // open/close (local); only used for syncing (e.g. onClose). Visibility is controlled by Headless.
-  const [isOpen, setIsOpen] = React.useState(false);
-  const rootRef = React.useRef<HTMLDivElement>(null);
-
   const effectiveFilterFn = filterFn ?? defaultFilterFn;
+
+  React.useEffect(() => {
+    if (queryProp !== undefined) return;
+    if (value?.label) {
+      setInternalQuery(value.label);
+    } else if (!value) {
+      setInternalQuery('');
+    }
+  }, [queryProp, value]);
 
   const filteredOptions = React.useMemo(() => {
     if (!query.trim()) return options;
@@ -146,10 +141,9 @@ function Root({
       placeholder,
       disabled,
       invalid,
-      isOpen,
-      setIsOpen,
       clearable,
-      rootRef,
+      isOpen: open,
+      setIsOpen: setOpen,
       filterFn: effectiveFilterFn,
       renderOption,
     }),
@@ -163,8 +157,9 @@ function Root({
       placeholder,
       disabled,
       invalid,
-      isOpen,
       clearable,
+      open,
+      setOpen,
       effectiveFilterFn,
       renderOption,
     ]
@@ -172,21 +167,29 @@ function Root({
 
   return (
     <ComboboxCtx.Provider value={ctx}>
-      <div ref={rootRef} className={clsx(styles.root, className)}>
-        <HeadlessCombobox
-          by="id"
-          value={value}
-          onChange={(next) => {
-            setValue(next);
-            setIsOpen(false);
-          }}
-          onClose={() => setIsOpen(false)}
-          disabled={disabled}
-          nullable
-        >
+      <BaseCombobox.Root<ComboboxOption>
+        value={isControlled ? value ?? undefined : undefined}
+        defaultValue={!isControlled ? defaultValue ?? undefined : undefined}
+        inputValue={query}
+        onValueChange={(next) => {
+          const nextValue = (next as ComboboxOption) ?? null;
+          setValue(nextValue);
+          if (queryProp === undefined) {
+            setInternalQuery(nextValue?.label ?? '');
+          }
+          setOpen(false);
+        }}
+        onInputValueChange={(inputValue) => setQuery(inputValue)}
+        open={open}
+        onOpenChange={setOpen}
+        disabled={disabled}
+        items={options.map((option) => ({ label: option.label, value: option }))}
+        itemToStringLabel={(option) => option.label}
+      >
+        <div className={clsx(styles.root, className)}>
           {children}
-        </HeadlessCombobox>
-      </div>
+        </div>
+      </BaseCombobox.Root>
     </ComboboxCtx.Provider>
   );
 }
@@ -211,37 +214,29 @@ function Control({
 }
 
 type InputProps = Omit<
-  React.ComponentProps<typeof ComboboxInput>,
+  React.ComponentProps<typeof BaseCombobox.Input>,
   'displayValue' | 'onChange'
 > & {
   displayValue?: (option: ComboboxOption | null) => string;
   onValueTextChange?: (text: string) => void;
-  /** Defaults true for Combobox */
-  openOnFocus?: boolean;
   placeholder?: string;
 };
 
 function Input({
   className,
-  displayValue,
+  displayValue: _displayValue,
   onValueTextChange,
-  onFocus,
-  onBlur,
-  openOnFocus = true,
   ...props
 }: InputProps) {
   const ctx = useComboboxCtx();
 
-  const displayValueFn = displayValue ?? ((opt: ComboboxOption | null) => opt?.label ?? '');
   const placeholderValue = props.placeholder ?? ctx.placeholder;
-  const inputProps = {
-    ...props,
-    placeholder: placeholderValue,
-    displayValue: displayValueFn as (item: unknown) => string,
-  } as React.ComponentProps<typeof ComboboxInput>;
+
   return (
-    <ComboboxInput
-      {...inputProps}
+    <BaseCombobox.Input
+      {...props}
+      value={ctx.query}
+      placeholder={placeholderValue}
       className={clsx(
         styles.input,
         ctx.invalid && styles['input-invalid'],
@@ -252,13 +247,9 @@ function Input({
         const next = e.target.value;
         ctx.setQuery(next);
         onValueTextChange?.(next);
-        if (!ctx.disabled) ctx.setIsOpen(true);
+        ctx.setIsOpen(true);
       }}
-      onFocus={(e: React.FocusEvent<HTMLInputElement>) => {
-        if (!ctx.disabled && openOnFocus) ctx.setIsOpen(true);
-        onFocus?.(e);
-      }}
-      onBlur={onBlur}
+      onFocus={() => ctx.setIsOpen(true)}
     />
   );
 }
@@ -307,11 +298,11 @@ function ToggleButton({
   children,
   onClick,
   ...props
-}: React.ComponentProps<typeof ComboboxButton>) {
+}: React.ComponentProps<typeof BaseCombobox.Trigger>) {
   const ctx = useComboboxCtx();
 
   return (
-    <ComboboxButton
+    <BaseCombobox.Trigger
       {...props}
       aria-label={props['aria-label'] ?? 'Toggle options'}
       className={clsx(
@@ -326,7 +317,7 @@ function ToggleButton({
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       )}
-    </ComboboxButton>
+    </BaseCombobox.Trigger>
   );
 }
 
@@ -334,7 +325,7 @@ function Options({
   className,
   children,
   ...props
-}: Omit<React.ComponentProps<typeof ComboboxOptions>, 'children'> & {
+}: Omit<React.ComponentProps<typeof BaseCombobox.List>, 'children'> & {
   /** If omitted, renders filtered options */
   children?: React.ReactNode;
 }) {
@@ -344,22 +335,21 @@ function Options({
   const hasResults = ctx.filteredOptions.length > 0;
 
   return (
-    <ComboboxOptions
-      {...props}
-      anchor="bottom start"
-      className={clsx(
-        styles.options,
-        className
-      )}
-    >
-      {children ? (
-        children
-      ) : hasResults ? (
-        ctx.filteredOptions.map((opt) => <Option key={opt.id} option={opt} />)
-      ) : (
-        <Empty />
-      )}
-    </ComboboxOptions>
+    <BaseCombobox.Portal>
+      <BaseCombobox.Positioner sideOffset={4}>
+        <BaseCombobox.Popup className={clsx(styles.options, className)}>
+          <BaseCombobox.List {...props}>
+            {children ? (
+              children
+            ) : hasResults ? (
+              ctx.filteredOptions.map((opt) => <Option key={opt.id} option={opt} />)
+            ) : (
+              <Empty />
+            )}
+          </BaseCombobox.List>
+        </BaseCombobox.Popup>
+      </BaseCombobox.Positioner>
+    </BaseCombobox.Portal>
   );
 }
 
@@ -379,54 +369,29 @@ function Option({
   className,
   children,
   ...props
-}: Omit<React.ComponentProps<typeof HeadlessComboboxOption>, 'value' | 'children'> & {
+}: Omit<React.ComponentProps<typeof BaseCombobox.Item>, 'value' | 'children'> & {
   option: ComboboxOption;
   children?: React.ReactNode;
 }) {
   const ctx = useComboboxCtx();
 
   return (
-    <HeadlessComboboxOption
+    <BaseCombobox.Item
       {...props}
       value={option}
       disabled={option.disabled}
-      className={({
-        active,
-        selected,
-        disabled: optDisabled,
-      }: {
-        active: boolean;
-        selected: boolean;
-        disabled: boolean;
-      }) =>
+      className={({ highlighted, selected, disabled: optDisabled }) =>
         clsx(
           styles.option,
           optDisabled ? styles['option-disabled'] : styles['option-enabled'],
-          active ? styles['option-active'] : styles['option-inactive'],
+          highlighted ? styles['option-active'] : styles['option-inactive'],
           selected && styles['option-selected'],
-          typeof className === 'function'
-            ? className({ active, selected, disabled: optDisabled })
-            : className
+          typeof className === 'function' ? className({ highlighted, selected, disabled: optDisabled }) : className
         )
       }
     >
-      {({
-        active,
-        selected,
-        disabled: optDisabled,
-      }: {
-        active: boolean;
-        selected: boolean;
-        disabled: boolean;
-      }) => {
-        const content = children
-          ? children
-          : ctx.renderOption
-            ? ctx.renderOption(option, { active, selected, disabled: optDisabled })
-            : option.label;
-        return <>{content}</>;
-      }}
-    </HeadlessComboboxOption>
+      {children ?? ctx.renderOption?.(option, { active: false, selected: false, disabled: Boolean(option.disabled) }) ?? option.label}
+    </BaseCombobox.Item>
   );
 }
 

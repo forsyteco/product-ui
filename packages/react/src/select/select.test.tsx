@@ -39,10 +39,10 @@ describe('Select', () => {
   describe('when error is true', () => {
     it('should apply error styling', () => {
       // Arrange
-      const { container } = render(<Select options={options} error />);
+      render(<Select options={options} error />);
 
       // Act
-      const select = container.querySelector('select');
+      const select = screen.getByRole('combobox');
 
       // Assert
       expect(select).toHaveClass(styles.error);

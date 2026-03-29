@@ -1,4 +1,5 @@
-import { Field, Label, Description, Switch as HeadlessSwitch } from '@headlessui/react';
+import { Field } from '@base-ui/react/field';
+import { Switch as BaseSwitch } from '@base-ui/react/switch';
 import { clsx } from 'clsx';
 import styles from './switch.module.css';
 
@@ -6,6 +7,7 @@ type SwitchSize = 'sm' | 'md' | 'lg';
 
 export type SwitchProps = {
   checked?: boolean;
+  defaultChecked?: boolean;
   onChange?: (checked: boolean) => void;
   label?: string;
   description?: string;
@@ -15,7 +17,8 @@ export type SwitchProps = {
 };
 
 function Switch({
-  checked = false,
+  checked,
+  defaultChecked = false,
   onChange,
   label,
   description,
@@ -26,30 +29,31 @@ function Switch({
   const isDisabled = Boolean(disabled);
 
   return (
-    <Field className={clsx(styles.field, className)}>
+    <Field.Root className={clsx(styles.field, className)}>
       {label && (
-        <Label
+        <Field.Label
           className={clsx(
             styles.label,
             isDisabled && styles['label-disabled']
           )}
         >
           {label}
-        </Label>
+        </Field.Label>
       )}
       {description && (
-        <Description
+        <Field.Description
           className={clsx(
             styles.description,
             isDisabled && styles['description-disabled']
           )}
         >
           {description}
-        </Description>
+        </Field.Description>
       )}
-      <HeadlessSwitch
+      <BaseSwitch.Root
         checked={checked}
-        onChange={onChange}
+        defaultChecked={defaultChecked}
+        onCheckedChange={(nextChecked) => onChange?.(nextChecked)}
         disabled={isDisabled}
         className={clsx(
           styles.switch,
@@ -57,14 +61,14 @@ function Switch({
           isDisabled && styles['switch-disabled']
         )}
       >
-        <span
+        <BaseSwitch.Thumb
           className={clsx(
             styles.thumb,
             size === 'sm' ? styles['thumb-sm'] : size === 'lg' ? styles['thumb-lg'] : styles['thumb-md']
           )}
         />
-      </HeadlessSwitch>
-    </Field>
+      </BaseSwitch.Root>
+    </Field.Root>
   );
 }
 

@@ -1,11 +1,11 @@
-import { Fragment, type ReactNode } from 'react';
-import { Menu, Transition } from '@headlessui/react';
+import { type ReactElement, type ReactNode } from 'react';
+import { Menu } from '@base-ui/react/menu';
 import { Button, type ButtonProps } from '../button';
 import { clsx } from 'clsx';
 import styles from './dropdown-menu.module.css';
 
 export type DropdownMenuProps = {
-  trigger: ReactNode;
+  trigger: ReactElement;
   children: ReactNode;
   className?: string;
   align?: 'left' | 'right';
@@ -25,61 +25,59 @@ export type DropdownMenuButtonProps = {
 
 function DropdownMenu({ trigger, children, className, align = 'right' }: DropdownMenuProps) {
   return (
-    <Menu as="div" className={clsx(styles.root, className)}>
-      <Menu.Button as={Fragment}>{trigger}</Menu.Button>
-      <Transition
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
-      >
-        <Menu.Items
-          className={clsx(
-            styles['menu-items'],
-            align === 'left' ? styles['align-left'] : styles['align-right']
-          )}
-        >
-          <div className={styles['menu-body']}>{children}</div>
-        </Menu.Items>
-      </Transition>
-    </Menu>
+    <Menu.Root>
+      <div className={clsx(styles.root, className)}>
+        <Menu.Trigger render={trigger as ReactElement<Record<string, unknown>>} />
+        <Menu.Portal>
+          <Menu.Positioner sideOffset={8}>
+            <Menu.Popup
+              className={clsx(
+                styles['menu-items'],
+                align === 'left' ? styles['align-left'] : styles['align-right']
+              )}
+            >
+              <div className={styles['menu-body']}>{children}</div>
+            </Menu.Popup>
+          </Menu.Positioner>
+        </Menu.Portal>
+      </div>
+    </Menu.Root>
   );
 }
 
 export function DropdownMenuItem({ children, onClick, disabled, className }: DropdownMenuItemProps) {
   return (
-    <Menu.Item disabled={disabled}>
-      {({ active }) => (
+    <Menu.Item
+      disabled={disabled}
+      onClick={onClick}
+      nativeButton
+      render={
         <Button
           type="button"
           variant="ghost"
-          onClick={onClick}
           disabled={disabled}
           className={clsx(
             styles.item,
-            active ? styles['item-active'] : styles['item-inactive'],
             className
           )}
         >
           {children}
         </Button>
-      )}
-    </Menu.Item>
+      }
+      className={({ highlighted }) =>
+        clsx(
+          highlighted ? styles['item-active'] : styles['item-inactive']
+        )
+      }
+    />
   );
 }
 
 export function DropdownMenuButton({ children, className, ...props }: DropdownMenuButtonProps & ButtonProps) {
   return (
-    <Menu.Button
-      as={Button}
-      variant="default"
-      className={clsx(styles.button, className)}
-      {...props}
-    >
+    <Button variant="default" className={clsx(styles.button, className)} {...props}>
       {children}
-    </Menu.Button>
+    </Button>
   );
 }
 

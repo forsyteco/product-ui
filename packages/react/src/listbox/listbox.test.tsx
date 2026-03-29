@@ -44,7 +44,7 @@ describe('Listbox', () => {
       render(<Listbox options={options} onChange={handleChange} />);
 
       // Act
-      await user.click(screen.getByRole('button'));
+      await user.click(screen.getByRole('combobox'));
       await user.click(screen.getByRole('option', { name: 'Option 2' }));
 
       // Assert

@@ -1,6 +1,7 @@
 import { type FieldsetHTMLAttributes, type ReactNode } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { clsx } from 'clsx';
+import { Fieldset as BaseFieldset } from '@base-ui/react/fieldset';
 import styles from './fieldset.module.css';
 
 const fieldsetVariants = cva(
@@ -28,17 +29,17 @@ function Fieldset({ legend, children, variant, error = false, className, ...prop
   const resolvedVariant = error ? 'error' : variant;
 
   return (
-    <fieldset
+    <BaseFieldset.Root
       className={clsx(fieldsetVariants({ variant: resolvedVariant }), className)}
       {...props}
     >
       {legend && (
-        <legend className={styles.legend}>
+        <BaseFieldset.Legend className={styles.legend}>
           {legend}
-        </legend>
+        </BaseFieldset.Legend>
       )}
       {children}
-    </fieldset>
+    </BaseFieldset.Root>
   );
 }
 

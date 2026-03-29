@@ -1,5 +1,6 @@
 import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react';
 import { clsx } from 'clsx';
+import { Button as BaseButton } from '@base-ui/react/button';
 import { buttonVariants, type ButtonVariantProps } from './button-variants';
 
 export type ButtonProps = ComponentPropsWithoutRef<'button'> &
@@ -12,13 +13,13 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   ref
 ) {
   return (
-    <button
+    <BaseButton
       ref={ref}
       className={clsx(buttonVariants({ variant, size }), className)}
       {...props}
     >
       {children}
-    </button>
+    </BaseButton>
   );
 });
 

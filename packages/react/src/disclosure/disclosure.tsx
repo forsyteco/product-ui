@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react';
-import { Disclosure as HeadlessDisclosure } from '@headlessui/react';
+import { Collapsible } from '@base-ui/react/collapsible';
 import { clsx } from 'clsx';
 import styles from './disclosure.module.css';
 
@@ -22,33 +22,33 @@ export type DisclosurePanelProps = {
 function Disclosure({ children, defaultOpen = false, className }: DisclosureProps) {
   return (
     <div className={clsx(styles.root, className)}>
-      <HeadlessDisclosure defaultOpen={defaultOpen}>
+      <Collapsible.Root defaultOpen={defaultOpen}>
         {children}
-      </HeadlessDisclosure>
+      </Collapsible.Root>
     </div>
   );
 }
 
 export function DisclosureButton({ children, className }: DisclosureButtonProps) {
   return (
-    <HeadlessDisclosure.Button
+    <Collapsible.Trigger
       className={clsx(
         styles.button,
         className
       )}
     >
       {children}
-    </HeadlessDisclosure.Button>
+    </Collapsible.Trigger>
   );
 }
 
 export function DisclosurePanel({ children, className }: DisclosurePanelProps) {
   return (
-    <HeadlessDisclosure.Panel
+    <Collapsible.Panel
       className={clsx(styles.panel, className)}
     >
       {children}
-    </HeadlessDisclosure.Panel>
+    </Collapsible.Panel>
   );
 }
 

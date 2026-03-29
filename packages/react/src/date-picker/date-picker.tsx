@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Popover as HeadlessPopover, Portal } from '@headlessui/react';
+import { Popover as BasePopover } from '@base-ui/react/popover';
 import { CalendarDays } from 'lucide-react';
 import { Calendar } from '../calendar';
 import { Button } from '../button';
@@ -40,6 +40,7 @@ function DatePicker({
   calendarProps,
 }: DatePickerProps) {
   const popoverRef = React.useRef<HTMLDivElement | null>(null);
+  const [open, setOpen] = React.useState(false);
   const [internalValue, setInternalValue] = React.useState<Date | undefined>(defaultValue);
   const isControlled = value !== undefined;
   const selected = isControlled ? value : internalValue;
@@ -86,32 +87,32 @@ function DatePicker({
   };
 
   return (
-    <HeadlessPopover
-      className={clsx(styles.root, className)}
-      onSubmitCapture={handleSubmitCapture}
-    >
-      {({ close, open }) => (
-        <>
-          <HeadlessPopover.Button
-            as={Button}
-            type="button"
-            variant="default"
-            disabled={disabled}
-            aria-expanded={open}
-            aria-haspopup="dialog"
-            aria-label={selected ? `Selected date: ${label}` : placeholder}
-            className={clsx(
-              styles.trigger,
-              !selected && styles['trigger-empty'],
-              buttonClassName
-            )}
-          >
-            <span className={styles['trigger-label']}>{label}</span>
-            <CalendarDays className={styles['trigger-icon']} />
-          </HeadlessPopover.Button>
+    <div className={clsx(styles.root, className)} onSubmitCapture={handleSubmitCapture}>
+      <BasePopover.Root open={open} onOpenChange={setOpen}>
+        <BasePopover.Trigger
+          render={
+            <Button
+              type="button"
+              variant="default"
+              disabled={disabled}
+              aria-expanded={open}
+              aria-haspopup="dialog"
+              aria-label={selected ? `Selected date: ${label}` : placeholder}
+              className={clsx(
+                styles.trigger,
+                !selected && styles['trigger-empty'],
+                buttonClassName
+              )}
+            />
+          }
+        >
+          <span className={styles['trigger-label']}>{label}</span>
+          <CalendarDays className={styles['trigger-icon']} />
+        </BasePopover.Trigger>
 
-          <Portal>
-            <HeadlessPopover.Panel
+        <BasePopover.Portal>
+          <BasePopover.Positioner sideOffset={8}>
+            <BasePopover.Popup
               ref={popoverRef}
               data-slot="popover-content"
               data-calendar-submit-ignore="true"
@@ -122,17 +123,17 @@ function DatePicker({
                 selected={selected}
                 onSelect={(date) => {
                   handleSelect(date);
-                  close();
+                  setOpen(false);
                 }}
                 defaultMonth={selected ?? defaultValue ?? new Date()}
                 initialFocus
                 {...calendarProps}
               />
-            </HeadlessPopover.Panel>
-          </Portal>
-        </>
-      )}
-    </HeadlessPopover>
+            </BasePopover.Popup>
+          </BasePopover.Positioner>
+        </BasePopover.Portal>
+      </BasePopover.Root>
+    </div>
   );
 }
 

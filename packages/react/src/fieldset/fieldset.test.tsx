@@ -39,7 +39,7 @@ describe('Fieldset', () => {
       const fieldset = screen.getByText('Content').closest('fieldset');
 
       // Assert
-      expect(fieldset).toBeDisabled();
+      expect(fieldset).toHaveAttribute('data-disabled');
     });
   });
 

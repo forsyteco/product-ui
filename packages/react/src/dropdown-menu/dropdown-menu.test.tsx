@@ -86,7 +86,7 @@ describe('DropdownMenuItem', () => {
 
       // Assert
       const item = await screen.findByText('Disabled');
-      expect(item).toBeDisabled();
+      expect(item).toHaveAttribute('aria-disabled', 'true');
     });
   });
 });

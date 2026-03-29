@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react';
-import { Popover as HeadlessPopover } from '@headlessui/react';
+import { Popover as BasePopover } from '@base-ui/react/popover';
 import { Button, type ButtonProps } from '../button';
 import { clsx } from 'clsx';
 import styles from './popover.module.css';
@@ -18,38 +18,31 @@ export type PopoverContentProps = {
 
 function Popover({ children, className }: PopoverProps) {
   return (
-    <div className={clsx(styles.root, className)}>
-      <HeadlessPopover>
+    <BasePopover.Root>
+      <div className={clsx(styles.root, className)}>
         {children}
-      </HeadlessPopover>
-    </div>
+      </div>
+    </BasePopover.Root>
   );
 }
 
 export function PopoverTrigger({ children, className, variant = 'default', size, ...props }: PopoverTriggerProps) {
   return (
-    <HeadlessPopover.Button
-      as={Button}
-      variant={variant}
-      size={size}
-      className={clsx(className)}
-      {...props}
-    >
+    <BasePopover.Trigger render={<Button variant={variant} size={size} className={clsx(className)} />} {...props}>
       {children}
-    </HeadlessPopover.Button>
+    </BasePopover.Trigger>
   );
 }
 
 export function PopoverContent({ children, className }: PopoverContentProps) {
   return (
-    <HeadlessPopover.Panel
-      className={clsx(
-        styles.panel,
-        className
-      )}
-    >
-      <div className={styles.body}>{children}</div>
-    </HeadlessPopover.Panel>
+    <BasePopover.Portal>
+      <BasePopover.Positioner sideOffset={8}>
+        <BasePopover.Popup className={clsx(styles.panel, className)}>
+          <div className={styles.body}>{children}</div>
+        </BasePopover.Popup>
+      </BasePopover.Positioner>
+    </BasePopover.Portal>
   );
 }
 

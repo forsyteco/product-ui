@@ -1,5 +1,4 @@
 import { ChevronRight, MoreHorizontal } from 'lucide-react';
-import { Slot as SlotPrimitive } from 'radix-ui';
 import * as React from 'react';
 
 import { clsx } from 'clsx';
@@ -45,16 +44,25 @@ function BreadcrumbItem({ className, ...props }: BreadcrumbItemProps) {
 function BreadcrumbLink({
   asChild,
   className,
+  children,
   ...props
 }: BreadcrumbLinkProps) {
-  const Comp = asChild ? SlotPrimitive.Slot : 'a';
+  if (asChild && React.isValidElement(children)) {
+    return React.cloneElement(children as React.ReactElement<Record<string, unknown>>, {
+      'data-slot': 'breadcrumb-link',
+      className: clsx(styles.link, className, (children.props as { className?: string }).className),
+      ...props,
+    });
+  }
 
   return (
-    <Comp
+    <a
       data-slot="breadcrumb-link"
       className={clsx(styles.link, className)}
       {...props}
-    />
+    >
+      {children}
+    </a>
   );
 }
 

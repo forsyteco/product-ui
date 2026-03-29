@@ -1,5 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import * as React from 'react';
+import { Input as BaseInput } from '@base-ui/react/input';
 
 import { clsx } from 'clsx';
 import styles from './input.module.css';
@@ -52,7 +53,7 @@ function Input({
         <div className={clsx(styles.slot, pad.slot)}>{startElement}</div>
       ) : null}
 
-      <input
+      <BaseInput
         {...props}
         ref={ref}
         type={type}

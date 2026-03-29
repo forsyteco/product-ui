@@ -1,6 +1,7 @@
-import { type SelectHTMLAttributes } from 'react';
+import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { clsx } from 'clsx';
+import { Select as BaseSelect } from '@base-ui/react/select';
 import styles from './select.module.css';
 
 export type SelectOption = {
@@ -24,40 +25,83 @@ const selectVariants = cva(
   }
 );
 
-export type SelectProps = Omit<SelectHTMLAttributes<HTMLSelectElement>, 'children'> & VariantProps<typeof selectVariants> & {
+export type SelectProps = VariantProps<typeof selectVariants> & {
   options: SelectOption[];
   placeholder?: string;
+  value?: string;
+  defaultValue?: string;
+  onValueChange?: (value: string | null) => void;
+  disabled?: boolean;
+  required?: boolean;
+  name?: string;
+  className?: string;
 };
 
-function Select({ options, placeholder, error, className, ...props }: SelectProps) {
+function Select({
+  options,
+  placeholder,
+  error,
+  className,
+  value,
+  defaultValue,
+  onValueChange,
+  disabled,
+  required,
+  name,
+}: SelectProps) {
+  const computedDefaultValue =
+    defaultValue ?? (value === undefined && !placeholder ? options[0]?.value : undefined);
+  const [internalValue, setInternalValue] = React.useState<string | undefined>(computedDefaultValue);
+  const selectedValue = value ?? internalValue;
+  const selectedLabel = options.find((option) => option.value === selectedValue)?.label;
+
   return (
-    <div className={styles.wrapper}>
-      <select
-        className={clsx(selectVariants({ error }), className)}
-        {...props}
-      >
-        {placeholder && (
-          <option value="" disabled>
-            {placeholder}
-          </option>
-        )}
-        {options.map((option) => (
-          <option key={option.value} value={option.value} disabled={option.disabled}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-      <span className={styles['icon-wrap']}>
-        <svg
-          className={styles.icon}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      </span>
-    </div>
+    <BaseSelect.Root
+      value={value}
+      defaultValue={computedDefaultValue}
+      onValueChange={(next) => {
+        const nextValue = (next as string) ?? undefined;
+        if (value === undefined) {
+          setInternalValue(nextValue);
+        }
+        onValueChange?.((next as string) ?? null);
+      }}
+      disabled={disabled}
+      required={required}
+      name={name}
+      items={options.map((option) => ({ label: option.label, value: option.value }))}
+    >
+      <div className={styles.wrapper}>
+        <BaseSelect.Trigger className={clsx(selectVariants({ error }), className)}>
+          <BaseSelect.Value>
+            {selectedLabel ?? (placeholder ? <span>{placeholder}</span> : null)}
+          </BaseSelect.Value>
+        </BaseSelect.Trigger>
+        <span className={styles['icon-wrap']}>
+          <svg
+            className={styles.icon}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </span>
+      </div>
+      <BaseSelect.Portal>
+        <BaseSelect.Positioner sideOffset={4}>
+          <BaseSelect.Popup className={styles.select}>
+            <BaseSelect.List>
+              {options.map((option) => (
+                <BaseSelect.Item key={option.value} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </BaseSelect.Item>
+              ))}
+            </BaseSelect.List>
+          </BaseSelect.Popup>
+        </BaseSelect.Positioner>
+      </BaseSelect.Portal>
+    </BaseSelect.Root>
   );
 }
 

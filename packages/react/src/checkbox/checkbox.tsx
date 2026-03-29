@@ -1,4 +1,4 @@
-import { type InputHTMLAttributes, type CSSProperties } from 'react';
+import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { clsx } from 'clsx';
 import styles from './checkbox.module.css';
@@ -25,20 +25,35 @@ const checkboxVariants = cva(
   }
 );
 
-export type CheckboxProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> & VariantProps<typeof checkboxVariants> & {
+export type CheckboxProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange'> &
+VariantProps<typeof checkboxVariants> & {
   label?: string;
   /** Custom background color when checked */
-  checkedBackground?: CSSProperties['backgroundColor'];
+  checkedBackground?: React.CSSProperties['backgroundColor'];
   /** Custom foreground/tick color when checked */
-  checkedForeground?: CSSProperties['color'];
+  checkedForeground?: React.CSSProperties['color'];
+  onChange?: (checked: boolean) => void;
 };
 
-function Checkbox({ label, size, className, id, checked, checkedBackground, checkedForeground, ...props }: CheckboxProps) {
-  const checkboxId = id || `checkbox-${Math.random().toString(36).substr(2, 9)}`;
+function Checkbox({
+  label,
+  size,
+  className,
+  id,
+  checked,
+  defaultChecked,
+  checkedBackground,
+  checkedForeground,
+  onChange,
+  ...props
+}: CheckboxProps) {
+  const reactId = React.useId();
+  const checkboxId = id || `checkbox-${reactId}`;
 
   // Use custom colors if provided
   const hasCustomColors = checkedBackground || checkedForeground;
-  const customStyle: CSSProperties | undefined = checked && hasCustomColors
+  const isChecked = checked ?? defaultChecked;
+  const customStyle: React.CSSProperties | undefined = isChecked && hasCustomColors
     ? {
         ...(checkedBackground && { backgroundColor: checkedBackground, borderColor: checkedBackground }),
         ...(checkedForeground && { color: checkedForeground }),
@@ -51,8 +66,10 @@ function Checkbox({ label, size, className, id, checked, checkedBackground, chec
         type="checkbox"
         id={checkboxId}
         checked={checked}
+        defaultChecked={defaultChecked}
         className={clsx(checkboxVariants({ size, useDefaultCheckedStyle: !hasCustomColors }), className)}
         style={customStyle}
+        onChange={(event) => onChange?.(event.target.checked)}
         {...props}
       />
       {label && (

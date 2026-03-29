@@ -52,7 +52,7 @@ describe('Switch', () => {
       const switchElement = screen.getByRole('switch');
 
       // Assert
-      expect(switchElement).toBeDisabled();
+      expect(switchElement).toHaveAttribute('aria-disabled', 'true');
     });
   });
 

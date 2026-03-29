@@ -16,7 +16,7 @@ import { clsx } from 'clsx';
 import { Button } from '../button';
 import styles from './calendar.module.css';
 
-type CalendarChevronProps = React.ComponentProps<typeof ChevronLeftIcon> & {
+export type CalendarChevronProps = React.ComponentProps<typeof ChevronLeftIcon> & {
   orientation?: 'left' | 'right' | string;
 };
 
@@ -32,6 +32,10 @@ function CalendarChevron({ className, orientation, ...props }: CalendarChevronPr
   return <ChevronDownIcon className={clsx(styles.chevron, className)} {...props} />;
 }
 
+export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
+  buttonVariant?: React.ComponentProps<typeof Button>['variant'];
+};
+
 function Calendar({
   className,
   classNames,
@@ -41,9 +45,7 @@ function Calendar({
   formatters,
   components,
   ...props
-}: React.ComponentProps<typeof DayPicker> & {
-  buttonVariant?: React.ComponentProps<typeof Button>['variant'];
-}) {
+}: CalendarProps) {
   const defaultClassNames = getDefaultClassNames();
 
   function Nav({ className }: NavProps) {
@@ -222,12 +224,14 @@ function Calendar({
   );
 }
 
+export type CalendarDayButtonProps = React.ComponentProps<typeof DayButton>;
+
 function CalendarDayButton({
   className,
   day,
   modifiers,
   ...props
-}: React.ComponentProps<typeof DayButton>) {
+}: CalendarDayButtonProps) {
   const ref = React.useRef<HTMLButtonElement>(null);
   React.useEffect(() => {
     if (modifiers.focused) ref.current?.focus();

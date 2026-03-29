@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { RadioGroup } from './radio-group';
 
 const options = [
@@ -22,10 +23,15 @@ describe('RadioGroup', () => {
     expect(option1).toHaveAttribute('aria-checked', 'true');
   });
 
-  it('calls onChange when option is selected', () => {
+  it('calls onChange when option is selected', async () => {
+    const user = userEvent.setup();
     const handleChange = vi.fn();
     render(<RadioGroup options={options} onChange={handleChange} />);
-    expect(handleChange).toBeDefined();
+
+    await user.click(screen.getByRole('radio', { name: 'Option 2' }));
+
+    expect(handleChange).toHaveBeenCalledTimes(1);
+    expect(handleChange).toHaveBeenCalledWith('option2');
   });
 });
 

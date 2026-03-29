@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Switch } from './switch';
 
 describe('Switch', () => {
@@ -26,10 +27,15 @@ describe('Switch', () => {
     expect(switchElement).toBeDisabled();
   });
 
-  it('calls onChange when toggled', () => {
+  it('calls onChange when toggled', async () => {
+    const user = userEvent.setup();
     const handleChange = vi.fn();
     render(<Switch onChange={handleChange} />);
-    expect(handleChange).toBeDefined();
+
+    await user.click(screen.getByRole('switch'));
+
+    expect(handleChange).toHaveBeenCalledTimes(1);
+    expect(handleChange).toHaveBeenCalledWith(true);
   });
 });
 

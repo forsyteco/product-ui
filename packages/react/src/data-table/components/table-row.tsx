@@ -45,6 +45,17 @@ function TableRow<TData>({
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTableRowElement>) => {
+    if (!isClickable || !onRowClick) {
+      return;
+    }
+
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      onRowClick(row);
+    }
+  };
+
   const handleCheckboxChange = () => {
     if (onSelectionChange) {
       onSelectionChange(rowId, !isSelected);
@@ -76,6 +87,7 @@ function TableRow<TData>({
   return (
     <tr
       role="row"
+      tabIndex={isClickable ? 0 : undefined}
       className={clsx(
         styles.row,
         isClickable && styles['row-clickable'],
@@ -85,6 +97,7 @@ function TableRow<TData>({
       )}
       style={rowStyle}
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
     >
       {isExpandable && (
         <td className={styles['expand-cell']}>

@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Listbox } from './listbox';
 
 const options = [
@@ -19,10 +20,16 @@ describe('Listbox', () => {
     expect(screen.getByText('Option 1')).toBeInTheDocument();
   });
 
-  it('calls onChange when option is selected', () => {
+  it('calls onChange when option is selected', async () => {
+    const user = userEvent.setup();
     const handleChange = vi.fn();
     render(<Listbox options={options} onChange={handleChange} />);
-    expect(handleChange).toBeDefined();
+
+    await user.click(screen.getByRole('button'));
+    await user.click(screen.getByRole('option', { name: 'Option 2' }));
+
+    expect(handleChange).toHaveBeenCalledTimes(1);
+    expect(handleChange).toHaveBeenCalledWith(options[1]);
   });
 });
 

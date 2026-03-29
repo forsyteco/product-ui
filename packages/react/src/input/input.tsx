@@ -20,27 +20,7 @@ const inputVariants = cva(
   }
 );
 
-export type InputProps = Pick<
-  React.ComponentProps<'input'>,
-  | 'type'
-  | 'className'
-  | 'placeholder'
-  | 'id'
-  | 'value'
-  | 'defaultValue'
-  | 'disabled'
-  | 'readOnly'
-  | 'aria-invalid'
-  | 'aria-describedby'
-  | 'autoFocus'
-  | 'autoCapitalize'
-  | 'autoComplete'
-  | 'autoCorrect'
-  | 'onBlur'
-  | 'onChange'
-  | 'onKeyDown'
-  | 'inputMode'
-> &
+export type InputProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'children' | 'size'> &
   VariantProps<typeof inputVariants> & {
     ref?: React.Ref<HTMLInputElement | null>;
     startElement?: React.ReactNode;

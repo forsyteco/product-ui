@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import { IconButton } from './icon-button';
 import styles from './icon-button.module.css';
@@ -42,12 +43,14 @@ describe('IconButton', () => {
     expect(link).toHaveAttribute('href', 'https://example.com')
   })
 
-  it('keeps interactions when inactive but dims the button', () => {
+  it('disables interactions when inactive', async () => {
+    const user = userEvent.setup()
     const handleClick = vi.fn()
     render(<IconButton icon={HeartIcon} inactive onClick={handleClick} aria-label="Inactive" />)
     const button = screen.getByRole('button')
-    button.click()
-    expect(handleClick).toHaveBeenCalledTimes(1)
+    await user.click(button)
+    expect(handleClick).not.toHaveBeenCalled()
+    expect(button).toBeDisabled()
     expect(button).toHaveClass(styles.inactive)
   })
 })

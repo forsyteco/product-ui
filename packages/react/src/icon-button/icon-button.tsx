@@ -3,6 +3,7 @@ import {
   type ComponentPropsWithoutRef,
   type ComponentType,
   type ForwardedRef,
+  type MouseEventHandler,
   type ReactNode,
 } from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -115,17 +116,30 @@ const IconButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, IconButtonP
 
   if (Component === 'a') {
     const { href, ...anchorProps } = rest as Omit<IconButtonAsAnchor, keyof BaseIconButtonProps>
+    const handleAnchorClick: MouseEventHandler<HTMLAnchorElement> = (event) => {
+      if (inactive) {
+        event.preventDefault()
+        event.stopPropagation()
+        return
+      }
+
+      anchorProps.onClick?.(event)
+    }
+
     return (
       <a
         {...anchorProps}
         ref={ref as ForwardedRef<HTMLAnchorElement>}
-        href={href}
+        href={inactive ? undefined : href}
         className={sharedClassName}
         aria-label={ariaLabel}
+        aria-disabled={inactive || undefined}
         aria-busy={loading || undefined}
+        tabIndex={inactive ? -1 : anchorProps.tabIndex}
         data-tooltip-direction={tooltipDirection}
         data-inactive={inactive || undefined}
         title={title}
+        onClick={handleAnchorClick}
       >
         {content}
         {screenReaderText ? <VisuallyHidden>{screenReaderText}</VisuallyHidden> : null}
@@ -141,6 +155,7 @@ const IconButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, IconButtonP
       {...buttonProps}
       ref={ref as ForwardedRef<HTMLButtonElement>}
       type={buttonProps.type ?? 'button'}
+      disabled={inactive || buttonProps.disabled}
       className={sharedClassName}
       aria-label={ariaLabel}
       aria-busy={loading || undefined}

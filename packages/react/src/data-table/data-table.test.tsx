@@ -264,6 +264,31 @@ describe('DataTable', () => {
       expect(onRowClick).toHaveBeenCalledTimes(1);
       expect(onRowClick).toHaveBeenCalledWith(mockData[0]);
     });
+
+    it('supports keyboard activation on clickable rows', async () => {
+      const user = userEvent.setup();
+      const onRowClick = vi.fn();
+
+      render(
+        <DataTable
+          {...createDefaultProps({
+            rowInteraction: ROW_INTERACTION.LINK,
+            onRowClick,
+          })}
+        />
+      );
+
+      const johnRow = screen.getByText('John Doe').closest('tr');
+      expect(johnRow).toHaveAttribute('tabindex', '0');
+
+      if (johnRow) {
+        johnRow.focus();
+        await user.keyboard('{Enter}');
+      }
+
+      expect(onRowClick).toHaveBeenCalledTimes(1);
+      expect(onRowClick).toHaveBeenCalledWith(mockData[0]);
+    });
   });
 
   describe('Sorting', () => {

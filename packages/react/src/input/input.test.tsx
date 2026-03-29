@@ -29,5 +29,12 @@ describe('Input', () => {
     const input = screen.getByRole('textbox');
     expect(input).toHaveAttribute('type', 'email');
   });
+
+  it('passes through common form and a11y attributes', () => {
+    render(<Input name="email" required aria-label="Email address" />);
+    const input = screen.getByRole('textbox', { name: 'Email address' });
+    expect(input).toHaveAttribute('name', 'email');
+    expect(input).toBeRequired();
+  });
 });
 

@@ -21,12 +21,15 @@ const fieldsetVariants = cva(
 export type FieldsetProps = FieldsetHTMLAttributes<HTMLFieldSetElement> & VariantProps<typeof fieldsetVariants> & {
   legend?: string;
   children: ReactNode;
+  error?: boolean;
 };
 
-function Fieldset({ legend, children, variant, className, ...props }: FieldsetProps) {
+function Fieldset({ legend, children, variant, error = false, className, ...props }: FieldsetProps) {
+  const resolvedVariant = error ? 'error' : variant;
+
   return (
     <fieldset
-      className={clsx(fieldsetVariants({ variant }), className)}
+      className={clsx(fieldsetVariants({ variant: resolvedVariant }), className)}
       {...props}
     >
       {legend && (

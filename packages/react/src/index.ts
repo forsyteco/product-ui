@@ -28,10 +28,10 @@ export { Checkbox } from './checkbox'
 export type { CheckboxProps } from './checkbox'
 
 export { Combobox } from './combobox'
-export type { ComboboxRootProps, ComboboxOption } from './combobox'
+export type { ComboboxProps, ComboboxRootProps, ComboboxOption } from './combobox'
 
 export { Autocomplete } from './autocomplete'
-export type { AutocompleteRootProps, AutocompleteOption } from './autocomplete'
+export type { AutocompleteProps, AutocompleteRootProps, AutocompleteOption } from './autocomplete'
 
 export { Fieldset } from './fieldset'
 export type { FieldsetProps } from './fieldset'
@@ -79,8 +79,18 @@ export type {
 } from './page-layout'
 
 export { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './card'
+export type {
+  CardProps,
+  CardActionProps,
+  CardContentProps,
+  CardDescriptionProps,
+  CardFooterProps,
+  CardHeaderProps,
+  CardTitleProps,
+} from './card'
 
 export { Calendar, CalendarDayButton } from './calendar'
+export type { CalendarProps, CalendarDayButtonProps, CalendarChevronProps } from './calendar'
 export { DatePicker } from './date-picker'
 export type { DatePickerProps } from './date-picker'
 
@@ -110,6 +120,15 @@ export {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
+} from './breadcrumb'
+export type {
+  BreadcrumbProps,
+  BreadcrumbEllipsisProps,
+  BreadcrumbItemProps,
+  BreadcrumbLinkProps,
+  BreadcrumbListProps,
+  BreadcrumbPageProps,
+  BreadcrumbSeparatorProps,
 } from './breadcrumb'
 
 export { ThemeProvider, useTheme } from './theme'

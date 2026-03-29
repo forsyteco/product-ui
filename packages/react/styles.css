@@ -140,11 +140,44 @@
   --popover-foreground: var(--brand-white);
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
 body {
+  font-family: var(--font-sans);
+}
+
+body {
+  margin: 0;
   background-color: rgb(var(--background));
   color: rgb(var(--foreground));
   font-size: var(--text-base);
   line-height: var(--text-base-line-height);
+}
+
+table {
+  border-collapse: collapse;
+}
+
+:root:where([data-colour-mode="light"]) input {
+  color-scheme: light;
+}
+
+:root:where([data-colour-mode="dark"]) input {
+  color-scheme: dark;
+}
+
+:where([role='button'], [role='tabpanel'][tabindex='0'], button, summary, a):focus:not(:focus-visible):not(.focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+:where([tabindex='0'], details-dialog):focus:not(:focus-visible):not(.focus-visible) {
+  outline: none;
 }
 
 @keyframes spinner-rotate {

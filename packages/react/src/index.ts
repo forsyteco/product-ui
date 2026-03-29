@@ -114,6 +114,8 @@ export {
 
 export { ThemeProvider, useTheme } from './theme'
 export type { ThemeProviderProps, ColourScheme, ThemeMode, ThemeContextValue } from './theme'
+export { BaseStyles } from './base-styles'
+export type { BaseStylesProps } from './base-styles'
 
 export { DataTable, DateCell, NameCell, RiskLevelCell, CountryCell, CopyableCell, StatusCell, STATUS, ROW_INTERACTION, DEFAULT_COLOR_CONFIG } from './data-table'
 export type {

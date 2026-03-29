@@ -8,6 +8,7 @@ import {
   type ColourScheme,
   type ThemeMode,
 } from '../src/theme/theme-provider';
+import { BaseStyles } from '../src/base-styles';
 
 import type { StorybookViewport } from './types';
 
@@ -101,7 +102,9 @@ export const decorators: Decorator[] = [
         defaultMode={mode}
         storageKey={storybookThemeStorageKey}
       >
-        <Story />
+        <BaseStyles style={{ backgroundColor: 'rgb(var(--background))', minHeight: '100vh' }}>
+          <Story />
+        </BaseStyles>
       </ThemeProvider>
     );
   },

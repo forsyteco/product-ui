@@ -1,0 +1,14 @@
+.root {
+  font-family: var(--BaseStyles-fontFamily, var(--font-sans));
+  line-height: var(--BaseStyles-lineHeight, var(--text-base-line-height));
+  color: var(--BaseStyles-fgColor, rgb(var(--foreground)));
+}
+
+.root :where(a:not([class])) {
+  color: rgb(var(--accent));
+  text-decoration: none;
+}
+
+.root :where(a:not([class]):hover) {
+  text-decoration: underline;
+}

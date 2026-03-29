@@ -31,14 +31,28 @@ Pull in the bundled component styles, design tokens, and fonts provided by the l
 @import '@forsyteco/product-ui/styles.css';
 ```
 
-### 2. Import components
+### 2. Wrap your app with theme + base styles
 
-```typescript
-import { Spinner } from '@forsyteco/product-ui'
-import type { SpinnerProps } from '@forsyteco/product-ui'
+```tsx
+import type { ReactNode } from 'react'
+import { ThemeProvider, BaseStyles } from '@forsyteco/product-ui'
+
+type RootLayoutProps = {
+  children: ReactNode
+}
+
+export function RootLayout({ children }: RootLayoutProps) {
+  return (
+    <ThemeProvider defaultMode="system" colourScheme="yellow">
+      <BaseStyles style={{ backgroundColor: 'rgb(var(--background))', minHeight: '100vh' }}>
+        {children}
+      </BaseStyles>
+    </ThemeProvider>
+  )
+}
 ```
 
-### Example
+### 3. Import components
 
 ```tsx
 import { Spinner } from '@forsyteco/product-ui'
@@ -54,7 +68,7 @@ function App() {
 
 ## Components
 
-Components ship with bundled CSS and do not require Tailwind in the consuming application.
+Components ship with CSS Modules and shared design tokens. Tailwind is not required in the consuming application.
 
 ### Spinner
 
@@ -66,11 +80,8 @@ import { Spinner } from '@forsyteco/product-ui'
 // Basic usage
 <Spinner />
 
-// Full-width centered spinner
-<Spinner full />
-
-// Custom styling with your own classes
-<Spinner className="text-blue-500 w-8 h-8" />
+// Custom sizing with inline style or your own app classes
+<Spinner style={{ width: 32, height: 32 }} />
 ```
 
 ## Development

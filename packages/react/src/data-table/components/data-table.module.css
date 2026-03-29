@@ -1,6 +1,6 @@
 .tableContainer { overflow: hidden; border-radius: 0.5rem; border: 1px solid rgb(var(--border)); }
 .tableWrap { overflow-x: auto; }
-.table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+.table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); line-height: var(--text-sm-line-height); }
 .paginationBorder { border-top: 1px solid rgb(var(--border)); }
 
 .headerRow { background: rgb(var(--muted)); border-bottom: 1px solid rgb(var(--border)); }

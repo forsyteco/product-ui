@@ -1,0 +1,110 @@
+---
+description: Strict cross-stack test writing style
+globs:
+  - "**/*.spec.ts"
+  - "**/*.spec.tsx"
+  - "**/*.test.ts"
+  - "**/*.test.tsx"
+  - "**/*.e2e-spec.ts"
+alwaysApply: true
+---
+
+# Cross-stack Test Style Rules
+
+## Mandatory naming
+
+Use this structure everywhere unless a more specific stack rule adds extra detail:
+
+```ts
+describe('UnitUnderTest', () => {
+  describe('when <context>', () => {
+    it('should <expected behaviour>', async () => {});
+  });
+});
+```
+
+Examples:
+- `describe('CreateRiskAssessmentService', ...)`
+- `describe('RiskAssessmentSummaryCard', ...)`
+- `describe('[Feature] Users - /:organisationIdOrSlug/users', ...)`
+
+Do not use vague names like:
+- `it('works')`
+- `it('renders')`
+- `describe('valid case')`
+
+---
+
+## Mandatory AAA structure
+
+Every test must include:
+
+1. Arrange
+2. Act
+3. Assert
+
+Use explicit comments.
+
+```ts
+it('should return the created user', async () => {
+  // Arrange
+  const command = createCommand()
+
+  // Act
+  const result = await service.execute(command)
+
+  // Assert
+  expect(result.id).toBeDefined()
+})
+```
+
+---
+
+## Before writing new tests
+
+Search for existing tests that already cover the behaviour:
+- `*.spec.*`
+- `*.test.*`
+- `*.e2e-spec.*`
+
+If coverage already exists and fails as expected, prefer fixing the implementation instead of adding redundant tests.
+
+---
+
+## Assertions
+
+Assert:
+- the returned result
+- the visible behaviour
+- the thrown error
+- contract-level collaborator interactions when relevant
+
+Do not over-assert internal implementation details.
+
+Prefer direct assertions over snapshots unless the snapshot adds clear value.
+
+---
+
+## Mocking
+
+- Mock only what the test actually uses.
+- Keep mocks minimal and readable.
+- Prefer typed fixtures and factory helpers when reused.
+- Clear mocks between tests when needed.
+
+---
+
+## Async rules
+
+- Always await async behaviour.
+- Use `rejects` for promise failures.
+- Avoid `done()` callbacks.
+- Use `waitFor` only when necessary in UI tests.
+
+---
+
+## Readability
+
+- Keep test data small and obvious.
+- Keep one behavioural reason per test.
+- Prefer explicit setup over hidden magic.

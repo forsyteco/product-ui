@@ -1,0 +1,120 @@
+---
+description: Strict cross-stack testing strategy
+globs:
+  - "**/*.spec.ts"
+  - "**/*.spec.tsx"
+  - "**/*.test.ts"
+  - "**/*.test.tsx"
+  - "**/*.e2e-spec.ts"
+alwaysApply: true
+---
+
+# Cross-stack Testing Strategy
+
+## Purpose
+
+Define a shared quality bar across frontend and backend.
+
+Use the smallest test that gives strong confidence.
+
+---
+
+## Test pyramid
+
+### Unit tests
+Use for:
+- domain logic
+- value objects
+- pure functions
+- isolated services
+- UI components with isolated behaviour
+- hooks with isolated behaviour
+
+Characteristics:
+- fast
+- deterministic
+- focused
+- no real network
+- no real production services
+
+### Integration tests
+Use for:
+- application service + mocked ports
+- infrastructure adapters against test dependencies
+- component + query client + mocked API boundary
+- route or controller wiring
+- database repositories against a test database
+
+### End-to-end tests
+Use for:
+- core user flows
+- critical API flows
+- authentication and authorization flows
+- key validation and persistence paths
+
+---
+
+## What to mock
+
+### Unit tests
+Mock:
+- persistence
+- network
+- cloud SDKs
+- analytics
+- queues
+- caches
+- browser APIs not under test
+
+Run real:
+- domain logic
+- mapping logic
+- validation in isolation
+- component rendering under test
+
+### Integration tests
+Run real where it adds confidence:
+- wiring
+- validation
+- mapping
+- test database adapters
+- query composition
+- form integration
+
+Mock only what is outside the intended boundary.
+
+### End-to-end tests
+Run real:
+- app wiring
+- auth and validation behaviour
+- critical persistence flow
+
+Mock only external systems that are flaky, expensive, or outside the repo boundary.
+
+---
+
+## Coverage expectations
+
+Every new feature should usually include:
+- unit coverage for business logic
+- integration coverage where wiring matters
+- e2e coverage for critical flows only
+
+Do not add e2e coverage for every small branch if a lower-layer test covers it better.
+
+---
+
+## File placement
+
+- unit tests live next to source files where practical
+- e2e tests live in the stack’s expected dedicated area
+- integration tests should be clearly named and placed consistently
+
+---
+
+## Quality rules
+
+- prefer fewer high-signal tests over many weak tests
+- avoid redundant duplicate coverage across layers unless intentional
+- make failures easy to diagnose
+- keep tests deterministic in CI and locally

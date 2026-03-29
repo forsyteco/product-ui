@@ -1,0 +1,102 @@
+---
+description: Strict Forsyte frontend testing conventions
+globs:
+  - "**/*.spec.ts"
+  - "**/*.spec.tsx"
+  - "**/*.test.ts"
+  - "**/*.test.tsx"
+alwaysApply: true
+---
+
+# Forsyte Frontend Testing Conventions
+
+## Testing approach
+
+Prefer behavioural tests using React Testing Library.
+
+Test:
+- what the user can observe
+- what the user can interact with
+- meaningful state transitions
+- loading, empty, success, and error states where relevant
+
+Avoid tests that mainly mirror implementation details.
+
+---
+
+## Test structure
+
+Use the shared house style:
+- `describe('UnitUnderTest', ...)`
+- nested `describe('when ...', ...)`
+- `it('should ...', ...)`
+- explicit Arrange / Act / Assert comments
+
+---
+
+## Component tests
+
+Component tests should usually cover:
+- rendering of key states
+- user interactions
+- disabled/loading/error states
+- conditional UI
+- callbacks or side effects visible at the component boundary
+
+---
+
+## Hook and application tests
+
+For hooks and application-layer frontend logic, unit test:
+- state transitions
+- derived outputs
+- command/query orchestration at the test boundary
+- error handling
+
+If the logic is not truly UI-specific, prefer moving it out of the hook and testing it as plain TypeScript.
+
+---
+
+## Query and API boundaries
+
+- mock the API boundary, not internal component details
+- use realistic typed fixtures
+- provide query client wrappers when needed
+- keep TanStack Query tests deterministic
+
+---
+
+## Element targeting
+
+Prefer accessible queries first:
+- `getByRole`
+- `getByLabelText`
+- `getByText` where unambiguous
+
+Use `data-testid` when:
+- text is duplicated
+- UI structure is complex
+- a stable scoped target is needed
+
+Avoid broad assertions that can pass for the wrong reason.
+
+---
+
+## Good test cases for feature UIs
+
+For a meaningful feature, usually cover:
+- default render
+- happy path interaction
+- invalid input or validation display
+- loading state
+- empty state
+- API failure or retry state where relevant
+
+---
+
+## Avoid
+
+- snapshot-heavy tests without a strong reason
+- asserting internal state instead of visible behaviour
+- over-mocking child components unless isolation requires it
+- broad `queryByText` checks when a more precise query is available

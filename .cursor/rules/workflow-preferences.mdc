@@ -1,0 +1,15 @@
+---
+description: Strict cross-stack workflow preferences
+alwaysApply: true
+---
+
+# Coding Workflow Preferences
+
+- Focus on the area of the codebase relevant to the task.
+- Do not change unrelated code.
+- Check whether a similar solution already exists before creating a new one.
+- Preserve established repo patterns unless explicitly asked to change them.
+- Think through downstream impact before changing shared types, interfaces, schemas, or contracts.
+- Write or update tests for meaningful behavioural changes.
+- Prefer completing the correct small change over doing a broad speculative refactor.
+- Keep diffs intentional, readable, and easy to review.

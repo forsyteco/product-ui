@@ -16,9 +16,11 @@ const config: StorybookConfig = {
   // ✅ THIS is where it belongs
   staticDirs: ['./public'],
 
-  async viteFinal(viteConfig) {
+  async viteFinal(viteConfig, options) {
     return mergeConfig(viteConfig, {
-      base: '/product-ui/',
+      // Keep local dev at "/" so addon-vitest can connect reliably.
+      // Use the deployed subpath only for static Storybook builds.
+      base: options.configType === 'PRODUCTION' ? '/product-ui/' : '/',
     });
   },
 };

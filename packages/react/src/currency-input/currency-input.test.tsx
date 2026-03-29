@@ -68,4 +68,36 @@ describe('CurrencyInput', () => {
     rerender(<CurrencyInput value={567.89} />);
     expect(input).toHaveValue('567.89');
   });
+
+  it('clears value and emits undefined on blur for invalid input', () => {
+    // Arrange
+    const onValueChange = vi.fn();
+    render(<CurrencyInput onValueChange={onValueChange} />);
+    const input = screen.getByRole('textbox');
+    fireEvent.change(input, { target: { value: 'abc' } });
+
+    // Act
+    fireEvent.blur(input);
+
+    // Assert
+    expect(input).toHaveValue('');
+    expect(onValueChange).toHaveBeenLastCalledWith(undefined);
+  });
+
+  it('does not render a currency symbol when currencySymbol is empty', () => {
+    // Arrange
+    render(<CurrencyInput currencySymbol="" />);
+
+    // Assert
+    expect(screen.queryByText('£')).not.toBeInTheDocument();
+  });
+
+  it('prefers custom startElement over currencySymbol', () => {
+    // Arrange
+    render(<CurrencyInput currencySymbol="$" startElement={<span data-testid="custom-start">EUR</span>} />);
+
+    // Assert
+    expect(screen.getByTestId('custom-start')).toHaveTextContent('EUR');
+    expect(screen.queryByText('$')).not.toBeInTheDocument();
+  });
 });

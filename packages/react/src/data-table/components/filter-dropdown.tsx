@@ -78,19 +78,19 @@ function FilterDropdown({
     : undefined;
 
   return (
-    <div className={styles.filterRoot}>
+    <div className={styles['filter-root']}>
       <HeadlessPopover>
         <HeadlessPopover.Button
           aria-label={`Filter ${columnId}`}
           className={clsx(
-            styles.filterButton,
-            isActive && !activeBackground && styles.filterButtonActiveDefault
+            styles['filter-button'],
+            isActive && !activeBackground && styles['filter-button-active-default']
           )}
           style={buttonStyle}
           onClick={(e: React.MouseEvent) => e.stopPropagation()}
         >
           <Filter
-            className={clsx(styles.filterIcon, !currentIconColor && styles.sortIconDefault)}
+            className={clsx(styles['filter-icon'], !currentIconColor && styles['sort-icon-default'])}
             style={currentIconColor ? { color: currentIconColor } : undefined}
           />
         </HeadlessPopover.Button>
@@ -98,11 +98,11 @@ function FilterDropdown({
         <Portal>
           <HeadlessPopover.Panel
             anchor={{ to: 'bottom end', gap: 8 }}
-            className={styles.filterPanel}
+            className={styles['filter-panel']}
             onClick={(e: React.MouseEvent) => e.stopPropagation()}
           >
-          <div className={styles.filterPanelInner}>
-            <div className={styles.filterSearchWrap}>
+          <div className={styles['filter-panel-inner']}>
+            <div className={styles['filter-search-wrap']}>
               <Input
                 type="search"
                 placeholder="Search..."
@@ -110,7 +110,7 @@ function FilterDropdown({
                 onChange={(e) => setSearchTerm(e.target.value)}
                 autoFocus
                 size="sm"
-                startElement={<Search className={styles.filterIcon} />}
+                startElement={<Search className={styles['filter-icon']} />}
               />
             </div>
             {showSelectAll ? (
@@ -118,16 +118,16 @@ function FilterDropdown({
                 variant="ghost"
                 size="sm"
                 onClick={selectedValues.length > 0 ? handleClearAll : handleSelectAll}
-                className={styles.filterSelectAll}
+                className={styles['filter-select-all']}
               >
                 <span
                   aria-hidden={selectedValues.length > 0}
                   className={clsx(
-                    styles.filterPrimaryText,
+                    styles['filter-primary-text'],
                     'inline-block transition-all duration-200',
                     selectedValues.length > 0
-                      ? styles.filterPrimaryTextHidden
-                      : styles.filterPrimaryTextShown
+                      ? styles['filter-primary-text-hidden']
+                      : styles['filter-primary-text-shown']
                   )}
                 >
                   Select all
@@ -135,10 +135,10 @@ function FilterDropdown({
                 <span
                   aria-hidden={selectedValues.length === 0}
                   className={clsx(
-                    styles.filterSecondaryText,
+                    styles['filter-secondary-text'],
                     selectedValues.length > 0
-                      ? styles.filterSecondaryShown
-                      : styles.filterSecondaryHidden
+                      ? styles['filter-secondary-shown']
+                      : styles['filter-secondary-hidden']
                   )}
                 >
                   Clear all
@@ -150,19 +150,19 @@ function FilterDropdown({
                 size="sm"
                 onClick={handleClearAll}
                 disabled={selectedValues.length === 0}
-                className={styles.filterClearFixed}
+                className={styles['filter-clear-fixed']}
               >
                 Clear all
               </Button>
             )}
-            <div data-testid="filter-options" className={styles.filterOptions}>
+            <div data-testid="filter-options" className={styles['filter-options']}>
               {filteredValues.map((value) => {
                 const isSelected = selectedValues.includes(value);
                 const displayLabel = formatFilterLabel(value);
                 return (
                   <label
                     key={value}
-                    className={styles.filterOptionLabel}
+                    className={styles['filter-option-label']}
                   >
                     <Checkbox
                       checked={isSelected}

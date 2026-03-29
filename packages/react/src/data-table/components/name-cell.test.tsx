@@ -17,7 +17,7 @@ describe('NameCell', () => {
       render(<NameCell value="Jane Smith" row={{ email: 'jane@example.com' }} />);
 
       const nameElement = screen.getByText('Jane Smith');
-      expect(nameElement).toHaveClass(styles.nameValue);
+      expect(nameElement).toHaveClass(styles['name-value']);
     });
   });
 
@@ -32,7 +32,7 @@ describe('NameCell', () => {
       render(<NameCell value="Jane Smith" row={{ email: 'jane@example.com' }} />);
 
       const emailElement = screen.getByText('jane@example.com');
-      expect(emailElement).toHaveClass(styles.nameEmail);
+      expect(emailElement).toHaveClass(styles['name-email']);
     });
   });
 

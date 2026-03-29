@@ -39,22 +39,22 @@ function ExpandedRow({ id, colSpan, children, isCollapsing = false }: ExpandedRo
   }, [children, isVisible, isCollapsing]);
 
   return (
-    <tr role="row" id={id} className={styles.expandedRow}>
+    <tr role="row" id={id} className={styles['expanded-row']}>
       <td
         colSpan={colSpan}
         role="gridcell"
-        className={styles.expandedCell}
+        className={styles['expanded-cell']}
       >
         <div
           className={clsx(
-            styles.expandedInner,
-            isVisible ? styles.expandedVisible : styles.expandedHidden
+            styles['expanded-inner'],
+            isVisible ? styles['expanded-visible'] : styles['expanded-hidden']
           )}
           style={{
             maxHeight: isVisible ? `${height}px` : '0px',
           }}
         >
-          <div ref={contentRef} className={styles.expandedContent}>
+          <div ref={contentRef} className={styles['expanded-content']}>
             {children}
           </div>
         </div>

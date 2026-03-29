@@ -78,16 +78,16 @@ function TableRow<TData>({
       role="row"
       className={clsx(
         styles.row,
-        isClickable && styles.rowClickable,
-        isSelectable && styles.rowSelectable,
-        isSelected && !colorConfig?.selectedRowBackground && styles.rowSelected,
-        isExpanded && styles.rowExpanded
+        isClickable && styles['row-clickable'],
+        isSelectable && styles['row-selectable'],
+        isSelected && !colorConfig?.selectedRowBackground && styles['row-selected'],
+        isExpanded && styles['row-expanded']
       )}
       style={rowStyle}
       onClick={handleClick}
     >
       {isExpandable && (
-        <td className={styles.expandCell}>
+        <td className={styles['expand-cell']}>
           <IconButton
             icon={ChevronRight}
             variant="ghost"
@@ -97,20 +97,20 @@ function TableRow<TData>({
             aria-controls={isExpanded ? expandedContentId : undefined}
             aria-label="Expand row"
             className={clsx(
-              styles.expandButton,
-              isExpanded && styles.expandButtonOpen
+              styles['expand-button'],
+              isExpanded && styles['expand-button-open']
             )}
           />
         </td>
       )}
       {isSelectable && (
-        <td className={styles.selectCell}>
+        <td className={styles['select-cell']}>
           <Checkbox
             checked={isSelected}
             onChange={handleCheckboxChange}
             onClick={(e) => e.stopPropagation()}
             aria-label="Select row"
-            className={styles.rowCheckbox}
+            className={styles['row-checkbox']}
             checkedBackground={colorConfig?.headerIconActiveBackground}
             checkedForeground={colorConfig?.headerIconActiveForeground}
           />

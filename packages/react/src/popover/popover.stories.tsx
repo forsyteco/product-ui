@@ -23,8 +23,8 @@ export const Default: Story = {
     <Popover>
       <PopoverTrigger>Open Popover</PopoverTrigger>
       <PopoverContent>
-        <h3 className="sbTextBase sbFontMedium sbForegroundText sbMb2">Popover Title</h3>
-        <p className="sbTextBase sbMutedText">This is the popover content.</p>
+        <h3 className="sb-text-base sb-font-medium sb-foreground-text sb-mb-2">Popover Title</h3>
+        <p className="sb-text-base sb-muted-text">This is the popover content.</p>
       </PopoverContent>
     </Popover>
   ),
@@ -35,8 +35,8 @@ export const Playground: Story = {
     <Popover {...args}>
       <PopoverTrigger>Toggle Popover</PopoverTrigger>
       <PopoverContent>
-        <h3 className="sbTextBase sbFontMedium sbForegroundText sbMb2">Custom Popover</h3>
-        <p className="sbTextBase sbMutedText">You can customize the content and styling.</p>
+        <h3 className="sb-text-base sb-font-medium sb-foreground-text sb-mb-2">Custom Popover</h3>
+        <p className="sb-text-base sb-muted-text">You can customize the content and styling.</p>
       </PopoverContent>
     </Popover>
   ),

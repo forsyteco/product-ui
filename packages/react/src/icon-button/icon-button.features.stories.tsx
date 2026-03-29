@@ -17,10 +17,9 @@ type Story = StoryObj<typeof meta>
 
 export const Variants: Story = {
   render: () => (
-    <div className="sbRow sbGap3">
+    <div className="sb-row sb-gap-3">
       <IconButton icon={Heart} variant="primary" aria-label="Primary" />
-      <IconButton icon={Heart} variant="secondary" aria-label="Secondary" />
-      <IconButton icon={Heart} variant="outline" aria-label="Outline" />
+      <IconButton icon={Heart} variant="default" aria-label="Default" />
       <IconButton icon={Heart} variant="ghost" aria-label="Ghost" />
       <IconButton icon={Heart} variant="danger" aria-label="Danger" />
       <IconButton icon={Heart} variant="primary" as="a" href="#" aria-label="Anchor (primary)" />
@@ -30,7 +29,7 @@ export const Variants: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <div className="sbRow sbGap3">
+    <div className="sb-row sb-gap-3">
       <IconButton icon={Inbox} size="small" aria-label="Small" />
       <IconButton icon={Inbox} size="medium" aria-label="Medium" />
       <IconButton icon={Inbox} size="large" aria-label="Large" />
@@ -40,7 +39,7 @@ export const Sizes: Story = {
 
 export const Shapes: Story = {
   render: () => (
-    <div className="sbRow sbGap3">
+    <div className="sb-row sb-gap-3">
       <IconButton icon={Heart} aria-label="Square" shape="square" />
       <IconButton icon={Heart} aria-label="Circle" shape="circle" />
     </div>
@@ -50,25 +49,24 @@ export const Shapes: Story = {
 export const StatesAndBehaviors: Story = {
   render: () => {
     return (
-      <div className="sbStack4">
-        <div className="sbRow sbGap3">
+      <div className="sb-stack-4">
+        <div className="sb-row sb-gap-3">
           <IconButton icon={Heart} aria-label="Primary" variant="primary" />
-          <IconButton icon={Heart} aria-label="Secondary" variant="secondary" />
-          <IconButton icon={Heart} aria-label="Outline" variant="outline" />
+          <IconButton icon={Heart} aria-label="Default" variant="default" />
           <IconButton icon={Heart} aria-label="Ghost" variant="ghost" />
           <IconButton icon={Heart} aria-label="Danger" variant="danger" />
         </div>
-        <div className="sbRow sbGap3">
+        <div className="sb-row sb-gap-3">
           <IconButton icon={Inbox} aria-label="Disabled" disabled />
           <IconButton icon={Inbox} aria-label="Inactive" inactive />
           <IconButton icon={Inbox} aria-label="External tooltip" title="External tooltip" />
         </div>
-        <div className="sbRow sbGap3">
+        <div className="sb-row sb-gap-3">
           <IconButton icon={Bell} aria-label="Menu anchor" aria-haspopup="menu" aria-expanded="false" />
           <IconButton icon={Bell} aria-label="Loading" loading />
           <LoadingTriggerDemo />
         </div>
-        <div className="sbRow sbGap3">
+        <div className="sb-row sb-gap-3">
           <LongDelayTooltipDemo />
         </div>
       </div>
@@ -110,11 +108,11 @@ const LongDelayTooltipDemo = () => {
         clear()
         setShow(false)
       }}
-      className="sbRelative"
+      className="sb-relative"
     >
       <IconButton icon={Bell} aria-label="Long delayed tooltip" />
       {show ? (
-        <span className="sbTooltip">
+        <span className="sb-tooltip">
           Tooltip after delay
         </span>
       ) : null}

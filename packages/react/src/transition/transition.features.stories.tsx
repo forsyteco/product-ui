@@ -25,11 +25,11 @@ export const Fade: Story = {
     const [show, setShow] = useState(false);
     return (
       <>
-        <Button variant="outline" onClick={() => setShow(!show)} className="sbMb4">
+        <Button variant="default" onClick={() => setShow(!show)} className="sb-mb-4">
           Toggle
         </Button>
         <Transition show={show}>
-          <div className="sbDemoInsetPad">Fading content</div>
+          <div className="sb-demo-inset-pad">Fading content</div>
         </Transition>
       </>
     );
@@ -41,19 +41,19 @@ export const Slide: Story = {
     const [show, setShow] = useState(false);
     return (
       <>
-        <Button variant="outline" onClick={() => setShow(!show)} className="sbMb4">
+        <Button variant="default" onClick={() => setShow(!show)} className="sb-mb-4">
           Toggle
         </Button>
         <Transition
           show={show}
-          enter="sbTransEaseOut300"
-          enterFrom="sbYMinus4Opacity0"
-          enterTo="sbY0Opacity1"
-          leave="sbTransEaseIn200"
-          leaveFrom="sbY0Opacity1"
-          leaveTo="sbYMinus4Opacity0"
+          enter="sb-trans-ease-out-300"
+          enterFrom="sb-y-minus-4-opacity-0"
+          enterTo="sb-y-0-opacity-1"
+          leave="sb-trans-ease-in-200"
+          leaveFrom="sb-y-0-opacity-1"
+          leaveTo="sb-y-minus-4-opacity-0"
         >
-          <div className="sbDemoInsetPad">Sliding content</div>
+          <div className="sb-demo-inset-pad">Sliding content</div>
         </Transition>
       </>
     );
@@ -65,19 +65,19 @@ export const Scale: Story = {
     const [show, setShow] = useState(false);
     return (
       <>
-        <Button variant="outline" onClick={() => setShow(!show)} className="sbMb4">
+        <Button variant="default" onClick={() => setShow(!show)} className="sb-mb-4">
           Toggle
         </Button>
         <Transition
           show={show}
-          enter="sbTransEaseOut200"
-          enterFrom="sbScale95Opacity0"
-          enterTo="sbScale100Opacity1"
-          leave="sbTransEaseIn150"
-          leaveFrom="sbScale100Opacity1"
-          leaveTo="sbScale95Opacity0"
+          enter="sb-trans-ease-out-200"
+          enterFrom="sb-scale-95-opacity-0"
+          enterTo="sb-scale-100-opacity-1"
+          leave="sb-trans-ease-in-150"
+          leaveFrom="sb-scale-100-opacity-1"
+          leaveTo="sb-scale-95-opacity-0"
         >
-          <div className="sbDemoInsetPad">Scaling content</div>
+          <div className="sb-demo-inset-pad">Scaling content</div>
         </Transition>
       </>
     );

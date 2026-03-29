@@ -46,8 +46,8 @@ function SortingStory({ pageSize: argPageSize }: StoryArgs) {
 	);
 
 	return (
-		<div className="sbStack4">
-			<p className="sbTextSm sbMutedText">
+		<div className="sb-stack-4">
+			<p className="sb-text-sm sb-muted-text">
 				Click on "Name" or "Email" column headers to sort. Current sort:{" "}
 				{sortState ? `${sortState.columnId} (${sortState.direction})` : "none"}
 			</p>
@@ -87,8 +87,8 @@ function FilteringStory({ pageSize: argPageSize }: StoryArgs) {
 	};
 
 	return (
-		<div className="sbStack4">
-			<p className="sbTextSm sbMutedText">
+		<div className="sb-stack-4">
+			<p className="sb-text-sm sb-muted-text">
 				Click on the filter icon in "Email", "Status" or "Role" columns to
 				filter. Active filters:{" "}
 				{filterState.length > 0
@@ -136,8 +136,8 @@ function RowSelectionStory({ pageSize: argPageSize }: StoryArgs) {
 	);
 
 	return (
-		<div className="sbStack4">
-			<p className="sbTextSm sbMutedText">
+		<div className="sb-stack-4">
+			<p className="sb-text-sm sb-muted-text">
 				Select rows using checkboxes. Selected:{" "}
 				{Array.from(selectedRowIds).join(", ") || "none"}
 			</p>
@@ -173,8 +173,8 @@ function ClickableRowsStory({ pageSize: argPageSize }: StoryArgs) {
 	);
 
 	return (
-		<div className="sbStack4">
-			<p className="sbTextSm sbMutedText">
+		<div className="sb-stack-4">
+			<p className="sb-text-sm sb-muted-text">
 				Click on any row to trigger an action. Last clicked:{" "}
 				{clickedRow || "none"}
 			</p>
@@ -208,8 +208,8 @@ function PaginationStory({ pageSize: argPageSize }: StoryArgs) {
 	);
 
 	return (
-		<div className="sbStack4">
-			<p className="sbTextSm sbMutedText">
+		<div className="sb-stack-4">
+			<p className="sb-text-sm sb-muted-text">
 				Navigate through pages. Current page: {page} of {result.totalPages}
 			</p>
 			<DataTable
@@ -267,9 +267,9 @@ function EmptyStateStory({ pageSize: argPageSize }: StoryArgs) {
 			totalCount={0}
 			onPageChange={setPage}
 			emptyState={
-				<div className="sbTextCenter sbPy8">
-					<p className="sbTextLg sbFontMedium sbForegroundText">No users found</p>
-					<p className="sbTextSm sbMutedText sbMt1">
+				<div className="sb-text-center sb-py-8">
+					<p className="sb-text-lg sb-font-medium sb-foreground-text">No users found</p>
+					<p className="sb-text-sm sb-muted-text sb-mt-1">
 						Try adjusting your filters or add a new user.
 					</p>
 				</div>
@@ -304,8 +304,8 @@ function SortingAndFilteringStory({ pageSize: argPageSize }: StoryArgs) {
 	};
 
 	return (
-		<div className="sbStack4">
-			<div className="sbTextSm sbMutedText sbStack1">
+		<div className="sb-stack-4">
+			<div className="sb-text-sm sb-muted-text sb-stack-1">
 				<p>
 					<strong>Sort:</strong>{" "}
 					{sortState
@@ -363,64 +363,64 @@ function UserExpandedContent({
 }: UserExpandedContentProps) {
 	return (
 		<div
-			className="sbOpacityTransition"
+			className="sb-opacity-transition"
 			style={{ opacity: loading ? 0.5 : 1 }}
 		>
 			{loading && (
-				<div className="sbRowCenter sbPy8">
-					<div className="sbRow sbGap3">
-						<div className="sbSpinner5 sbSpinnerRing" />
-						<span className="sbTextSm sbMutedText">
+				<div className="sb-row-center sb-py-8">
+					<div className="sb-row sb-gap-3">
+						<div className="sb-spinner-5 sb-spinner-ring" />
+						<span className="sb-text-sm sb-muted-text">
 							Loading details for {row.name}...
 						</span>
 					</div>
 				</div>
 			)}
 			{!loading && data && (
-				<div className="sbStack4 sbP4">
-					<div className="sbRowStartBetween">
-						<div className="sbStack3">
+				<div className="sb-stack-4 sb-p-4">
+					<div className="sb-row-start-between">
+						<div className="sb-stack-3">
 							<div>
-								<h3 className="sbTextLg sbFontSemibold sbForegroundText">
+								<h3 className="sb-text-lg sb-font-semibold sb-foreground-text">
 									{row.name}
 								</h3>
-								<p className="sbTextSm sbMutedText">
+								<p className="sb-text-sm sb-muted-text">
 									{row.email} &bull; {row.role}
 								</p>
 							</div>
-							<div className="sbStack1">
-								<p className="sbTextSm">
+							<div className="sb-stack-1">
+								<p className="sb-text-sm">
 									<strong>Bio:</strong> {data.bio}
 								</p>
-								<p className="sbTextSm">
+								<p className="sb-text-sm">
 									<strong>Member since:</strong> {data.joinDate}
 								</p>
-								<p className="sbTextSm">
+								<p className="sb-text-sm">
 									<strong>Last login:</strong> {data.lastLogin}
 								</p>
 							</div>
 							<div>
-								<p className="sbTextSm sbFontMedium sbMb1">Projects:</p>
-								<div className="sbRow sbFlexWrap sbGap1">
+								<p className="sb-text-sm sb-font-medium sb-mb-1">Projects:</p>
+								<div className="sb-row sb-flex-wrap sb-gap-1">
 									{data.projects.map((project) => (
-										<span key={project} className="sbTagAccent">
+										<span key={project} className="sb-tag-accent">
 											{project}
 										</span>
 									))}
 								</div>
 							</div>
 						</div>
-						<div className="sbRow sbGap2">
+						<div className="sb-row sb-gap-2">
 							<button
 								type="button"
-								className="sbDemoBtnMuted"
+								className="sb-demo-btn-muted"
 								onClick={() => alert(`Message sent to ${row.name}`)}
 							>
 								Message
 							</button>
 							<button
 								type="button"
-								className="sbDemoBtnAccent"
+								className="sb-demo-btn-accent"
 								onClick={() =>
 									alert(`Viewing profile for ${row.name} (ID: ${rowId})`)
 								}
@@ -445,8 +445,8 @@ function ExpandableRowsStory({ pageSize: argPageSize }: StoryArgs) {
 	);
 
 	return (
-		<div className="sbStack4">
-			<div className="sbTextSm sbMutedText sbStack1">
+		<div className="sb-stack-4">
+			<div className="sb-text-sm sb-muted-text sb-stack-1">
 				<p>Click on any row to expand and see user details.</p>
 				<p>Only one row can be expanded at a time. Click again to collapse.</p>
 			</div>
@@ -475,9 +475,9 @@ type StatusBadgeProps = Readonly<{ value: string }>;
 
 function StatusBadge({ value }: StatusBadgeProps) {
 	const toneClass =
-		value === "Active" ? "sbStoryBadgeActive" : "sbStoryBadgeInactive";
+		value === "Active" ? "sb-story-badge-active" : "sb-story-badge-inactive";
 	return (
-		<span className={`sbPill ${toneClass}`}>
+		<span className={`sb-pill ${toneClass}`}>
 			{value}
 		</span>
 	);
@@ -507,8 +507,8 @@ function CustomCellRendererStory({ pageSize: argPageSize }: StoryArgs) {
 	);
 
 	return (
-		<div className="sbStack4">
-			<p className="sbTextSm sbMutedText">
+		<div className="sb-stack-4">
+			<p className="sb-text-sm sb-muted-text">
 				The "Status" column uses a custom cell renderer to display badges.
 				Sorting still works with custom renderers.
 			</p>

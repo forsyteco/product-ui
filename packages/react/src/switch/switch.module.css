@@ -10,7 +10,7 @@
   color: rgb(var(--foreground));
 }
 
-.labelDisabled {
+.label-disabled {
   color: rgb(var(--muted-foreground));
   opacity: 0.5;
 }
@@ -21,7 +21,7 @@
   color: rgb(var(--muted-foreground));
 }
 
-.descriptionDisabled {
+.description-disabled {
   opacity: 0.5;
 }
 
@@ -43,22 +43,22 @@
   box-shadow: 0 0 0 2px rgb(var(--ring)), 0 0 0 4px rgb(var(--background));
 }
 
-.switchDisabled {
+.switch-disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
 
-.switchSm {
+.switch-sm {
   width: 2.25rem;
   height: 1.25rem;
 }
 
-.switchMd {
+.switch-md {
   width: 2.75rem;
   height: 1.5rem;
 }
 
-.switchLg {
+.switch-lg {
   width: 3.5rem;
   height: 1.75rem;
 }
@@ -70,32 +70,32 @@
   transition: transform 0.2s ease;
 }
 
-.thumbSm {
+.thumb-sm {
   width: 0.75rem;
   height: 0.75rem;
   transform: translateX(0.125rem);
 }
 
-.switch[data-checked] .thumbSm {
+.switch[data-checked] .thumb-sm {
   transform: translateX(1.25rem);
 }
 
-.thumbMd {
+.thumb-md {
   width: 1rem;
   height: 1rem;
   transform: translateX(0.25rem);
 }
 
-.switch[data-checked] .thumbMd {
+.switch[data-checked] .thumb-md {
   transform: translateX(1.5rem);
 }
 
-.thumbLg {
+.thumb-lg {
   width: 1.25rem;
   height: 1.25rem;
   transform: translateX(0.375rem);
 }
 
-.switch[data-checked] .thumbLg {
+.switch[data-checked] .thumb-lg {
   transform: translateX(2rem);
 }

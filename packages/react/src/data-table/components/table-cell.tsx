@@ -14,9 +14,9 @@ function TableCell<TData, TValue = unknown>({
   value,
 }: TableCellProps<TData, TValue>) {
   const alignmentClass = {
-    left: styles.alignLeft,
-    center: styles.alignCenter,
-    right: styles.alignRight,
+    left: styles['align-left'],
+    center: styles['align-center'],
+    right: styles['align-right'],
   }[column.align || 'left'];
 
   const CellComponent = column.cell;

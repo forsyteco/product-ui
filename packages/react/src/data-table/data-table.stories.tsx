@@ -99,8 +99,8 @@ function PlaygroundStory({ pageSize: argPageSize }: StoryArgs) {
   };
 
   return (
-    <div className="sbStack4">
-      <div className="sbTextSm sbMutedText sbStack1">
+    <div className="sb-stack-4">
+      <div className="sb-text-sm sb-muted-text sb-stack-1">
         <p>Status and Role columns have both sorting and filtering enabled.</p>
         <p><strong>Sort:</strong> {sortState ? `${sortState.columnId} (${sortState.direction})` : 'none'} | <strong>Filter:</strong> {filterState.length > 0 ? filterState.map(f => `${f.columnId}: ${f.values.join(', ')}`).join(' | ') : 'none'}</p>
         <p><strong>Results:</strong> {result.totalCount} of {sampleUsers.length} users | <strong>Selected:</strong> {selectedRowIds.size > 0 ? Array.from(selectedRowIds).join(', ') : 'none'}</p>

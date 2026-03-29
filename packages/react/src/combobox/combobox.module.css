@@ -1,4 +1,6 @@
-.root { position: relative; }
+.root {
+  position: relative;
+}
 .label { margin-bottom: 0.25rem; display: block; font-size: var(--text-sm); font-weight: 500; color: rgb(var(--foreground)); }
 .control { position: relative; }
 .input {
@@ -11,20 +13,27 @@
   font-size: var(--text-base);
 }
 .input:focus-visible { outline: none; box-shadow: 0 0 0 2px rgb(var(--ring)), 0 0 0 4px rgb(var(--background)); }
-.inputInvalid { border-color: rgb(var(--destructive)); }
-.inputDisabled { cursor: not-allowed; opacity: 0.5; }
-.clearButton {
+.input-invalid { border-color: rgb(var(--destructive)); }
+.input-disabled { cursor: not-allowed; opacity: 0.5; }
+.clear-button {
   position: absolute; inset-block: 0; right: 1.75rem; display: flex; align-items: center; padding: 0 0.5rem;
   color: rgb(var(--muted-foreground));
+  border-radius: 0.25rem;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
-.clearButton:hover { color: rgb(var(--foreground)); }
-.clearIcon { width: 1rem; height: 1rem; }
-.toggleButton {
+.clear-button:hover { color: rgb(var(--foreground)); background-color: var(--combobox-clear-hover); }
+.clear-button:active { background-color: var(--combobox-clear-active); }
+.clear-icon { width: 1rem; height: 1rem; }
+.toggle-button {
   position: absolute; inset-block: 0; right: 0; display: flex; align-items: center; padding-right: 0.5rem;
   color: rgb(var(--muted-foreground));
+  border-radius: 0.25rem;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
-.toggleDisabled { cursor: not-allowed; opacity: 0.5; }
-.toggleIcon { width: 1.25rem; height: 1.25rem; }
+.toggle-button:hover { color: rgb(var(--foreground)); background-color: var(--combobox-clear-hover); }
+.toggle-button:active { background-color: var(--combobox-clear-active); }
+.toggle-disabled { cursor: not-allowed; opacity: 0.5; }
+.toggle-icon { width: 1.25rem; height: 1.25rem; }
 .options {
   z-index: 10;
   max-height: 15rem;
@@ -39,10 +48,10 @@
 }
 .empty { cursor: default; user-select: none; padding: 0.5rem 1rem; color: rgb(var(--muted-foreground)); }
 .option { position: relative; user-select: none; padding: 0.5rem 0.75rem 0.5rem 0.75rem; }
-.optionEnabled { cursor: default; }
-.optionDisabled { cursor: not-allowed; opacity: 0.5; }
-.optionActive { background: rgb(var(--accent)); color: rgb(var(--accent-foreground)); }
-.optionInactive { color: rgb(var(--foreground)); }
-.optionSelected { font-weight: 500; }
+.option-enabled { cursor: default; }
+.option-disabled { cursor: not-allowed; opacity: 0.5; }
+.option-active { background: rgb(var(--accent)); color: rgb(var(--accent-foreground)); }
+.option-inactive { color: rgb(var(--foreground)); }
+.option-selected { font-weight: 500; }
 .hint { margin-top: 0.25rem; font-size: var(--text-sm); color: rgb(var(--muted-foreground)); }
 .error { margin-top: 0.25rem; font-size: var(--text-sm); color: rgb(var(--destructive)); }

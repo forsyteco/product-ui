@@ -53,7 +53,7 @@ export const Default: Story = {
   render: () => {
     const [selected, setSelected] = useState<AutocompleteOption | null>(null);
     return (
-      <div className="sbW72">
+      <div className="sb-w-72">
         <Autocomplete.Root
           options={options}
           value={selected}
@@ -76,7 +76,7 @@ export const Playground: Story = {
   render: (args) => {
     const [selected, setSelected] = useState<AutocompleteOption | null>(null);
     return (
-      <div className="sbW72">
+      <div className="sb-w-72">
         <Autocomplete.Root {...args} options={options} value={selected} onChange={setSelected}>
           <Autocomplete.Control>
             <Autocomplete.LeadingIcon />

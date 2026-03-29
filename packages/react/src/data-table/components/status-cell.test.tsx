@@ -33,7 +33,7 @@ describe('StatusCell', () => {
       render(<StatusCell value={STATUS.IN_PROGRESS} />);
 
       const badge = screen.getByText('In progress');
-      expect(badge).toHaveClass(styles.statusBadge);
+      expect(badge).toHaveClass(styles['status-badge']);
     });
   });
 
@@ -42,28 +42,28 @@ describe('StatusCell', () => {
       render(<StatusCell value={STATUS.COMPLETE} />);
 
       const badge = screen.getByText('Complete');
-      expect(badge).toHaveClass(styles.statusComplete);
+      expect(badge).toHaveClass(styles['status-complete']);
     });
 
     it('applies rose colors for do_not_act status', () => {
       render(<StatusCell value={STATUS.DO_NOT_ACT} />);
 
       const badge = screen.getByText('Do not act');
-      expect(badge).toHaveClass(styles.statusDoNotAct);
+      expect(badge).toHaveClass(styles['status-do-not-act']);
     });
 
     it('applies red colors for failed status', () => {
       render(<StatusCell value={STATUS.FAILED} />);
 
       const badge = screen.getByText('Failed');
-      expect(badge).toHaveClass(styles.statusFailed);
+      expect(badge).toHaveClass(styles['status-failed']);
     });
 
     it('applies gray colors for in_progress status', () => {
       render(<StatusCell value={STATUS.IN_PROGRESS} />);
 
       const badge = screen.getByText('In progress');
-      expect(badge).toHaveClass(styles.statusProgress);
+      expect(badge).toHaveClass(styles['status-progress']);
     });
   });
 
@@ -121,7 +121,7 @@ describe('StatusCell', () => {
 
       const versionLabel = screen.getByText('Version:');
       // The class is on the parent span element
-      expect(versionLabel.parentElement).toHaveClass(styles.statusVersion);
+      expect(versionLabel.parentElement).toHaveClass(styles['status-version']);
     });
   });
 
@@ -144,7 +144,7 @@ describe('StatusCell', () => {
 
       const versionLabel = screen.getByText('Version:');
       // The class is on the parent span element
-      expect(versionLabel.parentElement).toHaveClass(styles.statusVersion);
+      expect(versionLabel.parentElement).toHaveClass(styles['status-version']);
     });
   });
 
@@ -153,14 +153,14 @@ describe('StatusCell', () => {
       const { container } = render(<StatusCell value={STATUS.IN_PROGRESS} version="1.0.0" />);
 
       const wrapper = container.firstChild;
-      expect(wrapper).toHaveClass(styles.statusWrap);
+      expect(wrapper).toHaveClass(styles['status-wrap']);
     });
 
     it('has appropriate gap between status and version', () => {
       const { container } = render(<StatusCell value={STATUS.IN_PROGRESS} version="1.0.0" />);
 
       const wrapper = container.firstChild;
-      expect(wrapper).toHaveClass(styles.statusWrap);
+      expect(wrapper).toHaveClass(styles['status-wrap']);
     });
   });
 

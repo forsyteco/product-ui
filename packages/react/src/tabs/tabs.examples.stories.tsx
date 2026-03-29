@@ -18,8 +18,8 @@ export const SettingsPage: Story = {
   render: () => {
     const [selectedIndex, setSelectedIndex] = useState(0);
     return (
-      <div className="sbDemoTabsShell">
-        <h1 className="sbText2xl sbFontBold sbMb6">Settings</h1>
+      <div className="sb-demo-tabs-shell">
+        <h1 className="sb-text-2xl sb-font-bold sb-mb-6">Settings</h1>
         <Tabs selectedIndex={selectedIndex} onChange={setSelectedIndex}>
           <TabList>
             <Tab>General</Tab>
@@ -29,61 +29,61 @@ export const SettingsPage: Story = {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <div className="sbStack4">
+              <div className="sb-stack-4">
                 <div>
-                  <label className="sbFormLabelInline">Display Name</label>
+                  <label className="sb-form-label-inline">Display Name</label>
                   <input
                     type="text"
-                    className="sbNativeField"
+                    className="sb-native-field"
                     defaultValue="John Doe"
                   />
                 </div>
                 <div>
-                  <label className="sbFormLabelInline">Email</label>
+                  <label className="sb-form-label-inline">Email</label>
                   <input
                     type="email"
-                    className="sbNativeField"
+                    className="sb-native-field"
                     defaultValue="john@example.com"
                   />
                 </div>
               </div>
             </TabPanel>
             <TabPanel>
-              <div className="sbStack4">
+              <div className="sb-stack-4">
                 <div>
-                  <label className="sbFormLabelInline">Current Password</label>
-                  <input type="password" className="sbNativeField" />
+                  <label className="sb-form-label-inline">Current Password</label>
+                  <input type="password" className="sb-native-field" />
                 </div>
                 <div>
-                  <label className="sbFormLabelInline">New Password</label>
-                  <input type="password" className="sbNativeField" />
+                  <label className="sb-form-label-inline">New Password</label>
+                  <input type="password" className="sb-native-field" />
                 </div>
                 <Button>Update Password</Button>
               </div>
             </TabPanel>
             <TabPanel>
-              <div className="sbStack4">
-                <div className="sbRowBetween">
+              <div className="sb-stack-4">
+                <div className="sb-row-between">
                   <div>
-                    <h3 className="sbTextBase sbFontMedium">Public Profile</h3>
-                    <p className="sbTextBase sbMutedText">Make your profile visible to everyone</p>
+                    <h3 className="sb-text-base sb-font-medium">Public Profile</h3>
+                    <p className="sb-text-base sb-muted-text">Make your profile visible to everyone</p>
                   </div>
-                  <input type="checkbox" className="sbCheckbox" />
+                  <input type="checkbox" className="sb-checkbox" />
                 </div>
-                <div className="sbRowBetween">
+                <div className="sb-row-between">
                   <div>
-                    <h3 className="sbTextBase sbFontMedium">Email Notifications</h3>
-                    <p className="sbTextBase sbMutedText">Receive email updates</p>
+                    <h3 className="sb-text-base sb-font-medium">Email Notifications</h3>
+                    <p className="sb-text-base sb-muted-text">Receive email updates</p>
                   </div>
-                  <input type="checkbox" className="sbCheckbox" defaultChecked />
+                  <input type="checkbox" className="sb-checkbox" defaultChecked />
                 </div>
               </div>
             </TabPanel>
             <TabPanel>
-              <div className="sbStack4">
-                <div className="sbDocSurface">
-                  <h3 className="sbFontSemibold sbMb2">Current Plan</h3>
-                  <p className="sbTextBase sbMutedText sbMb4">Pro Plan - $29/month</p>
+              <div className="sb-stack-4">
+                <div className="sb-doc-surface">
+                  <h3 className="sb-font-semibold sb-mb-2">Current Plan</h3>
+                  <p className="sb-text-base sb-muted-text sb-mb-4">Pro Plan - $29/month</p>
                   <Button>Change Plan</Button>
                 </div>
               </div>

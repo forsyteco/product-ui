@@ -15,12 +15,12 @@ type Story = StoryObj<typeof meta>;
 
 export const UserMenu: Story = {
   render: () => (
-    <div className="sbEndBar">
+    <div className="sb-end-bar">
       <DropdownMenu
         trigger={
-          <Button variant="outline" className="sbRow sbGap2 sbRoundedLgBtn">
+          <Button variant="default" className="sb-row sb-gap-2 sb-rounded-lg-btn">
             <span>John Doe</span>
-            <svg className="sbIcon4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="sb-icon-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
           </Button>
@@ -38,19 +38,19 @@ export const UserMenu: Story = {
 
 export const ActionMenu: Story = {
   render: () => (
-    <div className="sbP4">
-      <div className="sbDocSurface">
-        <div className="sbRowBetween sbMb4">
-          <h3 className="sbFontSemibold">Document</h3>
+    <div className="sb-p-4">
+      <div className="sb-doc-surface">
+        <div className="sb-row-between sb-mb-4">
+          <h3 className="sb-font-semibold">Document</h3>
           <DropdownMenu trigger={<DropdownMenuButton>Actions</DropdownMenuButton>}>
             <DropdownMenuItem>Edit</DropdownMenuItem>
             <DropdownMenuItem>Share</DropdownMenuItem>
             <DropdownMenuItem>Duplicate</DropdownMenuItem>
             <DropdownMenuItem>Archive</DropdownMenuItem>
-            <DropdownMenuItem className="sbMenuItemDanger">Delete</DropdownMenuItem>
+            <DropdownMenuItem className="sb-menu-item-danger">Delete</DropdownMenuItem>
           </DropdownMenu>
         </div>
-        <p className="sbTextBase sbMutedText">This is a sample document with an action menu.</p>
+        <p className="sb-text-base sb-muted-text">This is a sample document with an action menu.</p>
       </div>
     </div>
   ),

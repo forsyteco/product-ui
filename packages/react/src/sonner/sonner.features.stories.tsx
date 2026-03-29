@@ -17,7 +17,7 @@ type Story = StoryObj<typeof meta>;
 
 export const WithAction: Story = {
   render: () => (
-    <div className="sbStackGap3">
+    <div className="sb-stack-gap-3">
       <Sonner />
       <Button
         onClick={() =>
@@ -38,7 +38,7 @@ export const WithAction: Story = {
 
 export const PromiseToast: Story = {
   render: () => (
-    <div className="sbStackGap3">
+    <div className="sb-stack-gap-3">
       <Sonner />
       <Button
         onClick={() =>

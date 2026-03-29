@@ -34,14 +34,14 @@ export type StatusCellProps = Readonly<{
 function getStatusColors(status: Status): string {
   switch (status) {
     case STATUS.COMPLETE:
-      return styles.statusComplete;
+      return styles['status-complete'];
     case STATUS.DO_NOT_ACT:
-      return styles.statusDoNotAct;
+      return styles['status-do-not-act'];
     case STATUS.FAILED:
-      return styles.statusFailed;
+      return styles['status-failed'];
     case STATUS.IN_PROGRESS:
     default:
-      return styles.statusProgress;
+      return styles['status-progress'];
   }
 }
 
@@ -63,17 +63,17 @@ export function StatusCell({ value, version }: StatusCellProps) {
   const displayValue = formatStatusDisplay(value);
 
   return (
-    <div className={styles.statusWrap}>
+    <div className={styles['status-wrap']}>
       <span
         className={clsx(
-          styles.statusBadge,
+          styles['status-badge'],
           colorClasses
         )}
       >
         {displayValue}
       </span>
       {showVersion && (
-        <span className={styles.statusVersion}>
+        <span className={styles['status-version']}>
           <span>Version:</span> <span>{version ?? '-'}</span>
         </span>
       )}

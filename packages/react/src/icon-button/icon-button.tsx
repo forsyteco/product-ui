@@ -17,20 +17,19 @@ const iconButtonVariants = cva(
   {
     variants: {
       variant: {
-        primary: styles.variantPrimary,
-        secondary: styles.variantSecondary,
-        outline: styles.variantOutline,
-        ghost: styles.variantGhost,
-        danger: styles.variantDanger,
+        primary: styles['variant-primary'],
+        default: styles['variant-default'],
+        ghost: styles['variant-ghost'],
+        danger: styles['variant-danger'],
       },
       shape: {
-        square: styles.shapeSquare,
-        circle: styles.shapeCircle,
+        square: styles['shape-square'],
+        circle: styles['shape-circle'],
       },
       size: {
-        small: styles.sizeSmall,
-        medium: styles.sizeMedium,
-        large: styles.sizeLarge,
+        small: styles['size-small'],
+        medium: styles['size-medium'],
+        large: styles['size-large'],
       },
     },
     defaultVariants: {
@@ -72,9 +71,9 @@ type IconButtonAsAnchor = BaseIconButtonProps &
 export type IconButtonProps = IconButtonAsButton | IconButtonAsAnchor
 
 const iconSizes = {
-  small: styles.iconSmall,
-  medium: styles.iconMedium,
-  large: styles.iconLarge,
+  small: styles['icon-small'],
+  medium: styles['icon-medium'],
+  large: styles['icon-large'],
 } as const
 
 type IconButtonSize = NonNullable<VariantProps<typeof iconButtonVariants>['size']>

@@ -23,15 +23,15 @@
   box-shadow: 0 0 0 3px rgb(var(--destructive) / 0.2);
 }
 
-.sizeDefault {
+.size-default {
   height: 2.25rem;
 }
 
-.sizeSm {
+.size-sm {
   height: 2rem;
 }
 
-.sizeLg {
+.size-lg {
   height: 2.5rem;
   font-size: var(--text-base);
   line-height: var(--text-base-line-height);
@@ -49,15 +49,15 @@
   flex-shrink: 0;
 }
 
-.slotPadDefault {
+.slot-pad-default {
   padding: 0 0.625rem;
 }
 
-.slotPadSm {
+.slot-pad-sm {
   padding: 0 0.5rem;
 }
 
-.slotPadLg {
+.slot-pad-lg {
   padding: 0 0.75rem;
 }
 
@@ -82,22 +82,22 @@
   opacity: 0.5;
 }
 
-.inputPadDefault {
+.input-pad-default {
   padding: 0 0.75rem;
 }
 
-.inputPadSm {
+.input-pad-sm {
   padding: 0 0.625rem;
 }
 
-.inputPadLg {
+.input-pad-lg {
   padding: 0 1rem;
 }
 
-.inputPadNoneLeft {
+.input-pad-none-left {
   padding-left: 0;
 }
 
-.inputPadNoneRight {
+.input-pad-none-right {
   padding-right: 0;
 }

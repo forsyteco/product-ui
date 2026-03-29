@@ -25,7 +25,7 @@ export const Default: Story = {
 
 export const Playground: Story = {
   render: () => (
-    <div className="sbRow sbGap2">
+    <div className="sb-row sb-gap-2">
       <CounterLabel variant="secondary">3</CounterLabel>
       <CounterLabel variant="primary">24</CounterLabel>
       <CounterLabel variant="secondary">128</CounterLabel>

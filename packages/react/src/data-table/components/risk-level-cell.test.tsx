@@ -10,7 +10,7 @@ describe('RiskLevelCell', () => {
 
       const badge = screen.getByText('High');
       expect(badge).toBeInTheDocument();
-      expect(badge).toHaveClass(styles.riskHigh);
+      expect(badge).toHaveClass(styles['risk-high']);
     });
   });
 
@@ -20,7 +20,7 @@ describe('RiskLevelCell', () => {
 
       const badge = screen.getByText('Medium');
       expect(badge).toBeInTheDocument();
-      expect(badge).toHaveClass(styles.riskMedium);
+      expect(badge).toHaveClass(styles['risk-medium']);
     });
   });
 
@@ -30,7 +30,7 @@ describe('RiskLevelCell', () => {
 
       const badge = screen.getByText('Low');
       expect(badge).toBeInTheDocument();
-      expect(badge).toHaveClass(styles.riskLow);
+      expect(badge).toHaveClass(styles['risk-low']);
     });
   });
 
@@ -59,7 +59,7 @@ describe('RiskLevelCell', () => {
       render(<RiskLevelCell value="low" />);
 
       const badge = screen.getByText('Low');
-      expect(badge).toHaveClass(styles.riskBadge);
+      expect(badge).toHaveClass(styles['risk-badge']);
     });
   });
 
@@ -69,7 +69,7 @@ describe('RiskLevelCell', () => {
 
       const badge = screen.getByText('Unknown');
       expect(badge).toBeInTheDocument();
-      expect(badge).toHaveClass(styles.riskUnknown);
+      expect(badge).toHaveClass(styles['risk-unknown']);
     });
 
     it('handles empty string gracefully', () => {
@@ -77,7 +77,7 @@ describe('RiskLevelCell', () => {
 
       const badge = container.querySelector('span');
       expect(badge).toBeInTheDocument();
-      expect(badge).toHaveClass(styles.riskUnknown);
+      expect(badge).toHaveClass(styles['risk-unknown']);
     });
 
     it('handles random unknown value with proper capitalization', () => {
@@ -85,7 +85,7 @@ describe('RiskLevelCell', () => {
 
       const badge = screen.getByText('Critical');
       expect(badge).toBeInTheDocument();
-      expect(badge).toHaveClass(styles.riskUnknown);
+      expect(badge).toHaveClass(styles['risk-unknown']);
     });
   });
 });

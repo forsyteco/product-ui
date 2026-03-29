@@ -33,7 +33,7 @@ type Story = StoryObj<typeof meta>;
 
 export const States: Story = {
   render: () => (
-    <div className="sbStack4">
+    <div className="sb-stack-4">
       <Switch label="Unchecked" />
       <Switch label="Checked" checked />
       <Switch label="Disabled" disabled />
@@ -44,7 +44,7 @@ export const States: Story = {
 
 export const WithDescription: Story = {
   render: () => (
-    <div className="sbStack4">
+    <div className="sb-stack-4">
       <Switch
         label="Email notifications"
         description="Receive email updates about your account"

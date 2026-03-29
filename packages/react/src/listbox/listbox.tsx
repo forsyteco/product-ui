@@ -48,13 +48,13 @@ function Listbox({
         <HeadlessListbox.Button
           className={clsx(
             styles.button,
-            disabled && styles.buttonDisabled
+            disabled && styles['button-disabled']
           )}
         >
           <span className={styles.value}>
             {value?.label || placeholder}
           </span>
-          <span className={styles.iconWrap}>
+          <span className={styles['icon-wrap']}>
             <svg
               className={styles.icon}
               fill="none"
@@ -79,8 +79,8 @@ function Listbox({
               className={({ active, disabled }) =>
                 clsx(
                   styles.option,
-                  active ? styles.optionActive : styles.optionInactive,
-                  disabled && styles.optionDisabled
+                  active ? styles['option-active'] : styles['option-inactive'],
+                  disabled && styles['option-disabled']
                 )
               }
             >

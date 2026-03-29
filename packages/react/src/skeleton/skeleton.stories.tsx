@@ -20,16 +20,16 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  render: () => <Skeleton className="sbSkH4 sbSkW48" />,
+  render: () => <Skeleton className="sb-sk-h-4 sb-sk-w-48" />,
 };
 
 export const Playground: Story = {
   args: {},
   render: () => (
-    <div className="sbGrid sbGridGap3">
-      <Skeleton className="sbSkH4 sbSkW56" />
-      <Skeleton className="sbSkH4 sbSkW48" />
-      <Skeleton className="sbSkH4 sbSkW64" />
+    <div className="sb-grid sb-grid-gap-3">
+      <Skeleton className="sb-sk-h-4 sb-sk-w-56" />
+      <Skeleton className="sb-sk-h-4 sb-sk-w-48" />
+      <Skeleton className="sb-sk-h-4 sb-sk-w-64" />
     </div>
   ),
 };

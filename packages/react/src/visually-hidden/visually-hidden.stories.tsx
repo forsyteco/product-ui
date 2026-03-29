@@ -23,12 +23,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
-    <div className="sbRow sbGap3">
-      <Button variant="outline">
+    <div className="sb-row sb-gap-3">
+      <Button variant="default">
         <VisuallyHidden>Opens settings</VisuallyHidden>
         Settings
       </Button>
-      <span className="sbTextBase sbMutedText">
+      <span className="sb-text-base sb-muted-text">
         The “Opens settings” text is hidden visually, but available to screen readers.
       </span>
     </div>

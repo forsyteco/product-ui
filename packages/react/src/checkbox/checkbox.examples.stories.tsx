@@ -22,9 +22,9 @@ export const SettingsForm: Story = {
     });
 
     return (
-      <div className="sbDemoNarrow">
-        <h2 className="sbTextLg sbFontSemibold sbMb4">Notification Preferences</h2>
-        <div className="sbStack4">
+      <div className="sb-demo-narrow">
+        <h2 className="sb-text-lg sb-font-semibold sb-mb-4">Notification Preferences</h2>
+        <div className="sb-stack-4">
           <Checkbox
             label="Email notifications"
             checked={settings.email}

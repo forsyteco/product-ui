@@ -25,8 +25,8 @@ export const StatusSelector: Story = {
   render: () => {
     const [selected, setSelected] = useState<ListboxOption | null>(null);
     return (
-      <div className="sbDemoNarrow">
-        <label className="sbBlock sbTextBase sbFontMedium sbMb2 sbForegroundText">
+      <div className="sb-demo-narrow">
+        <label className="sb-block sb-text-base sb-font-medium sb-mb-2 sb-foreground-text">
           Status
         </label>
         <Listbox
@@ -36,7 +36,7 @@ export const StatusSelector: Story = {
           placeholder="Select status..."
         />
         {selected && (
-          <p className="sbMt4 sbTextBase sbMutedText">
+          <p className="sb-mt-4 sb-text-base sb-muted-text">
             Selected: {selected.label}
           </p>
         )}

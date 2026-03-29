@@ -21,7 +21,7 @@ describe('CountryCell', () => {
       render(<CountryCell value="Germany" />);
 
       const nameElement = screen.getByText('Germany');
-      expect(nameElement).toHaveClass(styles.copyValue);
+      expect(nameElement).toHaveClass(styles['copy-value']);
     });
   });
 
@@ -37,7 +37,7 @@ describe('CountryCell', () => {
       render(<CountryCell value="Canada" />);
 
       const img = screen.getByRole('img');
-      expect(img).toHaveClass(styles.countryFlag);
+      expect(img).toHaveClass(styles['country-flag']);
     });
 
     it('sets correct alt text on flag image', () => {

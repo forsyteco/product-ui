@@ -13,13 +13,13 @@
   color: rgb(var(--muted-foreground));
 }
 
-.actionButton {
+.action-button {
   background-color: rgb(var(--primary));
   color: rgb(var(--primary-foreground));
   font-weight: 500;
 }
 
-.cancelButton {
+.cancel-button {
   background-color: rgb(var(--muted));
   color: rgb(var(--muted-foreground));
   font-weight: 500;

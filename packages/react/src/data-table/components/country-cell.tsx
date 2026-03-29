@@ -35,11 +35,11 @@ export function CountryCell({ value }: CountryCellProps) {
         <img
           src={flagUrl}
           alt={`${value} flag`}
-          className={styles.countryFlag}
+          className={styles['country-flag']}
           onError={handleImageError}
         />
       )}
-      <span className={styles.copyValue}>{value}</span>
+      <span className={styles['copy-value']}>{value}</span>
     </div>
   );
 }

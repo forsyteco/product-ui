@@ -84,6 +84,104 @@
   --popover: var(--brand-white);
   --popover-foreground: var(--brand-black);
 
+  --interactive-hover-darken: 8%;
+  --interactive-active-darken: 14%;
+  --interactive-hover-lighten: 10%;
+  --interactive-active-lighten: 16%;
+  --interactive-focus-ring: rgb(var(--ring));
+
+  --button-primary-background: rgb(var(--accent));
+  --button-primary-foreground: rgb(var(--accent-foreground));
+  --button-primary-border: transparent;
+  --button-primary-hover: color-mix(in srgb, var(--button-primary-background), black var(--interactive-hover-darken));
+  --button-primary-active: color-mix(in srgb, var(--button-primary-background), black var(--interactive-active-darken));
+  --button-primary-focus-ring: var(--interactive-focus-ring);
+
+  --button-default-background: rgb(var(--background));
+  --button-default-foreground: rgb(var(--foreground));
+  --button-default-border: rgb(var(--border));
+  --button-default-hover: color-mix(in srgb, var(--button-default-background), black var(--interactive-hover-darken));
+  --button-default-active: color-mix(in srgb, var(--button-default-background), black var(--interactive-active-darken));
+  --button-default-focus-ring: var(--interactive-focus-ring);
+
+  --button-ghost-background: transparent;
+  --button-ghost-foreground: rgb(var(--foreground));
+  --button-ghost-border: transparent;
+  --button-ghost-hover: rgb(var(--muted));
+  --button-ghost-active: color-mix(in srgb, rgb(var(--muted)), black var(--interactive-hover-darken));
+  --button-ghost-focus-ring: var(--interactive-focus-ring);
+
+  --button-danger-background: rgb(var(--destructive));
+  --button-danger-foreground: rgb(var(--destructive-foreground));
+  --button-danger-border: transparent;
+  --button-danger-hover: color-mix(in srgb, var(--button-danger-background), white var(--interactive-hover-lighten));
+  --button-danger-active: color-mix(in srgb, var(--button-danger-background), white var(--interactive-active-lighten));
+  --button-danger-focus-ring: var(--interactive-focus-ring);
+
+  --icon-button-primary-background: var(--button-primary-background);
+  --icon-button-primary-foreground: var(--button-primary-foreground);
+  --icon-button-primary-border: var(--button-primary-border);
+  --icon-button-primary-hover: var(--button-primary-hover);
+  --icon-button-primary-active: var(--button-primary-active);
+  --icon-button-primary-focus-ring: var(--button-primary-focus-ring);
+
+  --icon-button-default-background: var(--button-default-background);
+  --icon-button-default-foreground: var(--button-default-foreground);
+  --icon-button-default-border: var(--button-default-border);
+  --icon-button-default-hover: var(--button-default-hover);
+  --icon-button-default-active: var(--button-default-active);
+  --icon-button-default-focus-ring: var(--button-default-focus-ring);
+
+  --icon-button-ghost-background: var(--button-ghost-background);
+  --icon-button-ghost-foreground: var(--button-ghost-foreground);
+  --icon-button-ghost-border: var(--button-ghost-border);
+  --icon-button-ghost-hover: var(--button-ghost-hover);
+  --icon-button-ghost-active: var(--button-ghost-active);
+  --icon-button-ghost-focus-ring: var(--button-ghost-focus-ring);
+
+  --icon-button-danger-background: var(--button-danger-background);
+  --icon-button-danger-foreground: var(--button-danger-foreground);
+  --icon-button-danger-border: var(--button-danger-border);
+  --icon-button-danger-hover: var(--button-danger-hover);
+  --icon-button-danger-active: var(--button-danger-active);
+  --icon-button-danger-focus-ring: var(--button-danger-focus-ring);
+
+  --dropdown-item-hover: rgb(var(--muted));
+  --dropdown-item-active: color-mix(in srgb, rgb(var(--muted)), black var(--interactive-active-darken));
+  --dropdown-item-selected-background: rgb(var(--accent));
+  --dropdown-item-selected-foreground: rgb(var(--accent-foreground));
+
+  --disclosure-button-background: rgb(var(--muted));
+  --disclosure-button-foreground: rgb(var(--foreground));
+  --disclosure-button-hover: color-mix(in srgb, var(--disclosure-button-background), black var(--interactive-hover-darken));
+  --disclosure-button-active: color-mix(in srgb, var(--disclosure-button-background), black var(--interactive-active-darken));
+  --disclosure-button-focus-ring: rgb(var(--ring));
+
+  --tabs-unselected-hover: rgb(var(--muted));
+  --tabs-unselected-active: color-mix(in srgb, rgb(var(--muted)), black var(--interactive-active-darken));
+  --tabs-focus-ring: rgb(var(--ring));
+
+  --listbox-trigger-hover: color-mix(in srgb, rgb(var(--background)), black var(--interactive-hover-darken));
+  --listbox-trigger-active: color-mix(in srgb, rgb(var(--background)), black var(--interactive-active-darken));
+  --listbox-option-active-background: rgb(var(--accent));
+  --listbox-option-active-foreground: rgb(var(--accent-foreground));
+  --listbox-focus-ring: rgb(var(--ring));
+
+  --combobox-clear-hover: rgb(var(--muted));
+  --combobox-clear-active: color-mix(in srgb, rgb(var(--muted)), black var(--interactive-active-darken));
+
+  --autocomplete-clear-hover: rgb(var(--muted));
+  --autocomplete-clear-active: color-mix(in srgb, rgb(var(--muted)), black var(--interactive-active-darken));
+
+  --data-table-row-hover: rgb(var(--muted) / 0.5);
+  --data-table-row-active: rgb(var(--muted) / 0.7);
+  --data-table-row-selectable-hover: rgb(var(--muted) / 0.3);
+  --data-table-row-selectable-active: rgb(var(--muted) / 0.5);
+  --data-table-surface-hover: rgb(var(--muted));
+  --data-table-surface-active: color-mix(in srgb, rgb(var(--muted)), black var(--interactive-active-darken));
+
+  --calendar-cell-size: 2rem;
+
   --color-background: rgb(var(--background));
   --color-foreground: rgb(var(--foreground));
   --color-muted: rgb(var(--muted));
@@ -111,6 +209,8 @@
 :root:where([data-colour-scheme="blue"]) {
   --accent: 37 99 235;
   --accent-foreground: 255 255 255;
+  --button-primary-hover: color-mix(in srgb, var(--button-primary-background), white var(--interactive-hover-lighten));
+  --button-primary-active: color-mix(in srgb, var(--button-primary-background), white var(--interactive-active-lighten));
 }
 
 :root:where([data-colour-mode="dark"]) {
@@ -138,6 +238,23 @@
 
   --popover: var(--neutral-950);
   --popover-foreground: var(--brand-white);
+
+  --button-default-hover: color-mix(in srgb, var(--button-default-background), white var(--interactive-hover-lighten));
+  --button-default-active: color-mix(in srgb, var(--button-default-background), white var(--interactive-active-lighten));
+  --button-ghost-active: color-mix(in srgb, rgb(var(--muted)), white var(--interactive-hover-lighten));
+
+  --disclosure-button-hover: color-mix(in srgb, var(--disclosure-button-background), white var(--interactive-hover-lighten));
+  --disclosure-button-active: color-mix(in srgb, var(--disclosure-button-background), white var(--interactive-active-lighten));
+
+  --tabs-unselected-active: color-mix(in srgb, rgb(var(--muted)), white var(--interactive-hover-lighten));
+
+  --listbox-trigger-hover: color-mix(in srgb, rgb(var(--background)), white var(--interactive-hover-lighten));
+  --listbox-trigger-active: color-mix(in srgb, rgb(var(--background)), white var(--interactive-active-lighten));
+
+  --combobox-clear-active: color-mix(in srgb, rgb(var(--muted)), white var(--interactive-hover-lighten));
+  --autocomplete-clear-active: color-mix(in srgb, rgb(var(--muted)), white var(--interactive-hover-lighten));
+
+  --data-table-surface-active: color-mix(in srgb, rgb(var(--muted)), white var(--interactive-hover-lighten));
 }
 
 *,

@@ -27,7 +27,7 @@ export const CountrySelector: Story = {
   render: () => {
     const [selected, setSelected] = useState<ComboboxOption | null>(null);
     return (
-      <div className="sbDemoNarrow">
+      <div className="sb-demo-narrow">
         <Combobox.Root
           options={countries}
           value={selected}
@@ -43,7 +43,7 @@ export const CountrySelector: Story = {
           <Combobox.Options />
         </Combobox.Root>
         {selected && (
-          <p className="sbMt4 sbTextBase sbMutedText">Selected: {selected.label}</p>
+          <p className="sb-mt-4 sb-text-base sb-muted-text">Selected: {selected.label}</p>
         )}
       </div>
     );

@@ -47,10 +47,10 @@ export function DateCell({ value, dateFormat = 'DD/MM/YYYY' }: DateCellProps) {
   const relativeTime = getRelativeTime(date, now);
 
   return (
-    <div className={styles.dateWrap}>
-      <span className={styles.dateMain}>{formattedDate}</span>
-      <span className={clsx(styles.dateMeta)}>
-        <Clock className={styles.clockIcon} />
+    <div className={styles['date-wrap']}>
+      <span className={styles['date-main']}>{formattedDate}</span>
+      <span className={clsx(styles['date-meta'])}>
+        <Clock className={styles['clock-icon']} />
         {relativeTime}
       </span>
     </div>

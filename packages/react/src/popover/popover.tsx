@@ -26,7 +26,7 @@ function Popover({ children, className }: PopoverProps) {
   );
 }
 
-export function PopoverTrigger({ children, className, variant = 'outline', size, ...props }: PopoverTriggerProps) {
+export function PopoverTrigger({ children, className, variant = 'default', size, ...props }: PopoverTriggerProps) {
   return (
     <HeadlessPopover.Button
       as={Button}

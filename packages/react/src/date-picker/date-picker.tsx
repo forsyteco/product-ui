@@ -95,19 +95,19 @@ function DatePicker({
           <HeadlessPopover.Button
             as={Button}
             type="button"
-            variant="outline"
+            variant="default"
             disabled={disabled}
             aria-expanded={open}
             aria-haspopup="dialog"
             aria-label={selected ? `Selected date: ${label}` : placeholder}
             className={clsx(
               styles.trigger,
-              !selected && styles.triggerEmpty,
+              !selected && styles['trigger-empty'],
               buttonClassName
             )}
           >
-            <span className={styles.triggerLabel}>{label}</span>
-            <CalendarDays className={styles.triggerIcon} />
+            <span className={styles['trigger-label']}>{label}</span>
+            <CalendarDays className={styles['trigger-icon']} />
           </HeadlessPopover.Button>
 
           <Portal>

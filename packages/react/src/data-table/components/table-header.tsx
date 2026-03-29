@@ -102,17 +102,17 @@ function TableHeader<TData>({
 
   return (
     <thead>
-      <tr className={styles.headerRow} style={headerRowStyle}>
+      <tr className={styles['header-row']} style={headerRowStyle}>
         {isExpandable && (
-          <th className={styles.headerCellExpand} aria-label="Expand" style={headerCellStyle} />
+          <th className={styles['header-cell-expand']} aria-label="Expand" style={headerCellStyle} />
         )}
         {isSelectable && (
-          <th className={styles.headerCellSelect} style={headerCellStyle}>
+          <th className={styles['header-cell-select']} style={headerCellStyle}>
             <Checkbox
               checked={allSelected}
               onChange={handleSelectAll}
               aria-label="Select all rows"
-              className={styles.headerCheckbox}
+              className={styles['header-checkbox']}
               checkedBackground={colorConfig?.headerIconActiveBackground}
               checkedForeground={colorConfig?.headerIconActiveForeground}
             />
@@ -128,8 +128,8 @@ function TableHeader<TData>({
               role="columnheader"
               aria-sort={getAriaSort(column)}
               className={clsx(
-                styles.headerCell,
-                column.sortable && styles.headerCellSortable
+                styles['header-cell'],
+                column.sortable && styles['header-cell-sortable']
               )}
               style={{
                 width: column.width,
@@ -138,7 +138,7 @@ function TableHeader<TData>({
               }}
               onClick={() => handleSort(column)}
             >
-              <div className={styles.headerCellInner}>
+              <div className={styles['header-cell-inner']}>
                 <span>{column.header as ReactNode}</span>
                 {column.sortable && (
                   <SortIndicator

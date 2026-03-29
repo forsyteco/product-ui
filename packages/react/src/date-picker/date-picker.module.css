@@ -10,9 +10,9 @@
   font-size: var(--text-base);
   font-weight: 400;
 }
-.triggerEmpty { color: rgb(var(--muted-foreground)); }
-.triggerLabel { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.triggerIcon { width: 1rem; height: 1rem; color: rgb(var(--muted-foreground)); }
+.trigger-empty { color: rgb(var(--muted-foreground)); }
+.trigger-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.trigger-icon { width: 1rem; height: 1rem; color: rgb(var(--muted-foreground)); }
 .panel {
   z-index: 50;
   margin-top: 0.5rem;

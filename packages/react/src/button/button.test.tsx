@@ -17,15 +17,15 @@ describe('Button', () => {
   });
 
   it('applies variant classes', () => {
-    const { container } = render(<Button variant="secondary">Button</Button>);
+    const { container } = render(<Button variant="default">Button</Button>);
     const button = container.querySelector('button');
-    expect(button).toHaveClass(styles.variantSecondary);
+    expect(button).toHaveClass(styles['variant-default']);
   });
 
   it('applies size classes', () => {
     const { container } = render(<Button size="lg">Button</Button>);
     const button = container.querySelector('button');
-    expect(button).toHaveClass(styles.sizeLg);
+    expect(button).toHaveClass(styles['size-lg']);
   });
 
   it('applies disabled state', () => {

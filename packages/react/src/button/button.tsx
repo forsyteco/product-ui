@@ -1,38 +1,11 @@
 import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
 import { clsx } from 'clsx';
-import styles from './button.module.css';
+import { buttonVariants, type ButtonVariantProps } from './button-variants';
 
 export type ButtonProps = ComponentPropsWithoutRef<'button'> &
-  VariantProps<typeof buttonVariants> & {
+  ButtonVariantProps & {
     children?: ReactNode;
   };
-
-export const buttonVariants = cva(
-  styles.root,
-  {
-    variants: {
-      variant: {
-        primary: styles.variantPrimary,
-        secondary: styles.variantSecondary,
-        accent: styles.variantAccent,
-        outline: styles.variantOutline,
-        ghost: styles.variantGhost,
-        destructive: styles.variantDestructive,
-      },
-      size: {
-        sm: styles.sizeSm,
-        md: styles.sizeMd,
-        lg: styles.sizeLg,
-        icon: styles.sizeIcon,
-      },
-    },
-    defaultVariants: {
-      variant: 'primary',
-      size: 'md',
-    },
-  }
-);
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   { variant, size, children, className, ...props },

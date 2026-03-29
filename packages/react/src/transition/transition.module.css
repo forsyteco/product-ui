@@ -2,11 +2,11 @@
   transition: opacity 200ms ease-out;
 }
 
-.enterFrom {
+.enter-from {
   opacity: 0;
 }
 
-.enterTo {
+.enter-to {
   opacity: 1;
 }
 
@@ -14,10 +14,10 @@
   transition: opacity 150ms ease-in;
 }
 
-.leaveFrom {
+.leave-from {
   opacity: 1;
 }
 
-.leaveTo {
+.leave-to {
   opacity: 0;
 }

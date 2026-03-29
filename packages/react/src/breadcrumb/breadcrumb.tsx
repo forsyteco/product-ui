@@ -93,8 +93,8 @@ function BreadcrumbEllipsis({
       className={clsx(styles.ellipsis, className)}
       {...props}
     >
-      <MoreHorizontal className={styles.ellipsisIcon} />
-      <span className={styles.srOnly}>More</span>
+      <MoreHorizontal className={styles['ellipsis-icon']} />
+      <span className={styles['sr-only']}>More</span>
     </span>
   );
 }

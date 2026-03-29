@@ -42,14 +42,14 @@ describe('CopyableCell', () => {
       // The copy button should have opacity-0 class when not hovered
       const copyButton = container.querySelector('button');
       expect(copyButton).toBeInTheDocument();
-      expect(copyButton).toHaveClass(styles.copyButton);
+      expect(copyButton).toHaveClass(styles['copy-button']);
     });
 
     it('copy icon is wrapped by hover-aware group container', () => {
       const { container } = render(<CopyableCell value="Test value" />);
 
       const wrapper = container.firstChild;
-      expect(wrapper).toHaveClass(styles.copyGroup);
+      expect(wrapper).toHaveClass(styles['copy-group']);
     });
   });
 
@@ -58,14 +58,14 @@ describe('CopyableCell', () => {
       const { container } = render(<CopyableCell value="Test value" />);
 
       const wrapper = container.firstChild;
-      expect(wrapper).toHaveClass(styles.copyGroup);
+      expect(wrapper).toHaveClass(styles['copy-group']);
     });
 
     it('container uses copy group styling', () => {
       const { container } = render(<CopyableCell value="Test value" />);
 
       const wrapper = container.firstChild;
-      expect(wrapper).toHaveClass(styles.copyGroup);
+      expect(wrapper).toHaveClass(styles['copy-group']);
     });
   });
 
@@ -82,14 +82,14 @@ describe('CopyableCell', () => {
       const { container } = render(<CopyableCell value="Test value" />);
 
       const copyIcon = container.querySelector('svg.lucide-copy');
-      expect(copyIcon).toHaveClass(styles.copyIcon);
+      expect(copyIcon).toHaveClass(styles['copy-icon']);
     });
 
     it('copy button uses module class', () => {
       const { container } = render(<CopyableCell value="Test value" />);
 
       const copyButton = container.querySelector('button');
-      expect(copyButton).toHaveClass(styles.copyButton);
+      expect(copyButton).toHaveClass(styles['copy-button']);
     });
   });
 

@@ -35,13 +35,13 @@ function Pagination({
     <nav
       role="navigation"
       aria-label="Pagination"
-      className={clsx(styles.paginationNav, className)}
+      className={clsx(styles['pagination-nav'], className)}
       style={Object.keys(paginationStyle).length > 0 ? paginationStyle : undefined}
     >
-      <div className={styles.paginationText}>
+      <div className={styles['pagination-text']}>
         Page {page} of {totalPages}
       </div>
-      <div className={styles.paginationControls}>
+      <div className={styles['pagination-controls']}>
         <IconButton
           icon={ChevronLeft}
           variant="ghost"

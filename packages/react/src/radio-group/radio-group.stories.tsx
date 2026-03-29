@@ -36,7 +36,7 @@ export const Default: Story = {
   render: () => {
     const [value, setValue] = useState<string | undefined>(undefined);
     return (
-      <div className="sbW64">
+      <div className="sb-w-64">
         <RadioGroup options={options} value={value} onChange={setValue} />
       </div>
     );
@@ -47,7 +47,7 @@ export const Playground: Story = {
   render: (args) => {
     const [value, setValue] = useState<string | undefined>(undefined);
     return (
-      <div className="sbW64">
+      <div className="sb-w-64">
         <RadioGroup {...args} options={options} value={value} onChange={setValue} />
       </div>
     );

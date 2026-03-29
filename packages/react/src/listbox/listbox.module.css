@@ -19,10 +19,18 @@
 }
 
 .button:focus-visible {
-  box-shadow: 0 0 0 2px rgb(var(--ring)), 0 0 0 4px rgb(var(--background));
+  box-shadow: 0 0 0 2px var(--listbox-focus-ring), 0 0 0 4px rgb(var(--background));
 }
 
-.buttonDisabled {
+.button:hover {
+  background-color: var(--listbox-trigger-hover);
+}
+
+.button:active {
+  background-color: var(--listbox-trigger-active);
+}
+
+.button-disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
@@ -34,7 +42,7 @@
   white-space: nowrap;
 }
 
-.iconWrap {
+.icon-wrap {
   pointer-events: none;
   position: absolute;
   inset-block: 0;
@@ -74,16 +82,16 @@
   padding: 0.5rem 1rem 0.5rem 2.5rem;
 }
 
-.optionActive {
-  background-color: rgb(var(--accent));
-  color: rgb(var(--accent-foreground));
+.option-active {
+  background-color: var(--listbox-option-active-background);
+  color: var(--listbox-option-active-foreground);
 }
 
-.optionInactive {
+.option-inactive {
   color: rgb(var(--foreground));
 }
 
-.optionDisabled {
+.option-disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }

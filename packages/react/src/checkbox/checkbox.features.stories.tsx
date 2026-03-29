@@ -29,7 +29,7 @@ type Story = StoryObj<typeof meta>;
 
 export const WithLabel: Story = {
   render: () => (
-    <div className="sbStack4">
+    <div className="sb-stack-4">
       <Checkbox label="I agree to the terms and conditions" />
       <Checkbox label="Subscribe to newsletter" />
       <Checkbox label="Enable notifications" />
@@ -39,7 +39,7 @@ export const WithLabel: Story = {
 
 export const States: Story = {
   render: () => (
-    <div className="sbStack4">
+    <div className="sb-stack-4">
       <Checkbox label="Unchecked" />
       <Checkbox label="Checked" checked />
       <Checkbox label="Disabled" disabled />

@@ -14,12 +14,12 @@
   outline: none;
 }
 
-.optionChecked {
+.option-checked {
   border-color: rgb(var(--accent));
   background-color: rgb(var(--accent) / 0.15);
 }
 
-.optionDisabled {
+.option-disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
@@ -31,7 +31,7 @@
   justify-content: space-between;
 }
 
-.labelWrap {
+.label-wrap {
   display: flex;
   align-items: center;
 }
@@ -46,7 +46,7 @@
   color: rgb(var(--foreground));
 }
 
-.labelChecked {
+.label-checked {
   color: rgb(var(--foreground));
 }
 
@@ -54,11 +54,11 @@
   color: rgb(var(--muted-foreground));
 }
 
-.descriptionChecked {
+.description-checked {
   color: rgb(var(--foreground));
 }
 
-.iconWrap {
+.icon-wrap {
   flex-shrink: 0;
   color: rgb(var(--accent));
 }

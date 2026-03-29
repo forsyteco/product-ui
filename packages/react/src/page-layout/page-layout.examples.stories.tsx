@@ -23,9 +23,9 @@ type Story = StoryObj<typeof meta>
 
 function Panel({ title, children }: { title: string; children?: React.ReactNode }) {
   return (
-    <div className="sbPanel">
-      <div className="sbMb2 sbTextSm sbFontMedium">{title}</div>
-      <div className="sbTextSm sbMutedText">{children}</div>
+    <div className="sb-panel">
+      <div className="sb-mb-2 sb-text-sm sb-font-medium">{title}</div>
+      <div className="sb-text-sm sb-muted-text">{children}</div>
     </div>
   )
 }
@@ -41,20 +41,20 @@ export const DashboardTwoColumn: Story = {
   render: () => (
     <PageLayout containerWidth="xlarge" padding="normal" columnGap="normal" rowGap="normal">
       <PageLayoutHeader divider="none">
-        <div className="sbRowBetween">
+        <div className="sb-row-between">
           <div>
-            <div className="sbTextLg sbFontSemibold">Dashboard</div>
-            <div className="sbTextSm sbMutedText">Overview</div>
+            <div className="sb-text-lg sb-font-semibold">Dashboard</div>
+            <div className="sb-text-sm sb-muted-text">Overview</div>
           </div>
-          <div className="sbTextSm sbMutedText">Last updated: just now</div>
+          <div className="sb-text-sm sb-muted-text">Last updated: just now</div>
         </div>
       </PageLayoutHeader>
 
       <PageLayoutBody>
-        <PageLayoutContent className="sbLgColSpan9">
-          <div className="sbGrid sbGridGap4">
+        <PageLayoutContent className="sb-lg-col-span-9">
+          <div className="sb-grid sb-grid-gap-4">
             <Panel title="KPIs">Cards / charts go here</Panel>
-            <div className="sbGrid sbGridGap4 sbLgGridCols2">
+            <div className="sb-grid sb-grid-gap-4 sb-lg-grid-cols-2">
               <Panel title="Work queue">List</Panel>
               <Panel title="Alerts">List</Panel>
             </div>
@@ -62,8 +62,8 @@ export const DashboardTwoColumn: Story = {
           </div>
         </PageLayoutContent>
 
-        <PageLayoutPane className="sbLgColSpan3" position="end" sticky offsetHeader={0}>
-          <div className="sbGrid sbGridGap4">
+        <PageLayoutPane className="sb-lg-col-span-3" position="end" sticky offsetHeader={0}>
+          <div className="sb-grid sb-grid-gap-4">
             <Panel title="Quick actions">Buttons</Panel>
             <Panel title="Context">Selected matter/client details</Panel>
           </div>
@@ -71,7 +71,7 @@ export const DashboardTwoColumn: Story = {
       </PageLayoutBody>
 
       <PageLayoutFooter divider="line">
-        <div className="sbTextSm sbMutedText">© Forsyte</div>
+        <div className="sb-text-sm sb-muted-text">© Forsyte</div>
       </PageLayoutFooter>
     </PageLayout>
   ),
@@ -88,12 +88,12 @@ export const ContentOnly: Story = {
   render: () => (
     <PageLayout containerWidth="large" padding="normal" columnGap="normal" rowGap="normal">
       <PageLayoutHeader divider="line">
-        <div className="sbTextLg sbFontSemibold">Content-only page</div>
+        <div className="sb-text-lg sb-font-semibold">Content-only page</div>
       </PageLayoutHeader>
 
       <PageLayoutBody>
-        <PageLayoutContent className="sbLgColSpan12">
-          <div className="sbGrid sbGridGap4">
+        <PageLayoutContent className="sb-lg-col-span-12">
+          <div className="sb-grid sb-grid-gap-4">
             <Panel title="Form section">Inputs</Panel>
             <Panel title="Form section">Inputs</Panel>
             <Panel title="Form section">Inputs</Panel>
@@ -115,25 +115,25 @@ export const LeftPaneNavigation: Story = {
   render: () => (
     <PageLayout containerWidth="xlarge" padding="normal" columnGap="normal" rowGap="normal">
       <PageLayoutHeader divider="none">
-        <div className="sbRowBetween">
-          <div className="sbTextLg sbFontSemibold">Settings</div>
-          <div className="sbTextSm sbMutedText">Account</div>
+        <div className="sb-row-between">
+          <div className="sb-text-lg sb-font-semibold">Settings</div>
+          <div className="sb-text-sm sb-muted-text">Account</div>
         </div>
       </PageLayoutHeader>
 
       <PageLayoutBody>
-        <PageLayoutPane className="sbLgColSpan3" position="start" sticky offsetHeader={0}>
-          <div className="sbGrid sbGridGap2">
+        <PageLayoutPane className="sb-lg-col-span-3" position="start" sticky offsetHeader={0}>
+          <div className="sb-grid sb-grid-gap-2">
             {['Profile', 'Security', 'Billing', 'Integrations', 'Audit log'].map((item) => (
-              <div key={item} className="sbNavItem">
+              <div key={item} className="sb-nav-item">
                 {item}
               </div>
             ))}
           </div>
         </PageLayoutPane>
 
-        <PageLayoutContent className="sbLgColSpan9">
-          <div className="sbGrid sbGridGap4">
+        <PageLayoutContent className="sb-lg-col-span-9">
+          <div className="sb-grid sb-grid-gap-4">
             <Panel title="Profile">Main settings content</Panel>
             <Panel title="Preferences">More settings</Panel>
             <Panel title="Danger zone">Actions</Panel>
@@ -142,7 +142,7 @@ export const LeftPaneNavigation: Story = {
       </PageLayoutBody>
 
       <PageLayoutFooter divider="line">
-        <div className="sbTextSm sbMutedText">v1alpha</div>
+        <div className="sb-text-sm sb-muted-text">v1alpha</div>
       </PageLayoutFooter>
     </PageLayout>
   ),

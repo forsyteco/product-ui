@@ -10,8 +10,8 @@ const counterLabelVariants = cva(
   {
     variants: {
       variant: {
-        primary: styles.variantPrimary,
-        secondary: styles.variantSecondary,
+        primary: styles['variant-primary'],
+        secondary: styles['variant-secondary'],
       },
     },
     defaultVariants: {

@@ -65,8 +65,8 @@ export function Tab({ children, className }: TabProps) {
         clsx(
           styles.tab,
           selected
-            ? styles.tabSelected
-            : styles.tabUnselected,
+            ? styles['tab-selected']
+            : styles['tab-unselected'],
           className
         )
       }

@@ -12,13 +12,13 @@ export type RiskLevelCellProps = Readonly<{
 function getRiskLevelColors(level: string): string {
   switch (level.toLowerCase()) {
     case 'high':
-      return styles.riskHigh;
+      return styles['risk-high'];
     case 'medium':
-      return styles.riskMedium;
+      return styles['risk-medium'];
     case 'low':
-      return styles.riskLow;
+      return styles['risk-low'];
     default:
-      return styles.riskUnknown;
+      return styles['risk-unknown'];
   }
 }
 
@@ -48,7 +48,7 @@ export function RiskLevelCell({ value }: RiskLevelCellProps) {
   const displayValue = capitalizeFirst(value);
 
   return (
-    <span className={clsx(styles.riskBadge, colorClasses)}>
+    <span className={clsx(styles['risk-badge'], colorClasses)}>
       {displayValue}
     </span>
   );

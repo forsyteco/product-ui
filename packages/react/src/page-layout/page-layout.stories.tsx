@@ -181,8 +181,8 @@ export default meta
 type Story = StoryObj<StoryArgs>
 
 const Placeholder = ({ height, label }: { height: number; label: string }) => (
-  <div className="sbPanelDashed" style={{ minHeight: height }}>
-    <div className="sbP3 sbTextSm">{label}</div>
+  <div className="sb-panel-dashed" style={{ minHeight: height }}>
+    <div className="sb-p-3 sb-text-sm">{label}</div>
   </div>
 )
 
@@ -202,7 +202,7 @@ const Template: StoryFn<StoryArgs> = (args) => {
       ) : null}
 
       <PageLayoutBody>
-        <PageLayoutContent width={args.contentWidth} padding={args.contentPadding} className="sbLgColSpan8">
+        <PageLayoutContent width={args.contentWidth} padding={args.contentPadding} className="sb-lg-col-span-8">
           <Placeholder height={args.contentHeight} label="Content" />
         </PageLayoutContent>
 
@@ -215,7 +215,7 @@ const Template: StoryFn<StoryArgs> = (args) => {
             resizable={args.paneResizable}
             padding={args.panePadding}
             divider={args.paneDivider}
-            className="sbLgColSpan4"
+            className="sb-lg-col-span-4"
           >
             <Placeholder height={args.paneHeight} label="Pane" />
           </PageLayoutPane>

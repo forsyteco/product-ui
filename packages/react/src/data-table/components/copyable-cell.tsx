@@ -12,14 +12,14 @@ export function CopyableCell({ value }: CopyableCellProps) {
   };
 
   return (
-    <span className={clsx(styles.copyGroup)}>
-      <span className={styles.copyValue}>{value}</span>
+    <span className={clsx(styles['copy-group'])}>
+      <span className={styles['copy-value']}>{value}</span>
       <button
         onClick={handleCopy}
-        className={clsx(styles.copyButton)}
+        className={clsx(styles['copy-button'])}
         aria-label="Copy to clipboard"
       >
-        <Copy className={styles.copyIcon} />
+        <Copy className={styles['copy-icon']} />
       </button>
     </span>
   );

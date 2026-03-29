@@ -11,27 +11,27 @@ export type SkeletonRowProps<TData> = Readonly<{
 
 function SkeletonRow<TData>({ columns, rowInteraction }: SkeletonRowProps<TData>) {
   return (
-    <tr className={styles.skeletonRow}>
+    <tr className={styles['skeleton-row']}>
       {rowInteraction === ROW_INTERACTION.EXPANDABLE && (
-        <td className={styles.expandCell}>
-          <Skeleton className={styles.skeletonIcon} />
+        <td className={styles['expand-cell']}>
+          <Skeleton className={styles['skeleton-icon']} />
         </td>
       )}
       {rowInteraction === ROW_INTERACTION.SELECTION && (
-        <td className={styles.skeletonCell}>
-          <Skeleton className={styles.skeletonIcon} />
+        <td className={styles['skeleton-cell']}>
+          <Skeleton className={styles['skeleton-icon']} />
         </td>
       )}
       {columns.map((column) => (
         <td
           key={column.id}
-          className={styles.skeletonCell}
+          className={styles['skeleton-cell']}
           style={{
             width: column.width,
             minWidth: column.minWidth,
           }}
         >
-          <Skeleton className={styles.skeletonLine} />
+          <Skeleton className={styles['skeleton-line']} />
         </td>
       ))}
     </tr>

@@ -39,16 +39,16 @@ export const PlanSelector: Story = {
   render: () => {
     const [selectedPlan, setSelectedPlan] = useState<string>('basic');
     return (
-      <div className="sbDemoWide">
-        <h2 className="sbTextLg sbFontSemibold sbMb4">Choose Your Plan</h2>
+      <div className="sb-demo-wide">
+        <h2 className="sb-text-lg sb-font-semibold sb-mb-4">Choose Your Plan</h2>
         <RadioGroup
           options={planOptions}
           value={selectedPlan}
           onChange={setSelectedPlan}
         />
-        <div className="sbMutedInset">
-          <p className="sbTextBase sbMutedText">
-            Selected plan: <span className="sbFontMedium">{selectedPlan}</span>
+        <div className="sb-muted-inset">
+          <p className="sb-text-base sb-muted-text">
+            Selected plan: <span className="sb-font-medium">{selectedPlan}</span>
           </p>
         </div>
       </div>

@@ -33,14 +33,14 @@ export const Default: Story = {
 export const Playground: Story = {
   args: {},
   render: () => (
-    <div className="sbStackGap3">
+    <div className="sb-stack-gap-3">
       <Sonner />
-      <div className="sbFlexWrapGap2">
-        <Button variant="outline" onClick={() => toast('Default toast')}>
+      <div className="sb-flex-wrap-gap-2">
+        <Button variant="default" onClick={() => toast('Default toast')}>
           Default
         </Button>
         <Button onClick={() => toast.success('Success toast')}>Success</Button>
-        <Button variant="destructive" onClick={() => toast.error('Error toast')}>
+        <Button variant="danger" onClick={() => toast.error('Error toast')}>
           Error
         </Button>
       </div>

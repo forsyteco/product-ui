@@ -9,7 +9,7 @@ export type EmptyStateProps = Readonly<{
 function EmptyState({ children, colSpan }: EmptyStateProps) {
   return (
     <tr>
-      <td colSpan={colSpan} className={styles.emptyCell}>
+      <td colSpan={colSpan} className={styles['empty-cell']}>
         {children || 'No data available'}
       </td>
     </tr>

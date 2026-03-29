@@ -49,20 +49,20 @@ type Story = StoryObj<typeof meta>;
 
 export const InContext: Story = {
   render: () => (
-    <div className="sbStack8 sbWFullMaxWmd">
-      <div className="sbDocSurfacePad6">
-        <h3 className="sbTextLg sbFontSemibold sbMb4">Loading Content</h3>
-        <div className="sbRowCenter sbPy12">
+    <div className="sb-stack-8 sb-w-full-max-w-md">
+      <div className="sb-doc-surface-pad-6">
+        <h3 className="sb-text-lg sb-font-semibold sb-mb-4">Loading Content</h3>
+        <div className="sb-row-center sb-py-12">
           <Spinner size={48} />
         </div>
       </div>
-      <div className="sbDocSurface">
-        <div className="sbRow sbGap3">
+      <div className="sb-doc-surface">
+        <div className="sb-row sb-gap-3">
           <Spinner size={20} strokeWidth={3} />
-          <span className="sbTextBase sbMutedText">Processing...</span>
+          <span className="sb-text-base sb-muted-text">Processing...</span>
         </div>
       </div>
-      <Button type="button" disabled className="sbButtonRowGap2">
+      <Button type="button" disabled className="sb-button-row-gap-2">
         <Spinner size={16} strokeWidth={3} colors={['currentColor']} />
         <span>Submitting</span>
       </Button>
@@ -108,16 +108,16 @@ export const FullLifecycle: Story = {
 
     return (
       <>
-        <Button type="button" onClick={initiateLoading} disabled={state === 'done'} className="sbMb4">
+        <Button type="button" onClick={initiateLoading} disabled={state === 'done'} className="sb-mb-4">
           Load content
         </Button>
         {state === 'loading' && <Spinner />}
-        {loadedContent && <p className="sbMt4">{loadedContent}</p>}
+        {loadedContent && <p className="sb-mt-4">{loadedContent}</p>}
         <div
           role="status"
           aria-live="polite"
           aria-atomic="true"
-          className="sbSrOnly"
+          className="sb-sr-only"
         >
           {state === 'done' && 'Content finished loading'}
         </div>

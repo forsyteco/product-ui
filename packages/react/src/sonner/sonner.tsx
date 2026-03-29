@@ -27,8 +27,8 @@ export const Sonner = ({ ...props }: SonnerProps) => {
         classNames: {
           toast: styles.toast,
           description: styles.description,
-          actionButton: styles.actionButton,
-          cancelButton: styles.cancelButton,
+          actionButton: styles['action-button'],
+          cancelButton: styles['cancel-button'],
         },
       }}
       {...props}

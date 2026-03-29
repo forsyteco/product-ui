@@ -40,8 +40,8 @@ export const Default: Story = {
             <DialogDescription>
               Are you sure you want to proceed? This action cannot be undone.
             </DialogDescription>
-            <div className="sbDialogActions">
-              <Button variant="outline" onClick={() => setIsOpen(false)}>
+            <div className="sb-dialog-actions">
+              <Button variant="default" onClick={() => setIsOpen(false)}>
                 Cancel
               </Button>
               <Button onClick={() => setIsOpen(false)}>
@@ -69,8 +69,8 @@ export const Playground: Story = {
             <DialogDescription>
               This is a dialog description. You can customize the content here.
             </DialogDescription>
-            <div className="sbDialogActions">
-              <Button variant="outline" onClick={() => setIsOpen(false)}>
+            <div className="sb-dialog-actions">
+              <Button variant="default" onClick={() => setIsOpen(false)}>
                 Cancel
               </Button>
               <Button onClick={() => setIsOpen(false)}>

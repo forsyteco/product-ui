@@ -244,8 +244,8 @@ function Input({
       {...inputProps}
       className={clsx(
         styles.input,
-        ctx.invalid && styles.inputInvalid,
-        ctx.disabled && styles.inputDisabled,
+        ctx.invalid && styles['input-invalid'],
+        ctx.disabled && styles['input-disabled'],
         className
       )}
       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -280,7 +280,7 @@ function ClearButton({
       {...props}
       aria-label={ariaLabel ?? 'Clear selection'}
       className={clsx(
-        styles.clearButton,
+        styles['clear-button'],
         className
       )}
       onClick={(e) => {
@@ -291,7 +291,7 @@ function ClearButton({
         onClick?.(e);
       }}
     >
-      <svg className={styles.clearIcon} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+      <svg className={styles['clear-icon']} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
         <path
           fillRule="evenodd"
           d="M10 8.586 4.293 2.879A1 1 0 1 0 2.879 4.293L8.586 10l-5.707 5.707a1 1 0 1 0 1.414 1.414L10 11.414l5.707 5.707a1 1 0 0 0 1.414-1.414L11.414 10l5.707-5.707A1 1 0 0 0 15.707 2.88L10 8.586Z"
@@ -315,14 +315,14 @@ function ToggleButton({
       {...props}
       aria-label={props['aria-label'] ?? 'Toggle options'}
       className={clsx(
-        styles.toggleButton,
-        ctx.disabled && styles.toggleDisabled,
+        styles['toggle-button'],
+        ctx.disabled && styles['toggle-disabled'],
         className
       )}
       onClick={onClick}
     >
       {children ?? (
-        <svg className={styles.toggleIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <svg className={styles['toggle-icon']} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       )}
@@ -401,9 +401,9 @@ function Option({
       }) =>
         clsx(
           styles.option,
-          optDisabled ? styles.optionDisabled : styles.optionEnabled,
-          active ? styles.optionActive : styles.optionInactive,
-          selected && styles.optionSelected,
+          optDisabled ? styles['option-disabled'] : styles['option-enabled'],
+          active ? styles['option-active'] : styles['option-inactive'],
+          selected && styles['option-selected'],
           typeof className === 'function'
             ? className({ active, selected, disabled: optDisabled })
             : className

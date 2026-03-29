@@ -30,19 +30,19 @@ function SortIndicator({ direction, color, activeBackground, activeForeground }:
   return (
     <span
       className={clsx(
-        styles.sortWrap,
-        isActive && !activeBackground && styles.sortActiveDefault
+        styles['sort-wrap'],
+        isActive && !activeBackground && styles['sort-active-default']
       )}
       style={containerStyle}
     >
       {direction === 'asc' && (
-        <ArrowUp className={clsx(styles.sortIcon, !iconColor && styles.sortIconDefault)} style={iconStyle} />
+        <ArrowUp className={clsx(styles['sort-icon'], !iconColor && styles['sort-icon-default'])} style={iconStyle} />
       )}
       {direction === 'desc' && (
-        <ArrowDown className={clsx(styles.sortIcon, !iconColor && styles.sortIconDefault)} style={iconStyle} />
+        <ArrowDown className={clsx(styles['sort-icon'], !iconColor && styles['sort-icon-default'])} style={iconStyle} />
       )}
       {direction === null && (
-        <ArrowUpDown className={clsx(styles.sortIcon, !iconColor && styles.sortIconDefault, styles.sortIconInactive)} style={iconStyle} />
+        <ArrowUpDown className={clsx(styles['sort-icon'], !iconColor && styles['sort-icon-default'], styles['sort-icon-inactive'])} style={iconStyle} />
       )}
     </span>
   );

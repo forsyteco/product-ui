@@ -46,7 +46,7 @@ export const DefaultOpen: Story = {
 
 export const MultipleItems: Story = {
   render: () => (
-    <div className="sbWFullMaxWmd sbStack2">
+    <div className="sb-w-full-max-w-md sb-stack-2">
       <Disclosure>
         <DisclosureButton>What is your refund policy?</DisclosureButton>
         <DisclosurePanel>

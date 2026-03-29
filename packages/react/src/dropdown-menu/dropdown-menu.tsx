@@ -37,11 +37,11 @@ function DropdownMenu({ trigger, children, className, align = 'right' }: Dropdow
       >
         <Menu.Items
           className={clsx(
-            styles.menuItems,
-            align === 'left' ? styles.alignLeft : styles.alignRight
+            styles['menu-items'],
+            align === 'left' ? styles['align-left'] : styles['align-right']
           )}
         >
-          <div className={styles.menuBody}>{children}</div>
+          <div className={styles['menu-body']}>{children}</div>
         </Menu.Items>
       </Transition>
     </Menu>
@@ -59,7 +59,7 @@ export function DropdownMenuItem({ children, onClick, disabled, className }: Dro
           disabled={disabled}
           className={clsx(
             styles.item,
-            active ? styles.itemActive : styles.itemInactive,
+            active ? styles['item-active'] : styles['item-inactive'],
             className
           )}
         >
@@ -74,7 +74,7 @@ export function DropdownMenuButton({ children, className, ...props }: DropdownMe
   return (
     <Menu.Button
       as={Button}
-      variant="outline"
+      variant="default"
       className={clsx(styles.button, className)}
       {...props}
     >

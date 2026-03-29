@@ -40,7 +40,7 @@ export const Basic: Story = {
   render: () => {
     const [selected, setSelected] = useState<AutocompleteOption | null>(null);
     return (
-      <div className="sbW72">
+      <div className="sb-w-72">
         <Autocomplete.Root
           options={options}
           value={selected}
@@ -63,7 +63,7 @@ export const WithInitialValue: Story = {
   render: () => {
     const [selected, setSelected] = useState<AutocompleteOption | null>(options[1]);
     return (
-      <div className="sbW72">
+      <div className="sb-w-72">
         <Autocomplete.Root
           options={options}
           value={selected}
@@ -84,7 +84,7 @@ export const WithInitialValue: Story = {
 
 export const Disabled: Story = {
   render: () => (
-    <div className="sbW72">
+    <div className="sb-w-72">
       <Autocomplete.Root options={options} disabled placeholder="Disabled autocomplete">
         <Autocomplete.Control>
           <Autocomplete.LeadingIcon />
@@ -101,7 +101,7 @@ export const WithLoading: Story = {
   render: () => {
     const [selected, setSelected] = useState<AutocompleteOption | null>(null);
     return (
-      <div className="sbW72">
+      <div className="sb-w-72">
         <Autocomplete.Root
           options={options}
           value={selected}

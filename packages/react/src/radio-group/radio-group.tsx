@@ -40,22 +40,22 @@ function RadioGroup({
             className={({ checked, disabled: optionDisabled }) =>
               clsx(
                 styles.option,
-                checked && styles.optionChecked,
-                (disabled || optionDisabled) && styles.optionDisabled
+                checked && styles['option-checked'],
+                (disabled || optionDisabled) && styles['option-disabled']
               )
             }
           >
             {({ checked }) => (
               <div className={styles.row}>
-                <div className={styles.labelWrap}>
+                <div className={styles['label-wrap']}>
                   <div className={styles.text}>
-                    <HeadlessRadioGroup.Label as="p" className={clsx(styles.label, checked && styles.labelChecked)}>
+                    <HeadlessRadioGroup.Label as="p" className={clsx(styles.label, checked && styles['label-checked'])}>
                       {option.label}
                     </HeadlessRadioGroup.Label>
                     {option.description && (
                       <HeadlessRadioGroup.Description
                         as="span"
-                        className={clsx(styles.description, checked && styles.descriptionChecked)}
+                        className={clsx(styles.description, checked && styles['description-checked'])}
                       >
                         {option.description}
                       </HeadlessRadioGroup.Description>
@@ -63,7 +63,7 @@ function RadioGroup({
                   </div>
                 </div>
                 {checked && (
-                  <div className={styles.iconWrap}>
+                  <div className={styles['icon-wrap']}>
                     <svg className={styles.icon} fill="currentColor" viewBox="0 0 20 20">
                       <path
                         fillRule="evenodd"

@@ -47,7 +47,7 @@ function Select({ options, placeholder, error, className, ...props }: SelectProp
           </option>
         ))}
       </select>
-      <span className={styles.iconWrap}>
+      <span className={styles['icon-wrap']}>
         <svg
           className={styles.icon}
           fill="none"

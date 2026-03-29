@@ -97,10 +97,10 @@ function DataTable<TData, TExpandedData = unknown>({
 
   return (
     <div
-      className={clsx(styles.tableContainer, className)}
+      className={clsx(styles['table-container'], className)}
       style={containerStyle}
     >
-      <div className={styles.tableWrap}>
+      <div className={styles['table-wrap']}>
         <table
           aria-busy={loading}
           className={styles.table}
@@ -142,7 +142,7 @@ function DataTable<TData, TExpandedData = unknown>({
         pageSize={pageSize}
         totalCount={totalCount}
         onPageChange={onPageChange}
-        className={styles.paginationBorder}
+        className={styles['pagination-border']}
         colorConfig={colorConfig}
       />
     </div>

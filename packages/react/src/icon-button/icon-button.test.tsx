@@ -17,12 +17,18 @@ describe('IconButton', () => {
 
   it('applies variant, size, and shape classes', () => {
     const { container } = render(
-      <IconButton icon={HeartIcon} variant="primary" size="large" shape="circle" aria-label="Favorite" />
+      <IconButton icon={HeartIcon} variant="default" size="large" shape="circle" aria-label="Favorite" />
     )
     const button = container.firstChild as HTMLElement
-    expect(button).toHaveClass(styles.variantPrimary)
-    expect(button).toHaveClass(styles.sizeLarge, styles.shapeCircle)
-    expect(screen.getByTestId('icon')).toHaveClass(styles.iconLarge)
+    expect(button).toHaveClass(styles['variant-default'])
+    expect(button).toHaveClass(styles['size-large'], styles['shape-circle'])
+    expect(screen.getByTestId('icon')).toHaveClass(styles['icon-large'])
+  })
+
+  it('supports danger variant styling', () => {
+    const { container } = render(<IconButton icon={HeartIcon} variant="danger" aria-label="Danger" />)
+    const button = container.firstChild as HTMLElement
+    expect(button).toHaveClass(styles['variant-danger'])
   })
 
   it('supports loading state', () => {

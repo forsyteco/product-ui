@@ -31,7 +31,7 @@ function Switch({
         <Label
           className={clsx(
             styles.label,
-            isDisabled && styles.labelDisabled
+            isDisabled && styles['label-disabled']
           )}
         >
           {label}
@@ -41,7 +41,7 @@ function Switch({
         <Description
           className={clsx(
             styles.description,
-            isDisabled && styles.descriptionDisabled
+            isDisabled && styles['description-disabled']
           )}
         >
           {description}
@@ -53,14 +53,14 @@ function Switch({
         disabled={isDisabled}
         className={clsx(
           styles.switch,
-          size === 'sm' ? styles.switchSm : size === 'lg' ? styles.switchLg : styles.switchMd,
-          isDisabled && styles.switchDisabled
+          size === 'sm' ? styles['switch-sm'] : size === 'lg' ? styles['switch-lg'] : styles['switch-md'],
+          isDisabled && styles['switch-disabled']
         )}
       >
         <span
           className={clsx(
             styles.thumb,
-            size === 'sm' ? styles.thumbSm : size === 'lg' ? styles.thumbLg : styles.thumbMd
+            size === 'sm' ? styles['thumb-sm'] : size === 'lg' ? styles['thumb-lg'] : styles['thumb-md']
           )}
         />
       </HeadlessSwitch>

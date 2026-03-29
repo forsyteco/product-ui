@@ -16,32 +16,32 @@ type Story = StoryObj<typeof meta>;
 
 export const WithHeaderAction: Story = {
   render: () => (
-    <Card className="sbW420">
-      <CardHeader className="sbBorderB">
+    <Card className="sb-w-420">
+      <CardHeader className="sb-border-b">
         <div>
           <CardTitle>Team settings</CardTitle>
           <CardDescription>Manage your team configuration.</CardDescription>
         </div>
         <CardAction>
-          <Button size="sm" variant="outline">
+          <Button size="sm" variant="default">
             Edit
           </Button>
         </CardAction>
       </CardHeader>
       <CardContent>
-        <div className="sbGrid sbGridGap2 sbTextBase">
-          <div className="sbRowBetween">
-            <span className="sbMutedText">Members</span>
-            <span className="sbForegroundText">12</span>
+        <div className="sb-grid sb-grid-gap-2 sb-text-base">
+          <div className="sb-row-between">
+            <span className="sb-muted-text">Members</span>
+            <span className="sb-foreground-text">12</span>
           </div>
-          <div className="sbRowBetween">
-            <span className="sbMutedText">Plan</span>
-            <span className="sbForegroundText">Pro</span>
+          <div className="sb-row-between">
+            <span className="sb-muted-text">Plan</span>
+            <span className="sb-foreground-text">Pro</span>
           </div>
         </div>
       </CardContent>
-      <CardFooter className="sbBorderT sbCardFooterActions">
-        <Button variant="outline">Cancel</Button>
+      <CardFooter className="sb-border-t sb-card-footer-actions">
+        <Button variant="default">Cancel</Button>
         <Button>Save changes</Button>
       </CardFooter>
     </Card>
@@ -50,9 +50,9 @@ export const WithHeaderAction: Story = {
 
 export const Minimal: Story = {
   render: () => (
-    <Card className="sbW360">
+    <Card className="sb-w-360">
       <CardContent>
-        <p className="sbTextBase sbForegroundText">A minimal card with only content.</p>
+        <p className="sb-text-base sb-foreground-text">A minimal card with only content.</p>
       </CardContent>
     </Card>
   ),

@@ -15,30 +15,30 @@ type Story = StoryObj<typeof meta>;
 
 export const ContactForm: Story = {
   render: () => (
-    <div className="sbDemoNarrow">
-      <form className="sbStack4">
+    <div className="sb-demo-narrow">
+      <form className="sb-stack-4">
         <div>
-          <label className="sbFormLabel">
+          <label className="sb-form-label">
             Name
           </label>
           <input
             type="text"
-            className="sbNativeInput"
+            className="sb-native-input"
             placeholder="Your name"
           />
         </div>
         <div>
-          <label className="sbFormLabel">
+          <label className="sb-form-label">
             Email
           </label>
           <input
             type="email"
-            className="sbNativeInput"
+            className="sb-native-input"
             placeholder="you@example.com"
           />
         </div>
         <div>
-          <label className="sbFormLabel">
+          <label className="sb-form-label">
             Message
           </label>
           <Textarea
@@ -46,7 +46,7 @@ export const ContactForm: Story = {
             placeholder="Enter your message..."
           />
         </div>
-        <Button type="submit" className="sbWFull">
+        <Button type="submit" className="sb-w-full">
           Send Message
         </Button>
       </form>
@@ -56,10 +56,10 @@ export const ContactForm: Story = {
 
 export const FormWithValidation: Story = {
   render: () => (
-    <div className="sbDemoNarrow">
-      <form className="sbStack4">
+    <div className="sb-demo-narrow">
+      <form className="sb-stack-4">
         <div>
-          <label className="sbFormLabel">
+          <label className="sb-form-label">
             Description
           </label>
           <Textarea
@@ -67,7 +67,7 @@ export const FormWithValidation: Story = {
             placeholder="Enter description..."
             error
           />
-          <p className="sbMt1 sbTextBase sbErrorText">
+          <p className="sb-mt-1 sb-text-base sb-error-text">
             Description must be at least 10 characters
           </p>
         </div>

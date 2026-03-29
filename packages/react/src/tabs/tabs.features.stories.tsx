@@ -20,7 +20,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Basic: Story = {
   render: () => (
-    <div className="sbWFullMaxWmd">
+    <div className="sb-w-full-max-w-md">
       <Tabs>
         <TabList>
           <Tab>Account</Tab>
@@ -29,16 +29,16 @@ export const Basic: Story = {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <h3 className="sbFontSemibold sbMb2">Account Settings</h3>
-            <p className="sbTextBase sbMutedText">Manage your account preferences here.</p>
+            <h3 className="sb-font-semibold sb-mb-2">Account Settings</h3>
+            <p className="sb-text-base sb-muted-text">Manage your account preferences here.</p>
           </TabPanel>
           <TabPanel>
-            <h3 className="sbFontSemibold sbMb2">Password Settings</h3>
-            <p className="sbTextBase sbMutedText">Update your password and security settings.</p>
+            <h3 className="sb-font-semibold sb-mb-2">Password Settings</h3>
+            <p className="sb-text-base sb-muted-text">Update your password and security settings.</p>
           </TabPanel>
           <TabPanel>
-            <h3 className="sbFontSemibold sbMb2">Notification Settings</h3>
-            <p className="sbTextBase sbMutedText">Configure how you receive notifications.</p>
+            <h3 className="sb-font-semibold sb-mb-2">Notification Settings</h3>
+            <p className="sb-text-base sb-muted-text">Configure how you receive notifications.</p>
           </TabPanel>
         </TabPanels>
       </Tabs>
@@ -48,7 +48,7 @@ export const Basic: Story = {
 
 export const DefaultIndex: Story = {
   render: () => (
-    <div className="sbWFullMaxWmd">
+    <div className="sb-w-full-max-w-md">
       <Tabs defaultIndex={1}>
         <TabList>
           <Tab>First</Tab>

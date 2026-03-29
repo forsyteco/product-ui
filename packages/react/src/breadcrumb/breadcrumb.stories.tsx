@@ -31,9 +31,9 @@ export function Default() {
           <DropdownMenu
             align="left"
             trigger={
-              <Button variant="ghost" size="sm" className="sbBreadcrumbTrigger">
-                <BreadcrumbEllipsis className="sbIcon4" />
-                <span className="sbSrOnly">Toggle menu</span>
+              <Button variant="ghost" size="sm" className="sb-breadcrumb-trigger">
+                <BreadcrumbEllipsis className="sb-icon-4" />
+                <span className="sb-sr-only">Toggle menu</span>
               </Button>
             }
           >
@@ -75,9 +75,9 @@ export const Playground: Story = {
               <DropdownMenu
                 align="left"
                 trigger={
-                  <Button variant="ghost" size="sm" className="sbBreadcrumbTrigger">
-                    <BreadcrumbEllipsis className="sbIcon4" />
-                    <span className="sbSrOnly">Toggle menu</span>
+                  <Button variant="ghost" size="sm" className="sb-breadcrumb-trigger">
+                    <BreadcrumbEllipsis className="sb-icon-4" />
+                    <span className="sb-sr-only">Toggle menu</span>
                   </Button>
                 }
               >

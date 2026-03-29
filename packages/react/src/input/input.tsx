@@ -9,9 +9,9 @@ const inputVariants = cva(
   {
     variants: {
       size: {
-        default: styles.sizeDefault,
-        sm: styles.sizeSm,
-        lg: styles.sizeLg,
+        default: styles['size-default'],
+        sm: styles['size-sm'],
+        lg: styles['size-lg'],
       },
     },
     defaultVariants: {
@@ -49,9 +49,9 @@ export type InputProps = Pick<
   };
 
 const sizeToPadding = {
-  default: { slot: styles.slotPadDefault, input: styles.inputPadDefault },
-  sm: { slot: styles.slotPadSm, input: styles.inputPadSm },
-  lg: { slot: styles.slotPadLg, input: styles.inputPadLg },
+  default: { slot: styles['slot-pad-default'], input: styles['input-pad-default'] },
+  sm: { slot: styles['slot-pad-sm'], input: styles['input-pad-sm'] },
+  lg: { slot: styles['slot-pad-lg'], input: styles['input-pad-lg'] },
 } as const;
 
 function Input({
@@ -79,8 +79,8 @@ function Input({
         data-slot="input"
         className={clsx(
           styles.input,
-          startElement ? styles.inputPadNoneLeft : pad.input,
-          endElement ? styles.inputPadNoneRight : pad.input,
+          startElement ? styles['input-pad-none-left'] : pad.input,
+          endElement ? styles['input-pad-none-right'] : pad.input,
           inputClassName
         )}
       />

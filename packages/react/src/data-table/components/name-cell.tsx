@@ -24,9 +24,9 @@ export type NameCellProps<TData extends WithEmail = WithEmail> = Readonly<{
  */
 export function NameCell<TData extends WithEmail>({ value, row }: NameCellProps<TData>) {
   return (
-    <div className={styles.nameWrap}>
-      <span className={styles.nameValue}>{value}</span>
-      <span className={styles.nameEmail}>{row.email}</span>
+    <div className={styles['name-wrap']}>
+      <span className={styles['name-value']}>{value}</span>
+      <span className={styles['name-email']}>{row.email}</span>
     </div>
   );
 }

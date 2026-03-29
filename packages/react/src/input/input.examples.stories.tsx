@@ -15,21 +15,21 @@ type Story = StoryObj<typeof meta>;
 
 export const LoginForm: Story = {
   render: () => (
-    <div className="sbDemoNarrow">
-      <form className="sbStack4">
+    <div className="sb-demo-narrow">
+      <form className="sb-stack-4">
         <div>
-          <label className="sbFormLabel">
+          <label className="sb-form-label">
             Email
           </label>
           <Input type="email" placeholder="you@example.com" />
         </div>
         <div>
-          <label className="sbFormLabel">
+          <label className="sb-form-label">
             Password
           </label>
           <Input type="password" placeholder="••••••••" />
         </div>
-        <Button type="submit" className="sbWFull">
+        <Button type="submit" className="sb-w-full">
           Sign In
         </Button>
       </form>
@@ -39,21 +39,21 @@ export const LoginForm: Story = {
 
 export const FormWithValidation: Story = {
   render: () => (
-    <div className="sbDemoNarrow">
-      <form className="sbStack4">
+    <div className="sb-demo-narrow">
+      <form className="sb-stack-4">
         <div>
-          <label className="sbFormLabel">
+          <label className="sb-form-label">
             Username
           </label>
           <Input placeholder="Enter username" />
-          <p className="sbMt1 sbTextBase sbHelpText">Must be at least 3 characters</p>
+          <p className="sb-mt-1 sb-text-base sb-help-text">Must be at least 3 characters</p>
         </div>
         <div>
-          <label className="sbFormLabel">
+          <label className="sb-form-label">
             Email
           </label>
           <Input type="email" placeholder="Enter email" error />
-          <p className="sbMt1 sbTextBase sbErrorText">Please enter a valid email address</p>
+          <p className="sb-mt-1 sb-text-base sb-error-text">Please enter a valid email address</p>
         </div>
       </form>
     </div>

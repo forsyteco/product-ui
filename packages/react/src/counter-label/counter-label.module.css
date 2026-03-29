@@ -9,12 +9,12 @@
   font-weight: 600;
 }
 
-.variantPrimary {
+.variant-primary {
   background-color: rgb(var(--primary));
   color: rgb(var(--primary-foreground));
 }
 
-.variantSecondary {
+.variant-secondary {
   background-color: rgb(var(--muted));
   color: rgb(var(--foreground));
 }

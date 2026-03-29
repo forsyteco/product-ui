@@ -30,14 +30,14 @@ export const Default: Story = {
 
 export const Playground: Story = {
   render: () => (
-    <div className="sbRow sbGap3">
+    <div className="sb-row sb-gap-3">
       <Avatar>
         <AvatarFallback variant="initials" name="Ada Lovelace" />
       </Avatar>
       <Avatar>
         <AvatarFallback variant="boring" name="Grace Hopper" />
       </Avatar>
-      <Avatar className="sbSize12">
+      <Avatar className="sb-size-12">
         <AvatarFallback variant="boring" name="Alan Turing" />
       </Avatar>
     </div>

@@ -18,7 +18,7 @@ export const Notification: Story = {
   render: () => {
     const [show, setShow] = useState(false);
     return (
-      <div className="sbP6">
+      <div className="sb-p-6">
         <Button
           onClick={() => {
             setShow(true);
@@ -27,9 +27,9 @@ export const Notification: Story = {
         >
           Show Notification
         </Button>
-        <div className="sbFixedTopRight">
+        <div className="sb-fixed-top-right">
           <Transition show={show}>
-            <div className="sbToastSuccessDemo">
+            <div className="sb-toast-success-demo">
               Success! Your changes have been saved.
             </div>
           </Transition>

@@ -21,22 +21,26 @@
 }
 
 .tab:focus-visible {
-  box-shadow: 0 0 0 2px rgb(var(--ring));
+  box-shadow: 0 0 0 2px var(--tabs-focus-ring);
 }
 
-.tabSelected {
+.tab-selected {
   background-color: rgb(var(--background));
   color: rgb(var(--foreground));
   box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
 }
 
-.tabUnselected {
+.tab-unselected {
   color: rgb(var(--muted-foreground));
 }
 
-.tabUnselected:hover {
-  background-color: rgb(255 255 255 / 0.12);
+.tab-unselected:hover {
+  background-color: var(--tabs-unselected-hover);
   color: rgb(var(--foreground));
+}
+
+.tab-unselected:active {
+  background-color: var(--tabs-unselected-active);
 }
 
 .panels {

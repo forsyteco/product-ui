@@ -33,7 +33,7 @@
   border-color: rgb(var(--destructive));
 }
 
-.iconWrap {
+.icon-wrap {
   pointer-events: none;
   position: absolute;
   inset-block: 0;

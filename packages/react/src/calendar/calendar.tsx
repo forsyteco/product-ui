@@ -75,7 +75,7 @@ function Calendar({
           type="button"
           variant={buttonVariant}
           size="icon"
-          className={styles.navButton}
+          className={styles['nav-button']}
           tabIndex={isPreviousDisabled ? -1 : undefined}
           disabled={isPreviousDisabled}
           aria-label={labelPrevious(previousMonth)}
@@ -88,7 +88,7 @@ function Calendar({
           type="button"
           variant={buttonVariant}
           size="icon"
-          className={styles.navButton}
+          className={styles['nav-button']}
           tabIndex={isNextDisabled ? -1 : undefined}
           disabled={isNextDisabled}
           aria-label={labelNext(nextMonth)}
@@ -104,7 +104,7 @@ function Calendar({
     <DayPicker
       showOutsideDays={showOutsideDays}
       className={clsx(
-        styles.rootCalendar,
+        styles['root-calendar'],
         className
       )}
       data-testid="calendar-root"
@@ -121,8 +121,8 @@ function Calendar({
         ),
         month: clsx(styles.month, defaultClassNames.month),
         nav: clsx(defaultClassNames.nav),
-        button_previous: clsx(styles.navButton, defaultClassNames.button_previous),
-        button_next: clsx(styles.navButton, defaultClassNames.button_next),
+        button_previous: clsx(styles['nav-button'], defaultClassNames.button_previous),
+        button_next: clsx(styles['nav-button'], defaultClassNames.button_next),
         month_caption: clsx(
           styles.caption,
           defaultClassNames.month_caption
@@ -132,7 +132,7 @@ function Calendar({
           defaultClassNames.dropdowns
         ),
         dropdown_root: clsx(
-          styles.dropdownRoot,
+          styles['dropdown-root'],
           defaultClassNames.dropdown_root
         ),
         dropdown: clsx(
@@ -140,7 +140,7 @@ function Calendar({
           defaultClassNames.dropdown
         ),
         caption_label: clsx(
-          styles.captionLabel,
+          styles['caption-label'],
           defaultClassNames.caption_label
         ),
         table: styles.table,
@@ -151,11 +151,11 @@ function Calendar({
         ),
         week: clsx(styles.week, defaultClassNames.week),
         week_number_header: clsx(
-          styles.weekNumberHeader,
+          styles['week-number-header'],
           defaultClassNames.week_number_header
         ),
         week_number: clsx(
-          styles.weekNumber,
+          styles['week-number'],
           defaultClassNames.week_number
         ),
         day: clsx(
@@ -163,19 +163,19 @@ function Calendar({
           defaultClassNames.day
         ),
         day_button: clsx(
-          styles.dayButton,
+          styles['day-button'],
           defaultClassNames.day_button
         ),
         range_start: clsx(
-          styles.rangeStart,
+          styles['range-start'],
           defaultClassNames.range_start
         ),
         range_middle: clsx(
-          styles.rangeMiddle,
+          styles['range-middle'],
           defaultClassNames.range_middle
         ),
         range_end: clsx(
-          styles.rangeEnd,
+          styles['range-end'],
           defaultClassNames.range_end
         ),
         selected: clsx(
@@ -209,7 +209,7 @@ function Calendar({
         WeekNumber: ({ children, ...props }) => {
           return (
             <td {...props}>
-              <div className={styles.weekNumberCell}>
+              <div className={styles['week-number-cell']}>
                 {children}
               </div>
             </td>

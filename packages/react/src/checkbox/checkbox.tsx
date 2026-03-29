@@ -8,13 +8,13 @@ const checkboxVariants = cva(
   {
     variants: {
       size: {
-        sm: styles.sizeSm,
-        md: styles.sizeMd,
-        lg: styles.sizeLg,
+        sm: styles['size-sm'],
+        md: styles['size-md'],
+        lg: styles['size-lg'],
       },
       // Variant for default checked styling (can be disabled when using custom colors)
       useDefaultCheckedStyle: {
-        true: styles.useDefaultCheckedStyle,
+        true: styles['use-default-checked-style'],
         false: '',
       },
     },

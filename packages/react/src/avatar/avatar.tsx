@@ -116,18 +116,18 @@ function AvatarFallback(props: AvatarFallbackProps) {
       return (
         <AvatarPrimitive.Fallback
           data-slot="avatar-fallback"
-          className={clsx(styles.fallbackBoring, className)}
+          className={clsx(styles['fallback-boring'], className)}
           asChild
           {...rest}
         >
-          <div className={styles.boringContainer}>
+          <div className={styles['boring-container']}>
             <BoringAvatarComponent
               variant="beam"
               name={name}
-              className={styles.boringAvatar}
+              className={styles['boring-avatar']}
               colors={[...BORING_AVATAR_COLORS]}
             />
-            <span className={styles.boringInitials}>
+            <span className={styles['boring-initials']}>
               {getInitials(name)}
             </span>
           </div>

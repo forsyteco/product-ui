@@ -20,11 +20,11 @@ function Transition({
   children,
   className,
   enter = styles.enter,
-  enterFrom = styles.enterFrom,
-  enterTo = styles.enterTo,
+  enterFrom = styles['enter-from'],
+  enterTo = styles['enter-to'],
   leave = styles.leave,
-  leaveFrom = styles.leaveFrom,
-  leaveTo = styles.leaveTo,
+  leaveFrom = styles['leave-from'],
+  leaveTo = styles['leave-to'],
 }: TransitionProps) {
   return (
     <HeadlessTransition

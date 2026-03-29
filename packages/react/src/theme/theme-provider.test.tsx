@@ -39,38 +39,48 @@ describe('ThemeProvider', () => {
     });
   });
 
-  it('applies initial theme attributes from provider state', async () => {
-    render(
-      <ThemeProvider storageKey="theme-test-key" defaultMode="system" colourScheme="yellow">
-        <ThemeConsumer />
-      </ThemeProvider>
-    );
+  describe('when mounted with initial colour scheme and system mode', () => {
+    it('should apply initial theme attributes from provider state', async () => {
+      // Arrange
+      render(
+        <ThemeProvider storageKey="theme-test-key" defaultMode="system" colourScheme="yellow">
+          <ThemeConsumer />
+        </ThemeProvider>
+      );
 
-    await waitFor(() => {
-      expect(document.documentElement).toHaveAttribute('data-colour-scheme', 'yellow');
-      expect(document.documentElement).toHaveAttribute('data-colour-mode', 'dark');
+      // Act
+      // (ThemeProvider applies data attributes on mount)
+
+      // Assert
+      await waitFor(() => {
+        expect(document.documentElement).toHaveAttribute('data-colour-scheme', 'yellow');
+        expect(document.documentElement).toHaveAttribute('data-colour-mode', 'dark');
+      });
     });
   });
 
-  it('updates mode and colour scheme and persists values', async () => {
-    const user = userEvent.setup();
+  describe('when the user updates colour scheme and mode', () => {
+    it('should update mode and colour scheme and persist values', async () => {
+      // Arrange
+      const user = userEvent.setup();
+      render(
+        <ThemeProvider storageKey="theme-test-key">
+          <ThemeConsumer />
+        </ThemeProvider>
+      );
 
-    render(
-      <ThemeProvider storageKey="theme-test-key">
-        <ThemeConsumer />
-      </ThemeProvider>
-    );
+      // Act
+      await user.click(screen.getByRole('button', { name: 'Set blue' }));
+      await user.click(screen.getByRole('button', { name: 'Set light' }));
 
-    await user.click(screen.getByRole('button', { name: 'Set blue' }));
-    await user.click(screen.getByRole('button', { name: 'Set light' }));
-
-    await waitFor(() => {
-      expect(document.documentElement).toHaveAttribute('data-colour-scheme', 'blue');
-      expect(document.documentElement).toHaveAttribute('data-colour-mode', 'light');
+      // Assert
+      await waitFor(() => {
+        expect(document.documentElement).toHaveAttribute('data-colour-scheme', 'blue');
+        expect(document.documentElement).toHaveAttribute('data-colour-mode', 'light');
+      });
+      expect(localStorage.getItem('theme-test-key-colour-scheme')).toBe('blue');
+      expect(localStorage.getItem('theme-test-key-mode')).toBe('light');
+      expect(screen.getByTestId('theme-values')).toHaveTextContent('blue:light:light');
     });
-
-    expect(localStorage.getItem('theme-test-key-colour-scheme')).toBe('blue');
-    expect(localStorage.getItem('theme-test-key-mode')).toBe('light');
-    expect(screen.getByTestId('theme-values')).toHaveTextContent('blue:light:light');
   });
 });

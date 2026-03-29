@@ -10,26 +10,55 @@ const options = [
 ];
 
 describe('Select', () => {
-  it('renders the select component', () => {
-    render(<Select options={options} />);
-    expect(screen.getByText('Option 1')).toBeInTheDocument();
+  describe('when rendered with options', () => {
+    it('should render the select component', () => {
+      // Arrange
+      render(<Select options={options} />);
+
+      // Act
+      const firstOption = screen.getByText('Option 1');
+
+      // Assert
+      expect(firstOption).toBeInTheDocument();
+    });
   });
 
-  it('renders placeholder', () => {
-    render(<Select options={options} placeholder="Choose..." />);
-    expect(screen.getByText('Choose...')).toBeInTheDocument();
+  describe('when a placeholder is provided', () => {
+    it('should render placeholder', () => {
+      // Arrange
+      render(<Select options={options} placeholder="Choose..." />);
+
+      // Act
+      const placeholder = screen.getByText('Choose...');
+
+      // Assert
+      expect(placeholder).toBeInTheDocument();
+    });
   });
 
-  it('applies error styling', () => {
-    const { container } = render(<Select options={options} error />);
-    const select = container.querySelector('select');
-    expect(select).toHaveClass(styles.error);
+  describe('when error is true', () => {
+    it('should apply error styling', () => {
+      // Arrange
+      const { container } = render(<Select options={options} error />);
+
+      // Act
+      const select = container.querySelector('select');
+
+      // Assert
+      expect(select).toHaveClass(styles.error);
+    });
   });
 
-  it('applies disabled state', () => {
-    render(<Select options={options} disabled />);
-    const select = screen.getByRole('combobox');
-    expect(select).toBeDisabled();
+  describe('when disabled is true', () => {
+    it('should apply disabled state', () => {
+      // Arrange
+      render(<Select options={options} disabled />);
+
+      // Act
+      const select = screen.getByRole('combobox');
+
+      // Assert
+      expect(select).toBeDisabled();
+    });
   });
 });
-

@@ -10,26 +10,46 @@ const options = [
 ];
 
 describe('Listbox', () => {
-  it('renders the listbox component', () => {
-    render(<Listbox options={options} />);
-    expect(screen.getByText('Select an option...')).toBeInTheDocument();
+  describe('when rendered with options', () => {
+    it('should render the listbox component', () => {
+      // Arrange
+      render(<Listbox options={options} />);
+
+      // Act
+      const placeholder = screen.getByText('Select an option...');
+
+      // Assert
+      expect(placeholder).toBeInTheDocument();
+    });
   });
 
-  it('displays selected value', () => {
-    render(<Listbox options={options} value={options[0]} />);
-    expect(screen.getByText('Option 1')).toBeInTheDocument();
+  describe('when a value is selected', () => {
+    it('should display selected value', () => {
+      // Arrange
+      render(<Listbox options={options} value={options[0]} />);
+
+      // Act
+      const selected = screen.getByText('Option 1');
+
+      // Assert
+      expect(selected).toBeInTheDocument();
+    });
   });
 
-  it('calls onChange when option is selected', async () => {
-    const user = userEvent.setup();
-    const handleChange = vi.fn();
-    render(<Listbox options={options} onChange={handleChange} />);
+  describe('when the user picks an option', () => {
+    it('should call onChange when option is selected', async () => {
+      // Arrange
+      const user = userEvent.setup();
+      const handleChange = vi.fn();
+      render(<Listbox options={options} onChange={handleChange} />);
 
-    await user.click(screen.getByRole('button'));
-    await user.click(screen.getByRole('option', { name: 'Option 2' }));
+      // Act
+      await user.click(screen.getByRole('button'));
+      await user.click(screen.getByRole('option', { name: 'Option 2' }));
 
-    expect(handleChange).toHaveBeenCalledTimes(1);
-    expect(handleChange).toHaveBeenCalledWith(options[1]);
+      // Assert
+      expect(handleChange).toHaveBeenCalledTimes(1);
+      expect(handleChange).toHaveBeenCalledWith(options[1]);
+    });
   });
 });
-

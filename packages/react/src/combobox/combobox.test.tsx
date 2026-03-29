@@ -34,48 +34,77 @@ function renderCombobox(props: {
 }
 
 describe('Combobox', () => {
-  it('renders the combobox component', () => {
-    renderCombobox({ options });
-    const input = screen.getByPlaceholderText('Select an option...');
-    expect(input).toBeInTheDocument();
+  describe('when rendered with default props', () => {
+    it('should render the combobox component', () => {
+      // Arrange
+      // Act
+      renderCombobox({ options });
+
+      // Assert
+      const input = screen.getByPlaceholderText('Select an option...');
+      expect(input).toBeInTheDocument();
+    });
   });
 
-  it('displays selected value', () => {
-    renderCombobox({ options, value: options[0] });
-    const input = screen.getByDisplayValue('Option 1');
-    expect(input).toBeInTheDocument();
+  describe('when a value is selected', () => {
+    it('should display the selected value', () => {
+      // Arrange
+      // Act
+      renderCombobox({ options, value: options[0] });
+
+      // Assert
+      const input = screen.getByDisplayValue('Option 1');
+      expect(input).toBeInTheDocument();
+    });
   });
 
-  it('filters options by query and shows empty state', () => {
-    renderCombobox({ options });
-    const input = screen.getByPlaceholderText('Select an option...');
+  describe('when the user focuses and types in the input', () => {
+    it('should filter options by query and show empty state', () => {
+      // Arrange
+      renderCombobox({ options });
+      const input = screen.getByPlaceholderText('Select an option...');
 
-    fireEvent.focus(input);
-    fireEvent.change(input, { target: { value: 'Option 3' } });
-    expect(screen.getByText('Option 3')).toBeInTheDocument();
+      // Act
+      fireEvent.focus(input);
+      fireEvent.change(input, { target: { value: 'Option 3' } });
 
-    fireEvent.change(input, { target: { value: 'Missing' } });
-    expect(screen.getByText('Nothing found.')).toBeInTheDocument();
+      // Assert
+      expect(screen.getByText('Option 3')).toBeInTheDocument();
+
+      // Act
+      fireEvent.change(input, { target: { value: 'Missing' } });
+
+      // Assert
+      expect(screen.getByText('Nothing found.')).toBeInTheDocument();
+    });
+
+    it('should call onChange when an option is selected', () => {
+      // Arrange
+      const handleChange = vi.fn();
+      renderCombobox({ options, onChange: handleChange });
+      const input = screen.getByPlaceholderText('Select an option...');
+
+      // Act
+      fireEvent.focus(input);
+      fireEvent.keyDown(input, { key: 'ArrowDown' });
+      const option = screen.getByText('Option 2');
+      fireEvent.mouseDown(option);
+      fireEvent.click(option);
+
+      // Assert
+      expect(handleChange).toHaveBeenCalledWith(options[1]);
+    });
   });
 
-  it('calls onChange when option is selected', () => {
-    const handleChange = vi.fn();
-    renderCombobox({ options, onChange: handleChange });
+  describe('when disabled is true', () => {
+    it('should disable the input', () => {
+      // Arrange
+      // Act
+      renderCombobox({ options, disabled: true });
 
-    const input = screen.getByPlaceholderText('Select an option...');
-    fireEvent.focus(input);
-    fireEvent.keyDown(input, { key: 'ArrowDown' });
-
-    const option = screen.getByText('Option 2');
-    fireEvent.mouseDown(option);
-    fireEvent.click(option);
-
-    expect(handleChange).toHaveBeenCalledWith(options[1]);
-  });
-
-  it('respects disabled state', () => {
-    renderCombobox({ options, disabled: true });
-    const input = screen.getByPlaceholderText('Select an option...');
-    expect(input).toBeDisabled();
+      // Assert
+      const input = screen.getByPlaceholderText('Select an option...');
+      expect(input).toBeDisabled();
+    });
   });
 });

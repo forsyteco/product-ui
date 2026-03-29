@@ -1,40 +1,88 @@
-import {describe, expect, it} from 'vitest'
+import { describe, expect, it } from 'vitest';
+import { render } from '@testing-library/react';
 import { RelativeTime } from './relative-time';
-import {render} from '@testing-library/react'
 
 describe('RelativeTime', () => {
-  it('renders a <relative-time>', () => {
-    const {container} = render(<RelativeTime />)
-    expect(container.firstChild?.nodeName.toLowerCase()).toEqual('relative-time')
-  })
+  describe('when rendered with no date props', () => {
+    it('should render a relative-time element', () => {
+      // Arrange
+      const { container } = render(<RelativeTime />);
 
-  it('renders a date inside', () => {
-    const date = new Date('2024-03-07T12:22:48.123Z')
-    const {container} = render(<RelativeTime date={date} />)
-    expect(container.textContent).toEqual('Mar 7, 2024')
-  })
+      // Act
+      const nodeName = container.firstChild?.nodeName.toLowerCase();
 
-  it('renders a datetime inside', () => {
-    const date = new Date('2024-03-07T12:22:48.123Z')
-    const {container} = render(<RelativeTime datetime={date.toJSON()} />)
-    expect(container.textContent).toEqual('Mar 7, 2024')
-  })
+      // Assert
+      expect(nodeName).toEqual('relative-time');
+    });
+  });
 
-  it('renders children if passed', () => {
-    const date = new Date('2024-03-07T12:22:48.123Z')
-    const {container} = render(<RelativeTime date={date}>server rendered date</RelativeTime>)
-    expect(container.textContent).toEqual('server rendered date')
-  })
+  describe('when date is provided', () => {
+    it('should render a date inside', () => {
+      // Arrange
+      const date = new Date('2024-03-07T12:22:48.123Z');
+      const { container } = render(<RelativeTime date={date} />);
 
-  it('does not render no-title attribute by default', () => {
-    const date = new Date('2024-03-07T12:22:48.123Z')
-    const {container} = render(<RelativeTime date={date} />)
-    expect(container.firstChild).not.toHaveAttribute('no-title')
-  })
+      // Act
+      const text = container.textContent;
 
-  it('adds no-title attribute if noTitle={true}', () => {
-    const date = new Date('2024-03-07T12:22:48.123Z')
-    const {container} = render(<RelativeTime date={date} noTitle={true} />)
-    expect(container.firstChild).toHaveAttribute('no-title')
-  })
-})
+      // Assert
+      expect(text).toEqual('Mar 7, 2024');
+    });
+  });
+
+  describe('when datetime is provided', () => {
+    it('should render a datetime inside', () => {
+      // Arrange
+      const date = new Date('2024-03-07T12:22:48.123Z');
+      const { container } = render(<RelativeTime datetime={date.toJSON()} />);
+
+      // Act
+      const text = container.textContent;
+
+      // Assert
+      expect(text).toEqual('Mar 7, 2024');
+    });
+  });
+
+  describe('when children are provided', () => {
+    it('should render children if passed', () => {
+      // Arrange
+      const date = new Date('2024-03-07T12:22:48.123Z');
+      const { container } = render(<RelativeTime date={date}>server rendered date</RelativeTime>);
+
+      // Act
+      const text = container.textContent;
+
+      // Assert
+      expect(text).toEqual('server rendered date');
+    });
+  });
+
+  describe('when noTitle is not set', () => {
+    it('should not render no-title attribute by default', () => {
+      // Arrange
+      const date = new Date('2024-03-07T12:22:48.123Z');
+      const { container } = render(<RelativeTime date={date} />);
+
+      // Act
+      const el = container.firstChild;
+
+      // Assert
+      expect(el).not.toHaveAttribute('no-title');
+    });
+  });
+
+  describe('when noTitle is true', () => {
+    it('should add no-title attribute if noTitle is true', () => {
+      // Arrange
+      const date = new Date('2024-03-07T12:22:48.123Z');
+      const { container } = render(<RelativeTime date={date} noTitle={true} />);
+
+      // Act
+      const el = container.firstChild;
+
+      // Assert
+      expect(el).toHaveAttribute('no-title');
+    });
+  });
+});

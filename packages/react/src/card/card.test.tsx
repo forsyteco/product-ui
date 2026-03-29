@@ -11,43 +11,53 @@ import {
 } from './card';
 
 describe('Card', () => {
-  it('renders the card structure and forwards className', () => {
-    render(
-      <Card className="test-card">
-        <CardHeader>
-          <CardTitle>Title</CardTitle>
-        </CardHeader>
-        <CardContent>Content</CardContent>
-      </Card>
-    );
+  describe('when header and content are provided', () => {
+    it('should render the card structure and forwards className', () => {
+      // Arrange
+      render(
+        <Card className="test-card">
+          <CardHeader>
+            <CardTitle>Title</CardTitle>
+          </CardHeader>
+          <CardContent>Content</CardContent>
+        </Card>
+      );
 
-    const card = screen.getByText('Title').closest('[data-slot="card"]');
-    expect(card).toBeInTheDocument();
-    expect(card).toHaveClass('test-card');
+      // Act
+      const card = screen.getByText('Title').closest('[data-slot="card"]');
 
-    expect(screen.getByText('Title')).toBeInTheDocument();
-    expect(screen.getByText('Content')).toBeInTheDocument();
+      // Assert
+      expect(card).toBeInTheDocument();
+      expect(card).toHaveClass('test-card');
+      expect(screen.getByText('Title')).toBeInTheDocument();
+      expect(screen.getByText('Content')).toBeInTheDocument();
+    });
   });
 
-  it('renders all provided slots', () => {
-    render(
-      <Card>
-        <CardHeader>
-          <CardTitle>Header</CardTitle>
-          <CardDescription>Description</CardDescription>
-          <CardAction>Action</CardAction>
-        </CardHeader>
-        <CardContent>Body</CardContent>
-        <CardFooter>Footer</CardFooter>
-      </Card>
-    );
+  describe('when all slots are provided', () => {
+    it('should render all provided slots', () => {
+      // Arrange
+      render(
+        <Card>
+          <CardHeader>
+            <CardTitle>Header</CardTitle>
+            <CardDescription>Description</CardDescription>
+            <CardAction>Action</CardAction>
+          </CardHeader>
+          <CardContent>Body</CardContent>
+          <CardFooter>Footer</CardFooter>
+        </Card>
+      );
 
-    expect(screen.getByText('Header')).toBeInTheDocument();
-    expect(screen.getByText('Description')).toBeInTheDocument();
-    expect(screen.getByText('Action')).toBeInTheDocument();
-    expect(screen.getByText('Body')).toBeInTheDocument();
-    expect(screen.getByText('Footer')).toBeInTheDocument();
+      // Act
+      const header = screen.getByText('Header');
+
+      // Assert
+      expect(header).toBeInTheDocument();
+      expect(screen.getByText('Description')).toBeInTheDocument();
+      expect(screen.getByText('Action')).toBeInTheDocument();
+      expect(screen.getByText('Body')).toBeInTheDocument();
+      expect(screen.getByText('Footer')).toBeInTheDocument();
+    });
   });
 });
-
-

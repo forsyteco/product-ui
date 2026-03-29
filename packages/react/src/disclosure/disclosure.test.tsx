@@ -3,35 +3,57 @@ import { render, screen } from '@testing-library/react';
 import { Disclosure, DisclosureButton, DisclosurePanel } from './disclosure';
 
 describe('Disclosure', () => {
-  it('renders the disclosure component', () => {
-    render(
-      <Disclosure>
-        <DisclosureButton>Toggle</DisclosureButton>
-        <DisclosurePanel>Content</DisclosurePanel>
-      </Disclosure>
-    );
-    expect(screen.getByText('Toggle')).toBeInTheDocument();
+  describe('when rendered in default closed state', () => {
+    it('should render the disclosure component', () => {
+      // Arrange
+      render(
+        <Disclosure>
+          <DisclosureButton>Toggle</DisclosureButton>
+          <DisclosurePanel>Content</DisclosurePanel>
+        </Disclosure>
+      );
+
+      // Act
+      const toggle = screen.getByText('Toggle');
+
+      // Assert
+      expect(toggle).toBeInTheDocument();
+    });
   });
 
-  it('renders panel content', () => {
-    render(
-      <Disclosure defaultOpen>
-        <DisclosureButton>Toggle</DisclosureButton>
-        <DisclosurePanel>Panel content</DisclosurePanel>
-      </Disclosure>
-    );
-    expect(screen.getByText('Panel content')).toBeInTheDocument();
+  describe('when defaultOpen is true', () => {
+    it('should render panel content', () => {
+      // Arrange
+      render(
+        <Disclosure defaultOpen>
+          <DisclosureButton>Toggle</DisclosureButton>
+          <DisclosurePanel>Panel content</DisclosurePanel>
+        </Disclosure>
+      );
+
+      // Act
+      const panelText = screen.getByText('Panel content');
+
+      // Assert
+      expect(panelText).toBeInTheDocument();
+    });
   });
 
-  it('applies custom className', () => {
-    const { container } = render(
-      <Disclosure className="custom-class">
-        <DisclosureButton>Toggle</DisclosureButton>
-        <DisclosurePanel>Content</DisclosurePanel>
-      </Disclosure>
-    );
-    const disclosure = container.firstChild;
-    expect(disclosure).toHaveClass('custom-class');
+  describe('when className is provided', () => {
+    it('should apply custom className', () => {
+      // Arrange
+      const { container } = render(
+        <Disclosure className="custom-class">
+          <DisclosureButton>Toggle</DisclosureButton>
+          <DisclosurePanel>Content</DisclosurePanel>
+        </Disclosure>
+      );
+
+      // Act
+      const disclosure = container.firstChild as HTMLElement;
+
+      // Assert
+      expect(disclosure).toHaveClass('custom-class');
+    });
   });
 });
-

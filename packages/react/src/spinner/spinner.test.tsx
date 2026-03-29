@@ -4,41 +4,68 @@ import { Spinner } from './spinner';
 import styles from './spinner.module.css';
 
 describe('Spinner', () => {
-  it('renders wrapper and svg', () => {
-    const { container } = render(<Spinner />);
-    const wrapper = container.querySelector('div');
-    const svg = container.querySelector('svg');
-    const circle = container.querySelector('circle');
+  describe('when rendered with default props', () => {
+    it('should render wrapper and svg', () => {
+      // Arrange
+      const { container } = render(<Spinner />);
 
-    expect(wrapper).toBeInTheDocument();
-    expect(wrapper).toHaveClass(styles.root);
-    expect(svg).toBeInTheDocument();
-    expect(svg).toHaveClass('animate-spinner-rotate');
-    expect(circle).toBeInTheDocument();
-    expect(circle).toHaveClass('animate-spinner-dash');
+      // Act
+      const wrapper = container.querySelector('div');
+      const svg = container.querySelector('svg');
+      const circle = container.querySelector('circle');
+
+      // Assert
+      expect(wrapper).toBeInTheDocument();
+      expect(wrapper).toHaveClass(styles.root);
+      expect(svg).toBeInTheDocument();
+      expect(svg).toHaveClass('animate-spinner-rotate');
+      expect(circle).toBeInTheDocument();
+      expect(circle).toHaveClass('animate-spinner-dash');
+    });
   });
 
-  it('applies className to the wrapper', () => {
-    const { container } = render(<Spinner className="custom-spinner-class" />);
-    const wrapper = container.querySelector('div');
-    expect(wrapper).toHaveClass('custom-spinner-class');
+  describe('when className is provided', () => {
+    it('should apply className to the wrapper', () => {
+      // Arrange
+      const { container } = render(<Spinner className="custom-spinner-class" />);
+
+      // Act
+      const wrapper = container.querySelector('div');
+
+      // Assert
+      expect(wrapper).toHaveClass('custom-spinner-class');
+    });
   });
 
-  it('cycles through colors over time', () => {
-    vi.useFakeTimers();
-    const { container, unmount } = render(<Spinner colors={['#111111', '#222222']} />);
-    const circle = container.querySelector('circle');
+  describe('when multiple colors are provided', () => {
+    it('should use the first stroke color initially', () => {
+      // Arrange
+      const { container } = render(<Spinner colors={['#111111', '#222222']} />);
 
-    expect(circle).toHaveStyle({ stroke: '#111111' });
+      // Act
+      const circle = container.querySelector('circle');
 
-    act(() => {
-      vi.advanceTimersByTime(1500);
+      // Assert
+      expect(circle).toHaveStyle({ stroke: '#111111' });
     });
-    expect(circle).toHaveStyle({ stroke: '#222222' });
 
-    act(() => {
-      unmount();
+    it('should advance to the next stroke color after the interval', () => {
+      // Arrange
+      vi.useFakeTimers();
+      const { container, unmount } = render(<Spinner colors={['#111111', '#222222']} />);
+      const circle = container.querySelector('circle');
+
+      // Act
+      act(() => {
+        vi.advanceTimersByTime(1500);
+      });
+
+      // Assert
+      expect(circle).toHaveStyle({ stroke: '#222222' });
+      act(() => {
+        unmount();
+      });
+      vi.useRealTimers();
     });
-    vi.useRealTimers();
   });
 });

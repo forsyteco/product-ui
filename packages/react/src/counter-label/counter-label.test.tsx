@@ -3,19 +3,31 @@ import { render, screen } from '@testing-library/react';
 import { CounterLabel } from './counter-label';
 
 describe('CounterLabel', () => {
-  it('renders with default variant and aria-hidden', () => {
-    render(<CounterLabel>12</CounterLabel>);
+  describe('when children are provided', () => {
+    it('should render with default variant and aria-hidden', () => {
+      // Arrange
+      render(<CounterLabel>12</CounterLabel>);
 
-    const el = screen.getByText('12').closest('[data-slot="counter-label"]');
-    expect(el).toBeInTheDocument();
-    expect(el).toHaveAttribute('aria-hidden', 'true');
-    expect(el).toHaveAttribute('data-variant', 'secondary');
+      // Act
+      const el = screen.getByText('12').closest('[data-slot="counter-label"]');
+
+      // Assert
+      expect(el).toBeInTheDocument();
+      expect(el).toHaveAttribute('aria-hidden', 'true');
+      expect(el).toHaveAttribute('data-variant', 'secondary');
+    });
   });
 
-  it('does not render when empty', () => {
-    const { container } = render(<CounterLabel />);
-    expect(container.querySelector('[data-slot="counter-label"]')).toBeNull();
+  describe('when children are empty', () => {
+    it('should not render when empty', () => {
+      // Arrange
+      const { container } = render(<CounterLabel />);
+
+      // Act
+      const el = container.querySelector('[data-slot="counter-label"]');
+
+      // Assert
+      expect(el).toBeNull();
+    });
   });
 });
-
-

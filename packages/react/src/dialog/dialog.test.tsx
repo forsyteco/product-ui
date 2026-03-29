@@ -68,9 +68,12 @@ describe('Dialog', () => {
 
   it('should merge custom class names for root and subcomponents', async () => {
     // Arrange
+    const onClose = () => {};
+
+    // Act
     await act(async () => {
       render(
-        <Dialog open={true} onClose={() => {}} className="custom-root">
+        <Dialog open={true} onClose={onClose} className="custom-root">
           <DialogPanel className="custom-panel">
             <DialogTitle className="custom-title">Styled Dialog</DialogTitle>
             <DialogDescription className="custom-description">Styled description</DialogDescription>

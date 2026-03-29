@@ -10,28 +10,49 @@ const options = [
 ];
 
 describe('RadioGroup', () => {
-  it('renders the radio group component', () => {
-    render(<RadioGroup options={options} />);
-    expect(screen.getByText('Option 1')).toBeInTheDocument();
-    expect(screen.getByText('Option 2')).toBeInTheDocument();
-    expect(screen.getByText('Option 3')).toBeInTheDocument();
+  describe('when options are provided', () => {
+    it('should render the radio group component', () => {
+      // Arrange
+      render(<RadioGroup options={options} />);
+
+      // Act
+      const option1 = screen.getByText('Option 1');
+      const option2 = screen.getByText('Option 2');
+      const option3 = screen.getByText('Option 3');
+
+      // Assert
+      expect(option1).toBeInTheDocument();
+      expect(option2).toBeInTheDocument();
+      expect(option3).toBeInTheDocument();
+    });
   });
 
-  it('displays selected value', () => {
-    render(<RadioGroup options={options} value="option1" />);
-    const option1 = screen.getByText('Option 1').closest('[role="radio"]');
-    expect(option1).toHaveAttribute('aria-checked', 'true');
+  describe('when a value is selected', () => {
+    it('should display selected value', () => {
+      // Arrange
+      render(<RadioGroup options={options} value="option1" />);
+
+      // Act
+      const option1 = screen.getByText('Option 1').closest('[role="radio"]');
+
+      // Assert
+      expect(option1).toHaveAttribute('aria-checked', 'true');
+    });
   });
 
-  it('calls onChange when option is selected', async () => {
-    const user = userEvent.setup();
-    const handleChange = vi.fn();
-    render(<RadioGroup options={options} onChange={handleChange} />);
+  describe('when the user selects an option', () => {
+    it('should call onChange when option is selected', async () => {
+      // Arrange
+      const user = userEvent.setup();
+      const handleChange = vi.fn();
+      render(<RadioGroup options={options} onChange={handleChange} />);
 
-    await user.click(screen.getByRole('radio', { name: 'Option 2' }));
+      // Act
+      await user.click(screen.getByRole('radio', { name: 'Option 2' }));
 
-    expect(handleChange).toHaveBeenCalledTimes(1);
-    expect(handleChange).toHaveBeenCalledWith('option2');
+      // Assert
+      expect(handleChange).toHaveBeenCalledTimes(1);
+      expect(handleChange).toHaveBeenCalledWith('option2');
+    });
   });
 });
-

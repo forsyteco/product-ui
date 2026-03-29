@@ -4,34 +4,70 @@ import { Button } from './button';
 import styles from './button.module.css';
 
 describe('Button', () => {
-  it('renders the button component', () => {
-    render(<Button>Click me</Button>);
-    expect(screen.getByText('Click me')).toBeInTheDocument();
+  describe('when rendered with default props', () => {
+    it('should render button text content', () => {
+      // Arrange
+      render(<Button>Click me</Button>);
+
+      // Act
+      const button = screen.getByText('Click me');
+
+      // Assert
+      expect(button).toBeInTheDocument();
+    });
   });
 
-  it('handles click events', () => {
-    const handleClick = vi.fn();
-    render(<Button onClick={handleClick}>Click me</Button>);
-    screen.getByText('Click me').click();
-    expect(handleClick).toHaveBeenCalledTimes(1);
+  describe('when clicked with an onClick handler', () => {
+    it('should call the click handler once', () => {
+      // Arrange
+      const handleClick = vi.fn();
+      render(<Button onClick={handleClick}>Click me</Button>);
+
+      // Act
+      screen.getByText('Click me').click();
+
+      // Assert
+      expect(handleClick).toHaveBeenCalledTimes(1);
+    });
   });
 
-  it('applies variant classes', () => {
-    const { container } = render(<Button variant="default">Button</Button>);
-    const button = container.querySelector('button');
-    expect(button).toHaveClass(styles['variant-default']);
+  describe('when variant is provided', () => {
+    it('should apply the matching variant class', () => {
+      // Arrange
+      const { container } = render(<Button variant="default">Button</Button>);
+
+      // Act
+      const button = container.querySelector('button');
+
+      // Assert
+      expect(button).toHaveClass(styles['variant-default']);
+    });
   });
 
-  it('applies size classes', () => {
-    const { container } = render(<Button size="lg">Button</Button>);
-    const button = container.querySelector('button');
-    expect(button).toHaveClass(styles['size-lg']);
+  describe('when size is provided', () => {
+    it('should apply the matching size class', () => {
+      // Arrange
+      const { container } = render(<Button size="lg">Button</Button>);
+
+      // Act
+      const button = container.querySelector('button');
+
+      // Assert
+      expect(button).toHaveClass(styles['size-lg']);
+    });
   });
 
-  it('applies disabled state', () => {
-    render(<Button disabled>Disabled</Button>);
-    const button = screen.getByText('Disabled');
-    expect(button).toBeDisabled();
+  describe('when disabled is true', () => {
+    it('should render a disabled button', () => {
+      // Arrange
+      render(<Button disabled>Disabled</Button>);
+
+      // Act
+      const button = screen.getByText('Disabled');
+
+      // Assert
+      expect(button).toBeDisabled();
+    });
   });
 });
 

@@ -4,38 +4,71 @@ import userEvent from '@testing-library/user-event';
 import { Switch } from './switch';
 
 describe('Switch', () => {
-  it('renders the switch component', () => {
-    render(<Switch />);
-    const switchElement = screen.getByRole('switch');
-    expect(switchElement).toBeInTheDocument();
+  describe('when rendered with default props', () => {
+    it('should render the switch component', () => {
+      // Arrange
+      render(<Switch />);
+
+      // Act
+      const switchElement = screen.getByRole('switch');
+
+      // Assert
+      expect(switchElement).toBeInTheDocument();
+    });
   });
 
-  it('renders with label', () => {
-    render(<Switch label="Enable notifications" />);
-    expect(screen.getByText('Enable notifications')).toBeInTheDocument();
+  describe('when a label is provided', () => {
+    it('should render with label', () => {
+      // Arrange
+      render(<Switch label="Enable notifications" />);
+
+      // Act
+      const label = screen.getByText('Enable notifications');
+
+      // Assert
+      expect(label).toBeInTheDocument();
+    });
   });
 
-  it('applies checked state', () => {
-    render(<Switch checked />);
-    const switchElement = screen.getByRole('switch');
-    expect(switchElement).toHaveAttribute('aria-checked', 'true');
+  describe('when checked is true', () => {
+    it('should apply checked state', () => {
+      // Arrange
+      render(<Switch checked />);
+
+      // Act
+      const switchElement = screen.getByRole('switch');
+
+      // Assert
+      expect(switchElement).toHaveAttribute('aria-checked', 'true');
+    });
   });
 
-  it('applies disabled state', () => {
-    render(<Switch disabled />);
-    const switchElement = screen.getByRole('switch');
-    expect(switchElement).toBeDisabled();
+  describe('when disabled is true', () => {
+    it('should apply disabled state', () => {
+      // Arrange
+      render(<Switch disabled />);
+
+      // Act
+      const switchElement = screen.getByRole('switch');
+
+      // Assert
+      expect(switchElement).toBeDisabled();
+    });
   });
 
-  it('calls onChange when toggled', async () => {
-    const user = userEvent.setup();
-    const handleChange = vi.fn();
-    render(<Switch onChange={handleChange} />);
+  describe('when the user toggles the switch', () => {
+    it('should call onChange when toggled', async () => {
+      // Arrange
+      const user = userEvent.setup();
+      const handleChange = vi.fn();
+      render(<Switch onChange={handleChange} />);
 
-    await user.click(screen.getByRole('switch'));
+      // Act
+      await user.click(screen.getByRole('switch'));
 
-    expect(handleChange).toHaveBeenCalledTimes(1);
-    expect(handleChange).toHaveBeenCalledWith(true);
+      // Assert
+      expect(handleChange).toHaveBeenCalledTimes(1);
+      expect(handleChange).toHaveBeenCalledWith(true);
+    });
   });
 });
-

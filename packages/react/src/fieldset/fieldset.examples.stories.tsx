@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Input } from '../input';
 import { Fieldset } from './fieldset';
 
 const meta = {
@@ -20,17 +21,15 @@ export const ContactForm: Story = {
           <div className="sb-stack-4">
             <div>
               <label className="sb-form-label">Email</label>
-              <input
+              <Input
                 type="email"
-                className="sb-native-input"
                 placeholder="you@example.com"
               />
             </div>
             <div>
               <label className="sb-form-label">Phone</label>
-              <input
+              <Input
                 type="tel"
-                className="sb-native-input"
                 placeholder="+1 (555) 000-0000"
               />
             </div>
@@ -40,26 +39,23 @@ export const ContactForm: Story = {
           <div className="sb-stack-4">
             <div>
               <label className="sb-form-label">Street</label>
-              <input
+              <Input
                 type="text"
-                className="sb-native-input"
                 placeholder="123 Main St"
               />
             </div>
             <div className="sb-grid sb-grid-cols-2 sb-grid-gap-4">
               <div>
                 <label className="sb-form-label">City</label>
-                <input
+                <Input
                   type="text"
-                  className="sb-native-input"
                   placeholder="City"
                 />
               </div>
               <div>
                 <label className="sb-form-label">ZIP</label>
-                <input
+                <Input
                   type="text"
-                  className="sb-native-input"
                   placeholder="12345"
                 />
               </div>

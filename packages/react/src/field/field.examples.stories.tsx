@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Input } from '../input';
 import { Field } from './field';
 
 const meta = {
@@ -15,11 +16,11 @@ export const Stacked: Story = {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: 320 }}>
       <Field.Root name="a">
         <Field.Label>First</Field.Label>
-        <input name="a" />
+        <Input name="a" />
       </Field.Root>
       <Field.Root name="b">
         <Field.Label>Second</Field.Label>
-        <input name="b" />
+        <Input name="b" />
       </Field.Root>
     </div>
   ),

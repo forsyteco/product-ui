@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Input } from '../input';
 import { Fieldset } from './fieldset';
 
 const meta = {
@@ -26,8 +27,8 @@ export const WithLegend: Story = {
   render: () => (
     <Fieldset legend="Personal Information">
       <div className="sb-stack-2">
-        <input type="text" placeholder="First Name" className="sb-native-input-simple" />
-        <input type="text" placeholder="Last Name" className="sb-native-input-simple" />
+        <Input type="text" placeholder="First Name" />
+        <Input type="text" placeholder="Last Name" />
       </div>
     </Fieldset>
   ),
@@ -37,8 +38,8 @@ export const WithoutLegend: Story = {
   render: () => (
     <Fieldset>
       <div className="sb-stack-2">
-        <input type="text" placeholder="Field 1" className="sb-native-input-simple" />
-        <input type="text" placeholder="Field 2" className="sb-native-input-simple" />
+        <Input type="text" placeholder="Field 1" />
+        <Input type="text" placeholder="Field 2" />
       </div>
     </Fieldset>
   ),
@@ -48,8 +49,8 @@ export const Disabled: Story = {
   render: () => (
     <Fieldset legend="Disabled Fieldset" disabled>
       <div className="sb-stack-2">
-        <input type="text" placeholder="Field 1" className="sb-native-input-simple" disabled />
-        <input type="text" placeholder="Field 2" className="sb-native-input-simple" disabled />
+        <Input type="text" placeholder="Field 1" disabled />
+        <Input type="text" placeholder="Field 2" disabled />
       </div>
     </Fieldset>
   ),

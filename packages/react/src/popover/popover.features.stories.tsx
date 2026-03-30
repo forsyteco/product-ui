@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Popover, PopoverContent, PopoverTrigger } from './popover';
 import { Button } from '../button';
+import { Input } from '../input';
+import { Select } from '../select';
 
 const meta = {
   title: 'Components/Popover/Features',
@@ -33,15 +35,18 @@ export const WithForm: Story = {
         <form className="sb-stack-4">
           <div>
             <label className="sb-form-label-inline">Status</label>
-            <select className="sb-native-field">
-              <option>All</option>
-              <option>Active</option>
-              <option>Inactive</option>
-            </select>
+            <Select
+              options={[
+                { value: 'all', label: 'All' },
+                { value: 'active', label: 'Active' },
+                { value: 'inactive', label: 'Inactive' },
+              ]}
+              defaultValue="all"
+            />
           </div>
           <div>
             <label className="sb-form-label-inline">Date Range</label>
-            <input type="date" className="sb-native-field" />
+            <Input type="date" />
           </div>
           <Button type="submit" className="sb-w-full">
             Apply

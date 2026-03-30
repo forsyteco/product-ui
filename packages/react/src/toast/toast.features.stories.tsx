@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { toast } from 'sonner';
+import { Button } from '../button';
 import { Toast } from './toast';
 
 const meta = {
@@ -15,9 +16,9 @@ export const Success: Story = {
   render: () => (
     <>
       <Toast />
-      <button type="button" onClick={() => toast.success('Done')}>
+      <Button type="button" onClick={() => toast.success('Done')}>
         Success
-      </button>
+      </Button>
     </>
   ),
 };
@@ -26,9 +27,9 @@ export const ErrorToast: Story = {
   render: () => (
     <>
       <Toast />
-      <button type="button" onClick={() => toast.error('Something went wrong')}>
+      <Button type="button" onClick={() => toast.error('Something went wrong')}>
         Error
-      </button>
+      </Button>
     </>
   ),
 };

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Input } from '../input';
 import { Field } from './field';
 
 const meta = {
@@ -15,7 +16,7 @@ export const WithError: Story = {
     <Field.Root name="x" style={{ width: 280 }}>
       <Field.Label>Username</Field.Label>
       <Field.Error>Already taken</Field.Error>
-      <input name="x" style={{ padding: 8, borderRadius: 6, border: '1px solid rgb(var(--border))' }} />
+      <Input name="x" />
     </Field.Root>
   ),
 };

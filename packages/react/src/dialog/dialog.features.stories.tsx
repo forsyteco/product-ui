@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Dialog, DialogPanel, DialogTitle, DialogDescription } from './dialog';
 import { Button } from '../button';
+import { Input } from '../input';
 
 const meta = {
   title: 'Components/Dialog/Features',
@@ -66,10 +67,7 @@ export const WithForm: Story = {
             <form className="sb-mt-4 sb-stack-4">
               <div>
                 <label className="sb-form-label-inline">Name</label>
-                <input
-                  type="text"
-                  className="sb-native-field"
-                />
+                <Input type="text" />
               </div>
               <div>
                 <label className="sb-form-label-inline">Description</label>

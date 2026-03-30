@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Input } from '../input';
 import { Field } from './field';
 
 const meta = {
@@ -18,7 +19,7 @@ export const Default: Story = {
     <Field.Root name="story" style={{ width: 280 }}>
       <Field.Label>Label</Field.Label>
       <Field.Description>Helper text</Field.Description>
-      <input name="story" style={{ padding: 8, borderRadius: 6, border: '1px solid rgb(var(--border))' }} />
+      <Input name="story" />
     </Field.Root>
   ),
 };

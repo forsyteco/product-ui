@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Button } from './button';
+import { Input } from '../input';
 
 const meta = {
   title: 'Components/Button/Examples',
@@ -18,9 +19,8 @@ export const FormActions: Story = {
       <form className="sb-stack-4">
         <div>
           <label className="sb-form-label">Email</label>
-          <input
+          <Input
             type="email"
-            className="sb-native-input"
             placeholder="you@example.com"
           />
         </div>

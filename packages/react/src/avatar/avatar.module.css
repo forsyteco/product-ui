@@ -1,32 +1,33 @@
 .root {
-  position: relative;
   display: inline-flex;
-  height: 2rem;
-  width: 2rem;
-  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+  border-radius: 100%;
+  user-select: none;
+  font-weight: 500;
+  color: rgb(var(--foreground));
+  background-color: rgb(var(--muted));
+  font-size: var(--text-base);
+  line-height: 1;
   overflow: hidden;
-  border-radius: 9999px;
+  height: 3rem;
+  width: 3rem;
 }
 
 .image {
-  aspect-ratio: 1 / 1;
-  width: 100%;
+  object-fit: cover;
   height: 100%;
+  width: 100%;
 }
 
 .fallback {
+  align-items: center;
   display: flex;
+  justify-content: center;
   height: 100%;
   width: 100%;
-  align-items: center;
-  justify-content: center;
-  border-radius: 9999px;
-  background-color: rgb(var(--muted));
-  color: rgb(var(--foreground));
-  font-size: var(--text-xs);
-  line-height: var(--text-xs-line-height);
-  font-weight: 500;
-  text-transform: uppercase;
+  font-size: var(--text-base);
 }
 
 .fallback-boring {

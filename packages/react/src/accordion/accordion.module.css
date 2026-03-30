@@ -1,14 +1,15 @@
 .root {
-  width: 100%;
+  box-sizing: border-box;
   display: flex;
+  width: 100%;
+  max-width: calc(100vw - 8rem);
   flex-direction: column;
-  gap: 0.25rem;
+  justify-content: center;
+  color: rgb(var(--foreground));
 }
 
 .item {
-  border-radius: 0.5rem;
-  border: 1px solid rgb(var(--border));
-  background-color: rgb(var(--background));
+  border-bottom: 1px solid rgb(var(--border));
 }
 
 .header {
@@ -16,25 +17,49 @@
 }
 
 .trigger {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
   width: 100%;
-  text-align: left;
-  padding: 0.75rem 1rem;
+  gap: 1rem;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-block: 0.5rem;
+  padding-inline: 0.75rem 0.25rem;
+  color: rgb(var(--foreground));
+  font-family: inherit;
+  font-weight: 500;
   font-size: var(--text-base);
   line-height: var(--text-base-line-height);
-  font-weight: 500;
-  color: rgb(var(--foreground));
-  background: transparent;
+  background: rgb(var(--muted) / 0.25);
   border: none;
-  cursor: pointer;
+  outline: none;
+  text-align: left;
 }
 
-.trigger:hover {
-  background-color: rgb(var(--muted) / 0.35);
+@media (hover: hover) {
+  .trigger:hover {
+    background-color: rgb(var(--muted) / 0.4);
+  }
+}
+
+.trigger:focus-visible {
+  outline: 2px solid rgb(var(--ring));
+  z-index: 1;
 }
 
 .panel {
-  padding: 0 1rem 0.75rem;
+  box-sizing: border-box;
+  height: var(--accordion-panel-height);
+  overflow: hidden;
   color: rgb(var(--muted-foreground));
-  font-size: var(--text-sm);
-  line-height: var(--text-sm-line-height);
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
+  transition: height 150ms ease-out;
+  padding: 0.75rem;
+}
+
+.panel[data-starting-style],
+.panel[data-ending-style] {
+  height: 0;
 }

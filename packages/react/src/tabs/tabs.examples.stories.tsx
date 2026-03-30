@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from './tabs';
 import { Button } from '../button';
+import { Input } from '../input';
 
 const meta = {
   title: 'Components/Tabs/Examples',
@@ -32,17 +33,15 @@ export const SettingsPage: Story = {
               <div className="sb-stack-4">
                 <div>
                   <label className="sb-form-label-inline">Display Name</label>
-                  <input
+                  <Input
                     type="text"
-                    className="sb-native-field"
                     defaultValue="John Doe"
                   />
                 </div>
                 <div>
                   <label className="sb-form-label-inline">Email</label>
-                  <input
+                  <Input
                     type="email"
-                    className="sb-native-field"
                     defaultValue="john@example.com"
                   />
                 </div>
@@ -52,11 +51,11 @@ export const SettingsPage: Story = {
               <div className="sb-stack-4">
                 <div>
                   <label className="sb-form-label-inline">Current Password</label>
-                  <input type="password" className="sb-native-field" />
+                  <Input type="password" />
                 </div>
                 <div>
                   <label className="sb-form-label-inline">New Password</label>
-                  <input type="password" className="sb-native-field" />
+                  <Input type="password" />
                 </div>
                 <Button>Update Password</Button>
               </div>
@@ -68,6 +67,7 @@ export const SettingsPage: Story = {
                     <h3 className="sb-text-base sb-font-medium">Public Profile</h3>
                     <p className="sb-text-base sb-muted-text">Make your profile visible to everyone</p>
                   </div>
+                  {/* Intentional native checkbox demo for simple preference toggles. */}
                   <input type="checkbox" className="sb-checkbox" />
                 </div>
                 <div className="sb-row-between">
@@ -75,6 +75,7 @@ export const SettingsPage: Story = {
                     <h3 className="sb-text-base sb-font-medium">Email Notifications</h3>
                     <p className="sb-text-base sb-muted-text">Receive email updates</p>
                   </div>
+                  {/* Intentional native checkbox demo for simple preference toggles. */}
                   <input type="checkbox" className="sb-checkbox" defaultChecked />
                 </div>
               </div>

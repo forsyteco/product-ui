@@ -1,38 +1,59 @@
 .root {
-  width: 100%;
+  display: flex;
+  width: 14rem;
+  min-height: 9rem;
+  flex-direction: column;
+  justify-content: center;
+  color: rgb(var(--foreground));
 }
 
 .trigger {
   display: flex;
-  width: 100%;
-  justify-content: space-between;
-  border-radius: 0.5rem;
-  background-color: var(--disclosure-button-background);
-  color: var(--disclosure-button-foreground);
-  padding: 0.5rem 1rem;
-  text-align: left;
-  font-size: var(--text-base);
-  line-height: var(--text-base-line-height);
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  background-color: rgb(var(--muted));
+  color: rgb(var(--foreground));
+  font-family: inherit;
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-line-height);
   font-weight: 500;
-  outline: none;
-  transition: background-color 0.15s ease, color 0.15s ease;
-}
 
-.trigger:hover {
-  background-color: var(--disclosure-button-hover);
-}
+  @media (hover: hover) {
+    &:hover {
+      background-color: rgb(var(--border));
+    }
+  }
 
-.trigger:active {
-  background-color: var(--disclosure-button-active);
-}
+  &:active {
+    background-color: rgb(var(--border));
+  }
 
-.trigger:focus-visible {
-  box-shadow: 0 0 0 2px var(--disclosure-button-focus-ring);
+  &:focus-visible {
+    outline: 2px solid rgb(var(--ring));
+  }
 }
 
 .panel {
-  padding: 1rem 1rem 0.5rem;
-  color: rgb(var(--muted-foreground));
-  font-size: var(--text-base);
-  line-height: var(--text-base-line-height);
+  display: flex;
+  height: var(--collapsible-panel-height);
+  flex-direction: column;
+  justify-content: end;
+  overflow: hidden;
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-line-height);
+  transition: all 150ms ease-out;
+}
+
+.panel[hidden]:not([hidden='until-found']) {
+  display: none;
+}
+
+.panel[data-starting-style],
+.panel[data-ending-style] {
+  height: 0;
 }

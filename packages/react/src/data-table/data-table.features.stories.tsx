@@ -4,6 +4,7 @@ import { DataTable } from "./data-table";
 import { ROW_INTERACTION } from "./constants";
 import type { DataTableColumn, SortState, FilterState } from "./types";
 import { queryData } from "./stories/mock-data-service";
+import { Button } from "../button";
 import {
 	type User,
 	type UserExpandedData,
@@ -411,22 +412,21 @@ function UserExpandedContent({
 							</div>
 						</div>
 						<div className="sb-row sb-gap-2">
-							<button
+							<Button
 								type="button"
-								className="sb-demo-btn-muted"
+								variant="default"
 								onClick={() => alert(`Message sent to ${row.name}`)}
 							>
 								Message
-							</button>
-							<button
+							</Button>
+							<Button
 								type="button"
-								className="sb-demo-btn-accent"
 								onClick={() =>
 									alert(`Viewing profile for ${row.name} (ID: ${rowId})`)
 								}
 							>
 								View Profile
-							</button>
+							</Button>
 						</div>
 					</div>
 				</div>

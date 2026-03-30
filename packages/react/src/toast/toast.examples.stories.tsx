@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { toast } from 'sonner';
+import { Button } from '../button';
 import { Toast } from './toast';
 
 const meta = {
@@ -15,7 +16,7 @@ export const Action: Story = {
   render: () => (
     <>
       <Toast />
-      <button
+      <Button
         type="button"
         onClick={() =>
           toast('Unsaved changes', {
@@ -24,7 +25,7 @@ export const Action: Story = {
         }
       >
         With action
-      </button>
+      </Button>
     </>
   ),
 };

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Textarea } from './textarea';
 import { Button } from '../button';
+import { Input } from '../input';
 
 const meta = {
   title: 'Components/Textarea/Examples',
@@ -21,9 +22,8 @@ export const ContactForm: Story = {
           <label className="sb-form-label">
             Name
           </label>
-          <input
+          <Input
             type="text"
-            className="sb-native-input"
             placeholder="Your name"
           />
         </div>
@@ -31,9 +31,8 @@ export const ContactForm: Story = {
           <label className="sb-form-label">
             Email
           </label>
-          <input
+          <Input
             type="email"
-            className="sb-native-input"
             placeholder="you@example.com"
           />
         </div>

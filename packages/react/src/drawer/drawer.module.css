@@ -1,60 +1,191 @@
-.root {
-  display: contents;
+.trigger {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  padding: 0 0.875rem;
+  margin: 0;
+  outline: 0;
+  border: 1px solid rgb(var(--border));
+  border-radius: 0.375rem;
+  background-color: rgb(var(--background));
+  font-family: inherit;
+  font-size: var(--text-base);
+  font-weight: 500;
+  line-height: var(--text-base-line-height);
+  color: rgb(var(--foreground));
+  user-select: none;
 }
 
-.trigger {
-  display: inline-flex;
+@media (hover: hover) {
+  .trigger:hover {
+    background-color: rgb(var(--muted) / 0.35);
+  }
+}
+
+.trigger:active {
+  background-color: rgb(var(--muted) / 0.35);
+}
+
+.trigger:focus-visible {
+  outline: 2px solid rgb(var(--ring));
+  outline-offset: -1px;
 }
 
 .backdrop {
+  --backdrop-opacity: 0.2;
+  --bleed: 3rem;
   position: fixed;
+  min-height: 100dvh;
   inset: 0;
-  background-color: rgb(0 0 0 / 0.4);
+  background-color: black;
+  opacity: calc(var(--backdrop-opacity) * (1 - var(--drawer-swipe-progress)));
+  transition-duration: 450ms;
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
   z-index: 50;
+
+  @supports (-webkit-touch-callout: none) {
+    position: absolute;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .backdrop {
+    --backdrop-opacity: 0.7;
+  }
+}
+
+.backdrop[data-starting-style],
+.backdrop[data-ending-style] {
+  opacity: 0;
+}
+
+.backdrop[data-swiping] {
+  transition-duration: 0ms;
+}
+
+.backdrop[data-ending-style] {
+  transition-duration: calc(var(--drawer-swipe-strength) * 400ms);
 }
 
 .viewport {
+  --viewport-padding: 0px;
   position: fixed;
   inset: 0;
-  z-index: 50;
   display: flex;
   justify-content: flex-end;
-  align-items: stretch;
-  pointer-events: none;
+  padding: var(--viewport-padding);
+  z-index: 50;
+
+  @supports (-webkit-touch-callout: none) {
+    --viewport-padding: 0.625rem;
+  }
 }
 
 .popup {
-  pointer-events: auto;
+  --bleed: 3rem;
+  box-sizing: border-box;
+  width: calc(20rem + var(--bleed));
+  max-width: calc(100vw - 3rem + var(--bleed));
   height: 100%;
-  max-width: min(100%, 24rem);
-  width: 100%;
+  padding: 1.5rem;
+  padding-right: calc(1.5rem + var(--bleed));
+  margin-right: calc(-1 * var(--bleed));
+  outline: 1px solid rgb(var(--border));
   background-color: rgb(var(--background));
-  border-left: 1px solid rgb(var(--border));
-  box-shadow: -4px 0 24px rgb(0 0 0 / 0.12);
-  display: flex;
-  flex-direction: column;
+  color: rgb(var(--foreground));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: auto;
+  transition: transform 450ms cubic-bezier(0.32, 0.72, 0, 1);
+  will-change: transform;
+  transform: translateX(var(--drawer-swipe-movement-x));
+}
+
+.popup[data-swiping] {
+  user-select: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .popup {
+    outline: 1px solid rgb(var(--border));
+  }
+}
+
+.popup[data-starting-style],
+.popup[data-ending-style] {
+  transform: translateX(calc(100% - var(--bleed) + var(--viewport-padding) + 2px));
+}
+
+.popup[data-ending-style] {
+  transition-duration: calc(var(--drawer-swipe-strength) * 400ms);
+}
+
+@supports (-webkit-touch-callout: none) {
+  .popup {
+    --bleed: 0px;
+    margin-right: 0;
+    border-radius: 10px;
+  }
 }
 
 .content {
-  flex: 1;
-  padding: 1rem 1.25rem;
-  overflow: auto;
+  width: 100%;
+  max-width: 32rem;
+  margin: 0 auto;
 }
 
 .title {
-  margin: 0;
-  font-size: var(--text-lg);
-  font-weight: 600;
+  margin-top: -0.375rem;
+  margin-bottom: 0.25rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  letter-spacing: -0.0025em;
+  font-weight: 500;
   color: rgb(var(--foreground));
 }
 
 .description {
-  margin: 0.25rem 0 0;
-  font-size: var(--text-sm);
+  margin: 0 0 1.5rem;
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
   color: rgb(var(--muted-foreground));
 }
 
 .close {
-  align-self: flex-start;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  padding: 0 0.875rem;
+  margin: 0;
+  outline: 0;
+  border: 1px solid rgb(var(--border));
+  border-radius: 0.375rem;
+  background-color: rgb(var(--background));
+  font-family: inherit;
+  font-size: var(--text-base);
+  font-weight: 500;
+  line-height: var(--text-base-line-height);
+  color: rgb(var(--foreground));
+  user-select: none;
   margin-top: 0.5rem;
+}
+
+@media (hover: hover) {
+  .close:hover {
+    background-color: rgb(var(--muted) / 0.35);
+  }
+}
+
+.close:active {
+  background-color: rgb(var(--muted) / 0.35);
+}
+
+.close:focus-visible {
+  outline: 2px solid rgb(var(--ring));
+  outline-offset: -1px;
 }

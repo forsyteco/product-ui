@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Button } from '../button';
+import { Input } from '../input';
 import { Form } from './form';
 
 const meta = {
@@ -18,9 +20,9 @@ export const Default: Story = {
     <Form style={{ width: 320 }}>
       <label>
         Name
-        <input name="name" />
+        <Input name="name" />
       </label>
-      <button type="submit">Submit</button>
+      <Button type="submit">Submit</Button>
     </Form>
   ),
 };

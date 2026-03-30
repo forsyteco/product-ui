@@ -1,4 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Button } from '../button';
+import { Input } from '../input';
+import { Select } from '../select';
 import { Form } from './form';
 
 const meta = {
@@ -15,16 +18,20 @@ export const Settings: Story = {
     <Form style={{ display: 'flex', flexDirection: 'column', gap: 12, width: 360 }}>
       <label>
         Display name
-        <input name="displayName" />
+        <Input name="displayName" />
       </label>
       <label>
         Time zone
-        <select name="tz" defaultValue="utc">
-          <option value="utc">UTC</option>
-          <option value="local">Local</option>
-        </select>
+        <Select
+          name="tz"
+          defaultValue="utc"
+          options={[
+            { value: 'utc', label: 'UTC' },
+            { value: 'local', label: 'Local' },
+          ]}
+        />
       </label>
-      <button type="submit">Save</button>
+      <Button type="submit">Save</Button>
     </Form>
   ),
 };

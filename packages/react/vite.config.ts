@@ -49,6 +49,7 @@ const componentEntries = [
   'radio-group',
   'relative-time',
   'scroll-area',
+  'search-field',
   'select',
   'separator',
   'skeleton',

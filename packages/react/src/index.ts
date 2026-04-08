@@ -120,6 +120,9 @@ export type { DatePickerProps } from './date-picker'
 export { Toast, toast } from './toast'
 export type { ToastProps } from './toast'
 
+export { SearchField } from './search-field'
+export type { SearchFieldProps } from './search-field'
+
 export { Skeleton } from './skeleton'
 export type { SkeletonProps } from './skeleton'
 

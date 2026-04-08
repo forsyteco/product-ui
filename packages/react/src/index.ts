@@ -126,6 +126,9 @@ export type { SkeletonProps } from './skeleton'
 export { EmptyState } from './empty-state'
 export type { EmptyStateProps } from './empty-state'
 
+export { InlineAlert } from './inline-alert'
+export type { InlineAlertProps } from './inline-alert'
+
 export { RelativeTime } from './relative-time'
 export type { RelativeTimeProps } from './relative-time'
 

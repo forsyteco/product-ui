@@ -406,6 +406,16 @@
         "default": "./dist/icon-button/index.cjs"
       }
     },
+    "./inline-alert": {
+      "import": {
+        "types": "./dist/inline-alert/index.d.ts",
+        "default": "./dist/inline-alert/index.mjs"
+      },
+      "require": {
+        "types": "./dist/inline-alert/index.d.ts",
+        "default": "./dist/inline-alert/index.cjs"
+      }
+    },
     "./input": {
       "import": {
         "types": "./dist/input/index.d.ts",

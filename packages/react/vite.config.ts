@@ -35,6 +35,7 @@ const componentEntries = [
   'filter-chip',
   'form',
   'icon-button',
+  'inline-alert',
   'input',
   'listbox',
   'menu',

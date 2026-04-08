@@ -32,6 +32,7 @@ const componentEntries = [
   'empty-state',
   'field',
   'fieldset',
+  'filter-chip',
   'form',
   'icon-button',
   'input',

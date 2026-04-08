@@ -386,6 +386,16 @@
         "default": "./dist/fieldset/index.cjs"
       }
     },
+    "./filter-chip": {
+      "import": {
+        "types": "./dist/filter-chip/index.d.ts",
+        "default": "./dist/filter-chip/index.mjs"
+      },
+      "require": {
+        "types": "./dist/filter-chip/index.d.ts",
+        "default": "./dist/filter-chip/index.cjs"
+      }
+    },
     "./icon-button": {
       "import": {
         "types": "./dist/icon-button/index.d.ts",

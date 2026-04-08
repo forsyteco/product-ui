@@ -56,6 +56,9 @@ export type { AutocompleteProps, AutocompleteRootProps, AutocompleteOption } fro
 export { Fieldset } from './fieldset'
 export type { FieldsetProps } from './fieldset'
 
+export { FilterChip } from './filter-chip'
+export type { FilterChipProps } from './filter-chip'
+
 export { Input } from './input'
 export type { InputProps } from './input'
 export { CurrencyInput } from './currency-input'

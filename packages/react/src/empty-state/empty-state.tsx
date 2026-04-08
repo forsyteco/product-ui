@@ -1,3 +1,4 @@
+import { Button as BaseButton } from '@base-ui/react/button';
 import { clsx } from 'clsx';
 
 import styles from './empty-state.module.css';
@@ -38,9 +39,9 @@ export function EmptyState({
       <div className={styles.title}>{title}</div>
       {description ? <p className={styles.description}>{description}</p> : null}
       {actionLabel && onAction ? (
-        <button type="button" onClick={onAction} className={styles.action}>
+        <BaseButton type="button" onClick={onAction} className={styles.action}>
           {actionLabel}
-        </button>
+        </BaseButton>
       ) : null}
     </div>
   );

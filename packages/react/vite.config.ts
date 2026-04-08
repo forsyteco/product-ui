@@ -29,6 +29,7 @@ const componentEntries = [
   'counter-label',
   'dialog',
   'drawer',
+  'empty-state',
   'field',
   'fieldset',
   'form',

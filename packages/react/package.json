@@ -206,6 +206,16 @@
         "default": "./dist/drawer/index.cjs"
       }
     },
+    "./empty-state": {
+      "import": {
+        "types": "./dist/empty-state/index.d.ts",
+        "default": "./dist/empty-state/index.mjs"
+      },
+      "require": {
+        "types": "./dist/empty-state/index.d.ts",
+        "default": "./dist/empty-state/index.cjs"
+      }
+    },
     "./field": {
       "import": {
         "types": "./dist/field/index.d.ts",

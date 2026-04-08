@@ -120,6 +120,9 @@ export type { ToastProps } from './toast'
 export { Skeleton } from './skeleton'
 export type { SkeletonProps } from './skeleton'
 
+export { EmptyState } from './empty-state'
+export type { EmptyStateProps } from './empty-state'
+
 export { RelativeTime } from './relative-time'
 export type { RelativeTimeProps } from './relative-time'
 

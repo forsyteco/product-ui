@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Switch } from './switch';
+import { ThemeProvider } from '../theme';
 
 const meta = {
   title: 'Components/Switch/Features',
@@ -31,9 +32,20 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+function ControlledSwitchStory() {
+  const [checked, setChecked] = useState(false);
+  return (
+    <Switch
+      label="Controlled switch"
+      checked={checked}
+      onChange={setChecked}
+    />
+  );
+}
+
 export const States: Story = {
   render: () => (
-    <div className="space-y-4">
+    <div className="sb-stack-4">
       <Switch label="Unchecked" />
       <Switch label="Checked" checked />
       <Switch label="Disabled" disabled />
@@ -44,7 +56,7 @@ export const States: Story = {
 
 export const WithDescription: Story = {
   render: () => (
-    <div className="space-y-4">
+    <div className="sb-stack-4">
       <Switch
         label="Email notifications"
         description="Receive email updates about your account"
@@ -59,15 +71,30 @@ export const WithDescription: Story = {
 };
 
 export const Controlled: Story = {
-  render: () => {
-    const [checked, setChecked] = useState(false);
-    return (
-      <Switch
-        label="Controlled switch"
-        checked={checked}
-        onChange={setChecked}
-      />
-    );
-  },
+  render: () => <ControlledSwitchStory />,
+};
+
+export const ThemeLightYellow: Story = {
+  render: () => (
+    <ThemeProvider colourScheme="yellow" defaultMode="light" storageKey="switch-theme-light-yellow">
+      <div className="sb-row sb-gap-4">
+        <Switch label="Unchecked" />
+        <Switch label="Checked" checked />
+        <Switch label="Disabled" disabled />
+      </div>
+    </ThemeProvider>
+  ),
+};
+
+export const ThemeDarkBlue: Story = {
+  render: () => (
+    <ThemeProvider colourScheme="blue" defaultMode="dark" storageKey="switch-theme-dark-blue">
+      <div className="sb-row sb-gap-4">
+        <Switch label="Unchecked" />
+        <Switch label="Checked" checked />
+        <Switch label="Disabled" disabled />
+      </div>
+    </ThemeProvider>
+  ),
 };
 

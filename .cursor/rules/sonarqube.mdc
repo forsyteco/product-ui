@@ -1,0 +1,24 @@
+---
+description: SonarQube instructions
+globs:
+alwaysApply: true
+---
+
+These are some guidelines when using the SonarQube MCP server.
+
+# Important Tool Guidelines
+
+## Basic usage
+- IMPORTANT: After generating or modifying code files, call `analyze_file_list` at the end of the task if it exists.
+- IMPORTANT: When starting a new task, disable automatic analysis with `toggle_automatic_analysis` if it exists.
+- IMPORTANT: When finished, re-enable automatic analysis with `toggle_automatic_analysis` if it exists.
+
+## Project Keys
+- When a user mentions a project key, use `search_my_sonarqube_projects` first to find the exact key.
+- Do not guess project keys.
+
+## Branch and Pull Request Context
+- If the user mentions a feature branch or pull request, include branch context where relevant.
+
+## Code Issues
+- After fixing issues, do not immediately verify them with issue search tools because the server may not yet reflect new analysis.

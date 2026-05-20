@@ -1,67 +1,104 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { NameCell } from './name-cell';
+import styles from './data-table.module.css';
 
 describe('NameCell', () => {
   const mockRow = { email: 'john@example.com' };
 
-  describe('Name Rendering', () => {
-    it('renders the name correctly', () => {
-      render(<NameCell value="John Doe" row={mockRow} />);
+  describe('when rendering the name', () => {
+    it('should render the name correctly', () => {
+      // Arrange
+      const value = 'John Doe';
+      const row = mockRow;
 
+      // Act
+      render(<NameCell value={value} row={row} />);
+
+      // Assert
       expect(screen.getByText('John Doe')).toBeInTheDocument();
     });
 
-    it('applies correct styling to name (font-medium)', () => {
-      render(<NameCell value="Jane Smith" row={{ email: 'jane@example.com' }} />);
+    it('should apply name class to name text', () => {
+      // Arrange
+      const value = 'Jane Smith';
+      const row = { email: 'jane@example.com' };
 
+      // Act
+      render(<NameCell value={value} row={row} />);
+
+      // Assert
       const nameElement = screen.getByText('Jane Smith');
-      expect(nameElement).toHaveClass('font-medium');
+      expect(nameElement).toHaveClass(styles['name-value']);
     });
   });
 
-  describe('Email Rendering', () => {
-    it('renders the email from row correctly', () => {
-      render(<NameCell value="John Doe" row={{ email: 'john@example.com' }} />);
+  describe('when rendering the email', () => {
+    it('should render the email from row correctly', () => {
+      // Arrange
+      const value = 'John Doe';
+      const row = { email: 'john@example.com' };
 
+      // Act
+      render(<NameCell value={value} row={row} />);
+
+      // Assert
       expect(screen.getByText('john@example.com')).toBeInTheDocument();
     });
 
-    it('applies correct styling to email (text-xs and text-muted-foreground)', () => {
-      render(<NameCell value="Jane Smith" row={{ email: 'jane@example.com' }} />);
+    it('should apply email class to email text', () => {
+      // Arrange
+      const value = 'Jane Smith';
+      const row = { email: 'jane@example.com' };
 
+      // Act
+      render(<NameCell value={value} row={row} />);
+
+      // Assert
       const emailElement = screen.getByText('jane@example.com');
-      expect(emailElement).toHaveClass('text-xs');
-      expect(emailElement).toHaveClass('text-muted-foreground');
+      expect(emailElement).toHaveClass(styles['name-email']);
     });
   });
 
-  describe('Edge Cases', () => {
-    it('handles empty name gracefully', () => {
-      render(<NameCell value="" row={{ email: 'test@example.com' }} />);
+  describe('when handling edge cases', () => {
+    it('should still render email when name is empty', () => {
+      // Arrange
+      const value = '';
+      const row = { email: 'test@example.com' };
 
-      // Email should still render
+      // Act
+      render(<NameCell value={value} row={row} />);
+
+      // Assert
       expect(screen.getByText('test@example.com')).toBeInTheDocument();
     });
 
-    it('handles empty email gracefully', () => {
-      render(<NameCell value="John Doe" row={{ email: '' }} />);
+    it('should still render name when email is empty', () => {
+      // Arrange
+      const value = 'John Doe';
+      const row = { email: '' };
 
-      // Name should still render
+      // Act
+      render(<NameCell value={value} row={row} />);
+
+      // Assert
       expect(screen.getByText('John Doe')).toBeInTheDocument();
     });
   });
 
-  describe('Row with additional fields', () => {
-    it('works with rows that have additional fields beyond email', () => {
+  describe('when the row has additional fields', () => {
+    it('should render name and email from rows with extra fields', () => {
+      // Arrange
       const rowWithExtraFields = {
         id: '1',
         email: 'user@company.com',
         role: 'Admin',
       };
 
+      // Act
       render(<NameCell value="Test User" row={rowWithExtraFields} />);
 
+      // Assert
       expect(screen.getByText('Test User')).toBeInTheDocument();
       expect(screen.getByText('user@company.com')).toBeInTheDocument();
     });

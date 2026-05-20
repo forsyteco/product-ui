@@ -3,33 +3,32 @@ import {
   type ComponentPropsWithoutRef,
   type ComponentType,
   type ForwardedRef,
+  type MouseEventHandler,
   type ReactNode,
 } from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import { cn } from '../utils/tailwind'
+import { clsx } from 'clsx';
 import { Spinner } from '../spinner'
 import { VisuallyHidden } from '../visually-hidden'
+import styles from './icon-button.module.css'
 
-const iconButtonVariants = cva(
-  'inline-flex items-center justify-center font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none',
-  {
+const iconButtonVariants = cva(styles.root, {
     variants: {
       variant: {
-        primary: 'bg-accent text-accent-foreground hover:opacity-90',
-        secondary: 'bg-primary text-primary-foreground hover:opacity-90',
-        outline: 'border border-border bg-background text-foreground hover:bg-muted',
-        ghost: 'text-foreground hover:bg-muted',
-        danger: 'bg-destructive text-destructive-foreground hover:opacity-90',
+        primary: styles['variant-primary'],
+        default: styles['variant-default'],
+        ghost: styles['variant-ghost'],
+        danger: styles['variant-danger'],
       },
       shape: {
-        square: 'rounded-md',
-        circle: 'rounded-full',
+        square: styles['shape-square'],
+        circle: styles['shape-circle'],
       },
       size: {
-        small: 'h-8 w-8 text-sm',
-        medium: 'h-9 w-9 text-base',
-        large: 'h-10 w-10 text-lg',
+        small: styles['size-small'],
+        medium: styles['size-medium'],
+        large: styles['size-large'],
       },
     },
     defaultVariants: {
@@ -71,15 +70,15 @@ type IconButtonAsAnchor = BaseIconButtonProps &
 export type IconButtonProps = IconButtonAsButton | IconButtonAsAnchor
 
 const iconSizes = {
-  small: 'h-4 w-4',
-  medium: 'h-5 w-5',
-  large: 'h-6 w-6',
+  small: styles['icon-small'],
+  medium: styles['icon-medium'],
+  large: styles['icon-large'],
 } as const
 
 type IconButtonSize = NonNullable<VariantProps<typeof iconButtonVariants>['size']>
 
 const IconButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, IconButtonProps>(function IconButton(
-  props: IconButtonProps,
+  props: Readonly<IconButtonProps>,
   ref: ForwardedRef<HTMLButtonElement | HTMLAnchorElement>
 ) {
   const {
@@ -104,28 +103,41 @@ const IconButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, IconButtonP
   const title = keybindingHint ? `${tooltipText} (${keybindingHint})` : tooltipText
   const resolvedSize: IconButtonSize = (size ?? 'medium') as IconButtonSize
   const iconClassName = iconSizes[resolvedSize]
-  const sharedClassName = cn(iconButtonVariants({ variant, size, shape }), inactive && 'opacity-60', className)
+  const sharedClassName = clsx(iconButtonVariants({ variant, size, shape }), inactive && styles.inactive, className)
   const screenReaderText = description ?? (typeof children === 'string' ? children : undefined)
   const content =
     loading === true ? (
       <Spinner size={18} colors={['currentColor']} />
     ) : (
-      <Icon aria-hidden className={cn('shrink-0', iconClassName)} />
+      <Icon aria-hidden className={clsx(styles.icon, iconClassName)} />
     )
 
   if (Component === 'a') {
     const { href, ...anchorProps } = rest as Omit<IconButtonAsAnchor, keyof BaseIconButtonProps>
+    const handleAnchorClick: MouseEventHandler<HTMLAnchorElement> = (event) => {
+      if (inactive) {
+        event.preventDefault()
+        event.stopPropagation()
+        return
+      }
+
+      anchorProps.onClick?.(event)
+    }
+
     return (
       <a
         {...anchorProps}
         ref={ref as ForwardedRef<HTMLAnchorElement>}
-        href={href}
+        href={inactive ? undefined : href}
         className={sharedClassName}
         aria-label={ariaLabel}
+        aria-disabled={inactive || undefined}
         aria-busy={loading || undefined}
+        tabIndex={inactive ? -1 : anchorProps.tabIndex}
         data-tooltip-direction={tooltipDirection}
         data-inactive={inactive || undefined}
         title={title}
+        onClick={handleAnchorClick}
       >
         {content}
         {screenReaderText ? <VisuallyHidden>{screenReaderText}</VisuallyHidden> : null}
@@ -141,6 +153,7 @@ const IconButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, IconButtonP
       {...buttonProps}
       ref={ref as ForwardedRef<HTMLButtonElement>}
       type={buttonProps.type ?? 'button'}
+      disabled={inactive || buttonProps.disabled}
       className={sharedClassName}
       aria-label={ariaLabel}
       aria-busy={loading || undefined}

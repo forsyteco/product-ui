@@ -24,16 +24,16 @@ export const DatePickerInCard: Story = {
     const label = value ? dayjs(value).format('DD MMM YYYY') : 'No date selected';
 
     return (
-      <Card className="w-fit">
+      <Card className="sb-w-fit">
         <CardHeader>
           <CardTitle>Schedule review</CardTitle>
         </CardHeader>
-        <CardContent className="p-0">
+        <CardContent className="sb-p-0">
           <DatePicker value={value} onValueChange={setValue} />
         </CardContent>
-        <CardFooter className="justify-between gap-2">
-          <div className="text-base text-muted-foreground">{label}</div>
-          <Button variant="outline" size="sm" onClick={() => setValue(undefined)}>
+        <CardFooter className="sb-card-footer-spread">
+          <div className="sb-text-base sb-muted-text">{label}</div>
+          <Button variant="default" size="sm" onClick={() => setValue(undefined)}>
             Clear
           </Button>
         </CardFooter>

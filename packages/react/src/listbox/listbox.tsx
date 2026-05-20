@@ -1,6 +1,7 @@
 import { type ReactNode } from 'react';
-import { Listbox as HeadlessListbox } from '@headlessui/react';
-import { cn } from '../utils/tailwind';
+import { Select as BaseSelect } from '@base-ui/react/select';
+import { clsx } from 'clsx';
+import styles from './listbox.module.css';
 
 export type ListboxOption = {
   id: string | number;
@@ -42,20 +43,33 @@ function Listbox({
   disabled = false,
 }: ListboxProps) {
   return (
-    <HeadlessListbox value={value ?? undefined} onChange={onChange} disabled={disabled}>
-      <div className={cn('relative', className)}>
-        <HeadlessListbox.Button
-          className={cn(
-            'relative w-full cursor-default rounded-md bg-background py-2 pl-3 pr-10 text-left text-base text-foreground shadow-sm ring-1 ring-inset ring-border focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background',
-            disabled && 'cursor-not-allowed opacity-50'
+    <BaseSelect.Root<ListboxOption>
+      value={value ?? undefined}
+      onValueChange={(next) => {
+        const resolved = typeof next === 'object'
+          ? (next as ListboxOption)
+          : options.find((option) => option.value === String(next));
+        if (resolved) {
+          onChange?.(resolved);
+        }
+      }}
+      disabled={disabled}
+      items={options.map((option) => ({ label: option.label, value: option }))}
+      itemToStringLabel={(option) => option.label}
+    >
+      <div className={clsx(styles.root, className)}>
+        <BaseSelect.Trigger
+          className={clsx(
+            styles.button,
+            disabled && styles['button-disabled']
           )}
         >
-          <span className="block truncate">
-            {value?.label || placeholder}
+          <span className={styles.value}>
+            {value?.label ?? placeholder}
           </span>
-          <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+          <span className={styles['icon-wrap']}>
             <svg
-              className="h-5 w-5 text-muted-foreground"
+              className={styles.icon}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -68,27 +82,33 @@ function Listbox({
               />
             </svg>
           </span>
-        </HeadlessListbox.Button>
-        <HeadlessListbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-background py-1 text-base shadow-lg ring-1 ring-border focus:outline-none">
+        </BaseSelect.Trigger>
+        <BaseSelect.Portal>
+          <BaseSelect.Positioner>
+            <BaseSelect.Popup className={styles.options}>
+              <BaseSelect.List>
           {options.map((option) => (
-            <HeadlessListbox.Option
+            <BaseSelect.Item
               key={option.id}
               value={option}
               disabled={option.disabled}
-              className={({ active, disabled }) =>
-                cn(
-                  'relative cursor-default select-none py-2 pl-10 pr-4',
-                  active ? 'bg-accent text-accent-foreground' : 'text-foreground',
-                  disabled && 'cursor-not-allowed opacity-50'
+              className={({ highlighted, disabled: optionDisabled }) =>
+                clsx(
+                  styles.option,
+                  highlighted ? styles['option-active'] : styles['option-inactive'],
+                  optionDisabled && styles['option-disabled']
                 )
               }
             >
               {option.label}
-            </HeadlessListbox.Option>
+            </BaseSelect.Item>
           ))}
-        </HeadlessListbox.Options>
+              </BaseSelect.List>
+            </BaseSelect.Popup>
+          </BaseSelect.Positioner>
+        </BaseSelect.Portal>
       </div>
-    </HeadlessListbox>
+    </BaseSelect.Root>
   );
 }
 

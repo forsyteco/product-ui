@@ -1,0 +1,36 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 0.25rem;
+  width: 100%;
+  max-width: 16rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: rgb(var(--foreground));
+}
+
+.description {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: rgb(var(--muted-foreground));
+}
+
+.error {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: rgb(var(--destructive));
+}
+
+.control {
+  width: 100%;
+}
+
+.item {
+  width: 100%;
+}

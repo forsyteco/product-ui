@@ -30,7 +30,7 @@ export const Basic: Story = {
   render: () => {
     const [value, setValue] = useState<string | undefined>(undefined);
     return (
-      <div className="w-64">
+      <div className="sb-w-64">
         <RadioGroup options={options} value={value} onChange={setValue} />
       </div>
     );
@@ -46,7 +46,7 @@ export const WithDescriptions: Story = {
       { id: '3', label: 'Enterprise Plan', value: 'enterprise', description: '$99/month' },
     ];
     return (
-      <div className="w-96">
+      <div className="sb-w-96">
         <RadioGroup options={optionsWithDesc} value={value} onChange={setValue} />
       </div>
     );
@@ -57,7 +57,7 @@ export const WithInitialValue: Story = {
   render: () => {
     const [value, setValue] = useState<string>('option2');
     return (
-      <div className="w-64">
+      <div className="sb-w-64">
         <RadioGroup options={options} value={value} onChange={setValue} />
       </div>
     );

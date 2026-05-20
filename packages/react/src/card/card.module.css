@@ -1,0 +1,44 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgb(var(--border));
+  background-color: rgb(var(--card));
+  color: rgb(var(--card-foreground));
+  padding: 1.5rem 0;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+}
+
+.header {
+  display: grid;
+  grid-template-rows: auto auto;
+  align-items: start;
+  gap: 0.5rem;
+  padding: 0 1.5rem;
+}
+
+.title {
+  font-weight: 600;
+  line-height: 1;
+}
+
+.description {
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
+  color: rgb(var(--muted-foreground));
+}
+
+.action {
+  justify-self: end;
+}
+
+.content {
+  padding: 0 1.5rem;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+}

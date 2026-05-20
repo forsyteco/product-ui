@@ -5,6 +5,7 @@ import { ROW_INTERACTION } from './constants';
 import type { SortState, FilterState } from './types';
 import { queryData } from './stories/mock-data-service';
 import { sampleUsers, userColumnsWithSortAndFilter } from './stories/fixtures';
+import { ThemeProvider } from '../theme';
 
 const meta = {
   title: 'Components/DataTable',
@@ -99,8 +100,8 @@ function PlaygroundStory({ pageSize: argPageSize }: StoryArgs) {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="text-sm text-muted-foreground space-y-1">
+    <div className="sb-stack-4">
+      <div className="sb-text-sm sb-muted-text sb-stack-1">
         <p>Status and Role columns have both sorting and filtering enabled.</p>
         <p><strong>Sort:</strong> {sortState ? `${sortState.columnId} (${sortState.direction})` : 'none'} | <strong>Filter:</strong> {filterState.length > 0 ? filterState.map(f => `${f.columnId}: ${f.values.join(', ')}`).join(' | ') : 'none'}</p>
         <p><strong>Results:</strong> {result.totalCount} of {sampleUsers.length} users | <strong>Selected:</strong> {selectedRowIds.size > 0 ? Array.from(selectedRowIds).join(', ') : 'none'}</p>
@@ -130,4 +131,20 @@ export const Playground: Story = {
   args: {
     pageSize: 10,
   },
+};
+
+export const ThemeLightYellow: Story = {
+  render: () => (
+    <ThemeProvider colourScheme="yellow" defaultMode="light" storageKey="data-table-light-yellow">
+      <DefaultStory pageSize={10} />
+    </ThemeProvider>
+  ),
+};
+
+export const ThemeDarkBlue: Story = {
+  render: () => (
+    <ThemeProvider colourScheme="blue" defaultMode="dark" storageKey="data-table-dark-blue">
+      <DefaultStory pageSize={10} />
+    </ThemeProvider>
+  ),
 };

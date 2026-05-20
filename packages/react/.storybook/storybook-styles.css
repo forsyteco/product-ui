@@ -1,0 +1,57 @@
+/* Minimal Storybook preview baseline */
+
+.story-wrap {
+  font-family: var(--font-sans);
+  color: rgb(var(--foreground));
+  background: rgb(var(--background));
+}
+
+[data-color-mode] {
+  background-color: rgb(var(--background));
+}
+
+/* Keep preview surface stable; do not style sidebar chrome */
+#storybook-preview-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+  background-color: rgb(var(--background)) !important;
+}
+
+.theme-wrap-grid,
+.story-wrap-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(20rem, auto));
+  gap: 1px;
+  min-height: 100vh;
+}
+
+@media (max-width: 80rem) {
+  .theme-wrap-grid,
+  .story-wrap-grid {
+    grid-template-columns: repeat(3, minmax(20rem, auto));
+  }
+}
+
+@media (max-width: 60rem) {
+  .theme-wrap-grid,
+  .story-wrap-grid {
+    grid-template-columns: repeat(2, minmax(20rem, auto));
+  }
+}
+
+@media (max-width: 40rem) {
+  .theme-wrap-grid,
+  .story-wrap-grid {
+    display: block;
+    min-height: auto;
+  }
+}
+
+.theme-name {
+  margin: 0;
+  padding: 0.25rem 0.5rem;
+  font-size: var(--text-xs);
+  line-height: var(--text-xs-line-height);
+  color: rgb(var(--muted-foreground));
+  background: rgb(var(--muted));
+}

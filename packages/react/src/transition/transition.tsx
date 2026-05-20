@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
-import { Transition as HeadlessTransition } from '@headlessui/react';
-import { cn } from '../utils/tailwind';
+import { clsx } from 'clsx';
+import styles from './transition.module.css';
 
 export type TransitionProps = {
   show?: boolean;
@@ -18,25 +18,29 @@ function Transition({
   show,
   children,
   className,
-  enter = 'transition ease-out duration-200',
-  enterFrom = 'opacity-0',
-  enterTo = 'opacity-100',
-  leave = 'transition ease-in duration-150',
-  leaveFrom = 'opacity-100',
-  leaveTo = 'opacity-0',
+  enter = styles.enter,
+  enterFrom = styles['enter-from'],
+  enterTo = styles['enter-to'],
+  leave = styles.leave,
+  leaveFrom = styles['leave-from'],
+  leaveTo = styles['leave-to'],
 }: TransitionProps) {
+  if (!show) return null;
+
   return (
-    <HeadlessTransition
-      show={show}
-      enter={cn(enter)}
-      enterFrom={cn(enterFrom)}
-      enterTo={cn(enterTo)}
-      leave={cn(leave)}
-      leaveFrom={cn(leaveFrom)}
-      leaveTo={cn(leaveTo)}
+    <div
+      className={clsx(
+        enter,
+        enterFrom,
+        enterTo,
+        leave,
+        leaveFrom,
+        leaveTo,
+        className
+      )}
     >
-      <div className={cn(className)}>{children}</div>
-    </HeadlessTransition>
+      {children}
+    </div>
   );
 }
 

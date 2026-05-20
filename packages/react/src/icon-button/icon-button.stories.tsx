@@ -11,14 +11,14 @@ const meta = {
     docs: {
       description: {
         component:
-          'An icon-only button that supports variants, sizes, tooltips, and optional descriptions for accessibility.',
+          'An icon-only button with canonical variants (`primary`, `default`, `ghost`, `danger`) and shared interaction token contract. Variant states read named tokens such as `--icon-button-primary-background`, `--icon-button-primary-hover`, `--icon-button-primary-active`, and `--icon-button-primary-focus-ring`.',
       },
     },
   },
   argTypes: {
     variant: {
       control: { type: 'select' },
-      options: ['primary', 'secondary', 'outline', 'ghost', 'danger'],
+      options: ['primary', 'default', 'ghost', 'danger'],
     },
     size: {
       control: { type: 'select' },

@@ -1,126 +1,193 @@
 import { describe, it, expect } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { CountryCell } from './country-cell';
+import styles from './data-table.module.css';
 
 describe('CountryCell', () => {
-  describe('Country Name Rendering', () => {
-    it('renders the country name correctly', () => {
-      render(<CountryCell value="United Kingdom" />);
+  describe('when rendering the country name', () => {
+    it('should render the country name correctly', () => {
+      // Arrange
+      const value = 'United Kingdom';
 
+      // Act
+      render(<CountryCell value={value} />);
+
+      // Assert
       expect(screen.getByText('United Kingdom')).toBeInTheDocument();
     });
 
-    it('renders different country names', () => {
-      render(<CountryCell value="France" />);
+    it('should render different country names', () => {
+      // Arrange
+      const value = 'France';
 
+      // Act
+      render(<CountryCell value={value} />);
+
+      // Assert
       expect(screen.getByText('France')).toBeInTheDocument();
     });
 
-    it('applies correct styling to country name (text-foreground)', () => {
-      render(<CountryCell value="Germany" />);
+    it('should apply country name class', () => {
+      // Arrange
+      const value = 'Germany';
 
+      // Act
+      render(<CountryCell value={value} />);
+
+      // Assert
       const nameElement = screen.getByText('Germany');
-      expect(nameElement).toHaveClass('text-foreground');
+      expect(nameElement).toHaveClass(styles['copy-value']);
     });
   });
 
-  describe('Flag Image Rendering', () => {
-    it('renders an img element for the flag', () => {
-      render(<CountryCell value="United States" />);
+  describe('when rendering the flag image', () => {
+    it('should render an img element for the flag', () => {
+      // Arrange
+      const value = 'United States';
 
+      // Act
+      render(<CountryCell value={value} />);
+
+      // Assert
       const img = screen.getByRole('img');
       expect(img).toBeInTheDocument();
     });
 
-    it('renders flag image with correct dimensions (h-5 w-5)', () => {
-      render(<CountryCell value="Canada" />);
+    it('should render flag image with expected class', () => {
+      // Arrange
+      const value = 'Canada';
 
+      // Act
+      render(<CountryCell value={value} />);
+
+      // Assert
       const img = screen.getByRole('img');
-      expect(img).toHaveClass('h-5');
-      expect(img).toHaveClass('w-5');
+      expect(img).toHaveClass(styles['country-flag']);
     });
 
-    it('sets correct alt text on flag image', () => {
-      render(<CountryCell value="Japan" />);
+    it('should set correct alt text on flag image', () => {
+      // Arrange
+      const value = 'Japan';
 
+      // Act
+      render(<CountryCell value={value} />);
+
+      // Assert
       const img = screen.getByRole('img');
       expect(img).toHaveAttribute('alt', 'Japan flag');
     });
 
-    it('uses Twemoji CDN for flag images', () => {
-      render(<CountryCell value="United Kingdom" />);
+    it('should use Twemoji CDN for flag images', () => {
+      // Arrange
+      const value = 'United Kingdom';
 
+      // Act
+      render(<CountryCell value={value} />);
+
+      // Assert
       const img = screen.getByRole('img');
       expect(img.getAttribute('src')).toContain('twemoji');
     });
   });
 
-  describe('Container Styling', () => {
-    it('applies correct styling to container (inline-flex, items-center, gap)', () => {
-      const { container } = render(<CountryCell value="Australia" />);
+  describe('when inspecting container styling', () => {
+    it('should apply expected container class', () => {
+      // Arrange
+      const value = 'Australia';
 
+      // Act
+      const { container } = render(<CountryCell value={value} />);
+
+      // Assert
       const wrapper = container.firstChild;
-      expect(wrapper).toHaveClass('inline-flex');
-      expect(wrapper).toHaveClass('items-center');
-      expect(wrapper).toHaveClass('gap-2');
+      expect(wrapper).toHaveClass(styles.country);
     });
   });
 
-  describe('Unknown Country Names', () => {
-    it('handles unknown country names gracefully and still displays the name', () => {
-      render(<CountryCell value="Unknown Country" />);
+  describe('when the country name is unknown', () => {
+    it('should still display the name for unknown country names', () => {
+      // Arrange
+      const value = 'Unknown Country';
 
+      // Act
+      render(<CountryCell value={value} />);
+
+      // Assert
       expect(screen.getByText('Unknown Country')).toBeInTheDocument();
     });
 
-    it('still renders an img element for unknown countries', () => {
-      render(<CountryCell value="Fictional Land" />);
+    it('should still render an img element for unknown countries', () => {
+      // Arrange
+      const value = 'Fictional Land';
 
+      // Act
+      render(<CountryCell value={value} />);
+
+      // Assert
       const img = screen.getByRole('img');
       expect(img).toBeInTheDocument();
     });
   });
 
-  describe('Image Error Handling', () => {
-    it('shows fallback "-" when image fails to load', () => {
+  describe('when the flag image fails to load', () => {
+    it('should show fallback "-" when image fails to load', () => {
+      // Arrange
       render(<CountryCell value="Invalid Country" />);
-
       const img = screen.getByRole('img');
+
+      // Act
       fireEvent.error(img);
 
+      // Assert
       expect(screen.getByText('-')).toBeInTheDocument();
     });
 
-    it('hides the img element when error occurs', () => {
+    it('should hide the img element when error occurs', () => {
+      // Arrange
       render(<CountryCell value="Invalid Country" />);
-
       const img = screen.getByRole('img');
+
+      // Act
       fireEvent.error(img);
 
+      // Assert
       expect(screen.queryByRole('img')).not.toBeInTheDocument();
     });
 
-    it('still displays country name when image fails to load', () => {
+    it('should still display country name when image fails to load', () => {
+      // Arrange
       render(<CountryCell value="Some Country" />);
-
       const img = screen.getByRole('img');
+
+      // Act
       fireEvent.error(img);
 
+      // Assert
       expect(screen.getByText('Some Country')).toBeInTheDocument();
     });
   });
 
-  describe('Edge Cases', () => {
-    it('handles empty string gracefully', () => {
-      const { container } = render(<CountryCell value="" />);
+  describe('when handling edge cases', () => {
+    it('should handle empty string gracefully', () => {
+      // Arrange
+      const value = '';
 
+      // Act
+      const { container } = render(<CountryCell value={value} />);
+
+      // Assert
       const wrapper = container.firstChild;
       expect(wrapper).toBeInTheDocument();
     });
 
-    it('handles country names with special characters', () => {
-      render(<CountryCell value="Cote d'Ivoire" />);
+    it('should handle country names with special characters', () => {
+      // Arrange
+      const value = "Cote d'Ivoire";
 
+      // Act
+      render(<CountryCell value={value} />);
+
+      // Assert
       expect(screen.getByText("Cote d'Ivoire")).toBeInTheDocument();
     });
   });

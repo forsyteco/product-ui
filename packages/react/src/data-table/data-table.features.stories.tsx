@@ -4,6 +4,7 @@ import { DataTable } from "./data-table";
 import { ROW_INTERACTION } from "./constants";
 import type { DataTableColumn, SortState, FilterState } from "./types";
 import { queryData } from "./stories/mock-data-service";
+import { Button } from "../button";
 import {
 	type User,
 	type UserExpandedData,
@@ -46,8 +47,8 @@ function SortingStory({ pageSize: argPageSize }: StoryArgs) {
 	);
 
 	return (
-		<div className="space-y-4">
-			<p className="text-sm text-muted-foreground">
+		<div className="sb-stack-4">
+			<p className="sb-text-sm sb-muted-text">
 				Click on "Name" or "Email" column headers to sort. Current sort:{" "}
 				{sortState ? `${sortState.columnId} (${sortState.direction})` : "none"}
 			</p>
@@ -87,8 +88,8 @@ function FilteringStory({ pageSize: argPageSize }: StoryArgs) {
 	};
 
 	return (
-		<div className="space-y-4">
-			<p className="text-sm text-muted-foreground">
+		<div className="sb-stack-4">
+			<p className="sb-text-sm sb-muted-text">
 				Click on the filter icon in "Email", "Status" or "Role" columns to
 				filter. Active filters:{" "}
 				{filterState.length > 0
@@ -136,8 +137,8 @@ function RowSelectionStory({ pageSize: argPageSize }: StoryArgs) {
 	);
 
 	return (
-		<div className="space-y-4">
-			<p className="text-sm text-muted-foreground">
+		<div className="sb-stack-4">
+			<p className="sb-text-sm sb-muted-text">
 				Select rows using checkboxes. Selected:{" "}
 				{Array.from(selectedRowIds).join(", ") || "none"}
 			</p>
@@ -173,8 +174,8 @@ function ClickableRowsStory({ pageSize: argPageSize }: StoryArgs) {
 	);
 
 	return (
-		<div className="space-y-4">
-			<p className="text-sm text-muted-foreground">
+		<div className="sb-stack-4">
+			<p className="sb-text-sm sb-muted-text">
 				Click on any row to trigger an action. Last clicked:{" "}
 				{clickedRow || "none"}
 			</p>
@@ -208,8 +209,8 @@ function PaginationStory({ pageSize: argPageSize }: StoryArgs) {
 	);
 
 	return (
-		<div className="space-y-4">
-			<p className="text-sm text-muted-foreground">
+		<div className="sb-stack-4">
+			<p className="sb-text-sm sb-muted-text">
 				Navigate through pages. Current page: {page} of {result.totalPages}
 			</p>
 			<DataTable
@@ -267,9 +268,9 @@ function EmptyStateStory({ pageSize: argPageSize }: StoryArgs) {
 			totalCount={0}
 			onPageChange={setPage}
 			emptyState={
-				<div className="text-center py-8">
-					<p className="text-lg font-medium text-foreground">No users found</p>
-					<p className="text-sm text-muted-foreground mt-1">
+				<div className="sb-text-center sb-py-8">
+					<p className="sb-text-lg sb-font-medium sb-foreground-text">No users found</p>
+					<p className="sb-text-sm sb-muted-text sb-mt-1">
 						Try adjusting your filters or add a new user.
 					</p>
 				</div>
@@ -304,8 +305,8 @@ function SortingAndFilteringStory({ pageSize: argPageSize }: StoryArgs) {
 	};
 
 	return (
-		<div className="space-y-4">
-			<div className="text-sm text-muted-foreground space-y-1">
+		<div className="sb-stack-4">
+			<div className="sb-text-sm sb-muted-text sb-stack-1">
 				<p>
 					<strong>Sort:</strong>{" "}
 					{sortState
@@ -363,73 +364,69 @@ function UserExpandedContent({
 }: UserExpandedContentProps) {
 	return (
 		<div
-			className="transition-opacity duration-300"
+			className="sb-opacity-transition"
 			style={{ opacity: loading ? 0.5 : 1 }}
 		>
 			{loading && (
-				<div className="flex items-center justify-center py-8">
-					<div className="flex items-center gap-3">
-						<div className="h-5 w-5 animate-spin rounded-full border-2 border-muted-foreground border-t-transparent" />
-						<span className="text-sm text-muted-foreground">
+				<div className="sb-row-center sb-py-8">
+					<div className="sb-row sb-gap-3">
+						<div className="sb-spinner-5 sb-spinner-ring" />
+						<span className="sb-text-sm sb-muted-text">
 							Loading details for {row.name}...
 						</span>
 					</div>
 				</div>
 			)}
 			{!loading && data && (
-				<div className="space-y-4 p-4">
-					<div className="flex items-start justify-between">
-						<div className="space-y-3">
+				<div className="sb-stack-4 sb-p-4">
+					<div className="sb-row-start-between">
+						<div className="sb-stack-3">
 							<div>
-								<h3 className="text-lg font-semibold text-foreground">
+								<h3 className="sb-text-lg sb-font-semibold sb-foreground-text">
 									{row.name}
 								</h3>
-								<p className="text-sm text-muted-foreground">
+								<p className="sb-text-sm sb-muted-text">
 									{row.email} &bull; {row.role}
 								</p>
 							</div>
-							<div className="space-y-1">
-								<p className="text-sm">
+							<div className="sb-stack-1">
+								<p className="sb-text-sm">
 									<strong>Bio:</strong> {data.bio}
 								</p>
-								<p className="text-sm">
+								<p className="sb-text-sm">
 									<strong>Member since:</strong> {data.joinDate}
 								</p>
-								<p className="text-sm">
+								<p className="sb-text-sm">
 									<strong>Last login:</strong> {data.lastLogin}
 								</p>
 							</div>
 							<div>
-								<p className="text-sm font-medium mb-1">Projects:</p>
-								<div className="flex flex-wrap gap-1">
+								<p className="sb-text-sm sb-font-medium sb-mb-1">Projects:</p>
+								<div className="sb-row sb-flex-wrap sb-gap-1">
 									{data.projects.map((project) => (
-										<span
-											key={project}
-											className="inline-flex items-center rounded-full bg-accent/20 px-2 py-0.5 text-xs font-medium text-accent-foreground"
-										>
+										<span key={project} className="sb-tag-accent">
 											{project}
 										</span>
 									))}
 								</div>
 							</div>
 						</div>
-						<div className="flex gap-2">
-							<button
+						<div className="sb-row sb-gap-2">
+							<Button
 								type="button"
-								className="inline-flex items-center rounded-md bg-muted px-3 py-1.5 text-sm font-medium text-muted-foreground hover:bg-muted/80"
+								variant="default"
 								onClick={() => alert(`Message sent to ${row.name}`)}
 							>
 								Message
-							</button>
-							<button
+							</Button>
+							<Button
 								type="button"
-								className="inline-flex items-center rounded-md bg-accent px-3 py-1.5 text-sm font-medium text-accent-foreground hover:bg-accent/80"
 								onClick={() =>
 									alert(`Viewing profile for ${row.name} (ID: ${rowId})`)
 								}
 							>
 								View Profile
-							</button>
+							</Button>
 						</div>
 					</div>
 				</div>
@@ -448,8 +445,8 @@ function ExpandableRowsStory({ pageSize: argPageSize }: StoryArgs) {
 	);
 
 	return (
-		<div className="space-y-4">
-			<div className="text-sm text-muted-foreground space-y-1">
+		<div className="sb-stack-4">
+			<div className="sb-text-sm sb-muted-text sb-stack-1">
 				<p>Click on any row to expand and see user details.</p>
 				<p>Only one row can be expanded at a time. Click again to collapse.</p>
 			</div>
@@ -477,14 +474,10 @@ export const ExpandableRows: Story = {
 type StatusBadgeProps = Readonly<{ value: string }>;
 
 function StatusBadge({ value }: StatusBadgeProps) {
-	const colorClass =
-		value === "Active"
-			? "bg-green-100 text-green-800"
-			: "bg-gray-100 text-gray-800";
+	const toneClass =
+		value === "Active" ? "sb-story-badge-active" : "sb-story-badge-inactive";
 	return (
-		<span
-			className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${colorClass}`}
-		>
+		<span className={`sb-pill ${toneClass}`}>
 			{value}
 		</span>
 	);
@@ -514,8 +507,8 @@ function CustomCellRendererStory({ pageSize: argPageSize }: StoryArgs) {
 	);
 
 	return (
-		<div className="space-y-4">
-			<p className="text-sm text-muted-foreground">
+		<div className="sb-stack-4">
+			<p className="sb-text-sm sb-muted-text">
 				The "Status" column uses a custom cell renderer to display badges.
 				Sorting still works with custom renderers.
 			</p>

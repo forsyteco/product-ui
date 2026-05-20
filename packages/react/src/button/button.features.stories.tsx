@@ -10,7 +10,7 @@ const meta = {
   argTypes: {
     variant: {
       control: { type: 'select' },
-      options: ['primary', 'secondary', 'outline', 'ghost'],
+      options: ['primary', 'default', 'ghost', 'danger'],
       description: 'Button variant style',
     },
     size: {
@@ -30,18 +30,18 @@ type Story = StoryObj<typeof meta>;
 
 export const Variants: Story = {
   render: () => (
-    <div className="flex gap-4">
+    <div className="sb-row sb-gap-4">
       <Button variant="primary">Primary</Button>
-      <Button variant="secondary">Secondary</Button>
-      <Button variant="outline">Outline</Button>
+      <Button variant="default">Default</Button>
       <Button variant="ghost">Ghost</Button>
+      <Button variant="danger">Danger</Button>
     </div>
   ),
 };
 
 export const Sizes: Story = {
   render: () => (
-    <div className="flex items-center gap-4">
+    <div className="sb-row sb-gap-4">
       <Button size="sm">Small</Button>
       <Button size="md">Medium</Button>
       <Button size="lg">Large</Button>
@@ -51,10 +51,10 @@ export const Sizes: Story = {
 
 export const Disabled: Story = {
   render: () => (
-    <div className="flex gap-4">
+    <div className="sb-row sb-gap-4">
       <Button disabled>Disabled Primary</Button>
-      <Button variant="secondary" disabled>
-        Disabled Secondary
+      <Button variant="default" disabled>
+        Disabled Default
       </Button>
     </div>
   ),

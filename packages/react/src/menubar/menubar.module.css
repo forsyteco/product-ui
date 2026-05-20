@@ -1,0 +1,7 @@
+.root {
+  display: flex;
+  background-color: rgb(var(--background));
+  border: 1px solid rgb(var(--border));
+  border-radius: 0.375rem;
+  padding: 0.125rem;
+}

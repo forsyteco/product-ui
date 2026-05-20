@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { Clock } from 'lucide-react';
-import { cn } from '../../utils/tailwind';
+import { clsx } from 'clsx';
+import styles from './data-table.module.css';
 
 export type DateCellProps = Readonly<{
   /** The date to display */
@@ -46,10 +47,10 @@ export function DateCell({ value, dateFormat = 'DD/MM/YYYY' }: DateCellProps) {
   const relativeTime = getRelativeTime(date, now);
 
   return (
-    <div className="flex flex-col">
-      <span className="text-foreground">{formattedDate}</span>
-      <span className={cn('flex items-center gap-1 text-xs text-muted-foreground')}>
-        <Clock className="h-3 w-3" />
+    <div className={styles['date-wrap']}>
+      <span className={styles['date-main']}>{formattedDate}</span>
+      <span className={clsx(styles['date-meta'])}>
+        <Clock className={styles['clock-icon']} />
         {relativeTime}
       </span>
     </div>

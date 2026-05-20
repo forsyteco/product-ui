@@ -2,6 +2,8 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from './tabs';
 import { Button } from '../button';
+import { Input } from '../input';
+import { Switch } from '../switch';
 
 const meta = {
   title: 'Components/Tabs/Examples',
@@ -18,8 +20,8 @@ export const SettingsPage: Story = {
   render: () => {
     const [selectedIndex, setSelectedIndex] = useState(0);
     return (
-      <div className="max-w-2xl mx-auto p-6">
-        <h1 className="text-2xl font-bold mb-6">Settings</h1>
+      <div className="sb-demo-tabs-shell">
+        <h1 className="sb-text-2xl sb-font-bold sb-mb-6">Settings</h1>
         <Tabs selectedIndex={selectedIndex} onChange={setSelectedIndex}>
           <TabList>
             <Tab>General</Tab>
@@ -29,61 +31,54 @@ export const SettingsPage: Story = {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <div className="space-y-4">
+              <div className="sb-stack-4">
                 <div>
-                  <label className="block text-base font-medium text-gray-700">Display Name</label>
-                  <input
+                  <label className="sb-form-label-inline">Display Name</label>
+                  <Input
                     type="text"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                     defaultValue="John Doe"
                   />
                 </div>
                 <div>
-                  <label className="block text-base font-medium text-gray-700">Email</label>
-                  <input
+                  <label className="sb-form-label-inline">Email</label>
+                  <Input
                     type="email"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                     defaultValue="john@example.com"
                   />
                 </div>
               </div>
             </TabPanel>
             <TabPanel>
-              <div className="space-y-4">
+              <div className="sb-stack-4">
                 <div>
-                  <label className="block text-base font-medium text-gray-700">Current Password</label>
-                  <input type="password" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
+                  <label className="sb-form-label-inline">Current Password</label>
+                  <Input type="password" />
                 </div>
                 <div>
-                  <label className="block text-base font-medium text-gray-700">New Password</label>
-                  <input type="password" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
+                  <label className="sb-form-label-inline">New Password</label>
+                  <Input type="password" />
                 </div>
                 <Button>Update Password</Button>
               </div>
             </TabPanel>
             <TabPanel>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-base font-medium">Public Profile</h3>
-                    <p className="text-base text-gray-600">Make your profile visible to everyone</p>
-                  </div>
-                  <input type="checkbox" className="rounded" />
-                </div>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-base font-medium">Email Notifications</h3>
-                    <p className="text-base text-gray-600">Receive email updates</p>
-                  </div>
-                  <input type="checkbox" className="rounded" defaultChecked />
-                </div>
+              <div className="sb-stack-4">
+                <Switch
+                  label="Public Profile"
+                  description="Make your profile visible to everyone"
+                />
+                <Switch
+                  label="Email Notifications"
+                  description="Receive email updates"
+                  defaultChecked
+                />
               </div>
             </TabPanel>
             <TabPanel>
-              <div className="space-y-4">
-                <div className="border border-gray-200 rounded-lg p-4">
-                  <h3 className="font-semibold mb-2">Current Plan</h3>
-                  <p className="text-base text-gray-600 mb-4">Pro Plan - $29/month</p>
+              <div className="sb-stack-4">
+                <div className="sb-doc-surface">
+                  <h3 className="sb-font-semibold sb-mb-2">Current Plan</h3>
+                  <p className="sb-text-base sb-muted-text sb-mb-4">Pro Plan - $29/month</p>
                   <Button>Change Plan</Button>
                 </div>
               </div>

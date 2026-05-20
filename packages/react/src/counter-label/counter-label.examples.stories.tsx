@@ -16,18 +16,18 @@ type Story = StoryObj<typeof meta>;
 
 export const SidebarItem: Story = {
   render: () => (
-    <div className="max-w-sm">
+    <div className="sb-w-full sb-max-w-sm">
       <Card>
         <CardHeader>
           <CardTitle>Navigation</CardTitle>
         </CardHeader>
-        <CardContent className="grid gap-2">
-          <div className="flex items-center justify-between rounded-md px-3 py-2 hover:bg-muted">
-            <span className="text-base">Inbox</span>
+        <CardContent className="sb-grid sb-grid-gap-2">
+          <div className="sb-list-row">
+            <span className="sb-text-base">Inbox</span>
             <CounterLabel>12</CounterLabel>
           </div>
-          <div className="flex items-center justify-between rounded-md px-3 py-2 hover:bg-muted">
-            <span className="text-base">Requests</span>
+          <div className="sb-list-row">
+            <span className="sb-text-base">Requests</span>
             <CounterLabel variant="primary">3</CounterLabel>
           </div>
         </CardContent>

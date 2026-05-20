@@ -28,9 +28,7 @@ function renderAutocomplete(props: {
       loading={props.loading}
     >
       <Autocomplete.Control>
-        <Autocomplete.LeadingIcon />
         <Autocomplete.Input />
-        <Autocomplete.ClearButton />
       </Autocomplete.Control>
       <Autocomplete.Options />
     </Autocomplete.Root>
@@ -38,77 +36,133 @@ function renderAutocomplete(props: {
 }
 
 describe('Autocomplete', () => {
-  it('renders the autocomplete component', () => {
-    renderAutocomplete({ options });
-    const input = screen.getByPlaceholderText('Search…');
-    expect(input).toBeInTheDocument();
+  describe('when rendered with default props', () => {
+    it('should render the autocomplete component', () => {
+      // Arrange
+      // Act
+      renderAutocomplete({ options });
+
+      // Assert
+      const input = screen.getByPlaceholderText('Search…');
+      expect(input).toBeInTheDocument();
+    });
   });
 
-  it('displays selected value', () => {
-    renderAutocomplete({ options, value: options[0] });
-    const input = screen.getByDisplayValue('Option 1');
-    expect(input).toBeInTheDocument();
+  describe('when a value is selected', () => {
+    it('should display the selected value', () => {
+      // Arrange
+      // Act
+      renderAutocomplete({ options, value: options[0] });
+
+      // Assert
+      const input = screen.getByDisplayValue('Option 1');
+      expect(input).toBeInTheDocument();
+    });
+
+    it('should show a clear button', () => {
+      // Arrange
+      // Act
+      renderAutocomplete({ options, value: options[0] });
+
+      // Assert
+      expect(screen.getByRole('button', { name: 'Clear selection' })).toBeInTheDocument();
+    });
   });
 
-  it('opens options on first character typed by default', () => {
-    renderAutocomplete({ options });
-    const input = screen.getByPlaceholderText('Search…');
+  describe('when the user types in the input', () => {
+    it('should open options on the first character typed by default', () => {
+      // Arrange
+      renderAutocomplete({ options });
+      const input = screen.getByPlaceholderText('Search…');
 
-    fireEvent.change(input, { target: { value: 'O' } });
-    expect(screen.getByText('Option 1')).toBeInTheDocument();
-    expect(screen.getByText('Option 2')).toBeInTheDocument();
-    expect(screen.getByText('Option 3')).toBeInTheDocument();
+      // Act
+      fireEvent.change(input, { target: { value: 'O' } });
+
+      // Assert
+      expect(screen.getByText('Option 1')).toBeInTheDocument();
+      expect(screen.getByText('Option 2')).toBeInTheDocument();
+      expect(screen.getByText('Option 3')).toBeInTheDocument();
+    });
+
+    it('should open options only after minQueryLength characters when minQueryLength is set', () => {
+      // Arrange
+      renderAutocomplete({ options, minQueryLength: 2 });
+      const input = screen.getByPlaceholderText('Search…');
+
+      // Act
+      fireEvent.change(input, { target: { value: 'O' } });
+
+      // Assert
+      expect(screen.queryByText('Option 1')).not.toBeInTheDocument();
+
+      // Act
+      fireEvent.change(input, { target: { value: 'Op' } });
+
+      // Assert
+      expect(screen.getByText('Option 1')).toBeInTheDocument();
+      expect(screen.getByText('Option 2')).toBeInTheDocument();
+      expect(screen.getByText('Option 3')).toBeInTheDocument();
+    });
+
+    it('should filter options by query and show empty state after threshold', () => {
+      // Arrange
+      renderAutocomplete({ options });
+      const input = screen.getByPlaceholderText('Search…');
+
+      // Act
+      fireEvent.change(input, { target: { value: 'Option 3' } });
+
+      // Assert
+      expect(screen.getByText('Option 3')).toBeInTheDocument();
+
+      // Act
+      fireEvent.change(input, { target: { value: 'Missing' } });
+
+      // Assert
+      expect(screen.getByText('No results')).toBeInTheDocument();
+    });
+
+    it('should call onChange when an option is selected', () => {
+      // Arrange
+      const handleChange = vi.fn();
+      renderAutocomplete({ options, onChange: handleChange });
+      const input = screen.getByPlaceholderText('Search…');
+
+      // Act
+      fireEvent.change(input, { target: { value: 'Option' } });
+      fireEvent.keyDown(input, { key: 'ArrowDown' });
+      const option = screen.getByText('Option 2');
+      fireEvent.mouseDown(option);
+      fireEvent.click(option);
+
+      // Assert
+      expect(handleChange).toHaveBeenCalledWith(options[1]);
+    });
   });
 
-  it('opens options only after minQueryLength characters when set', () => {
-    renderAutocomplete({ options, minQueryLength: 2 });
-    const input = screen.getByPlaceholderText('Search…');
+  describe('when disabled is true', () => {
+    it('should disable the input', () => {
+      // Arrange
+      // Act
+      renderAutocomplete({ options, disabled: true });
 
-    fireEvent.change(input, { target: { value: 'O' } });
-    expect(screen.queryByText('Option 1')).not.toBeInTheDocument();
-
-    fireEvent.change(input, { target: { value: 'Op' } });
-    expect(screen.getByText('Option 1')).toBeInTheDocument();
-    expect(screen.getByText('Option 2')).toBeInTheDocument();
-    expect(screen.getByText('Option 3')).toBeInTheDocument();
+      // Assert
+      const input = screen.getByPlaceholderText('Search…');
+      expect(input).toBeDisabled();
+    });
   });
 
-  it('filters options by query and shows empty state after threshold', () => {
-    renderAutocomplete({ options });
-    const input = screen.getByPlaceholderText('Search…');
+  describe('when loading is true', () => {
+    it('should show loading state after typing', () => {
+      // Arrange
+      renderAutocomplete({ options, loading: true });
+      const input = screen.getByPlaceholderText('Search…');
 
-    fireEvent.change(input, { target: { value: 'Option 3' } });
-    expect(screen.getByText('Option 3')).toBeInTheDocument();
+      // Act
+      fireEvent.change(input, { target: { value: 'O' } });
 
-    fireEvent.change(input, { target: { value: 'Missing' } });
-    expect(screen.getByText('No results')).toBeInTheDocument();
-  });
-
-  it('calls onChange when option is selected', () => {
-    const handleChange = vi.fn();
-    renderAutocomplete({ options, onChange: handleChange });
-
-    const input = screen.getByPlaceholderText('Search…');
-    fireEvent.change(input, { target: { value: 'Option' } });
-    fireEvent.keyDown(input, { key: 'ArrowDown' });
-
-    const option = screen.getByText('Option 2');
-    fireEvent.mouseDown(option);
-    fireEvent.click(option);
-
-    expect(handleChange).toHaveBeenCalledWith(options[1]);
-  });
-
-  it('respects disabled state', () => {
-    renderAutocomplete({ options, disabled: true });
-    const input = screen.getByPlaceholderText('Search…');
-    expect(input).toHaveClass('opacity-50');
-  });
-
-  it('shows loading state when loading', () => {
-    renderAutocomplete({ options, loading: true });
-    const input = screen.getByPlaceholderText('Search…');
-    fireEvent.change(input, { target: { value: 'O' } });
-    expect(screen.getByText('Loading…')).toBeInTheDocument();
+      // Assert
+      expect(screen.getByText('Loading…')).toBeInTheDocument();
+    });
   });
 });

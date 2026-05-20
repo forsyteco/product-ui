@@ -1,7 +1,8 @@
 import type { CSSProperties } from 'react';
 import { ArrowUp, ArrowDown, ArrowUpDown } from 'lucide-react';
-import { cn } from '../../utils/tailwind';
+import { clsx } from 'clsx';
 import type { SortDirection } from '../types';
+import styles from './data-table.module.css';
 
 export type SortIndicatorProps = Readonly<{
   direction: SortDirection | null;
@@ -28,20 +29,20 @@ function SortIndicator({ direction, color, activeBackground, activeForeground }:
 
   return (
     <span
-      className={cn(
-        'inline-flex items-center justify-center rounded p-1',
-        isActive && !activeBackground && 'bg-accent'
+      className={clsx(
+        styles['sort-wrap'],
+        isActive && !activeBackground && styles['sort-active-default']
       )}
       style={containerStyle}
     >
       {direction === 'asc' && (
-        <ArrowUp className={cn('h-3 w-3', !iconColor && 'text-foreground')} style={iconStyle} />
+        <ArrowUp className={clsx(styles['sort-icon'], !iconColor && styles['sort-icon-default'])} style={iconStyle} />
       )}
       {direction === 'desc' && (
-        <ArrowDown className={cn('h-3 w-3', !iconColor && 'text-foreground')} style={iconStyle} />
+        <ArrowDown className={clsx(styles['sort-icon'], !iconColor && styles['sort-icon-default'])} style={iconStyle} />
       )}
       {direction === null && (
-        <ArrowUpDown className={cn('h-3 w-3', !iconColor && 'opacity-50 text-foreground')} style={iconStyle} />
+        <ArrowUpDown className={clsx(styles['sort-icon'], !iconColor && styles['sort-icon-default'], styles['sort-icon-inactive'])} style={iconStyle} />
       )}
     </span>
   );

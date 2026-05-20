@@ -34,7 +34,7 @@ const options = [
 
 export const Basic: Story = {
   render: () => (
-    <div className="w-64">
+    <div className="sb-w-64">
       <Select options={options} placeholder="Select an option..." />
     </div>
   ),
@@ -42,7 +42,7 @@ export const Basic: Story = {
 
 export const States: Story = {
   render: () => (
-    <div className="space-y-4 w-64">
+    <div className="sb-stack-4 sb-w-64">
       <Select options={options} placeholder="Normal" />
       <Select options={options} placeholder="Disabled" disabled />
       <Select options={options} placeholder="Error" error />
@@ -52,7 +52,7 @@ export const States: Story = {
 
 export const WithDisabledOptions: Story = {
   render: () => (
-    <div className="w-64">
+    <div className="sb-w-64">
       <Select
         options={[
           { value: '1', label: 'Option 1' },

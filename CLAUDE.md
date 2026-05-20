@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a Turborepo monorepo containing two primary packages:
 
-- **packages/react**: A Vite-based React component library using Tailwind CSS 4
+- **packages/react**: A Vite-based React component library using CSS modules and shared design tokens
   - Built with React 19, TypeScript, and Vitest for testing
   - Components exported through `src/index.ts` with types
   - Storybook for component documentation and development
@@ -60,7 +60,7 @@ pnpm vitest --dir packages/react --watch  # Watch mode
 
 ### React Package Structure
 - **Entry point**: `src/index.ts` exports components and types
-- **Styles**: `src/globals.css` for global Tailwind styles
+- **Styles**: `styles.css` for global design tokens and shared styles
 - **Components**: Feature-based folders (e.g., `spinner/`) containing:
   - Component implementation
   - Storybook stories (`.stories.tsx`)
@@ -80,7 +80,7 @@ pnpm vitest --dir packages/react --watch  # Watch mode
   - Components/files: PascalCase (`Spinner.tsx`)
   - Utilities/functions: camelCase (`cn`)
 - **Imports**: Organize logically (external packages, internal utils, styles)
-- **Tailwind**: Use `cn` utility from `tailwind-merge` to merge className strings
+- **Class merging**: Use the `cn` utility (`clsx`) for conditional className composition
 - **Formatting**: 2-space indentation, enforced by Prettier
 
 ## Testing

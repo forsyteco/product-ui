@@ -51,19 +51,11 @@ export type DataTableColorConfig = {
 };
 
 /**
- * Default color configuration for DataTable
+ * Default color configuration for DataTable.
+ * Keep this empty so token-driven CSS remains the source of truth
+ * unless consumers intentionally override specific colors.
  */
-export const DEFAULT_COLOR_CONFIG: DataTableColorConfig = {
-  headerBackground: '#000000',
-  headerText: '#ffffff',
-  headerIconActiveBackground: '#ffde13',
-  headerIconActiveForeground: '#000000',
-  rowBackground: '#ffffff',
-  selectedRowBackground: '#fef9c3',
-  borderColor: '#cbd5e1',
-  paginationBackground: '#ffffff',
-  paginationText: '#000000',
-};
+export const DEFAULT_COLOR_CONFIG: DataTableColorConfig = {};
 
 /**
  * Props passed to custom cell renderer components

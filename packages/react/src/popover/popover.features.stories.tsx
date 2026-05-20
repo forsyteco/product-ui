@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Popover, PopoverContent, PopoverTrigger } from './popover';
 import { Button } from '../button';
+import { Input } from '../input';
+import { Select } from '../select';
 
 const meta = {
   title: 'Components/Popover/Features',
@@ -18,8 +20,8 @@ export const Basic: Story = {
     <Popover>
       <PopoverTrigger>Open Popover</PopoverTrigger>
       <PopoverContent>
-        <h3 className="text-base font-medium text-gray-900 mb-2">Popover Title</h3>
-        <p className="text-base text-gray-600">This is the popover content.</p>
+        <h3 className="sb-text-base sb-font-medium sb-foreground-text sb-mb-2">Popover Title</h3>
+        <p className="sb-text-base sb-muted-text">This is the popover content.</p>
       </PopoverContent>
     </Popover>
   ),
@@ -30,20 +32,23 @@ export const WithForm: Story = {
     <Popover>
       <PopoverTrigger>Filter</PopoverTrigger>
       <PopoverContent>
-        <form className="space-y-4">
+        <form className="sb-stack-4">
           <div>
-            <label className="block text-base font-medium text-gray-700">Status</label>
-            <select className="mt-1 block w-full rounded-md border-gray-300">
-              <option>All</option>
-              <option>Active</option>
-              <option>Inactive</option>
-            </select>
+            <label className="sb-form-label-inline">Status</label>
+            <Select
+              options={[
+                { value: 'all', label: 'All' },
+                { value: 'active', label: 'Active' },
+                { value: 'inactive', label: 'Inactive' },
+              ]}
+              defaultValue="all"
+            />
           </div>
           <div>
-            <label className="block text-base font-medium text-gray-700">Date Range</label>
-            <input type="date" className="mt-1 block w-full rounded-md border-gray-300" />
+            <label className="sb-form-label-inline">Date Range</label>
+            <Input type="date" />
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="sb-w-full">
             Apply
           </Button>
         </form>

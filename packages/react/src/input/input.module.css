@@ -1,0 +1,159 @@
+.root {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: stretch;
+  border-radius: 0.375rem;
+  border: 1px solid rgb(var(--input));
+  background-color: rgb(var(--background));
+  color: rgb(var(--foreground));
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.root:hover:not(:has(:disabled)):not(:has(input:focus)) {
+  border-color: color-mix(in srgb, rgb(var(--foreground)) 20%, transparent);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
+}
+
+.root:has(input:focus) {
+  border-color: rgb(var(--field-focus-border));
+  box-shadow: 0 0 0 3px rgb(var(--field-halo));
+}
+
+.root--error {
+  border-color: rgb(var(--field-error));
+}
+
+.root--error:hover:not(:has(:disabled)):not(:has(input:focus)) {
+  border-color: rgb(var(--field-error));
+}
+
+.root--error:has(input:focus) {
+  border-color: rgb(var(--field-error));
+  box-shadow: 0 0 0 3px rgb(var(--field-error-halo));
+}
+
+.root--success {
+  border-color: rgb(var(--success));
+}
+
+.root--success:hover:not(:has(:disabled)):not(:has(input:focus)) {
+  border-color: rgb(var(--success));
+}
+
+.root--success:has(input:focus) {
+  border-color: rgb(var(--success));
+  box-shadow: 0 0 0 3px rgb(var(--success) / 0.2);
+}
+
+.root:has(:disabled) {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.root:has(:disabled):hover {
+  border-color: rgb(var(--input));
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+}
+
+.size-default {
+  height: 2.25rem;
+}
+
+.size-sm {
+  height: 2rem;
+}
+
+.size-lg {
+  height: 2.5rem;
+  font-size: var(--text-lg);
+  line-height: var(--text-lg-line-height);
+}
+
+.slot {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: rgb(var(--field-adornment));
+  pointer-events: none;
+}
+
+.slot :is(button, a) {
+  pointer-events: auto;
+}
+
+.slot :is(button, a):focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgb(var(--field-halo));
+}
+
+.slot svg {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
+.slot-pad-default {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.slot-pad-sm {
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+}
+
+.slot-pad-lg {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.input {
+  min-height: 0;
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+.input::placeholder {
+  color: rgb(var(--field-placeholder));
+}
+
+.input:disabled,
+.input:read-only {
+  cursor: not-allowed;
+}
+
+.input-pad-default {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.input-pad-sm {
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+}
+
+.input-pad-lg {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.input-pad-none-left {
+  padding-left: 0;
+}
+
+.input-pad-none-right {
+  padding-right: 0;
+}

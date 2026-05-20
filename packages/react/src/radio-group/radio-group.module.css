@@ -1,0 +1,69 @@
+.root {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.option {
+  position: relative;
+  display: flex;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  border: 1px solid rgb(var(--border));
+  background-color: rgb(var(--background));
+  padding: 1rem;
+  outline: none;
+}
+
+.option-checked {
+  border-color: rgb(var(--accent));
+  background-color: rgb(var(--accent) / 0.15);
+}
+
+.option-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.label-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.text {
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
+}
+
+.label {
+  font-weight: 500;
+  color: rgb(var(--foreground));
+}
+
+.label-checked {
+  color: rgb(var(--foreground));
+}
+
+.description {
+  color: rgb(var(--muted-foreground));
+}
+
+.description-checked {
+  color: rgb(var(--foreground));
+}
+
+.icon-wrap {
+  flex-shrink: 0;
+  color: rgb(var(--accent));
+}
+
+.icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}

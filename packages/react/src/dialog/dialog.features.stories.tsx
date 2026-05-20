@@ -2,6 +2,8 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Dialog, DialogPanel, DialogTitle, DialogDescription } from './dialog';
 import { Button } from '../button';
+import { Input } from '../input';
+import { Textarea } from '../textarea';
 
 const meta = {
   title: 'Components/Dialog/Features',
@@ -34,8 +36,8 @@ export const Basic: Story = {
             <DialogDescription>
               Are you sure you want to proceed? This action cannot be undone.
             </DialogDescription>
-            <div className="mt-4 flex justify-end gap-2">
-              <Button variant="outline" onClick={() => setIsOpen(false)}>
+            <div className="sb-dialog-actions">
+              <Button variant="default" onClick={() => setIsOpen(false)}>
                 Cancel
               </Button>
               <Button onClick={() => setIsOpen(false)}>
@@ -63,23 +65,17 @@ export const WithForm: Story = {
             <DialogDescription>
               Fill in the details below to create a new item.
             </DialogDescription>
-            <form className="mt-4 space-y-4">
+            <form className="sb-mt-4 sb-stack-4">
               <div>
-                <label className="block text-base font-medium text-gray-700">Name</label>
-                <input
-                  type="text"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-                />
+                <label className="sb-form-label-inline">Name</label>
+                <Input type="text" />
               </div>
               <div>
-                <label className="block text-base font-medium text-gray-700">Description</label>
-                <textarea
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-                  rows={3}
-                />
+                <label className="sb-form-label-inline">Description</label>
+                <Textarea rows={3} />
               </div>
-              <div className="flex justify-end gap-2">
-                <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>
+              <div className="sb-card-footer-actions">
+                <Button type="button" variant="default" onClick={() => setIsOpen(false)}>
                   Cancel
                 </Button>
                 <Button type="submit" onClick={() => setIsOpen(false)}>

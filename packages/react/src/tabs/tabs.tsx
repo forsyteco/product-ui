@@ -1,6 +1,7 @@
-import { type ReactNode } from 'react';
-import { Tab as HeadlessTab } from '@headlessui/react';
-import { cn } from '../utils/tailwind';
+import { createContext, useContext, useMemo, useRef, type ReactNode } from 'react';
+import { Tabs as BaseTabs } from '@base-ui/react/tabs';
+import { clsx } from 'clsx';
+import styles from './tabs.module.css';
 
 export type TabsProps = {
   children: ReactNode;
@@ -18,6 +19,7 @@ export type TabListProps = {
 export type TabProps = {
   children: ReactNode;
   className?: string;
+  value?: string | number;
 };
 
 export type TabPanelsProps = {
@@ -28,73 +30,101 @@ export type TabPanelsProps = {
 export type TabPanelProps = {
   children: ReactNode;
   className?: string;
+  value?: string | number;
 };
 
-function Tabs({ children, defaultIndex, selectedIndex, onChange, className }: TabsProps) {
+type TabsValue = string | number;
+type TabsRegistrationContextValue = {
+  nextValue: (kind: 'tab' | 'panel') => number;
+};
+
+const TabsRegistrationContext = createContext<TabsRegistrationContextValue | null>(null);
+
+function useRegisteredValue(kind: 'tab' | 'panel', provided?: TabsValue) {
+  const ctx = useContext(TabsRegistrationContext);
+  const valueRef = useRef<TabsValue | undefined>(provided);
+  if (valueRef.current === undefined && ctx) {
+    valueRef.current = ctx.nextValue(kind);
+  }
+  return valueRef.current ?? 0;
+}
+
+function Tabs({ children, defaultIndex, selectedIndex, onChange, className }: Readonly<TabsProps>) {
+  const registrationContext = useMemo<TabsRegistrationContextValue>(() => {
+    let tabCounter = 0;
+    let panelCounter = 0;
+    return {
+      nextValue: (kind) => (kind === 'tab' ? tabCounter++ : panelCounter++),
+    };
+  }, []);
+
   return (
-    <div className={cn('w-full', className)}>
-      <HeadlessTab.Group
-        defaultIndex={defaultIndex}
-        selectedIndex={selectedIndex}
-        onChange={onChange}
-      >
+    <BaseTabs.Root
+      defaultValue={defaultIndex}
+      value={selectedIndex}
+      onValueChange={(value) => onChange?.(Number(value))}
+      className={clsx(styles.root, className)}
+    >
+      <TabsRegistrationContext.Provider value={registrationContext}>
         {children}
-      </HeadlessTab.Group>
-    </div>
+      </TabsRegistrationContext.Provider>
+    </BaseTabs.Root>
   );
 }
 
-export function TabList({ children, className }: TabListProps) {
+export function TabList({ children, className }: Readonly<TabListProps>) {
   return (
-    <HeadlessTab.List
-      className={cn(
-        'flex space-x-1 rounded-xl bg-gray-100 p-1',
+    <BaseTabs.List
+      className={clsx(
+        styles.list,
         className
       )}
     >
       {children}
-    </HeadlessTab.List>
+    </BaseTabs.List>
   );
 }
 
-export function Tab({ children, className }: TabProps) {
+export function Tab({ children, className, value }: Readonly<TabProps>) {
+  const resolvedValue = useRegisteredValue('tab', value);
   return (
-    <HeadlessTab
-      className={({ selected }) =>
-        cn(
-          'w-full rounded-lg py-2.5 text-base font-medium leading-5',
-          'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
-          selected
-            ? 'bg-white text-gray-900 shadow'
-            : 'text-gray-600 hover:bg-white/[0.12] hover:text-gray-900',
+    <BaseTabs.Tab
+      value={resolvedValue}
+      className={({ active }) =>
+        clsx(
+          styles.tab,
+          active
+            ? styles['tab-selected']
+            : styles['tab-unselected'],
           className
         )
       }
     >
       {children}
-    </HeadlessTab>
+    </BaseTabs.Tab>
   );
 }
 
-export function TabPanels({ children, className }: TabPanelsProps) {
+export function TabPanels({ children, className }: Readonly<TabPanelsProps>) {
   return (
-    <HeadlessTab.Panels className={cn('mt-2', className)}>
+    <div className={clsx(styles.panels, className)}>
       {children}
-    </HeadlessTab.Panels>
+    </div>
   );
 }
 
-export function TabPanel({ children, className }: TabPanelProps) {
+export function TabPanel({ children, className, value }: Readonly<TabPanelProps>) {
+  const resolvedValue = useRegisteredValue('panel', value);
   return (
-    <HeadlessTab.Panel
-      className={cn(
-        'rounded-xl bg-white p-3',
-        'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+    <BaseTabs.Panel
+      value={resolvedValue}
+      className={clsx(
+        styles.panel,
         className
       )}
     >
       {children}
-    </HeadlessTab.Panel>
+    </BaseTabs.Panel>
   );
 }
 

@@ -1,14 +1,16 @@
 import { type FieldsetHTMLAttributes, type ReactNode } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '../utils/tailwind';
+import { clsx } from 'clsx';
+import { Fieldset as BaseFieldset } from '@base-ui/react/fieldset';
+import styles from './fieldset.module.css';
 
 const fieldsetVariants = cva(
-  'border rounded-md p-4 bg-background',
+  styles.root,
   {
     variants: {
       variant: {
-        default: 'border-border',
-        error: 'border-destructive-border',
+        default: '',
+        error: styles.error,
       },
     },
     defaultVariants: {
@@ -20,21 +22,24 @@ const fieldsetVariants = cva(
 export type FieldsetProps = FieldsetHTMLAttributes<HTMLFieldSetElement> & VariantProps<typeof fieldsetVariants> & {
   legend?: string;
   children: ReactNode;
+  error?: boolean;
 };
 
-function Fieldset({ legend, children, variant, className, ...props }: FieldsetProps) {
+function Fieldset({ legend, children, variant, error = false, className, ...props }: FieldsetProps) {
+  const resolvedVariant = error ? 'error' : variant;
+
   return (
-    <fieldset
-      className={cn(fieldsetVariants({ variant }), className)}
+    <BaseFieldset.Root
+      className={clsx(fieldsetVariants({ variant: resolvedVariant }), className)}
       {...props}
     >
       {legend && (
-        <legend className="px-2 text-base font-medium text-foreground">
+        <BaseFieldset.Legend className={styles.legend}>
           {legend}
-        </legend>
+        </BaseFieldset.Legend>
       )}
       {children}
-    </fieldset>
+    </BaseFieldset.Root>
   );
 }
 

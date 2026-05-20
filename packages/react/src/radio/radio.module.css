@@ -1,0 +1,30 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--text-base);
+  color: rgb(var(--foreground));
+}
+
+.indicator {
+  box-sizing: border-box;
+  display: flex;
+  width: 1.25rem;
+  height: 1.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  outline: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.root[data-unchecked] .indicator {
+  border: 1px solid rgb(var(--border));
+  background-color: transparent;
+}
+
+.root[data-checked] .indicator {
+  background-color: rgb(var(--foreground));
+}

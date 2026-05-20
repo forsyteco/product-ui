@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Button } from '../button';
-import { DropdownMenu, DropdownMenuItem } from '../dropdown-menu/dropdown-menu';
+import { Menu, MenuItem } from '../menu/menu';
 import {
   Breadcrumb,
   BreadcrumbEllipsis,
@@ -25,7 +25,7 @@ type Story = StoryObj<typeof meta>;
 
 export const PageHeader: Story = {
   render: () => (
-    <div className="flex items-center justify-between gap-6">
+    <div className="sb-row-between sb-gap-6">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -42,8 +42,8 @@ export const PageHeader: Story = {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <div className="flex items-center gap-2">
-        <Button variant="outline">Share</Button>
+      <div className="sb-row sb-gap-2">
+        <Button variant="default">Share</Button>
         <Button>New</Button>
       </div>
     </div>
@@ -63,19 +63,19 @@ export const DeepHierarchy: Story = {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <DropdownMenu
+          <Menu
             align="left"
             trigger={
-              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                <BreadcrumbEllipsis className="h-4 w-4" />
-                <span className="sr-only">Open breadcrumb menu</span>
+              <Button variant="ghost" size="sm" className="sb-breadcrumb-trigger">
+                <BreadcrumbEllipsis className="sb-icon-4" />
+                <span className="sb-sr-only">Open breadcrumb menu</span>
               </Button>
             }
           >
-            <DropdownMenuItem>Guides</DropdownMenuItem>
-            <DropdownMenuItem>API</DropdownMenuItem>
-            <DropdownMenuItem>Changelog</DropdownMenuItem>
-          </DropdownMenu>
+            <MenuItem>Guides</MenuItem>
+            <MenuItem>API</MenuItem>
+            <MenuItem>Changelog</MenuItem>
+          </Menu>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>

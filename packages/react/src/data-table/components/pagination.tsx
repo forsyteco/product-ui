@@ -1,7 +1,8 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { cn } from '../../utils/tailwind';
+import { clsx } from 'clsx';
 import { IconButton } from '../../icon-button';
 import type { DataTableColorConfig } from '../types';
+import styles from './data-table.module.css';
 
 export type PaginationProps = Readonly<{
   page: number;
@@ -34,13 +35,13 @@ function Pagination({
     <nav
       role="navigation"
       aria-label="Pagination"
-      className={cn('flex items-center justify-between px-4 py-3', className)}
+      className={clsx(styles['pagination-nav'], className)}
       style={Object.keys(paginationStyle).length > 0 ? paginationStyle : undefined}
     >
-      <div className="text-sm text-muted-foreground">
+      <div className={styles['pagination-text']}>
         Page {page} of {totalPages}
       </div>
-      <div className="flex items-center gap-2">
+      <div className={styles['pagination-controls']}>
         <IconButton
           icon={ChevronLeft}
           variant="ghost"

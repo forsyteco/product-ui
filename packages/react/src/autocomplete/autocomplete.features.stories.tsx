@@ -40,7 +40,7 @@ export const Basic: Story = {
   render: () => {
     const [selected, setSelected] = useState<AutocompleteOption | null>(null);
     return (
-      <div className="w-72">
+      <div className="sb-w-72">
         <Autocomplete.Root
           options={options}
           value={selected}
@@ -48,9 +48,7 @@ export const Basic: Story = {
           placeholder="Search fruits…"
         >
           <Autocomplete.Control>
-            <Autocomplete.LeadingIcon />
             <Autocomplete.Input />
-            <Autocomplete.ClearButton />
           </Autocomplete.Control>
           <Autocomplete.Options />
         </Autocomplete.Root>
@@ -63,7 +61,7 @@ export const WithInitialValue: Story = {
   render: () => {
     const [selected, setSelected] = useState<AutocompleteOption | null>(options[1]);
     return (
-      <div className="w-72">
+      <div className="sb-w-72">
         <Autocomplete.Root
           options={options}
           value={selected}
@@ -71,9 +69,7 @@ export const WithInitialValue: Story = {
           placeholder="Search fruits…"
         >
           <Autocomplete.Control>
-            <Autocomplete.LeadingIcon />
             <Autocomplete.Input />
-            <Autocomplete.ClearButton />
           </Autocomplete.Control>
           <Autocomplete.Options />
         </Autocomplete.Root>
@@ -84,12 +80,10 @@ export const WithInitialValue: Story = {
 
 export const Disabled: Story = {
   render: () => (
-    <div className="w-72">
+    <div className="sb-w-72">
       <Autocomplete.Root options={options} disabled placeholder="Disabled autocomplete">
         <Autocomplete.Control>
-          <Autocomplete.LeadingIcon />
           <Autocomplete.Input />
-          <Autocomplete.ClearButton />
         </Autocomplete.Control>
         <Autocomplete.Options />
       </Autocomplete.Root>
@@ -101,7 +95,7 @@ export const WithLoading: Story = {
   render: () => {
     const [selected, setSelected] = useState<AutocompleteOption | null>(null);
     return (
-      <div className="w-72">
+      <div className="sb-w-72">
         <Autocomplete.Root
           options={options}
           value={selected}
@@ -110,9 +104,7 @@ export const WithLoading: Story = {
           loading
         >
           <Autocomplete.Control>
-            <Autocomplete.LeadingIcon />
             <Autocomplete.Input />
-            <Autocomplete.ClearButton />
           </Autocomplete.Control>
           <Autocomplete.Options />
         </Autocomplete.Root>

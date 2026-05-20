@@ -1,0 +1,23 @@
+---
+description: Strict cross-stack coding pattern preferences
+alwaysApply: true
+---
+
+# Strict Coding Pattern Preferences
+
+- Always prefer the simplest solution that fits the existing architecture.
+- Reuse existing patterns before introducing new abstractions.
+- Avoid duplication by checking nearby modules and utilities before adding new code.
+- Keep files cohesive and small. Refactor before files become difficult to scan.
+- Do not mix domain logic, transport logic, persistence logic, and rendering logic in the same file.
+- Do not introduce a new library or pattern unless the current approach has been exhausted.
+- If replacing an old implementation, remove the superseded path so duplicate logic does not remain.
+- Make changes only in areas relevant to the task unless a directly related fix is required.
+- Write code that behaves correctly in dev, test, and prod.
+- Mocking data is for tests only. Do not add fake-data patterns to dev or prod code paths.
+- Never overwrite `.env` files without explicit confirmation.
+- Never overwrite shadcn components in `components/ui`.
+- Prefer explicit naming over generic names like `helper`, `manager`, `data`, or `util`.
+- Prefer composition over deep inheritance.
+- Prefer explicit mapping over passing raw objects through multiple layers.
+- Keep comments for intent, not for narrating obvious code.

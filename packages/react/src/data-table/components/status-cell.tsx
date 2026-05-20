@@ -1,4 +1,5 @@
-import { cn } from '../../utils/tailwind';
+import { clsx } from 'clsx';
+import styles from './data-table.module.css';
 
 /**
  * Allowed status values for the StatusCell component
@@ -33,14 +34,14 @@ export type StatusCellProps = Readonly<{
 function getStatusColors(status: Status): string {
   switch (status) {
     case STATUS.COMPLETE:
-      return 'bg-emerald-100 text-emerald-800';
+      return styles['status-complete'];
     case STATUS.DO_NOT_ACT:
-      return 'bg-rose-100 text-rose-800';
+      return styles['status-do-not-act'];
     case STATUS.FAILED:
-      return 'bg-red-100 text-red-800';
+      return styles['status-failed'];
     case STATUS.IN_PROGRESS:
     default:
-      return 'bg-gray-100 text-gray-800';
+      return styles['status-progress'];
   }
 }
 
@@ -62,17 +63,17 @@ export function StatusCell({ value, version }: StatusCellProps) {
   const displayValue = formatStatusDisplay(value);
 
   return (
-    <div className={cn('flex flex-col gap-1')}>
+    <div className={styles['status-wrap']}>
       <span
-        className={cn(
-          'inline-flex w-fit items-center rounded px-2 py-1 text-xs font-medium',
+        className={clsx(
+          styles['status-badge'],
           colorClasses
         )}
       >
         {displayValue}
       </span>
       {showVersion && (
-        <span className="text-xs text-muted-foreground">
+        <span className={styles['status-version']}>
           <span>Version:</span> <span>{version ?? '-'}</span>
         </span>
       )}

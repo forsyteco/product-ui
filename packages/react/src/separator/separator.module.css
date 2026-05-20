@@ -1,0 +1,16 @@
+.root {
+  background-color: rgb(var(--border));
+}
+
+.root[data-orientation='horizontal'] {
+  height: 1px;
+  width: 100%;
+  margin: 0.5rem 0;
+}
+
+.root[data-orientation='vertical'] {
+  width: 1px;
+  align-self: stretch;
+  min-height: 1.5rem;
+  margin: 0 0.5rem;
+}

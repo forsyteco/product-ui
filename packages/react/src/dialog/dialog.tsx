@@ -1,10 +1,13 @@
 import { type ReactNode } from 'react';
-import { Dialog as HeadlessDialog } from '@headlessui/react';
-import { cn } from '../utils/tailwind';
+import { Dialog as BaseDialog } from '@base-ui/react/dialog';
+import { clsx } from 'clsx';
+import styles from './dialog.module.css';
 
 export type DialogProps = {
-  open: boolean;
-  onClose: () => void;
+  open?: boolean;
+  defaultOpen?: boolean;
+  onClose?: () => void;
+  onOpenChange?: (open: boolean) => void;
   children: ReactNode;
   className?: string;
 };
@@ -24,45 +27,49 @@ export type DialogPanelProps = {
   className?: string;
 };
 
-function Dialog({ open, onClose, children, className }: DialogProps) {
+function Dialog({ open, defaultOpen, onClose, onOpenChange, children, className }: Readonly<DialogProps>) {
   return (
-    <HeadlessDialog open={open} onClose={onClose}>
-      <div className={cn('relative z-50', className)}>
-        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-        <div className="fixed inset-0 flex items-center justify-center p-4">
-          {children}
-        </div>
-      </div>
-    </HeadlessDialog>
-  );
-}
-
-export function DialogPanel({ children, className }: DialogPanelProps) {
-  return (
-    <HeadlessDialog.Panel
-      className={cn(
-        'w-full max-w-md rounded-lg bg-white p-6 shadow-xl',
-        className
-      )}
+    <BaseDialog.Root
+      open={open}
+      defaultOpen={defaultOpen}
+      onOpenChange={(next) => {
+        onOpenChange?.(next);
+        if (!next) onClose?.();
+      }}
     >
-      {children}
-    </HeadlessDialog.Panel>
+      <BaseDialog.Portal>
+        <div className={clsx(styles.root, className)}>
+          <BaseDialog.Backdrop className={styles.overlay} />
+          <div className={styles.container}>
+            {children}
+          </div>
+        </div>
+      </BaseDialog.Portal>
+    </BaseDialog.Root>
   );
 }
 
-export function DialogTitle({ children, className }: DialogTitleProps) {
+export function DialogPanel({ children, className }: Readonly<DialogPanelProps>) {
   return (
-    <HeadlessDialog.Title className={cn('text-lg font-medium text-gray-900', className)}>
+    <BaseDialog.Popup className={clsx(styles.panel, className)}>
       {children}
-    </HeadlessDialog.Title>
+    </BaseDialog.Popup>
   );
 }
 
-export function DialogDescription({ children, className }: DialogDescriptionProps) {
+export function DialogTitle({ children, className }: Readonly<DialogTitleProps>) {
   return (
-    <HeadlessDialog.Description className={cn('mt-2 text-base text-gray-600', className)}>
+    <BaseDialog.Title className={clsx(styles.title, className)}>
       {children}
-    </HeadlessDialog.Description>
+    </BaseDialog.Title>
+  );
+}
+
+export function DialogDescription({ children, className }: Readonly<DialogDescriptionProps>) {
+  return (
+    <BaseDialog.Description className={clsx(styles.description, className)}>
+      {children}
+    </BaseDialog.Description>
   );
 }
 

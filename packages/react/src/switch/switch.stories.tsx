@@ -9,7 +9,7 @@ const meta = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A switch component for toggling boolean values. Built with Headless UI for accessibility.',
+        component: 'A switch component for toggling boolean values, built with Base UI primitives and design tokens.',
       },
     },
   },

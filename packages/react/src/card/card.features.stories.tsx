@@ -16,32 +16,32 @@ type Story = StoryObj<typeof meta>;
 
 export const WithHeaderAction: Story = {
   render: () => (
-    <Card className="w-[420px]">
-      <CardHeader className="border-b border-border">
+    <Card className="sb-w-420">
+      <CardHeader className="sb-border-b">
         <div>
           <CardTitle>Team settings</CardTitle>
           <CardDescription>Manage your team configuration.</CardDescription>
         </div>
         <CardAction>
-          <Button size="sm" variant="outline">
+          <Button size="sm" variant="default">
             Edit
           </Button>
         </CardAction>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-2 text-base">
-          <div className="flex items-center justify-between">
-            <span className="text-muted-foreground">Members</span>
-            <span className="text-foreground">12</span>
+        <div className="sb-grid sb-grid-gap-2 sb-text-base">
+          <div className="sb-row-between">
+            <span className="sb-muted-text">Members</span>
+            <span className="sb-foreground-text">12</span>
           </div>
-          <div className="flex items-center justify-between">
-            <span className="text-muted-foreground">Plan</span>
-            <span className="text-foreground">Pro</span>
+          <div className="sb-row-between">
+            <span className="sb-muted-text">Plan</span>
+            <span className="sb-foreground-text">Pro</span>
           </div>
         </div>
       </CardContent>
-      <CardFooter className="border-t border-border justify-end gap-2">
-        <Button variant="outline">Cancel</Button>
+      <CardFooter className="sb-border-t sb-card-footer-actions">
+        <Button variant="default">Cancel</Button>
         <Button>Save changes</Button>
       </CardFooter>
     </Card>
@@ -50,9 +50,9 @@ export const WithHeaderAction: Story = {
 
 export const Minimal: Story = {
   render: () => (
-    <Card className="w-[360px]">
+    <Card className="sb-w-360">
       <CardContent>
-        <p className="text-base text-foreground">A minimal card with only content.</p>
+        <p className="sb-text-base sb-foreground-text">A minimal card with only content.</p>
       </CardContent>
     </Card>
   ),

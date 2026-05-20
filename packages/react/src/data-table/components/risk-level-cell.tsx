@@ -1,4 +1,5 @@
-import { cn } from '../../utils/tailwind';
+import { clsx } from 'clsx';
+import styles from './data-table.module.css';
 
 export type RiskLevelCellProps = Readonly<{
   /** The risk level to display */
@@ -11,13 +12,13 @@ export type RiskLevelCellProps = Readonly<{
 function getRiskLevelColors(level: string): string {
   switch (level.toLowerCase()) {
     case 'high':
-      return 'bg-red-100 text-red-800';
+      return styles['risk-high'];
     case 'medium':
-      return 'bg-yellow-100 text-yellow-800';
+      return styles['risk-medium'];
     case 'low':
-      return 'bg-green-100 text-green-800';
+      return styles['risk-low'];
     default:
-      return 'bg-gray-100 text-gray-800';
+      return styles['risk-unknown'];
   }
 }
 
@@ -47,7 +48,7 @@ export function RiskLevelCell({ value }: RiskLevelCellProps) {
   const displayValue = capitalizeFirst(value);
 
   return (
-    <span className={cn('rounded px-2 py-1 text-xs font-medium', colorClasses)}>
+    <span className={clsx(styles['risk-badge'], colorClasses)}>
       {displayValue}
     </span>
   );

@@ -1,0 +1,67 @@
+.root {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+  border-radius: 100%;
+  user-select: none;
+  font-weight: 500;
+  color: rgb(var(--foreground));
+  background-color: rgb(var(--muted));
+  font-size: var(--text-base);
+  line-height: 1;
+  overflow: hidden;
+  height: 3rem;
+  width: 3rem;
+}
+
+.image {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.fallback {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  font-size: var(--text-base);
+}
+
+.fallback-boring {
+  position: relative;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 9999px;
+}
+
+.boring-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.boring-avatar {
+  width: 100%;
+  height: 100%;
+}
+
+.boring-initials {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(var(--foreground));
+  font-size: var(--text-xs);
+  line-height: var(--text-xs-line-height);
+  font-weight: 600;
+  text-transform: uppercase;
+  mix-blend-mode: overlay;
+}

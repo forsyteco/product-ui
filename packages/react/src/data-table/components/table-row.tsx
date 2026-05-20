@@ -1,10 +1,11 @@
 import type { ReactNode } from 'react';
 import { ChevronRight } from 'lucide-react';
-import { cn } from '../../utils/tailwind';
+import { clsx } from 'clsx';
 import { ROW_INTERACTION, type RowInteractionMode } from '../constants';
 import type { DataTableColorConfig } from '../types';
 import { Checkbox } from '../../checkbox';
 import { IconButton } from '../../icon-button';
+import styles from './data-table.module.css';
 
 export type TableRowProps<TData> = Readonly<{
   row: TData;
@@ -44,6 +45,17 @@ function TableRow<TData>({
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTableRowElement>) => {
+    if (!isClickable || !onRowClick) {
+      return;
+    }
+
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      onRowClick(row);
+    }
+  };
+
   const handleCheckboxChange = () => {
     if (onSelectionChange) {
       onSelectionChange(rowId, !isSelected);
@@ -75,18 +87,20 @@ function TableRow<TData>({
   return (
     <tr
       role="row"
-      className={cn(
-        'border-b border-border last:border-b-0 transition-colors duration-300',
-        isClickable && 'cursor-pointer hover:bg-muted/50',
-        isSelectable && 'hover:bg-muted/30',
-        isSelected && !colorConfig?.selectedRowBackground && 'bg-accent/10',
-        isExpanded && 'border-b-0'
+      tabIndex={isClickable ? 0 : undefined}
+      className={clsx(
+        styles.row,
+        isClickable && styles['row-clickable'],
+        isSelectable && styles['row-selectable'],
+        isSelected && !colorConfig?.selectedRowBackground && styles['row-selected'],
+        isExpanded && styles['row-expanded']
       )}
       style={rowStyle}
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
     >
       {isExpandable && (
-        <td className="w-10 px-4 py-3">
+        <td className={styles['expand-cell']}>
           <IconButton
             icon={ChevronRight}
             variant="ghost"
@@ -95,21 +109,21 @@ function TableRow<TData>({
             aria-expanded={isExpanded}
             aria-controls={isExpanded ? expandedContentId : undefined}
             aria-label="Expand row"
-            className={cn(
-              'h-6 w-6 transition-colors duration-300 [&_svg]:transition-transform [&_svg]:duration-300',
-              isExpanded && 'bg-accent hover:bg-accent [&_svg]:rotate-90'
+            className={clsx(
+              styles['expand-button'],
+              isExpanded && styles['expand-button-open']
             )}
           />
         </td>
       )}
       {isSelectable && (
-        <td className="px-4 py-3">
+        <td className={styles['select-cell']}>
           <Checkbox
             checked={isSelected}
             onChange={handleCheckboxChange}
             onClick={(e) => e.stopPropagation()}
             aria-label="Select row"
-            className="h-3 w-3"
+            className={styles['row-checkbox']}
             checkedBackground={colorConfig?.headerIconActiveBackground}
             checkedForeground={colorConfig?.headerIconActiveForeground}
           />

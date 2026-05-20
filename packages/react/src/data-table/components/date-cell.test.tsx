@@ -3,7 +3,6 @@ import { render, screen } from '@testing-library/react';
 import { DateCell } from './date-cell';
 
 describe('DateCell', () => {
-  // Use a fixed "now" date for consistent test results
   const fixedNow = new Date('2025-07-15T12:00:00.000Z');
 
   beforeEach(() => {
@@ -15,74 +14,107 @@ describe('DateCell', () => {
     vi.useRealTimers();
   });
 
-  describe('Date Formatting', () => {
-    it('renders the formatted date in default British format (dd/MM/yyyy)', () => {
+  describe('when formatting dates', () => {
+    it('should render the formatted date in default British format (dd/MM/yyyy)', () => {
+      // Arrange
       const testDate = new Date('2025-07-10T10:00:00.000Z');
+
+      // Act
       render(<DateCell value={testDate} />);
 
+      // Assert
       expect(screen.getByText('10/07/2025')).toBeInTheDocument();
     });
 
-    it('accepts custom date format string and renders accordingly', () => {
+    it('should accept custom date format string and render accordingly', () => {
+      // Arrange
       const testDate = new Date('2025-07-10T10:00:00.000Z');
+
+      // Act
       render(<DateCell value={testDate} dateFormat="YYYY-MM-DD" />);
 
+      // Assert
       expect(screen.getByText('2025-07-10')).toBeInTheDocument();
     });
 
-    it('handles string date input (ISO format)', () => {
-      render(<DateCell value="2025-07-10T10:00:00.000Z" />);
+    it('should handle string date input (ISO format)', () => {
+      // Arrange
+      const value = '2025-07-10T10:00:00.000Z';
 
+      // Act
+      render(<DateCell value={value} />);
+
+      // Assert
       expect(screen.getByText('10/07/2025')).toBeInTheDocument();
     });
 
-    it('handles Date object input', () => {
+    it('should handle Date object input', () => {
+      // Arrange
       const testDate = new Date('2025-07-10T10:00:00.000Z');
+
+      // Act
       render(<DateCell value={testDate} />);
 
+      // Assert
       expect(screen.getByText('10/07/2025')).toBeInTheDocument();
     });
   });
 
-  describe('Relative Time', () => {
-    it('renders "today" when date is today', () => {
-      // Use the same day as fixedNow
+  describe('when showing relative time', () => {
+    it('should render "today" when date is today', () => {
+      // Arrange
       const today = new Date('2025-07-15T08:00:00.000Z');
+
+      // Act
       render(<DateCell value={today} />);
 
+      // Assert
       expect(screen.getByText('today')).toBeInTheDocument();
     });
 
-    it('renders "yesterday" when date is 1 day ago', () => {
+    it('should render "yesterday" when date is 1 day ago', () => {
+      // Arrange
       const yesterday = new Date('2025-07-14T10:00:00.000Z');
+
+      // Act
       render(<DateCell value={yesterday} />);
 
+      // Assert
       expect(screen.getByText('yesterday')).toBeInTheDocument();
     });
 
-    it('renders "x days ago" for dates 2+ days in the past', () => {
-      // 5 days ago from fixedNow (July 15)
+    it('should render "x days ago" for dates 2+ days in the past', () => {
+      // Arrange
       const fiveDaysAgo = new Date('2025-07-10T10:00:00.000Z');
+
+      // Act
       render(<DateCell value={fiveDaysAgo} />);
 
+      // Assert
       expect(screen.getByText('5 days ago')).toBeInTheDocument();
     });
 
-    it('renders "in x days" for future dates', () => {
-      // 3 days in the future from fixedNow (July 15)
+    it('should render "in x days" for future dates', () => {
+      // Arrange
       const threeDaysInFuture = new Date('2025-07-18T10:00:00.000Z');
+
+      // Act
       render(<DateCell value={threeDaysInFuture} />);
 
+      // Assert
       expect(screen.getByText('in 3 days')).toBeInTheDocument();
     });
   });
 
-  describe('Clock Icon', () => {
-    it('renders the Clock icon', () => {
+  describe('when rendering the clock icon', () => {
+    it('should render the Clock icon', () => {
+      // Arrange
       const testDate = new Date('2025-07-10T10:00:00.000Z');
+
+      // Act
       const { container } = render(<DateCell value={testDate} />);
 
-      // lucide-react icons render as SVGs with the lucide class
+      // Assert
       const clockIcon = container.querySelector('svg.lucide-clock');
       expect(clockIcon).toBeInTheDocument();
     });

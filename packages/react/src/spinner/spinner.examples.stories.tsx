@@ -49,20 +49,20 @@ type Story = StoryObj<typeof meta>;
 
 export const InContext: Story = {
   render: () => (
-    <div className="flex flex-col gap-8 w-full max-w-md">
-      <div className="border border-gray-200 rounded-lg p-6">
-        <h3 className="text-lg font-semibold mb-4">Loading Content</h3>
-        <div className="flex items-center justify-center py-12">
+    <div className="sb-stack-8 sb-w-full-max-w-md">
+      <div className="sb-doc-surface-pad-6">
+        <h3 className="sb-text-lg sb-font-semibold sb-mb-4">Loading Content</h3>
+        <div className="sb-row-center sb-py-12">
           <Spinner size={48} />
         </div>
       </div>
-      <div className="border border-gray-200 rounded-lg p-4">
-        <div className="flex items-center gap-3">
+      <div className="sb-doc-surface">
+        <div className="sb-row sb-gap-3">
           <Spinner size={20} strokeWidth={3} />
-          <span className="text-base text-gray-600">Processing...</span>
+          <span className="sb-text-base sb-muted-text">Processing...</span>
         </div>
       </div>
-      <Button type="button" disabled className="gap-2">
+      <Button type="button" disabled className="sb-button-row-gap-2">
         <Spinner size={16} strokeWidth={3} colors={['currentColor']} />
         <span>Submitting</span>
       </Button>
@@ -108,16 +108,16 @@ export const FullLifecycle: Story = {
 
     return (
       <>
-        <Button type="button" onClick={initiateLoading} disabled={state === 'done'} className="mb-4">
+        <Button type="button" onClick={initiateLoading} disabled={state === 'done'} className="sb-mb-4">
           Load content
         </Button>
         {state === 'loading' && <Spinner />}
-        {loadedContent && <p className="mt-4">{loadedContent}</p>}
+        {loadedContent && <p className="sb-mt-4">{loadedContent}</p>}
         <div
           role="status"
           aria-live="polite"
           aria-atomic="true"
-          className="sr-only"
+          className="sb-sr-only"
         >
           {state === 'done' && 'Content finished loading'}
         </div>

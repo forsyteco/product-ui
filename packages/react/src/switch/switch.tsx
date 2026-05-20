@@ -1,95 +1,86 @@
-import { Field, Label, Description, Switch as HeadlessSwitch } from '@headlessui/react';
-import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '../utils/tailwind';
+import { Field } from '@base-ui/react/field';
+import { Switch as BaseSwitch } from '@base-ui/react/switch';
+import { clsx } from 'clsx';
+import styles from './switch.module.css';
 
-const switchVariants = cva(
-  'group ml-3 inline-flex items-center rounded-full bg-muted transition data-checked:bg-accent focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
-  {
-    variants: {
-      size: {
-        sm: 'h-5 w-9',
-        md: 'h-6 w-11',
-        lg: 'h-7 w-14',
-      },
-      disabled: {
-        true: 'opacity-50 cursor-not-allowed',
-        false: '',
-      },
-    },
-    defaultVariants: {
-      size: 'md',
-      disabled: false,
-    },
-  }
-);
+type SwitchSize = 'sm' | 'md' | 'lg';
+const ROOT_SIZE_CLASS: Record<SwitchSize, string> = {
+  sm: styles['switch-sm'],
+  md: styles['switch-md'],
+  lg: styles['switch-lg'],
+};
 
-const switchThumbVariants = cva(
-  'pointer-events-none rounded-full bg-white transition',
-  {
-    variants: {
-      size: {
-        sm: 'size-3 translate-x-0.5 group-data-checked:translate-x-5',
-        md: 'size-4 translate-x-1 group-data-checked:translate-x-6',
-        lg: 'size-5 translate-x-1.5 group-data-checked:translate-x-8',
-      },
-    },
-    defaultVariants: {
-      size: 'md',
-    },
-  }
-);
+const THUMB_SIZE_CLASS: Record<SwitchSize, string> = {
+  sm: styles['thumb-sm'],
+  md: styles['thumb-md'],
+  lg: styles['thumb-lg'],
+};
 
-export type SwitchProps = Omit<VariantProps<typeof switchVariants>, 'disabled'> & {
+export type SwitchProps = {
   checked?: boolean;
+  defaultChecked?: boolean;
   onChange?: (checked: boolean) => void;
   label?: string;
   description?: string;
   disabled?: boolean;
+  size?: SwitchSize;
   className?: string;
 };
 
 function Switch({
-  checked = false,
+  checked,
+  defaultChecked = false,
   onChange,
   label,
   description,
   disabled = false,
   size,
   className,
-}: SwitchProps) {
+}: Readonly<SwitchProps>) {
   const isDisabled = Boolean(disabled);
+  const resolvedSize = size ?? 'md';
 
   return (
-    <Field className={cn('flex items-center', className)}>
+    <Field.Root className={clsx(styles.field, className)}>
       {label && (
-        <Label
-          className={cn(
-            'text-base font-medium',
-            isDisabled ? 'text-muted-foreground opacity-50' : 'text-foreground'
+        <Field.Label
+          className={clsx(
+            styles.label,
+            isDisabled && styles['label-disabled']
           )}
         >
           {label}
-        </Label>
+        </Field.Label>
       )}
       {description && (
-        <Description
-          className={cn(
-            'text-base',
-            isDisabled ? 'text-muted-foreground opacity-50' : 'text-muted-foreground'
+        <Field.Description
+          className={clsx(
+            styles.description,
+            isDisabled && styles['description-disabled']
           )}
         >
           {description}
-        </Description>
+        </Field.Description>
       )}
-      <HeadlessSwitch
+      <BaseSwitch.Root
         checked={checked}
-        onChange={onChange}
+        defaultChecked={defaultChecked}
+        onCheckedChange={(nextChecked) => onChange?.(nextChecked)}
         disabled={isDisabled}
-        className={switchVariants({ size, disabled: isDisabled })}
+        className={clsx(
+          styles.switch,
+          ROOT_SIZE_CLASS[resolvedSize],
+          isDisabled && styles['switch-disabled']
+        )}
       >
-        <span className={switchThumbVariants({ size })} />
-      </HeadlessSwitch>
-    </Field>
+        <BaseSwitch.Thumb
+          className={clsx(
+            styles.thumb,
+            THUMB_SIZE_CLASS[resolvedSize]
+          )}
+        />
+      </BaseSwitch.Root>
+    </Field.Root>
   );
 }
 

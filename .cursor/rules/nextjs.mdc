@@ -1,0 +1,166 @@
+---
+description: Strict Forsyte Next.js and React architecture rules
+alwaysApply: true
+---
+
+# Forsyte Next.js / React Rules
+
+## Primary rule
+
+`app/` is a routing layer, not the home of feature logic.
+
+Feature logic belongs in:
+
+```text
+@/modules/<context>/
+  domain/
+  application/
+  infrastructure/
+  ui/
+```
+
+---
+
+## Frontend feature shape
+
+Preferred structure:
+
+```text
+modules/
+  <context>/
+    domain/
+    application/
+      commands/
+      queries/
+      services/
+      mappers/
+    infrastructure/
+      api/
+      query/
+      adapters/
+    ui/
+      components/
+      hooks/
+      view-models/
+```
+
+Use this structure consistently rather than inventing a new structure per feature.
+
+---
+
+## Route files
+
+Keep these thin:
+- `page.tsx`
+- `layout.tsx`
+- `loading.tsx`
+- `error.tsx`
+- route handlers
+
+Route files should:
+- compose feature modules
+- pass params
+- delegate fetching or orchestration to application/infrastructure code
+- avoid becoming the feature's service layer
+
+---
+
+## Components
+
+Use components for presentation and interaction.
+
+Components should:
+- stay focused on UI behaviour
+- receive already-shaped data where practical
+- avoid owning heavy business orchestration
+
+Do not bury core business logic inside JSX trees.
+
+When complexity grows:
+- extract view models
+- extract application actions
+- extract mappers
+- split containers from presentational components where useful
+
+---
+
+## Server vs client components
+
+- prefer Server Components by default
+- use `use client` only when browser APIs, local interaction, or client-only state is genuinely required
+- do not move feature logic to client components unnecessarily
+- do not use client components as a substitute for poor module structure
+
+---
+
+## Data access
+
+Do not fetch directly from arbitrary components when the data belongs to a feature workflow.
+
+Prefer:
+- feature query functions
+- infrastructure API clients
+- application-level data shaping
+- explicit view models for UI consumption
+
+Use TanStack Query where that is the established repo pattern, but keep query concerns out of purely presentational components.
+
+---
+
+## Hooks
+
+Hooks should not become a hidden service layer.
+
+Good uses:
+- UI state
+- view composition
+- feature-specific interaction helpers
+
+Move logic out of hooks when it becomes:
+- cross-component business orchestration
+- domain logic
+- workflow coordination
+- persistence or transport shaping
+
+---
+
+## Types and models
+
+- use TypeScript consistently
+- prefer interfaces for object shapes where that is the repo standard
+- avoid enums when a union or map is clearer
+- do not use API DTOs directly throughout the UI if a view model would be clearer
+
+Keep these distinct where useful:
+- API response types
+- domain types
+- form types
+- view models
+
+---
+
+## Imports and naming
+
+- prefer `@/` imports
+- use domain-driven names
+- keep directories lowercase with dashes where that is the repo standard
+- favour named exports for reusable components and utilities
+
+---
+
+## Styling and UI
+
+- use Tailwind and shadcn/ui consistently
+- keep styling close to components
+- prefer composable UI over one-off large pages
+- preserve responsive behaviour and accessibility
+
+---
+
+## Performance
+
+- minimise unnecessary `useEffect`
+- minimise unnecessary `useState`
+- avoid redundant client-side fetching when server rendering is a better fit
+- lazy load genuinely non-critical UI
+- keep bundle impact in mind when adding dependencies

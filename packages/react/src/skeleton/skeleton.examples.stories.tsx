@@ -16,22 +16,22 @@ type Story = StoryObj<typeof meta>;
 
 export const LoadingCard: Story = {
   render: () => (
-    <Card className="w-[420px]">
+    <Card className="sb-w-420">
       <CardHeader>
         <CardTitle>Loading profile</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="flex items-center gap-3">
-          <Skeleton className="h-12 w-12 rounded-full" />
-          <div className="space-y-2">
-            <Skeleton className="h-4 w-40" />
-            <Skeleton className="h-4 w-56" />
+      <CardContent className="sb-stack-4">
+        <div className="sb-row sb-gap-3">
+          <Skeleton className="sb-sk-avatar-12" />
+          <div className="sb-stack-2">
+            <Skeleton className="sb-sk-h-4 sb-sk-w-40" />
+            <Skeleton className="sb-sk-h-4 sb-sk-w-56" />
           </div>
         </div>
-        <div className="space-y-2">
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-11/12" />
-          <Skeleton className="h-4 w-4/5" />
+        <div className="sb-stack-2">
+          <Skeleton className="sb-sk-h-4 sb-sk-w-full" />
+          <Skeleton className="sb-sk-h-4 sb-sk-w-11-of-12" />
+          <Skeleton className="sb-sk-h-4 sb-sk-w-80p" />
         </div>
       </CardContent>
     </Card>

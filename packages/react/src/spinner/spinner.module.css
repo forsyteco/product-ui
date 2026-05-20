@@ -1,0 +1,11 @@
+.root {
+  display: inline-flex;
+}
+
+.svg {
+  transform: rotate(-90deg);
+}
+
+.circle {
+  transform-origin: center;
+}

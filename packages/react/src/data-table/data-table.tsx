@@ -1,11 +1,11 @@
 import { useMemo, useState, useCallback } from 'react';
-import { cn } from '../utils/tailwind';
+import { clsx } from 'clsx';
 import type { DataTableProps } from './types';
-import { DEFAULT_COLOR_CONFIG } from './types';
 import { ROW_INTERACTION } from './constants';
 import { TableHeader } from './components/table-header';
 import { TableBody } from './components/table-body';
 import { Pagination } from './components/pagination';
+import styles from './components/data-table.module.css';
 
 function DataTable<TData, TExpandedData = unknown>({
   columns,
@@ -30,8 +30,7 @@ function DataTable<TData, TExpandedData = unknown>({
   className,
   colorConfig: colorConfigProp,
 }: DataTableProps<TData, TExpandedData>) {
-  // Merge with default color config (user values override defaults)
-  const colorConfig = { ...DEFAULT_COLOR_CONFIG, ...colorConfigProp };
+  const colorConfig = colorConfigProp;
 
   const allRowIds = useMemo(() => data.map(getRowId), [data, getRowId]);
 
@@ -96,13 +95,13 @@ function DataTable<TData, TExpandedData = unknown>({
 
   return (
     <div
-      className={cn('overflow-hidden rounded-lg border border-border', className)}
+      className={clsx(styles['table-container'], className)}
       style={containerStyle}
     >
-      <div className="overflow-x-auto">
+      <div className={styles['table-wrap']}>
         <table
           aria-busy={loading}
-          className="w-full border-collapse text-sm"
+          className={styles.table}
         >
           <TableHeader
             columns={columns}
@@ -141,7 +140,7 @@ function DataTable<TData, TExpandedData = unknown>({
         pageSize={pageSize}
         totalCount={totalCount}
         onPageChange={onPageChange}
-        className="border-t border-border"
+        className={styles['pagination-border']}
         colorConfig={colorConfig}
       />
     </div>

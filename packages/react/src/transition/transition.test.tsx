@@ -3,22 +3,37 @@ import { render, screen } from '@testing-library/react';
 import { Transition } from './transition';
 
 describe('Transition', () => {
-  it('renders children when show is true', () => {
-    render(
-      <Transition show={true}>
-        <div>Content</div>
-      </Transition>
-    );
-    expect(screen.getByText('Content')).toBeInTheDocument();
+  describe('when show is true', () => {
+    it('should render children when show is true', () => {
+      // Arrange
+      render(
+        <Transition show={true}>
+          <div>Content</div>
+        </Transition>
+      );
+
+      // Act
+      const content = screen.getByText('Content');
+
+      // Assert
+      expect(content).toBeInTheDocument();
+    });
   });
 
-  it('does not render children when show is false', () => {
-    render(
-      <Transition show={false}>
-        <div>Content</div>
-      </Transition>
-    );
-    expect(screen.queryByText('Content')).not.toBeInTheDocument();
+  describe('when show is false', () => {
+    it('should not render children when show is false', () => {
+      // Arrange
+      render(
+        <Transition show={false}>
+          <div>Content</div>
+        </Transition>
+      );
+
+      // Act
+      const content = screen.queryByText('Content');
+
+      // Assert
+      expect(content).not.toBeInTheDocument();
+    });
   });
 });
-

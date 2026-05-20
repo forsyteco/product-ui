@@ -1,7 +1,8 @@
 import type React from 'react';
 import type { HTMLAttributes } from 'react';
 
-import { cn } from '../utils/tailwind';
+import { clsx } from 'clsx';
+import styles from './visually-hidden.module.css';
 
 /**
  * Provides a component that implements the "visually hidden" technique. This is
@@ -16,11 +17,8 @@ import { cn } from '../utils/tailwind';
 export const VisuallyHidden = ({className, children, ...rest}: VisuallyHiddenProps) => {
   return (
     <span
-      className={cn(
-        'absolute h-px w-px overflow-hidden whitespace-nowrap [clip-path:inset(50%)]',
-        'focus:static focus:h-auto focus:w-auto focus:overflow-visible focus:whitespace-normal focus:[clip-path:none]',
-        'active:static active:h-auto active:w-auto active:overflow-visible active:whitespace-normal active:[clip-path:none]',
-        'focus-within:static focus-within:h-auto focus-within:w-auto focus-within:overflow-visible focus-within:whitespace-normal focus-within:[clip-path:none]',
+      className={clsx(
+        styles.root,
         className
       )}
       {...rest}

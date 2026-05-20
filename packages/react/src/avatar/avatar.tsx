@@ -1,22 +1,23 @@
 'use client';
 
 import BoringAvatarComponent from 'boring-avatars';
-import { Avatar as AvatarPrimitive } from 'radix-ui';
+import { Avatar as BaseAvatar } from '@base-ui/react/avatar';
 import * as React from 'react';
 
-import { cn } from '../utils/tailwind';
+import { clsx } from 'clsx';
+import styles from './avatar.module.css';
 
 const BORING_AVATAR_COLORS = [
     "#ff0000","#0000ff"
 ] as const;
 
-export type AvatarProps = React.ComponentProps<typeof AvatarPrimitive.Root>;
+export type AvatarProps = React.ComponentProps<typeof BaseAvatar.Root>;
 
 function Avatar({ className, ...props }: AvatarProps) {
   return (
-    <AvatarPrimitive.Root
+    <BaseAvatar.Root
       data-slot="avatar"
-      className={cn('relative flex size-8 shrink-0 overflow-hidden rounded-full', className)}
+      className={clsx(styles.root, className)}
       {...props}
     />
   );
@@ -25,20 +26,16 @@ function Avatar({ className, ...props }: AvatarProps) {
 export type AvatarImageProps = React.ComponentPropsWithoutRef<'img'>;
 
 function AvatarImage({ className, ...props }: AvatarImageProps) {
-  // Render a real <img> so tests and consumers can rely on DOM semantics,
-  // while still letting Radix control loading/fallback behavior.
   return (
-    <AvatarPrimitive.Image asChild>
-      <img
-        data-slot="avatar-image"
-        className={cn('aspect-square size-full', className)}
-        {...props}
-      />
-    </AvatarPrimitive.Image>
+    <BaseAvatar.Image
+      data-slot="avatar-image"
+      className={clsx(styles.image, className)}
+      {...props}
+    />
   );
 }
 
-type AvatarFallbackBaseProps = Omit<React.ComponentProps<typeof AvatarPrimitive.Fallback>, 'children'> & {
+type AvatarFallbackBaseProps = Omit<React.ComponentProps<typeof BaseAvatar.Fallback>, 'children'> & {
   className?: string;
 };
 
@@ -79,16 +76,16 @@ function AvatarFallback(props: AvatarFallbackProps) {
       const { variant, children, className, ...rest } = props;
 
       return (
-        <AvatarPrimitive.Fallback
+        <BaseAvatar.Fallback
           data-slot="avatar-fallback"
-          className={cn(
-            'flex size-full items-center justify-center rounded-full bg-muted text-xs font-medium uppercase text-foreground',
+          className={clsx(
+            styles.fallback,
             className
           )}
           {...rest}
         >
           {children}
-        </AvatarPrimitive.Fallback>
+        </BaseAvatar.Fallback>
       );
     }
 
@@ -96,16 +93,16 @@ function AvatarFallback(props: AvatarFallbackProps) {
       const { variant, name, className, ...rest } = props;
 
       return (
-        <AvatarPrimitive.Fallback
+        <BaseAvatar.Fallback
           data-slot="avatar-fallback"
-          className={cn(
-            'flex size-full items-center justify-center rounded-full bg-muted text-xs font-medium uppercase text-foreground',
+          className={clsx(
+            styles.fallback,
             className
           )}
           {...rest}
         >
           {getInitials(name)}
-        </AvatarPrimitive.Fallback>
+        </BaseAvatar.Fallback>
       );
     }
 
@@ -113,24 +110,23 @@ function AvatarFallback(props: AvatarFallbackProps) {
       const { variant, name, className, ...rest } = props;
 
       return (
-        <AvatarPrimitive.Fallback
+        <BaseAvatar.Fallback
           data-slot="avatar-fallback"
-          className={cn('relative flex size-full items-center justify-center overflow-hidden rounded-full', className)}
-          asChild
+          className={clsx(styles.fallback, styles['fallback-boring'], className)}
           {...rest}
         >
-          <div className="relative size-full">
+          <div className={styles['boring-container']}>
             <BoringAvatarComponent
               variant="beam"
               name={name}
-              className="size-full"
+              className={styles['boring-avatar']}
               colors={[...BORING_AVATAR_COLORS]}
             />
-            <span className="absolute inset-0 flex items-center justify-center text-xs font-semibold uppercase text-foreground mix-blend-overlay">
+            <span className={styles['boring-initials']}>
               {getInitials(name)}
             </span>
           </div>
-        </AvatarPrimitive.Fallback>
+        </BaseAvatar.Fallback>
       );
     }
   }

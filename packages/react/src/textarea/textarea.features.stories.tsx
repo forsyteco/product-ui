@@ -32,7 +32,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Sizes: Story = {
   render: () => (
-    <div className="space-y-4 w-64">
+    <div className="sb-stack-4 sb-w-64">
       <Textarea placeholder="Small (2 rows)" rows={2} />
       <Textarea placeholder="Medium (4 rows)" rows={4} />
       <Textarea placeholder="Large (6 rows)" rows={6} />
@@ -42,7 +42,7 @@ export const Sizes: Story = {
 
 export const States: Story = {
   render: () => (
-    <div className="space-y-4 w-64">
+    <div className="sb-stack-4 sb-w-64">
       <Textarea placeholder="Normal textarea" />
       <Textarea placeholder="Disabled textarea" disabled />
       <Textarea placeholder="Error textarea" error />

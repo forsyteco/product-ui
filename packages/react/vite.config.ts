@@ -1,6 +1,5 @@
 /// <reference types="vitest/config" />
 import { defineConfig } from 'vite';
-import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { posix as pathPosix, resolve } from 'path';
 import dts from 'vite-plugin-dts';
@@ -14,33 +13,58 @@ const dirname =
   typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
 const componentEntries = [
-  'avatar',
+  'accordion',
+  'alert-dialog',
   'autocomplete',
+  'avatar',
   'breadcrumb',
   'button',
   'calendar',
   'card',
   'checkbox',
+  'checkbox-group',
+  'collapsible',
   'combobox',
+  'context-menu',
   'counter-label',
   'dialog',
-  'disclosure',
-  'dropdown-menu',
+  'drawer',
+  'empty-state',
+  'field',
   'fieldset',
+  'filter-chip',
+  'form',
+  'form-field',
   'icon-button',
+  'inline-alert',
   'input',
   'listbox',
+  'menu',
+  'menubar',
+  'meter',
+  'navigation-menu',
+  'number-field',
   'popover',
+  'progress',
+  'radio',
   'radio-group',
   'relative-time',
+  'scroll-area',
+  'search-field',
   'select',
+  'separator',
   'skeleton',
-  'sonner',
+  'slider',
   'spinner',
   'switch',
   'tabs',
   'textarea',
   'theme',
+  'toast',
+  'toggle',
+  'toggle-group',
+  'toolbar',
+  'tooltip',
   'transition',
   'visually-hidden',
 ];
@@ -67,7 +91,6 @@ const withFileName = (entryName: string, format: ModuleFormat) => {
 export default defineConfig({
   plugins: [
     react({ jsxRuntime: 'automatic' }),
-    tailwindcss(),
     dts({
       include: ['src/**/*'],
       exclude: ['src/**/*.stories.tsx', 'src/**/*.test.tsx'],
@@ -109,7 +132,6 @@ export default defineConfig({
       {
         plugins: [
           react({ jsxRuntime: 'automatic' }),
-          tailwindcss(),
           storybookTest({ configDir: path.join(dirname, '.storybook') }),
         ],
         test: {

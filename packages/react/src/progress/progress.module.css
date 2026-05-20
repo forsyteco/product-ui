@@ -1,0 +1,38 @@
+.root {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 0.25rem;
+  grid-row-gap: 0.5rem;
+  width: 12rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: rgb(var(--foreground));
+}
+
+.track {
+  grid-column: 1 / 3;
+  overflow: hidden;
+  background-color: rgb(var(--border));
+  box-shadow: inset 0 0 0 1px rgb(var(--border));
+  height: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.indicator {
+  display: block;
+  background-color: rgb(var(--muted-foreground));
+  transition: width 0.2s ease;
+}
+
+.value {
+  grid-column-start: 2;
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: rgb(var(--foreground));
+  text-align: right;
+}

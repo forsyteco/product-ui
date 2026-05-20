@@ -1,5 +1,6 @@
 import type { DataTableColumn } from '../types';
-import { cn } from '../../utils/tailwind';
+import { clsx } from 'clsx';
+import styles from './data-table.module.css';
 
 export type TableCellProps<TData, TValue = unknown> = Readonly<{
   column: DataTableColumn<TData, TValue>;
@@ -13,9 +14,9 @@ function TableCell<TData, TValue = unknown>({
   value,
 }: TableCellProps<TData, TValue>) {
   const alignmentClass = {
-    left: 'text-left',
-    center: 'text-center',
-    right: 'text-right',
+    left: styles['align-left'],
+    center: styles['align-center'],
+    right: styles['align-right'],
   }[column.align || 'left'];
 
   const CellComponent = column.cell;
@@ -23,7 +24,7 @@ function TableCell<TData, TValue = unknown>({
   return (
     <td
       role="gridcell"
-      className={cn('px-4 py-3', alignmentClass)}
+      className={clsx(styles.cell, alignmentClass)}
       style={{
         width: column.width,
         minWidth: column.minWidth,

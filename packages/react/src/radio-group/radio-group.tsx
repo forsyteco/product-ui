@@ -1,6 +1,8 @@
 import { type ReactNode } from 'react';
-import { RadioGroup as HeadlessRadioGroup } from '@headlessui/react';
-import { cn } from '../utils/tailwind';
+import { RadioGroup as BaseRadioGroup } from '@base-ui/react/radio-group';
+import { Radio } from '@base-ui/react/radio';
+import { clsx } from 'clsx';
+import styles from './radio-group.module.css';
 
 export type RadioGroupOption = {
   id: string | number;
@@ -30,60 +32,47 @@ function RadioGroup({
   disabled = false,
 }: RadioGroupProps) {
   return (
-    <div className={cn('space-y-2', className)}>
-      <HeadlessRadioGroup value={value} onChange={onChange} disabled={disabled}>
+    <div className={clsx(styles.root, className)}>
+      <BaseRadioGroup value={value} onValueChange={(next) => onChange?.(String(next))} disabled={disabled}>
         {options.map((option) => (
-        <HeadlessRadioGroup.Option
-          key={option.id}
-          value={option.value}
-          className={({ checked, disabled: optionDisabled }) =>
-            cn(
-              'relative flex cursor-pointer rounded-lg border p-4 focus:outline-none',
-              checked
-                ? 'border-blue-600 bg-blue-50'
-                : 'border-gray-200 bg-white',
-              (disabled || optionDisabled) && 'opacity-50 cursor-not-allowed'
-            )
-          }
-        >
-          {({ checked }) => (
-            <>
-              <div className="flex w-full items-center justify-between">
-                <div className="flex items-center">
-                  <div className="text-base">
-                    <HeadlessRadioGroup.Label
-                      as="p"
-                      className={cn('font-medium', checked ? 'text-blue-900' : 'text-gray-900')}
-                    >
-                      {option.label}
-                    </HeadlessRadioGroup.Label>
-                    {option.description && (
-                      <HeadlessRadioGroup.Description
-                        as="span"
-                        className={cn('inline', checked ? 'text-blue-700' : 'text-gray-500')}
-                      >
-                        {option.description}
-                      </HeadlessRadioGroup.Description>
-                    )}
-                  </div>
+          <Radio.Root
+            key={option.id}
+            value={option.value}
+            disabled={disabled}
+            className={({ checked, disabled: optionDisabled }) =>
+              clsx(
+                styles.option,
+                checked && styles['option-checked'],
+                (disabled || optionDisabled) && styles['option-disabled']
+              )
+            }
+          >
+            <div className={styles.row}>
+              <div className={styles['label-wrap']}>
+                <div className={styles.text}>
+                  <p className={styles.label}>
+                    {option.label}
+                  </p>
+                  {option.description && (
+                    <span className={styles.description}>
+                      {option.description}
+                    </span>
+                  )}
                 </div>
-                {checked && (
-                  <div className="shrink-0 text-blue-600">
-                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a1 1 0 00-1.714-1.029L9 9.586 7.857 8.162a1 1 0 00-1.714 1.029l2 3a1 1 0 001.514.143l4-3z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                )}
               </div>
-            </>
-          )}
-        </HeadlessRadioGroup.Option>
-      ))}
-      </HeadlessRadioGroup>
+              <Radio.Indicator className={styles['icon-wrap']}>
+                <svg className={styles.icon} fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a1 1 0 00-1.714-1.029L9 9.586 7.857 8.162a1 1 0 00-1.714 1.029l2 3a1 1 0 001.514.143l4-3z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </Radio.Indicator>
+            </div>
+          </Radio.Root>
+        ))}
+      </BaseRadioGroup>
     </div>
   );
 }

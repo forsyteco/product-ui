@@ -1,7 +1,3 @@
-@import "tailwindcss";
-
-@custom-variant dark (&:where([data-colour-mode="dark"]));
-
 @font-face {
   font-family: "Plus Jakarta Sans";
   src: url("./fonts/plus-jakarta-sans-[wght].woff2") format("woff2");
@@ -17,7 +13,7 @@
   font-display: swap;
 }
 
-@theme {
+:root {
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 
   --spacing: 0.25rem;
@@ -46,39 +42,6 @@
   --text-4xl: 1.953rem;             /* 31px */
   --text-4xl-line-height: 2.25rem;
 
-  --color-background: rgb(var(--background));
-  --color-foreground: rgb(var(--foreground));
-
-  --color-muted: rgb(var(--muted));
-  --color-muted-foreground: rgb(var(--muted-foreground));
-
-  --color-border: rgb(var(--border));
-  --color-input: rgb(var(--input));
-
-  --color-accent: rgb(var(--accent));
-  --color-accent-foreground: rgb(var(--accent-foreground));
-
-  --color-primary: rgb(var(--primary));
-  --color-primary-foreground: rgb(var(--primary-foreground));
-  --color-secondary: rgb(var(--secondary));
-  --color-secondary-foreground: rgb(var(--secondary-foreground));
-
-  --color-destructive: rgb(var(--destructive));
-  --color-destructive-foreground: rgb(var(--destructive-foreground));
-
-  --color-ring: rgb(var(--ring));
-
-  --color-card: rgb(var(--card));
-  --color-card-foreground: rgb(var(--card-foreground));
-  --color-popover: rgb(var(--popover));
-  --color-popover-foreground: rgb(var(--popover-foreground));
-
-  --color-spinner-primary: rgb(var(--accent));
-  --color-spinner-secondary: rgb(var(--neutral-200));
-  --color-spinner-tertiary: rgb(var(--brand-black));
-}
-
-:root {
   color-scheme: light;
 
   --brand-yellow: 255 222 19;
@@ -113,18 +76,175 @@
   --destructive: 220 38 38;
   --destructive-foreground: var(--brand-white);
 
+  --success: 22 163 74;
+
   --ring: var(--brand-black);
+  --field-halo: 233 233 233;
+  --field-focus-border: 161 161 161;
+  --field-adornment: 81 81 81;
+  --field-placeholder: 161 161 161;
+  --field-error: 193 0 7;
+  --field-error-halo: 248 240 240;
 
   --card: var(--brand-white);
   --card-foreground: var(--brand-black);
 
   --popover: var(--brand-white);
   --popover-foreground: var(--brand-black);
+
+  --interactive-hover-darken: 8%;
+  --interactive-active-darken: 14%;
+  --interactive-hover-lighten: 10%;
+  --interactive-active-lighten: 16%;
+  --interactive-focus-ring: rgb(var(--ring));
+
+  --button-primary-background: rgb(var(--accent));
+  --button-primary-foreground: rgb(var(--accent-foreground));
+  --button-primary-border: transparent;
+  --button-primary-hover: color-mix(in srgb, var(--button-primary-background), black var(--interactive-hover-darken));
+  --button-primary-active: color-mix(in srgb, var(--button-primary-background), black var(--interactive-active-darken));
+  --button-primary-focus-ring: var(--interactive-focus-ring);
+
+  --button-default-background: rgb(var(--background));
+  --button-default-foreground: rgb(var(--foreground));
+  --button-default-border: rgb(var(--border));
+  --button-default-hover: color-mix(in srgb, var(--button-default-background), black var(--interactive-hover-darken));
+  --button-default-active: color-mix(in srgb, var(--button-default-background), black var(--interactive-active-darken));
+  --button-default-focus-ring: var(--interactive-focus-ring);
+
+  --button-ghost-background: transparent;
+  --button-ghost-foreground: rgb(var(--foreground));
+  --button-ghost-border: transparent;
+  --button-ghost-hover: rgb(var(--muted));
+  --button-ghost-active: color-mix(in srgb, rgb(var(--muted)), black var(--interactive-hover-darken));
+  --button-ghost-focus-ring: var(--interactive-focus-ring);
+
+  --button-danger-background: rgb(var(--destructive));
+  --button-danger-foreground: rgb(var(--destructive-foreground));
+  --button-danger-border: transparent;
+  --button-danger-hover: color-mix(in srgb, var(--button-danger-background), white var(--interactive-hover-lighten));
+  --button-danger-active: color-mix(in srgb, var(--button-danger-background), white var(--interactive-active-lighten));
+  --button-danger-focus-ring: var(--interactive-focus-ring);
+
+  --icon-button-primary-background: var(--button-primary-background);
+  --icon-button-primary-foreground: var(--button-primary-foreground);
+  --icon-button-primary-border: var(--button-primary-border);
+  --icon-button-primary-hover: var(--button-primary-hover);
+  --icon-button-primary-active: var(--button-primary-active);
+  --icon-button-primary-focus-ring: var(--button-primary-focus-ring);
+
+  --icon-button-default-background: var(--button-default-background);
+  --icon-button-default-foreground: var(--button-default-foreground);
+  --icon-button-default-border: var(--button-default-border);
+  --icon-button-default-hover: var(--button-default-hover);
+  --icon-button-default-active: var(--button-default-active);
+  --icon-button-default-focus-ring: var(--button-default-focus-ring);
+
+  --icon-button-ghost-background: var(--button-ghost-background);
+  --icon-button-ghost-foreground: var(--button-ghost-foreground);
+  --icon-button-ghost-border: var(--button-ghost-border);
+  --icon-button-ghost-hover: var(--button-ghost-hover);
+  --icon-button-ghost-active: var(--button-ghost-active);
+  --icon-button-ghost-focus-ring: var(--button-ghost-focus-ring);
+
+  --icon-button-danger-background: var(--button-danger-background);
+  --icon-button-danger-foreground: var(--button-danger-foreground);
+  --icon-button-danger-border: var(--button-danger-border);
+  --icon-button-danger-hover: var(--button-danger-hover);
+  --icon-button-danger-active: var(--button-danger-active);
+  --icon-button-danger-focus-ring: var(--button-danger-focus-ring);
+
+  --dropdown-item-hover: rgb(var(--muted));
+  --dropdown-item-active: color-mix(in srgb, rgb(var(--muted)), black var(--interactive-active-darken));
+  --dropdown-item-selected-background: rgb(var(--accent));
+  --dropdown-item-selected-foreground: rgb(var(--accent-foreground));
+
+  --disclosure-button-background: rgb(var(--muted));
+  --disclosure-button-foreground: rgb(var(--foreground));
+  --disclosure-button-hover: color-mix(in srgb, var(--disclosure-button-background), black var(--interactive-hover-darken));
+  --disclosure-button-active: color-mix(in srgb, var(--disclosure-button-background), black var(--interactive-active-darken));
+  --disclosure-button-focus-ring: rgb(var(--ring));
+
+  --tabs-unselected-hover: rgb(var(--muted));
+  --tabs-unselected-active: color-mix(in srgb, rgb(var(--muted)), black var(--interactive-active-darken));
+  --tabs-focus-ring: rgb(var(--ring));
+
+  --listbox-trigger-hover: color-mix(in srgb, rgb(var(--background)), black var(--interactive-hover-darken));
+  --listbox-trigger-active: color-mix(in srgb, rgb(var(--background)), black var(--interactive-active-darken));
+  --listbox-option-active-background: rgb(var(--accent));
+  --listbox-option-active-foreground: rgb(var(--accent-foreground));
+  --listbox-focus-ring: rgb(var(--ring));
+
+  --combobox-clear-hover: rgb(var(--muted));
+  --combobox-clear-active: color-mix(in srgb, rgb(var(--muted)), black var(--interactive-active-darken));
+
+  --autocomplete-clear-hover: rgb(var(--muted));
+  --autocomplete-clear-active: color-mix(in srgb, rgb(var(--muted)), black var(--interactive-active-darken));
+
+  --data-table-row-hover: rgb(var(--muted) / 0.5);
+  --data-table-row-active: rgb(var(--muted) / 0.7);
+  --data-table-row-selectable-hover: rgb(var(--muted) / 0.3);
+  --data-table-row-selectable-active: rgb(var(--muted) / 0.5);
+  --data-table-surface-hover: rgb(var(--muted));
+  --data-table-surface-active: color-mix(in srgb, rgb(var(--muted)), black var(--interactive-active-darken));
+  --data-table-risk-high-bg: 254 226 226;
+  --data-table-risk-high-fg: 153 27 27;
+  --data-table-risk-medium-bg: 254 249 195;
+  --data-table-risk-medium-fg: 133 77 14;
+  --data-table-risk-low-bg: 220 252 231;
+  --data-table-risk-low-fg: 22 101 52;
+  --data-table-risk-unknown-bg: 243 244 246;
+  --data-table-risk-unknown-fg: 31 41 55;
+  --data-table-status-complete-bg: 209 250 229;
+  --data-table-status-complete-fg: 6 95 70;
+  --data-table-status-do-not-act-bg: 255 228 230;
+  --data-table-status-do-not-act-fg: 159 18 57;
+  --data-table-status-failed-bg: 254 226 226;
+  --data-table-status-failed-fg: 153 27 27;
+  --data-table-status-progress-bg: 243 244 246;
+  --data-table-status-progress-fg: 31 41 55;
+
+  --switch-track-off: 218 222 228;
+  --switch-track-off-hover: 206 212 220;
+  --switch-track-border: var(--neutral-200);
+  --switch-track-on: var(--accent);
+  --switch-track-on-hover: var(--accent);
+  --switch-track-disabled: 226 230 236;
+  --switch-track-disabled-border: 210 216 224;
+  --switch-thumb: var(--background);
+  --switch-thumb-disabled: 245 247 250;
+
+  --calendar-cell-size: 2rem;
+
+  --color-background: rgb(var(--background));
+  --color-foreground: rgb(var(--foreground));
+  --color-muted: rgb(var(--muted));
+  --color-muted-foreground: rgb(var(--muted-foreground));
+  --color-border: rgb(var(--border));
+  --color-input: rgb(var(--input));
+  --color-accent: rgb(var(--accent));
+  --color-accent-foreground: rgb(var(--accent-foreground));
+  --color-primary: rgb(var(--primary));
+  --color-primary-foreground: rgb(var(--primary-foreground));
+  --color-secondary: rgb(var(--secondary));
+  --color-secondary-foreground: rgb(var(--secondary-foreground));
+  --color-destructive: rgb(var(--destructive));
+  --color-destructive-foreground: rgb(var(--destructive-foreground));
+  --color-ring: rgb(var(--ring));
+  --color-card: rgb(var(--card));
+  --color-card-foreground: rgb(var(--card-foreground));
+  --color-popover: rgb(var(--popover));
+  --color-popover-foreground: rgb(var(--popover-foreground));
+  --color-spinner-primary: rgb(var(--accent));
+  --color-spinner-secondary: rgb(var(--neutral-200));
+  --color-spinner-tertiary: rgb(var(--brand-black));
 }
 
 :root:where([data-colour-scheme="blue"]) {
   --accent: 37 99 235;
   --accent-foreground: 255 255 255;
+  --button-primary-hover: color-mix(in srgb, var(--button-primary-background), white var(--interactive-hover-lighten));
+  --button-primary-active: color-mix(in srgb, var(--button-primary-background), white var(--interactive-active-lighten));
 }
 
 :root:where([data-colour-mode="dark"]) {
@@ -146,19 +266,100 @@
   --secondary-foreground: var(--brand-white);
 
   --ring: var(--brand-white);
+  --field-halo: 57 61 65;
+  --field-focus-border: 179 192 209;
+  --field-adornment: 196 207 222;
+  --field-placeholder: 179 192 209;
+  --field-error: 193 0 7;
+  --field-error-halo: 248 240 240;
 
   --card: var(--neutral-950);
   --card-foreground: var(--brand-white);
 
   --popover: var(--neutral-950);
   --popover-foreground: var(--brand-white);
+
+  --button-default-hover: color-mix(in srgb, var(--button-default-background), white var(--interactive-hover-lighten));
+  --button-default-active: color-mix(in srgb, var(--button-default-background), white var(--interactive-active-lighten));
+  --button-ghost-active: color-mix(in srgb, rgb(var(--muted)), white var(--interactive-hover-lighten));
+
+  --disclosure-button-hover: color-mix(in srgb, var(--disclosure-button-background), white var(--interactive-hover-lighten));
+  --disclosure-button-active: color-mix(in srgb, var(--disclosure-button-background), white var(--interactive-active-lighten));
+
+  --tabs-unselected-active: color-mix(in srgb, rgb(var(--muted)), white var(--interactive-hover-lighten));
+
+  --listbox-trigger-hover: color-mix(in srgb, rgb(var(--background)), white var(--interactive-hover-lighten));
+  --listbox-trigger-active: color-mix(in srgb, rgb(var(--background)), white var(--interactive-active-lighten));
+
+  --combobox-clear-active: color-mix(in srgb, rgb(var(--muted)), white var(--interactive-hover-lighten));
+  --autocomplete-clear-active: color-mix(in srgb, rgb(var(--muted)), white var(--interactive-hover-lighten));
+
+  --data-table-surface-active: color-mix(in srgb, rgb(var(--muted)), white var(--interactive-hover-lighten));
+  --data-table-risk-high-bg: 127 29 29;
+  --data-table-risk-high-fg: 254 226 226;
+  --data-table-risk-medium-bg: 113 63 18;
+  --data-table-risk-medium-fg: 254 249 195;
+  --data-table-risk-low-bg: 20 83 45;
+  --data-table-risk-low-fg: 220 252 231;
+  --data-table-risk-unknown-bg: var(--neutral-900);
+  --data-table-risk-unknown-fg: var(--neutral-200);
+  --data-table-status-complete-bg: 6 78 59;
+  --data-table-status-complete-fg: 209 250 229;
+  --data-table-status-do-not-act-bg: 131 24 67;
+  --data-table-status-do-not-act-fg: 255 228 230;
+  --data-table-status-failed-bg: 127 29 29;
+  --data-table-status-failed-fg: 254 226 226;
+  --data-table-status-progress-bg: var(--neutral-900);
+  --data-table-status-progress-fg: var(--neutral-100);
+
+  --switch-track-off: var(--neutral-700);
+  --switch-track-off-hover: var(--neutral-800);
+  --switch-track-border: var(--neutral-800);
+  --switch-track-disabled: var(--neutral-900);
+  --switch-track-disabled-border: var(--neutral-800);
+  --switch-thumb: var(--background);
+  --switch-thumb-disabled: var(--neutral-700);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: var(--font-sans);
 }
 
 body {
+  margin: 0;
   background-color: rgb(var(--background));
   color: rgb(var(--foreground));
+  font-family: var(--font-sans);
   font-size: var(--text-base);
   line-height: var(--text-base-line-height);
+}
+
+table {
+  border-collapse: collapse;
+}
+
+:root:where([data-colour-mode="light"]) input {
+  color-scheme: light;
+}
+
+:root:where([data-colour-mode="dark"]) input {
+  color-scheme: dark;
+}
+
+:where([role='button'], [role='tabpanel'][tabindex='0'], button, summary, a):focus:not(:focus-visible):not(.focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+:where([tabindex='0'], details-dialog):focus:not(:focus-visible):not(.focus-visible) {
+  outline: none;
 }
 
 @keyframes spinner-rotate {
@@ -170,10 +371,10 @@ body {
   100% { stroke-dasharray: 1, 150; stroke-dashoffset: -124; }
 }
 
-@utility animate-spinner-rotate {
+.animate-spinner-rotate {
   animation: spinner-rotate 1.5s linear infinite;
 }
 
-@utility animate-spinner-dash {
+.animate-spinner-dash {
   animation: spinner-dash 1.5s ease-in-out infinite;
 }

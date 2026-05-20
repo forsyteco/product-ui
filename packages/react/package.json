@@ -146,24 +146,234 @@
         "default": "./dist/dialog/index.cjs"
       }
     },
-    "./disclosure": {
+    "./accordion": {
       "import": {
-        "types": "./dist/disclosure/index.d.ts",
-        "default": "./dist/disclosure/index.mjs"
+        "types": "./dist/accordion/index.d.ts",
+        "default": "./dist/accordion/index.mjs"
       },
       "require": {
-        "types": "./dist/disclosure/index.d.ts",
-        "default": "./dist/disclosure/index.cjs"
+        "types": "./dist/accordion/index.d.ts",
+        "default": "./dist/accordion/index.cjs"
       }
     },
-    "./dropdown-menu": {
+    "./alert-dialog": {
       "import": {
-        "types": "./dist/dropdown-menu/index.d.ts",
-        "default": "./dist/dropdown-menu/index.mjs"
+        "types": "./dist/alert-dialog/index.d.ts",
+        "default": "./dist/alert-dialog/index.mjs"
       },
       "require": {
-        "types": "./dist/dropdown-menu/index.d.ts",
-        "default": "./dist/dropdown-menu/index.cjs"
+        "types": "./dist/alert-dialog/index.d.ts",
+        "default": "./dist/alert-dialog/index.cjs"
+      }
+    },
+    "./checkbox-group": {
+      "import": {
+        "types": "./dist/checkbox-group/index.d.ts",
+        "default": "./dist/checkbox-group/index.mjs"
+      },
+      "require": {
+        "types": "./dist/checkbox-group/index.d.ts",
+        "default": "./dist/checkbox-group/index.cjs"
+      }
+    },
+    "./collapsible": {
+      "import": {
+        "types": "./dist/collapsible/index.d.ts",
+        "default": "./dist/collapsible/index.mjs"
+      },
+      "require": {
+        "types": "./dist/collapsible/index.d.ts",
+        "default": "./dist/collapsible/index.cjs"
+      }
+    },
+    "./context-menu": {
+      "import": {
+        "types": "./dist/context-menu/index.d.ts",
+        "default": "./dist/context-menu/index.mjs"
+      },
+      "require": {
+        "types": "./dist/context-menu/index.d.ts",
+        "default": "./dist/context-menu/index.cjs"
+      }
+    },
+    "./drawer": {
+      "import": {
+        "types": "./dist/drawer/index.d.ts",
+        "default": "./dist/drawer/index.mjs"
+      },
+      "require": {
+        "types": "./dist/drawer/index.d.ts",
+        "default": "./dist/drawer/index.cjs"
+      }
+    },
+    "./empty-state": {
+      "import": {
+        "types": "./dist/empty-state/index.d.ts",
+        "default": "./dist/empty-state/index.mjs"
+      },
+      "require": {
+        "types": "./dist/empty-state/index.d.ts",
+        "default": "./dist/empty-state/index.cjs"
+      }
+    },
+    "./field": {
+      "import": {
+        "types": "./dist/field/index.d.ts",
+        "default": "./dist/field/index.mjs"
+      },
+      "require": {
+        "types": "./dist/field/index.d.ts",
+        "default": "./dist/field/index.cjs"
+      }
+    },
+    "./form": {
+      "import": {
+        "types": "./dist/form/index.d.ts",
+        "default": "./dist/form/index.mjs"
+      },
+      "require": {
+        "types": "./dist/form/index.d.ts",
+        "default": "./dist/form/index.cjs"
+      }
+    },
+    "./menu": {
+      "import": {
+        "types": "./dist/menu/index.d.ts",
+        "default": "./dist/menu/index.mjs"
+      },
+      "require": {
+        "types": "./dist/menu/index.d.ts",
+        "default": "./dist/menu/index.cjs"
+      }
+    },
+    "./menubar": {
+      "import": {
+        "types": "./dist/menubar/index.d.ts",
+        "default": "./dist/menubar/index.mjs"
+      },
+      "require": {
+        "types": "./dist/menubar/index.d.ts",
+        "default": "./dist/menubar/index.cjs"
+      }
+    },
+    "./meter": {
+      "import": {
+        "types": "./dist/meter/index.d.ts",
+        "default": "./dist/meter/index.mjs"
+      },
+      "require": {
+        "types": "./dist/meter/index.d.ts",
+        "default": "./dist/meter/index.cjs"
+      }
+    },
+    "./navigation-menu": {
+      "import": {
+        "types": "./dist/navigation-menu/index.d.ts",
+        "default": "./dist/navigation-menu/index.mjs"
+      },
+      "require": {
+        "types": "./dist/navigation-menu/index.d.ts",
+        "default": "./dist/navigation-menu/index.cjs"
+      }
+    },
+    "./number-field": {
+      "import": {
+        "types": "./dist/number-field/index.d.ts",
+        "default": "./dist/number-field/index.mjs"
+      },
+      "require": {
+        "types": "./dist/number-field/index.d.ts",
+        "default": "./dist/number-field/index.cjs"
+      }
+    },
+    "./progress": {
+      "import": {
+        "types": "./dist/progress/index.d.ts",
+        "default": "./dist/progress/index.mjs"
+      },
+      "require": {
+        "types": "./dist/progress/index.d.ts",
+        "default": "./dist/progress/index.cjs"
+      }
+    },
+    "./radio": {
+      "import": {
+        "types": "./dist/radio/index.d.ts",
+        "default": "./dist/radio/index.mjs"
+      },
+      "require": {
+        "types": "./dist/radio/index.d.ts",
+        "default": "./dist/radio/index.cjs"
+      }
+    },
+    "./scroll-area": {
+      "import": {
+        "types": "./dist/scroll-area/index.d.ts",
+        "default": "./dist/scroll-area/index.mjs"
+      },
+      "require": {
+        "types": "./dist/scroll-area/index.d.ts",
+        "default": "./dist/scroll-area/index.cjs"
+      }
+    },
+    "./separator": {
+      "import": {
+        "types": "./dist/separator/index.d.ts",
+        "default": "./dist/separator/index.mjs"
+      },
+      "require": {
+        "types": "./dist/separator/index.d.ts",
+        "default": "./dist/separator/index.cjs"
+      }
+    },
+    "./slider": {
+      "import": {
+        "types": "./dist/slider/index.d.ts",
+        "default": "./dist/slider/index.mjs"
+      },
+      "require": {
+        "types": "./dist/slider/index.d.ts",
+        "default": "./dist/slider/index.cjs"
+      }
+    },
+    "./toggle": {
+      "import": {
+        "types": "./dist/toggle/index.d.ts",
+        "default": "./dist/toggle/index.mjs"
+      },
+      "require": {
+        "types": "./dist/toggle/index.d.ts",
+        "default": "./dist/toggle/index.cjs"
+      }
+    },
+    "./toggle-group": {
+      "import": {
+        "types": "./dist/toggle-group/index.d.ts",
+        "default": "./dist/toggle-group/index.mjs"
+      },
+      "require": {
+        "types": "./dist/toggle-group/index.d.ts",
+        "default": "./dist/toggle-group/index.cjs"
+      }
+    },
+    "./toolbar": {
+      "import": {
+        "types": "./dist/toolbar/index.d.ts",
+        "default": "./dist/toolbar/index.mjs"
+      },
+      "require": {
+        "types": "./dist/toolbar/index.d.ts",
+        "default": "./dist/toolbar/index.cjs"
+      }
+    },
+    "./tooltip": {
+      "import": {
+        "types": "./dist/tooltip/index.d.ts",
+        "default": "./dist/tooltip/index.mjs"
+      },
+      "require": {
+        "types": "./dist/tooltip/index.d.ts",
+        "default": "./dist/tooltip/index.cjs"
       }
     },
     "./fieldset": {
@@ -176,6 +386,26 @@
         "default": "./dist/fieldset/index.cjs"
       }
     },
+    "./filter-chip": {
+      "import": {
+        "types": "./dist/filter-chip/index.d.ts",
+        "default": "./dist/filter-chip/index.mjs"
+      },
+      "require": {
+        "types": "./dist/filter-chip/index.d.ts",
+        "default": "./dist/filter-chip/index.cjs"
+      }
+    },
+    "./form-field": {
+      "import": {
+        "types": "./dist/form-field/index.d.ts",
+        "default": "./dist/form-field/index.mjs"
+      },
+      "require": {
+        "types": "./dist/form-field/index.d.ts",
+        "default": "./dist/form-field/index.cjs"
+      }
+    },
     "./icon-button": {
       "import": {
         "types": "./dist/icon-button/index.d.ts",
@@ -184,6 +414,16 @@
       "require": {
         "types": "./dist/icon-button/index.d.ts",
         "default": "./dist/icon-button/index.cjs"
+      }
+    },
+    "./inline-alert": {
+      "import": {
+        "types": "./dist/inline-alert/index.d.ts",
+        "default": "./dist/inline-alert/index.mjs"
+      },
+      "require": {
+        "types": "./dist/inline-alert/index.d.ts",
+        "default": "./dist/inline-alert/index.cjs"
       }
     },
     "./input": {
@@ -246,6 +486,16 @@
         "default": "./dist/relative-time/index.cjs"
       }
     },
+    "./search-field": {
+      "import": {
+        "types": "./dist/search-field/index.d.ts",
+        "default": "./dist/search-field/index.mjs"
+      },
+      "require": {
+        "types": "./dist/search-field/index.d.ts",
+        "default": "./dist/search-field/index.cjs"
+      }
+    },
     "./select": {
       "import": {
         "types": "./dist/select/index.d.ts",
@@ -266,14 +516,14 @@
         "default": "./dist/skeleton/index.cjs"
       }
     },
-    "./sonner": {
+    "./toast": {
       "import": {
-        "types": "./dist/sonner/index.d.ts",
-        "default": "./dist/sonner/index.mjs"
+        "types": "./dist/toast/index.d.ts",
+        "default": "./dist/toast/index.mjs"
       },
       "require": {
-        "types": "./dist/sonner/index.d.ts",
-        "default": "./dist/sonner/index.cjs"
+        "types": "./dist/toast/index.d.ts",
+        "default": "./dist/toast/index.cjs"
       }
     },
     "./spinner": {
@@ -346,15 +596,13 @@
         "default": "./dist/visually-hidden/index.cjs"
       }
     },
-    "./styles.css": "./styles.css",
-    "./fonts/*": "./fonts/*",
-    "./tailwind": "./tailwind.config.js"
+    "./styles.css": "./dist/product-ui.css",
+    "./fonts/*": "./fonts/*"
   },
   "files": [
     "dist",
     "styles.css",
     "fonts",
-    "tailwind.config.js",
     "README.md"
   ],
   "repository": {
@@ -364,31 +612,27 @@
   "keywords": [
     "react",
     "components",
-    "ui",
-    "tailwind"
+    "ui"
   ],
   "author": "etiCloud Ltd",
   "license": "MIT",
   "dependencies": {
+    "@base-ui/react": "^1.3.0",
     "@github/relative-time-element": "^5.0.0",
-    "@headlessui/react": "^2.2.9",
     "@lit-labs/react": "^2.1.3",
-    "@tailwindcss/vite": "^4.1.18",
     "boring-avatars": "^2.0.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.19",
     "lucide-react": "^0.563.0",
-    "radix-ui": "^1.4.3",
     "react": "^19.2.4",
     "react-day-picker": "^9.13.1",
     "react-dom": "^19.2.4",
-    "sonner": "^2.0.7",
-    "tailwind-merge": "^3.4.0"
+    "sonner": "^2.0.7"
   },
   "devDependencies": {
-    "@storybook/addon-vitest": "^10.2.8",
-    "@storybook/react-vite": "^10.2.8",
+    "@storybook/addon-vitest": "^10.3.3",
+    "@storybook/react-vite": "^10.3.3",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
@@ -400,8 +644,7 @@
     "jsdom": "^28.0.0",
     "playwright": "^1.58.2",
     "rollup": "^4.57.1",
-    "storybook": "^10.2.8",
-    "tailwindcss": "^4.1.18",
+    "storybook": "^10.3.3",
     "vite": "^7.3.1",
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^4.0.18"
@@ -417,7 +660,6 @@
   },
   "peerDependencies": {
     "react": ">=19.2.1 <20",
-    "react-dom": ">=19.2.1 <20",
-    "tailwindcss": ">=4.1.17 <5"
+    "react-dom": ">=19.2.1 <20"
   }
 }

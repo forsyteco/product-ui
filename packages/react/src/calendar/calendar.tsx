@@ -12,24 +12,29 @@ import {
   useDayPicker,
 } from 'react-day-picker';
 
-import { cn } from '../utils/tailwind';
-import { Button, buttonVariants } from '../button';
+import { clsx } from 'clsx';
+import { Button } from '../button';
+import styles from './calendar.module.css';
 
-type CalendarChevronProps = React.ComponentProps<typeof ChevronLeftIcon> & {
+export type CalendarChevronProps = React.ComponentProps<typeof ChevronLeftIcon> & {
   orientation?: 'left' | 'right' | string;
 };
 
 function CalendarChevron({ className, orientation, ...props }: CalendarChevronProps) {
   if (orientation === 'left') {
-    return <ChevronLeftIcon className={cn('size-4', className)} {...props} />;
+    return <ChevronLeftIcon className={clsx(styles.chevron, className)} {...props} />;
   }
 
   if (orientation === 'right') {
-    return <ChevronRightIcon className={cn('size-4', className)} {...props} />;
+    return <ChevronRightIcon className={clsx(styles.chevron, className)} {...props} />;
   }
 
-  return <ChevronDownIcon className={cn('size-4', className)} {...props} />;
+  return <ChevronDownIcon className={clsx(styles.chevron, className)} {...props} />;
 }
+
+export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
+  buttonVariant?: React.ComponentProps<typeof Button>['variant'];
+};
 
 function Calendar({
   className,
@@ -40,9 +45,7 @@ function Calendar({
   formatters,
   components,
   ...props
-}: React.ComponentProps<typeof DayPicker> & {
-  buttonVariant?: React.ComponentProps<typeof Button>['variant'];
-}) {
+}: CalendarProps) {
   const defaultClassNames = getDefaultClassNames();
 
   function Nav({ className }: NavProps) {
@@ -69,31 +72,31 @@ function Calendar({
     };
 
     return (
-      <nav className={cn('flex items-center gap-1', className)}>
+      <nav className={clsx(styles.nav, className)}>
         <Button
           type="button"
           variant={buttonVariant}
           size="icon"
-          className="size-(--cell-size) bg-transparent p-0 opacity-80 hover:bg-transparent hover:opacity-100"
+          className={styles['nav-button']}
           tabIndex={isPreviousDisabled ? -1 : undefined}
           disabled={isPreviousDisabled}
           aria-label={labelPrevious(previousMonth)}
           onClick={handlePreviousClick}
         >
-          <ChevronLeftIcon className="size-4" />
+          <ChevronLeftIcon className={styles.chevron} />
         </Button>
 
         <Button
           type="button"
           variant={buttonVariant}
           size="icon"
-          className="size-(--cell-size) bg-transparent p-0 opacity-80 hover:bg-transparent hover:opacity-100"
+          className={styles['nav-button']}
           tabIndex={isNextDisabled ? -1 : undefined}
           disabled={isNextDisabled}
           aria-label={labelNext(nextMonth)}
           onClick={handleNextClick}
         >
-          <ChevronRightIcon className="size-4" />
+          <ChevronRightIcon className={styles.chevron} />
         </Button>
       </nav>
     );
@@ -102,10 +105,8 @@ function Calendar({
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
-      className={cn(
-        'bg-background group/calendar p-3 [--cell-size:--spacing(8)] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent',
-        String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
-        String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
+      className={clsx(
+        styles['root-calendar'],
         className
       )}
       data-testid="calendar-root"
@@ -115,84 +116,81 @@ function Calendar({
         ...formatters,
       }}
       classNames={{
-        root: cn('w-fit', defaultClassNames.root),
-        months: cn(
-          'relative flex flex-col gap-4 md:flex-row',
+        root: clsx(styles.root, defaultClassNames.root),
+        months: clsx(
+          styles.months,
           defaultClassNames.months
         ),
-        month: cn('flex w-full flex-col gap-4', defaultClassNames.month),
-        nav: cn('absolute inset-x-0 top-0 flex w-full items-center justify-between gap-1', defaultClassNames.nav),
-        button_previous: cn(buttonVariants({ variant: buttonVariant }), 'size-(--cell-size) select-none p-0 aria-disabled:opacity-50', defaultClassNames.button_previous),
-        button_next: cn(buttonVariants({ variant: buttonVariant }), 'size-(--cell-size) select-none p-0 aria-disabled:opacity-50', defaultClassNames.button_next),
-        month_caption: cn(
-          'flex h-(--cell-size) w-full items-center justify-center px-(--cell-size)',
+        month: clsx(styles.month, defaultClassNames.month),
+        nav: clsx(defaultClassNames.nav),
+        button_previous: clsx(styles['nav-button'], defaultClassNames.button_previous),
+        button_next: clsx(styles['nav-button'], defaultClassNames.button_next),
+        month_caption: clsx(
+          styles.caption,
           defaultClassNames.month_caption
         ),
-        dropdowns: cn(
-          'flex h-(--cell-size) w-full items-center justify-center gap-1.5 text-base font-medium',
+        dropdowns: clsx(
+          styles.dropdowns,
           defaultClassNames.dropdowns
         ),
-        dropdown_root: cn(
-          'relative rounded-md border border-input shadow-xs has-focus:border-ring has-focus:ring-[3px] has-focus:ring-ring/50',
+        dropdown_root: clsx(
+          styles['dropdown-root'],
           defaultClassNames.dropdown_root
         ),
-        dropdown: cn(
-          'absolute inset-0 bg-popover opacity-0',
+        dropdown: clsx(
+          styles.dropdown,
           defaultClassNames.dropdown
         ),
-        caption_label: cn(
-          'select-none font-medium',
-          captionLayout === 'label'
-            ? 'text-base'
-            : 'flex h-8 items-center gap-1 rounded-md pl-2 pr-1 text-base [&>svg]:size-3.5 [&>svg]:text-muted-foreground',
+        caption_label: clsx(
+          styles['caption-label'],
           defaultClassNames.caption_label
         ),
-        table: 'w-full border-collapse',
-        weekdays: cn('flex', defaultClassNames.weekdays),
-        weekday: cn(
-          'select-none flex-1 rounded-md text-[0.8rem] font-normal text-muted-foreground',
+        table: styles.table,
+        weekdays: clsx(styles.weekdays, defaultClassNames.weekdays),
+        weekday: clsx(
+          styles.weekday,
           defaultClassNames.weekday
         ),
-        week: cn('mt-2 flex w-full', defaultClassNames.week),
-        week_number_header: cn(
-          'w-(--cell-size) select-none',
+        week: clsx(styles.week, defaultClassNames.week),
+        week_number_header: clsx(
+          styles['week-number-header'],
           defaultClassNames.week_number_header
         ),
-        week_number: cn(
-          'select-none text-[0.8rem] text-muted-foreground',
+        week_number: clsx(
+          styles['week-number'],
           defaultClassNames.week_number
         ),
-        day: cn(
-          'group/day relative flex size-(--cell-size) select-none items-center justify-center p-0 text-center text-base [&>button]:size-(--cell-size) [&>span]:size-(--cell-size)',
+        day: clsx(
+          styles.day,
           defaultClassNames.day
         ),
-        day_button: cn(
-          'size-(--cell-size) rounded-md p-0 font-normal aria-selected:opacity-100',
+        day_button: clsx(
+          styles['day-button'],
           defaultClassNames.day_button
         ),
-        range_start: cn(
-          'rounded-l-md bg-accent [&>button]:bg-primary [&>button]:text-primary-foreground [&>button]:hover:bg-primary [&>button]:hover:text-primary-foreground',
+        range_start: clsx(
+          styles['range-start'],
           defaultClassNames.range_start
         ),
-        range_middle: cn(
-          'rounded-none bg-accent [&>button]:bg-transparent [&>button]:text-foreground [&>button]:hover:bg-transparent [&>button]:hover:text-foreground',
+        range_middle: clsx(
+          styles['range-middle'],
           defaultClassNames.range_middle
         ),
-        range_end: cn(
-          'rounded-r-md bg-accent [&>button]:bg-primary [&>button]:text-primary-foreground [&>button]:hover:bg-primary [&>button]:hover:text-primary-foreground',
+        range_end: clsx(
+          styles['range-end'],
           defaultClassNames.range_end
         ),
-        selected: cn(
-          '[&>button]:bg-primary [&>button]:font-medium [&>button]:text-primary-foreground [&>button]:hover:bg-primary [&>button]:hover:text-primary-foreground',
+        selected: clsx(
+          styles.selected,
           defaultClassNames.selected
         ),
-        today: cn('[&>button]:bg-accent [&>button]:text-accent-foreground', defaultClassNames.today),
-        outside: cn(
-          'text-muted-foreground opacity-80 aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30',
+        today: clsx(styles.today, defaultClassNames.today),
+        outside: clsx(
+          styles.outside,
           defaultClassNames.outside
         ),
-        disabled: cn('text-muted-foreground opacity-60', defaultClassNames.disabled),
-        hidden: cn('invisible flex-1', defaultClassNames.hidden),
+        disabled: clsx(styles.disabled, defaultClassNames.disabled),
+        hidden: clsx(styles.hidden, defaultClassNames.hidden),
         ...classNames,
       }}
       components={{
@@ -202,7 +200,7 @@ function Calendar({
               data-slot="calendar"
               data-calendar-submit-ignore="true"
               ref={rootRef}
-              className={cn(className)}
+              className={clsx(className)}
               {...props}
             />
           );
@@ -213,7 +211,7 @@ function Calendar({
         WeekNumber: ({ children, ...props }) => {
           return (
             <td {...props}>
-              <div className="flex size-(--cell-size) items-center justify-center text-center">
+              <div className={styles['week-number-cell']}>
                 {children}
               </div>
             </td>
@@ -226,12 +224,14 @@ function Calendar({
   );
 }
 
+export type CalendarDayButtonProps = React.ComponentProps<typeof DayButton>;
+
 function CalendarDayButton({
   className,
   day,
   modifiers,
   ...props
-}: React.ComponentProps<typeof DayButton>) {
+}: CalendarDayButtonProps) {
   const ref = React.useRef<HTMLButtonElement>(null);
   React.useEffect(() => {
     if (modifiers.focused) ref.current?.focus();
@@ -250,7 +250,7 @@ function CalendarDayButton({
       })}
       {...props}
       type="button"
-      className={cn(className)}
+      className={clsx(className)}
     />
   );
 }

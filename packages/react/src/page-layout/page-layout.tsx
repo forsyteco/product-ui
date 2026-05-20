@@ -1,8 +1,9 @@
 import * as React from 'react'
-import { cn } from '../utils/tailwind'
+import { clsx } from 'clsx';
+import styles from './page-layout.module.css'
 
 /* -------------------------------------------------------------------------------------------------
- * Tokens → Tailwind classes
+ * Tokens → layout classes
  * ------------------------------------------------------------------------------------------------- */
 
 export type ContainerWidth = 'full' | 'medium' | 'large' | 'xlarge'
@@ -12,22 +13,22 @@ export type Divider = 'none' | 'line' | 'filled'
 export type PanePosition = 'start' | 'end'
 
 const containerWidthClass: Record<ContainerWidth, string> = {
-  full: 'max-w-none',
-  medium: 'max-w-3xl',
-  large: 'max-w-5xl',
-  xlarge: 'max-w-7xl',
+  full: styles['maxw-none'],
+  medium: styles['maxw-3xl'],
+  large: styles['maxw-5xl'],
+  xlarge: styles['maxw-7xl'],
 }
 
 const paddingClass: Record<Spacing, string> = {
-  none: 'px-0 py-0',
-  condensed: 'px-4 py-4 sm:px-6',
-  normal: 'px-4 py-6 sm:px-6 lg:px-8',
+  none: styles['pad-none'],
+  condensed: styles['pad-condensed'],
+  normal: styles['pad-normal'],
 }
 
 const gapXClass: Record<Gap, string> = {
-  none: 'gap-x-0',
-  condensed: 'gap-x-4',
-  normal: 'gap-x-6',
+  none: styles['gap-xnone'],
+  condensed: styles['gap-xcondensed'],
+  normal: styles['gap-xnormal'],
 }
 
 const gapXValue: Record<Gap, string> = {
@@ -37,9 +38,9 @@ const gapXValue: Record<Gap, string> = {
 }
 
 const gapYClass: Record<Gap, string> = {
-  none: 'gap-y-0',
-  condensed: 'gap-y-4',
-  normal: 'gap-y-6',
+  none: styles['gap-ynone'],
+  condensed: styles['gap-ycondensed'],
+  normal: styles['gap-ynormal'],
 }
 
 const gapYValue: Record<Gap, string> = {
@@ -49,8 +50,8 @@ const gapYValue: Record<Gap, string> = {
 }
 
 const dividerElClass: Record<Exclude<Divider, 'none'>, string> = {
-  line: 'border-t border-border',
-  filled: 'h-px bg-border',
+  line: styles['divider-line'],
+  filled: styles['divider-filled'],
 }
 
 /* -------------------------------------------------------------------------------------------------
@@ -95,7 +96,7 @@ export function PageLayout({
 }: PageLayoutProps) {
   return (
     <PageLayoutContext.Provider value={{ containerWidth, padding, columnGap, rowGap }}>
-      <div className={cn('w-full', className)}>{children}</div>
+      <div className={clsx(styles['w-full'], className)}>{children}</div>
     </PageLayoutContext.Provider>
   )
 }
@@ -130,8 +131,9 @@ export function PageLayoutSection({
 
   return (
     <section
-      className={cn(
-        'mx-auto w-full',
+      className={clsx(
+        styles['mx-auto'],
+        styles['w-full'],
         containerWidthClass[resolvedWidth],
         paddingClass[resolvedPadding],
         className
@@ -154,7 +156,7 @@ type HeaderFooterProps = A11yProps &
 
 function DividerBar({ divider }: { divider: Divider }) {
   if (divider === 'none') return null
-  return <div className={cn('w-full', dividerElClass[divider])} aria-hidden="true" />
+  return <div className={clsx(styles['divider-bar'], dividerElClass[divider])} aria-hidden="true" />
 }
 
 export function PageLayoutHeader({
@@ -173,7 +175,7 @@ export function PageLayoutHeader({
     <header
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledby}
-      className={cn('mx-auto w-full', containerWidthClass[ctx.containerWidth], paddingClass[p], className)}
+      className={clsx(styles['header-footer-base'], containerWidthClass[ctx.containerWidth], paddingClass[p], className)}
       {...rest}
     >
       <DividerBar divider={divider} />
@@ -198,7 +200,7 @@ export function PageLayoutFooter({
     <footer
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledby}
-      className={cn('mx-auto w-full', containerWidthClass[ctx.containerWidth], paddingClass[p], className)}
+      className={clsx(styles['header-footer-base'], containerWidthClass[ctx.containerWidth], paddingClass[p], className)}
       {...rest}
     >
       <DividerBar divider={divider} />
@@ -241,11 +243,12 @@ export function PageLayoutBody({
 
   return (
     <div
-      className={cn(
-        'mx-auto w-full',
+      className={clsx(
+        styles['mx-auto'],
+        styles['w-full'],
         containerWidthClass[cw],
         paddingClass[p],
-        'grid grid-cols-12',
+        styles['grid-12'],
         gapXClass[cg],
         gapYClass[rg],
         className
@@ -287,8 +290,10 @@ export function PageLayoutContent<E extends React.ElementType = 'main'>(
     <Component
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledby}
-      className={cn(
-        'col-span-12 min-w-0 w-full',
+      className={clsx(
+        styles['col-span12'],
+        styles['min-w0'],
+        styles['w-full'],
         containerWidthClass[cw],
         p === 'none' ? '' : paddingClass[p],
         className
@@ -300,7 +305,7 @@ export function PageLayoutContent<E extends React.ElementType = 'main'>(
 
 /* -------------------------------------------------------------------------------------------------
  * Pane (sticky + optional resizable)
- * - No responsive prop modelling; use Tailwind classes to control spans/visibility.
+ * - No responsive prop modelling; use classes to control spans/visibility.
  * ------------------------------------------------------------------------------------------------- */
 
 export type PageLayoutPaneProps = A11yProps &
@@ -410,19 +415,16 @@ export const PageLayoutPane = React.forwardRef<HTMLDivElement, PageLayoutPanePro
     // - mobile: full width
     // - lg+: 4/12 columns
     // Consumers override spans with className (e.g., "lg:col-span-3")
-    const gridPos =
-      position === 'start'
-        ? 'col-span-12 lg:col-span-4 lg:order-first'
-        : 'col-span-12 lg:col-span-4 lg:order-last'
+    const gridPos = position === 'start' ? styles['pane-start'] : styles['pane-end']
 
     return (
       <div
         ref={ref}
-        className={cn(
+        className={clsx(
           gridPos,
-          'relative min-w-0',
-          // Nice defaults if used outside Body:
-          'w-full',
+          styles.relative,
+          styles['min-w0'],
+          styles['w-full'],
           containerWidthClass[cw],
           p === 'none' ? '' : paddingClass[p],
           className
@@ -434,7 +436,7 @@ export const PageLayoutPane = React.forwardRef<HTMLDivElement, PageLayoutPanePro
         <aside
           aria-label={ariaLabel}
           aria-labelledby={ariaLabelledby}
-          className="relative"
+          className={styles.aside}
           {...asideProps}
         >
           {children}
@@ -444,10 +446,9 @@ export const PageLayoutPane = React.forwardRef<HTMLDivElement, PageLayoutPanePro
           <div
             role="separator"
             aria-orientation="vertical"
-            className={cn(
-              'absolute top-0 h-full w-2 cursor-col-resize select-none',
-              position === 'end' ? 'left-0 -ml-1' : 'right-0 -mr-1',
-              'hover:bg-border/60'
+            className={clsx(
+              styles.resizer,
+              position === 'end' ? styles['resizer-end'] : styles['resizer-start']
             )}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}

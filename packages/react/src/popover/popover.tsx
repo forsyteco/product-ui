@@ -1,54 +1,62 @@
-import { type ReactNode } from 'react';
-import { Popover as HeadlessPopover } from '@headlessui/react';
+import { type ReactElement, type ReactNode } from 'react';
+import { Popover as BasePopover } from '@base-ui/react/popover';
 import { Button, type ButtonProps } from '../button';
-import { cn } from '../utils/tailwind';
+import { clsx } from 'clsx';
+import styles from './popover.module.css';
 
 export type PopoverProps = {
   children: ReactNode;
   className?: string;
 };
 
-export type PopoverTriggerProps = ButtonProps;
+export type PopoverTriggerProps = Omit<ButtonProps, 'children'> & {
+  children: ReactNode;
+  render?: ReactElement;
+};
 
 export type PopoverContentProps = {
   children: ReactNode;
   className?: string;
 };
 
-function Popover({ children, className }: PopoverProps) {
+function Popover({ children, className }: Readonly<PopoverProps>) {
   return (
-    <div className={cn('relative', className)}>
-      <HeadlessPopover>
+    <BasePopover.Root>
+      <div className={clsx(styles.root, className)}>
         {children}
-      </HeadlessPopover>
-    </div>
+      </div>
+    </BasePopover.Root>
   );
 }
 
-export function PopoverTrigger({ children, className, variant = 'outline', size, ...props }: PopoverTriggerProps) {
+export function PopoverTrigger({
+  children,
+  className,
+  variant = 'default',
+  size,
+  render,
+  ...props
+}: Readonly<PopoverTriggerProps>) {
+  const triggerRender = render ?? (
+    <Button variant={variant} size={size} className={clsx(className)} />
+  );
+
   return (
-    <HeadlessPopover.Button
-      as={Button}
-      variant={variant}
-      size={size}
-      className={cn(className)}
-      {...props}
-    >
+    <BasePopover.Trigger render={triggerRender} {...props}>
       {children}
-    </HeadlessPopover.Button>
+    </BasePopover.Trigger>
   );
 }
 
-export function PopoverContent({ children, className }: PopoverContentProps) {
+export function PopoverContent({ children, className }: Readonly<PopoverContentProps>) {
   return (
-    <HeadlessPopover.Panel
-      className={cn(
-        'absolute z-10 mt-2 w-72 rounded-md bg-background shadow-lg ring-1 ring-border focus:outline-none',
-        className
-      )}
-    >
-      <div className="p-4">{children}</div>
-    </HeadlessPopover.Panel>
+    <BasePopover.Portal>
+      <BasePopover.Positioner sideOffset={8}>
+        <BasePopover.Popup className={clsx(styles.panel, className)}>
+          <div className={styles.body}>{children}</div>
+        </BasePopover.Popup>
+      </BasePopover.Positioner>
+    </BasePopover.Portal>
   );
 }
 

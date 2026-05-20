@@ -1,19 +1,29 @@
 import { ChevronRight, MoreHorizontal } from 'lucide-react';
-import { Slot as SlotPrimitive } from 'radix-ui';
 import * as React from 'react';
 
-import { cn } from '../utils/tailwind';
+import { clsx } from 'clsx';
+import styles from './breadcrumb.module.css';
 
-function Breadcrumb({ ...props }: React.ComponentProps<'nav'>) {
+export type BreadcrumbProps = React.ComponentProps<'nav'>;
+export type BreadcrumbListProps = React.ComponentProps<'ol'>;
+export type BreadcrumbItemProps = React.ComponentProps<'li'>;
+export type BreadcrumbLinkProps = React.ComponentProps<'a'> & {
+  asChild?: boolean;
+};
+export type BreadcrumbPageProps = React.ComponentProps<'span'>;
+export type BreadcrumbSeparatorProps = React.ComponentProps<'li'>;
+export type BreadcrumbEllipsisProps = React.ComponentProps<'span'>;
+
+function Breadcrumb({ ...props }: BreadcrumbProps) {
   return <nav aria-label="breadcrumb" data-slot="breadcrumb" {...props} />;
 }
 
-function BreadcrumbList({ className, ...props }: React.ComponentProps<'ol'>) {
+function BreadcrumbList({ className, ...props }: BreadcrumbListProps) {
   return (
     <ol
       data-slot="breadcrumb-list"
-      className={cn(
-        'flex flex-wrap items-center gap-1.5 text-base break-words text-muted-foreground sm:gap-2.5',
+      className={clsx(
+        styles.list,
         className
       )}
       {...props}
@@ -21,11 +31,11 @@ function BreadcrumbList({ className, ...props }: React.ComponentProps<'ol'>) {
   );
 }
 
-function BreadcrumbItem({ className, ...props }: React.ComponentProps<'li'>) {
+function BreadcrumbItem({ className, ...props }: BreadcrumbItemProps) {
   return (
     <li
       data-slot="breadcrumb-item"
-      className={cn('inline-flex items-center gap-1.5', className)}
+      className={clsx(styles.item, className)}
       {...props}
     />
   );
@@ -34,29 +44,36 @@ function BreadcrumbItem({ className, ...props }: React.ComponentProps<'li'>) {
 function BreadcrumbLink({
   asChild,
   className,
+  children,
   ...props
-}: React.ComponentProps<'a'> & {
-  asChild?: boolean;
-}) {
-  const Comp = asChild ? SlotPrimitive.Slot : 'a';
+}: BreadcrumbLinkProps) {
+  if (asChild && React.isValidElement(children)) {
+    return React.cloneElement(children as React.ReactElement<Record<string, unknown>>, {
+      'data-slot': 'breadcrumb-link',
+      className: clsx(styles.link, className, (children.props as { className?: string }).className),
+      ...props,
+    });
+  }
 
   return (
-    <Comp
+    <a
       data-slot="breadcrumb-link"
-      className={cn('transition-colors hover:text-foreground', className)}
+      className={clsx(styles.link, className)}
       {...props}
-    />
+    >
+      {children}
+    </a>
   );
 }
 
-function BreadcrumbPage({ className, ...props }: React.ComponentProps<'span'>) {
+function BreadcrumbPage({ className, ...props }: BreadcrumbPageProps) {
   return (
     <span
       data-slot="breadcrumb-page"
       role="link"
       aria-disabled="true"
       aria-current="page"
-      className={cn('font-normal text-foreground', className)}
+      className={clsx(styles.page, className)}
       {...props}
     />
   );
@@ -66,13 +83,13 @@ function BreadcrumbSeparator({
   children,
   className,
   ...props
-}: React.ComponentProps<'li'>) {
+}: BreadcrumbSeparatorProps) {
   return (
     <li
       data-slot="breadcrumb-separator"
       role="presentation"
       aria-hidden="true"
-      className={cn('[&>svg]:size-3.5', className)}
+      className={clsx(styles.separator, className)}
       {...props}
     >
       {children ?? <ChevronRight />}
@@ -83,17 +100,17 @@ function BreadcrumbSeparator({
 function BreadcrumbEllipsis({
   className,
   ...props
-}: React.ComponentProps<'span'>) {
+}: BreadcrumbEllipsisProps) {
   return (
     <span
       data-slot="breadcrumb-ellipsis"
       role="presentation"
       aria-hidden="true"
-      className={cn('flex size-9 items-center justify-center', className)}
+      className={clsx(styles.ellipsis, className)}
       {...props}
     >
-      <MoreHorizontal className="size-4" />
-      <span className="sr-only">More</span>
+      <MoreHorizontal className={styles['ellipsis-icon']} />
+      <span className={styles['sr-only']}>More</span>
     </span>
   );
 }

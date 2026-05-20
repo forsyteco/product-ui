@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { Popover as HeadlessPopover, Portal } from '@headlessui/react';
+import { Popover as BasePopover } from '@base-ui/react/popover';
 import { CalendarDays } from 'lucide-react';
 import { Calendar } from '../calendar';
 import { Button } from '../button';
-import { cn } from '../utils/tailwind';
+import { clsx } from 'clsx';
+import styles from './date-picker.module.css';
 
 const defaultFormatDate = (date: Date) =>
   date.toLocaleDateString('en', {
@@ -39,6 +40,7 @@ function DatePicker({
   calendarProps,
 }: DatePickerProps) {
   const popoverRef = React.useRef<HTMLDivElement | null>(null);
+  const [open, setOpen] = React.useState(false);
   const [internalValue, setInternalValue] = React.useState<Date | undefined>(defaultValue);
   const isControlled = value !== undefined;
   const selected = isControlled ? value : internalValue;
@@ -85,53 +87,53 @@ function DatePicker({
   };
 
   return (
-    <HeadlessPopover
-      className={cn('relative inline-flex w-full', className)}
-      onSubmitCapture={handleSubmitCapture}
-    >
-      {({ close, open }) => (
-        <>
-          <HeadlessPopover.Button
-            as={Button}
-            type="button"
-            variant="outline"
-            disabled={disabled}
-            aria-expanded={open}
-            aria-haspopup="dialog"
-            aria-label={selected ? `Selected date: ${label}` : placeholder}
-            className={cn(
-              'h-9 w-full justify-between gap-2 bg-background/80 px-3 text-left text-base font-normal',
-              !selected && 'text-muted-foreground',
-              buttonClassName
-            )}
-          >
-            <span className="truncate">{label}</span>
-            <CalendarDays className="size-4 text-muted-foreground" />
-          </HeadlessPopover.Button>
+    <div className={clsx(styles.root, className)} onSubmitCapture={handleSubmitCapture}>
+      <BasePopover.Root open={open} onOpenChange={setOpen}>
+        <BasePopover.Trigger
+          render={
+            <Button
+              type="button"
+              variant="default"
+              disabled={disabled}
+              aria-expanded={open}
+              aria-haspopup="dialog"
+              aria-label={selected ? `Selected date: ${label}` : placeholder}
+              className={clsx(
+                styles.trigger,
+                !selected && styles['trigger-empty'],
+                buttonClassName
+              )}
+            />
+          }
+        >
+          <span className={styles['trigger-label']}>{label}</span>
+          <CalendarDays className={styles['trigger-icon']} />
+        </BasePopover.Trigger>
 
-          <Portal>
-            <HeadlessPopover.Panel
+        <BasePopover.Portal>
+          <BasePopover.Positioner sideOffset={8}>
+            <BasePopover.Popup
               ref={popoverRef}
               data-slot="popover-content"
               data-calendar-submit-ignore="true"
-              className="z-50 mt-2 w-fit rounded-md bg-popover shadow-lg ring-1 ring-border focus:outline-none"
+              className={styles.panel}
             >
               <Calendar
                 mode="single"
                 selected={selected}
                 onSelect={(date) => {
                   handleSelect(date);
-                  close();
+                  setOpen(false);
                 }}
                 defaultMonth={selected ?? defaultValue ?? new Date()}
                 initialFocus
                 {...calendarProps}
               />
-            </HeadlessPopover.Panel>
-          </Portal>
-        </>
-      )}
-    </HeadlessPopover>
+            </BasePopover.Popup>
+          </BasePopover.Positioner>
+        </BasePopover.Portal>
+      </BasePopover.Root>
+    </div>
   );
 }
 

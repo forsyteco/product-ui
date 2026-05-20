@@ -8,7 +8,8 @@ const meta = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'An input component with error state support. Supports all standard input HTML attributes and types.',
+        component:
+          'Bare text input with size, error, success, and start/end adornment slots. Pair with FormField for labels, captions, and validation messages.',
       },
     },
   },
@@ -48,6 +49,7 @@ export const Playground: Story = {
     type: 'text',
     placeholder: 'Enter your text',
     error: false,
+    success: false,
     disabled: false,
   },
 };

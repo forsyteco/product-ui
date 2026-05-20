@@ -47,18 +47,18 @@ type Story = StoryObj<typeof meta>;
 
 export const Sizes: Story = {
   render: () => (
-    <div className="flex items-end gap-8">
-      <div className="flex flex-col items-center gap-2">
+    <div className="sb-row-align-end-gap-8">
+      <div className="sb-col-center sb-gap-2">
         <Spinner size={24} />
-        <span className="text-xs text-gray-600">Small (24px)</span>
+        <span className="sb-text-xs sb-muted-text">Small (24px)</span>
       </div>
-      <div className="flex flex-col items-center gap-2">
+      <div className="sb-col-center sb-gap-2">
         <Spinner size={50} />
-        <span className="text-xs text-gray-600">Default (50px)</span>
+        <span className="sb-text-xs sb-muted-text">Default (50px)</span>
       </div>
-      <div className="flex flex-col items-center gap-2">
+      <div className="sb-col-center sb-gap-2">
         <Spinner size={80} />
-        <span className="text-xs text-gray-600">Large (80px)</span>
+        <span className="sb-text-xs sb-muted-text">Large (80px)</span>
       </div>
     </div>
   ),
@@ -73,18 +73,18 @@ export const Sizes: Story = {
 
 export const StrokeWidths: Story = {
   render: () => (
-    <div className="flex items-center gap-8">
-      <div className="flex flex-col items-center gap-2">
+    <div className="sb-row sb-gap-8">
+      <div className="sb-col-center sb-gap-2">
         <Spinner size={60} strokeWidth={2} />
-        <span className="text-xs text-gray-600">Thin (2px)</span>
+        <span className="sb-text-xs sb-muted-text">Thin (2px)</span>
       </div>
-      <div className="flex flex-col items-center gap-2">
+      <div className="sb-col-center sb-gap-2">
         <Spinner size={60} strokeWidth={5} />
-        <span className="text-xs text-gray-600">Default (5px)</span>
+        <span className="sb-text-xs sb-muted-text">Default (5px)</span>
       </div>
-      <div className="flex flex-col items-center gap-2">
+      <div className="sb-col-center sb-gap-2">
         <Spinner size={60} strokeWidth={8} />
-        <span className="text-xs text-gray-600">Thick (8px)</span>
+        <span className="sb-text-xs sb-muted-text">Thick (8px)</span>
       </div>
     </div>
   ),
@@ -99,20 +99,18 @@ export const StrokeWidths: Story = {
 
 export const CustomColors: Story = {
   render: () => (
-    <div className="flex flex-col gap-8">
-      <div className="flex items-center gap-8">
-        <div className="flex flex-col items-center gap-2">
-          <Spinner colors={['#3b82f6', '#8b5cf6', '#ec4899']} />
-          <span className="text-xs text-gray-600">Blue → Purple → Pink</span>
-        </div>
-        <div className="flex flex-col items-center gap-2">
-          <Spinner colors={['#10b981', '#f59e0b', '#ef4444']} />
-          <span className="text-xs text-gray-600">Green → Amber → Red</span>
-        </div>
-        <div className="flex flex-col items-center gap-2">
-          <Spinner colors={['#6366f1']} />
-          <span className="text-xs text-gray-600">Single Color</span>
-        </div>
+    <div className="sb-row sb-gap-8">
+      <div className="sb-col-center sb-gap-2">
+        <Spinner colors={['#3b82f6', '#8b5cf6', '#ec4899']} />
+        <span className="sb-text-xs sb-muted-text">Blue → Purple → Pink</span>
+      </div>
+      <div className="sb-col-center sb-gap-2">
+        <Spinner colors={['#10b981', '#f59e0b', '#ef4444']} />
+        <span className="sb-text-xs sb-muted-text">Green → Amber → Red</span>
+      </div>
+      <div className="sb-col-center sb-gap-2">
+        <Spinner colors={['#6366f1']} />
+        <span className="sb-text-xs sb-muted-text">Single Color</span>
       </div>
     </div>
   ),

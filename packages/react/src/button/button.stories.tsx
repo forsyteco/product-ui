@@ -8,17 +8,18 @@ const meta = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A button component with multiple variants and sizes. Supports all standard button HTML attributes.',
+        component:
+          'A button component with canonical variants (`primary`, `default`, `ghost`, `danger`) and size options. Interaction states consume centralized tokens such as `--button-primary-background`, `--button-primary-hover`, `--button-primary-active`, and `--button-primary-focus-ring`.',
       },
     },
   },
   argTypes: {
     variant: {
       control: { type: 'select' },
-      options: ['primary', 'secondary', 'outline', 'ghost'],
+      options: ['primary', 'default', 'ghost', 'danger'],
       description: 'Button variant style',
       table: {
-        type: { summary: "'primary' | 'secondary' | 'outline' | 'ghost'" },
+        type: { summary: "'primary' | 'default' | 'ghost' | 'danger'" },
         defaultValue: { summary: "'primary'" },
       },
     },

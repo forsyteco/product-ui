@@ -22,9 +22,9 @@ export const NotificationSettings: Story = {
     });
 
     return (
-      <div className="p-6 max-w-md">
-        <h2 className="text-lg font-semibold mb-4">Notification Preferences</h2>
-        <div className="space-y-4">
+      <div className="sb-demo-narrow">
+        <h2 className="sb-text-lg sb-font-semibold sb-mb-4">Notification Preferences</h2>
+        <div className="sb-stack-4">
           <Switch
             label="Email notifications"
             description="Receive updates via email"

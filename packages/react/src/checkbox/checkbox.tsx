@@ -1,28 +1,20 @@
-import { type InputHTMLAttributes, type CSSProperties } from 'react';
+import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '../utils/tailwind';
+import { clsx } from 'clsx';
+import styles from './checkbox.module.css';
 
 const checkboxVariants = cva(
-  [
-    // Base
-    'relative inline-flex shrink-0 appearance-none items-center justify-center rounded border border-input bg-background text-foreground transition-colors',
-    // Focus / disabled
-    'focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background',
-    'disabled:cursor-not-allowed disabled:opacity-50',
-    // Tick mark (hidden until checked)
-    'after:absolute after:left-1/2 after:top-1/2 after:block after:-translate-x-1/2 after:-translate-y-1/2 after:rotate-45 after:border-b-2 after:border-r-2 after:border-current after:opacity-0',
-    'checked:after:opacity-100',
-  ].join(' '),
+  styles.root,
   {
     variants: {
       size: {
-        sm: 'h-3 w-3 after:h-1.5 after:w-0.5',
-        md: 'h-4 w-4 after:h-2 after:w-1',
-        lg: 'h-5 w-5 after:h-2.5 after:w-1.5',
+        sm: styles['size-sm'],
+        md: styles['size-md'],
+        lg: styles['size-lg'],
       },
       // Variant for default checked styling (can be disabled when using custom colors)
       useDefaultCheckedStyle: {
-        true: 'checked:border-accent checked:bg-accent checked:text-accent-foreground',
+        true: styles['use-default-checked-style'],
         false: '',
       },
     },
@@ -33,20 +25,35 @@ const checkboxVariants = cva(
   }
 );
 
-export type CheckboxProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> & VariantProps<typeof checkboxVariants> & {
+export type CheckboxProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange'> &
+VariantProps<typeof checkboxVariants> & {
   label?: string;
   /** Custom background color when checked */
-  checkedBackground?: CSSProperties['backgroundColor'];
+  checkedBackground?: React.CSSProperties['backgroundColor'];
   /** Custom foreground/tick color when checked */
-  checkedForeground?: CSSProperties['color'];
+  checkedForeground?: React.CSSProperties['color'];
+  onChange?: (checked: boolean) => void;
 };
 
-function Checkbox({ label, size, className, id, checked, checkedBackground, checkedForeground, ...props }: CheckboxProps) {
-  const checkboxId = id || `checkbox-${Math.random().toString(36).substr(2, 9)}`;
+function Checkbox({
+  label,
+  size,
+  className,
+  id,
+  checked,
+  defaultChecked,
+  checkedBackground,
+  checkedForeground,
+  onChange,
+  ...props
+}: CheckboxProps) {
+  const reactId = React.useId();
+  const checkboxId = id || `checkbox-${reactId}`;
 
   // Use custom colors if provided
   const hasCustomColors = checkedBackground || checkedForeground;
-  const customStyle: CSSProperties | undefined = checked && hasCustomColors
+  const isChecked = checked ?? defaultChecked;
+  const customStyle: React.CSSProperties | undefined = isChecked && hasCustomColors
     ? {
         ...(checkedBackground && { backgroundColor: checkedBackground, borderColor: checkedBackground }),
         ...(checkedForeground && { color: checkedForeground }),
@@ -54,17 +61,19 @@ function Checkbox({ label, size, className, id, checked, checkedBackground, chec
     : undefined;
 
   return (
-    <div className="flex items-center">
+    <div className={styles.wrapper}>
       <input
         type="checkbox"
         id={checkboxId}
         checked={checked}
-        className={cn(checkboxVariants({ size, useDefaultCheckedStyle: !hasCustomColors }), className)}
+        defaultChecked={defaultChecked}
+        className={clsx(checkboxVariants({ size, useDefaultCheckedStyle: !hasCustomColors }), className)}
         style={customStyle}
+        onChange={(event) => onChange?.(event.target.checked)}
         {...props}
       />
       {label && (
-        <label htmlFor={checkboxId} className="ml-2 text-base text-foreground">
+        <label htmlFor={checkboxId} className={styles.label}>
           {label}
         </label>
       )}

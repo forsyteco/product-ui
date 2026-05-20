@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Input } from '../input';
 import { Fieldset } from './fieldset';
 
 const meta = {
@@ -25,9 +26,9 @@ type Story = StoryObj<typeof meta>;
 export const WithLegend: Story = {
   render: () => (
     <Fieldset legend="Personal Information">
-      <div className="space-y-2">
-        <input type="text" placeholder="First Name" className="w-full px-3 py-2 border rounded" />
-        <input type="text" placeholder="Last Name" className="w-full px-3 py-2 border rounded" />
+      <div className="sb-stack-2">
+        <Input type="text" placeholder="First Name" />
+        <Input type="text" placeholder="Last Name" />
       </div>
     </Fieldset>
   ),
@@ -36,9 +37,9 @@ export const WithLegend: Story = {
 export const WithoutLegend: Story = {
   render: () => (
     <Fieldset>
-      <div className="space-y-2">
-        <input type="text" placeholder="Field 1" className="w-full px-3 py-2 border rounded" />
-        <input type="text" placeholder="Field 2" className="w-full px-3 py-2 border rounded" />
+      <div className="sb-stack-2">
+        <Input type="text" placeholder="Field 1" />
+        <Input type="text" placeholder="Field 2" />
       </div>
     </Fieldset>
   ),
@@ -47,9 +48,9 @@ export const WithoutLegend: Story = {
 export const Disabled: Story = {
   render: () => (
     <Fieldset legend="Disabled Fieldset" disabled>
-      <div className="space-y-2">
-        <input type="text" placeholder="Field 1" className="w-full px-3 py-2 border rounded" disabled />
-        <input type="text" placeholder="Field 2" className="w-full px-3 py-2 border rounded" disabled />
+      <div className="sb-stack-2">
+        <Input type="text" placeholder="Field 1" disabled />
+        <Input type="text" placeholder="Field 2" disabled />
       </div>
     </Fieldset>
   ),

@@ -38,9 +38,7 @@ export const CountrySearch: Story = {
         >
           <Autocomplete.Label>Country</Autocomplete.Label>
           <Autocomplete.Control>
-            <Autocomplete.LeadingIcon />
             <Autocomplete.Input />
-            <Autocomplete.ClearButton />
           </Autocomplete.Control>
           <Autocomplete.Options />
         </Autocomplete.Root>

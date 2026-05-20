@@ -11,7 +11,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Search-first autocomplete: options open after typing a minimum number of characters. Supports loading state and custom empty messages. Use compound parts: Root, Control, LeadingIcon, Input, ClearButton, Options.',
+          'Search-first autocomplete: options open after typing a minimum number of characters. Uses the shared Input styling (search icon and clear). Compound parts: Root, Control, Input, Options.',
       },
     },
   },
@@ -61,9 +61,7 @@ export const Default: Story = {
           placeholder="Search fruits…"
         >
           <Autocomplete.Control>
-            <Autocomplete.LeadingIcon />
             <Autocomplete.Input />
-            <Autocomplete.ClearButton />
           </Autocomplete.Control>
           <Autocomplete.Options />
         </Autocomplete.Root>
@@ -79,9 +77,7 @@ export const Playground: Story = {
       <div className="sb-w-72">
         <Autocomplete.Root {...args} options={options} value={selected} onChange={setSelected}>
           <Autocomplete.Control>
-            <Autocomplete.LeadingIcon />
             <Autocomplete.Input />
-            <Autocomplete.ClearButton />
           </Autocomplete.Control>
           <Autocomplete.Options />
         </Autocomplete.Root>

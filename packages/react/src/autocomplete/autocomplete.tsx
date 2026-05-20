@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
+import { SearchIcon, XIcon } from 'lucide-react';
 import { clsx } from 'clsx';
+import { IconButton } from '../icon-button';
+import { getInputInnerClassName, InputShell, type InputSize } from '../input/input-shell';
 import type { AutocompleteOption } from './types';
 import styles from './autocomplete.module.css';
 
@@ -200,89 +203,96 @@ function Control({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) 
   return <div {...props} className={clsx(styles.control, className)} />;
 }
 
-function LeadingIcon({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return (
-    <div {...props} className={clsx(styles['leading-icon'], className)}>
-      {children ?? (
-        <svg className={styles['leading-icon-svg']} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-          <path
-            fillRule="evenodd"
-            d="M9 3a6 6 0 1 0 3.476 10.892l3.316 3.316a1 1 0 0 0 1.414-1.414l-3.316-3.316A6 6 0 0 0 9 3Zm-4 6a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z"
-            clipRule="evenodd"
-          />
-        </svg>
-      )}
-    </div>
-  );
+/** @deprecated Search icon is built into `Autocomplete.Input`; kept for story compatibility. */
+function LeadingIcon() {
+  return null;
 }
 
-type InputProps = React.ComponentProps<typeof BaseCombobox.Input> & {
+type AutocompleteInputProps = Omit<
+  React.ComponentProps<typeof BaseCombobox.Input>,
+  'className' | 'value' | 'onChange'
+> & {
+  className?: string;
+  inputClassName?: string;
+  size?: InputSize;
+  showSearchIcon?: boolean;
   onValueTextChange?: (text: string) => void;
 };
 
-function Input({ className, onValueTextChange, ...props }: InputProps) {
-  const ctx = useAutocompleteCtx();
-
-  return (
-    <BaseCombobox.Input
-      {...props}
-      value={ctx.query}
-      placeholder={props.placeholder ?? ctx.placeholder}
-      className={clsx(
-        styles.input,
-        ctx.invalid && styles['input-invalid'],
-        ctx.disabled && styles['input-disabled'],
-        className
-      )}
-      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-        const next = e.target.value;
-        ctx.setQuery(next);
-        onValueTextChange?.(next);
-        ctx.setIsOpen(next.trim().length >= ctx.minQueryLength);
-      }}
-      onFocus={() => {
-        if (!ctx.disabled) {
-          ctx.setIsOpen(ctx.query.trim().length >= ctx.minQueryLength);
-        }
-      }}
-    />
-  );
-}
-
-function ClearButton({
+function Input({
   className,
-  'aria-label': ariaLabel,
-  onClick,
+  inputClassName,
+  size = 'default',
+  showSearchIcon = true,
+  onValueTextChange,
   ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+}: AutocompleteInputProps) {
   const ctx = useAutocompleteCtx();
-  const visible = ctx.clearable && !!ctx.value && !ctx.disabled;
+  const resolvedSize = size ?? 'default';
+  const showClear = ctx.clearable && !!ctx.value && !ctx.disabled;
 
-  if (!visible) return null;
-
-  return (
-    <button
+  const startElement = showSearchIcon ? <SearchIcon aria-hidden="true" /> : null;
+  const endElement = showClear ? (
+    <IconButton
+      icon={XIcon}
+      aria-label="Clear selection"
+      variant="ghost"
+      size="small"
+      shape="circle"
       type="button"
-      {...props}
-      aria-label={ariaLabel ?? 'Clear selection'}
-      className={clsx(styles['clear-button'], className)}
       onClick={(e) => {
         e.preventDefault();
         ctx.setValue(null);
         ctx.setQuery('');
         ctx.setIsOpen(false);
-        onClick?.(e);
       }}
+    />
+  ) : null;
+
+  const innerClassName = getInputInnerClassName({
+    size: resolvedSize,
+    hasStartElement: Boolean(startElement),
+    hasEndElement: Boolean(endElement),
+    inputClassName,
+  });
+
+  return (
+    <InputShell
+      className={className}
+      size={resolvedSize}
+      error={ctx.invalid}
+      startElement={startElement}
+      endElement={endElement}
     >
-      <svg className={styles['clear-icon']} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path
-          fillRule="evenodd"
-          d="M10 8.586 4.293 2.879A1 1 0 1 0 2.879 4.293L8.586 10l-5.707 5.707a1 1 0 1 0 1.414 1.414L10 11.414l5.707 5.707a1 1 0 0 0 1.414-1.414L11.414 10l5.707-5.707A1 1 0 0 0 15.707 2.88L10 8.586Z"
-          clipRule="evenodd"
-        />
-      </svg>
-    </button>
+      <BaseCombobox.Input
+        {...props}
+        value={ctx.query}
+        placeholder={props.placeholder ?? ctx.placeholder}
+        disabled={ctx.disabled}
+        aria-invalid={ctx.invalid || undefined}
+        data-slot="autocomplete-input"
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          const next = e.target.value;
+          ctx.setQuery(next);
+          onValueTextChange?.(next);
+          ctx.setIsOpen(next.trim().length >= ctx.minQueryLength);
+        }}
+        onFocus={() => {
+          if (!ctx.disabled) {
+            ctx.setIsOpen(ctx.query.trim().length >= ctx.minQueryLength);
+          }
+        }}
+        render={(comboboxProps) => (
+          <input {...comboboxProps} className={innerClassName} />
+        )}
+      />
+    </InputShell>
   );
+}
+
+/** @deprecated Clear control is built into `Autocomplete.Input`; kept for story compatibility. */
+function ClearButton() {
+  return null;
 }
 
 function Options({ className, children, ...props }: Omit<React.ComponentProps<typeof BaseCombobox.List>, 'children'> & { children?: React.ReactNode }) {

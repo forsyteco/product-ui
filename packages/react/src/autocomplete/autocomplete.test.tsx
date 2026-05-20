@@ -28,9 +28,7 @@ function renderAutocomplete(props: {
       loading={props.loading}
     >
       <Autocomplete.Control>
-        <Autocomplete.LeadingIcon />
         <Autocomplete.Input />
-        <Autocomplete.ClearButton />
       </Autocomplete.Control>
       <Autocomplete.Options />
     </Autocomplete.Root>
@@ -59,6 +57,15 @@ describe('Autocomplete', () => {
       // Assert
       const input = screen.getByDisplayValue('Option 1');
       expect(input).toBeInTheDocument();
+    });
+
+    it('should show a clear button', () => {
+      // Arrange
+      // Act
+      renderAutocomplete({ options, value: options[0] });
+
+      // Assert
+      expect(screen.getByRole('button', { name: 'Clear selection' })).toBeInTheDocument();
     });
   });
 

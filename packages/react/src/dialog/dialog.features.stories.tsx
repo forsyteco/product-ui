@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Dialog, DialogPanel, DialogTitle, DialogDescription } from './dialog';
 import { Button } from '../button';
 import { Input } from '../input';
+import { Textarea } from '../textarea';
 
 const meta = {
   title: 'Components/Dialog/Features',
@@ -71,10 +72,7 @@ export const WithForm: Story = {
               </div>
               <div>
                 <label className="sb-form-label-inline">Description</label>
-                <textarea
-                  className="sb-native-field"
-                  rows={3}
-                />
+                <Textarea rows={3} />
               </div>
               <div className="sb-card-footer-actions">
                 <Button type="button" variant="default" onClick={() => setIsOpen(false)}>

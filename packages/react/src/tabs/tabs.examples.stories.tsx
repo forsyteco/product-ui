@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from './tabs';
 import { Button } from '../button';
 import { Input } from '../input';
+import { Switch } from '../switch';
 
 const meta = {
   title: 'Components/Tabs/Examples',
@@ -62,22 +63,15 @@ export const SettingsPage: Story = {
             </TabPanel>
             <TabPanel>
               <div className="sb-stack-4">
-                <div className="sb-row-between">
-                  <div>
-                    <h3 className="sb-text-base sb-font-medium">Public Profile</h3>
-                    <p className="sb-text-base sb-muted-text">Make your profile visible to everyone</p>
-                  </div>
-                  {/* Intentional native checkbox demo for simple preference toggles. */}
-                  <input type="checkbox" className="sb-checkbox" />
-                </div>
-                <div className="sb-row-between">
-                  <div>
-                    <h3 className="sb-text-base sb-font-medium">Email Notifications</h3>
-                    <p className="sb-text-base sb-muted-text">Receive email updates</p>
-                  </div>
-                  {/* Intentional native checkbox demo for simple preference toggles. */}
-                  <input type="checkbox" className="sb-checkbox" defaultChecked />
-                </div>
+                <Switch
+                  label="Public Profile"
+                  description="Make your profile visible to everyone"
+                />
+                <Switch
+                  label="Email Notifications"
+                  description="Receive email updates"
+                  defaultChecked
+                />
               </div>
             </TabPanel>
             <TabPanel>

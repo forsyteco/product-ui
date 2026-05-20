@@ -48,9 +48,7 @@ export const Basic: Story = {
           placeholder="Search fruits…"
         >
           <Autocomplete.Control>
-            <Autocomplete.LeadingIcon />
             <Autocomplete.Input />
-            <Autocomplete.ClearButton />
           </Autocomplete.Control>
           <Autocomplete.Options />
         </Autocomplete.Root>
@@ -71,9 +69,7 @@ export const WithInitialValue: Story = {
           placeholder="Search fruits…"
         >
           <Autocomplete.Control>
-            <Autocomplete.LeadingIcon />
             <Autocomplete.Input />
-            <Autocomplete.ClearButton />
           </Autocomplete.Control>
           <Autocomplete.Options />
         </Autocomplete.Root>
@@ -87,9 +83,7 @@ export const Disabled: Story = {
     <div className="sb-w-72">
       <Autocomplete.Root options={options} disabled placeholder="Disabled autocomplete">
         <Autocomplete.Control>
-          <Autocomplete.LeadingIcon />
           <Autocomplete.Input />
-          <Autocomplete.ClearButton />
         </Autocomplete.Control>
         <Autocomplete.Options />
       </Autocomplete.Root>
@@ -110,9 +104,7 @@ export const WithLoading: Story = {
           loading
         >
           <Autocomplete.Control>
-            <Autocomplete.LeadingIcon />
             <Autocomplete.Input />
-            <Autocomplete.ClearButton />
           </Autocomplete.Control>
           <Autocomplete.Options />
         </Autocomplete.Root>

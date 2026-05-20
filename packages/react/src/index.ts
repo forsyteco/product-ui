@@ -59,6 +59,17 @@ export type { FieldsetProps } from './fieldset'
 export { FilterChip } from './filter-chip'
 export type { FilterChipProps } from './filter-chip'
 
+export { FormField } from './form-field'
+export type {
+  FormFieldProps,
+  FormFieldLabelProps,
+  FormFieldLabelRowProps,
+  FormFieldLabelActionsProps,
+  FormFieldDescriptionProps,
+  FormFieldErrorProps,
+  FormFieldControlProps,
+} from './form-field'
+
 export { Input } from './input'
 export type { InputProps } from './input'
 export { CurrencyInput } from './currency-input'

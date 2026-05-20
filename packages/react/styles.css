@@ -76,7 +76,15 @@
   --destructive: 220 38 38;
   --destructive-foreground: var(--brand-white);
 
+  --success: 22 163 74;
+
   --ring: var(--brand-black);
+  --field-halo: 233 233 233;
+  --field-focus-border: 161 161 161;
+  --field-adornment: 81 81 81;
+  --field-placeholder: 161 161 161;
+  --field-error: 193 0 7;
+  --field-error-halo: 248 240 240;
 
   --card: var(--brand-white);
   --card-foreground: var(--brand-black);
@@ -258,6 +266,12 @@
   --secondary-foreground: var(--brand-white);
 
   --ring: var(--brand-white);
+  --field-halo: 57 61 65;
+  --field-focus-border: 179 192 209;
+  --field-adornment: 196 207 222;
+  --field-placeholder: 179 192 209;
+  --field-error: 193 0 7;
+  --field-error-halo: 248 240 240;
 
   --card: var(--neutral-950);
   --card-foreground: var(--brand-white);
@@ -322,6 +336,7 @@ body {
   margin: 0;
   background-color: rgb(var(--background));
   color: rgb(var(--foreground));
+  font-family: var(--font-sans);
   font-size: var(--text-base);
   line-height: var(--text-base-line-height);
 }

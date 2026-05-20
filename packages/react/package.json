@@ -396,6 +396,16 @@
         "default": "./dist/filter-chip/index.cjs"
       }
     },
+    "./form-field": {
+      "import": {
+        "types": "./dist/form-field/index.d.ts",
+        "default": "./dist/form-field/index.mjs"
+      },
+      "require": {
+        "types": "./dist/form-field/index.d.ts",
+        "default": "./dist/form-field/index.cjs"
+      }
+    },
     "./icon-button": {
       "import": {
         "types": "./dist/icon-button/index.d.ts",

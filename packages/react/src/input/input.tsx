@@ -1,25 +1,32 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import * as React from 'react';
 import { Input as BaseInput } from '@base-ui/react/input';
-
 import { clsx } from 'clsx';
+
 import styles from './input.module.css';
 
-const inputVariants = cva(
-  styles.root,
-  {
-    variants: {
-      size: {
-        default: styles['size-default'],
-        sm: styles['size-sm'],
-        lg: styles['size-lg'],
-      },
+const inputVariants = cva(styles.root, {
+  variants: {
+    size: {
+      default: styles['size-default'],
+      sm: styles['size-sm'],
+      lg: styles['size-lg'],
     },
-    defaultVariants: {
-      size: 'default',
+    error: {
+      true: styles['root--error'],
+      false: '',
     },
-  }
-);
+    success: {
+      true: styles['root--success'],
+      false: '',
+    },
+  },
+  defaultVariants: {
+    size: 'default',
+    error: false,
+    success: false,
+  },
+});
 
 export type InputProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'children' | 'size'> &
   VariantProps<typeof inputVariants> & {
@@ -43,12 +50,24 @@ function Input({
   startElement,
   endElement,
   size = 'default',
+  error,
+  success,
+  'aria-invalid': ariaInvalid,
+  disabled,
   ...props
 }: InputProps) {
-  const pad = sizeToPadding[size ?? 'default'];
+  const resolvedSize = size ?? 'default';
+  const pad = sizeToPadding[resolvedSize];
+  const hasError = error === true;
+  const hasSuccess = success === true && !hasError;
 
   return (
-    <div className={clsx(inputVariants({ size }), className)}>
+    <div
+      className={clsx(
+        inputVariants({ size: resolvedSize, error: hasError, success: hasSuccess }),
+        className
+      )}
+    >
       {startElement ? (
         <div className={clsx(styles.slot, pad.slot)}>{startElement}</div>
       ) : null}
@@ -57,6 +76,8 @@ function Input({
         {...props}
         ref={ref}
         type={type}
+        disabled={disabled}
+        aria-invalid={hasError ? true : ariaInvalid}
         data-slot="input"
         className={clsx(
           styles.input,

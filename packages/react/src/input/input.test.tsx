@@ -32,13 +32,57 @@ describe('Input', () => {
     });
   });
 
+  describe('when error is true', () => {
+    it('should set aria-invalid to true and apply error styling', () => {
+      // Arrange
+      const { container } = render(<Input error aria-label="Error input" />);
+
+      // Act
+      const input = screen.getByRole('textbox', { name: 'Error input' });
+      const wrapper = container.firstChild as HTMLElement;
+
+      // Assert
+      expect(input).toHaveAttribute('aria-invalid', 'true');
+      expect(wrapper).toHaveClass(styles['root--error']);
+    });
+  });
+
+  describe('when success is true', () => {
+    it('should apply success styling on the wrapper', () => {
+      // Arrange
+      const { container } = render(<Input success aria-label="Success input" />);
+
+      // Act
+      const wrapper = container.firstChild as HTMLElement;
+
+      // Assert
+      expect(wrapper).toHaveClass(styles['root--success']);
+    });
+  });
+
+  describe('when both error and success are true', () => {
+    it('should prefer error styling over success', () => {
+      // Arrange
+      const { container } = render(<Input error success aria-label="Conflict input" />);
+
+      // Act
+      const input = screen.getByRole('textbox', { name: 'Conflict input' });
+      const wrapper = container.firstChild as HTMLElement;
+
+      // Assert
+      expect(input).toHaveAttribute('aria-invalid', 'true');
+      expect(wrapper).toHaveClass(styles['root--error']);
+      expect(wrapper).not.toHaveClass(styles['root--success']);
+    });
+  });
+
   describe('when disabled is true', () => {
     it('should disable the input control', () => {
       // Arrange
-      render(<Input disabled />);
+      render(<Input disabled aria-label="Disabled input" />);
 
       // Act
-      const input = screen.getByRole('textbox');
+      const input = screen.getByRole('textbox', { name: 'Disabled input' });
 
       // Assert
       expect(input).toBeDisabled();
@@ -72,4 +116,3 @@ describe('Input', () => {
     });
   });
 });
-

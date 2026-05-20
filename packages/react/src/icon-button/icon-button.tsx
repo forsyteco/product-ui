@@ -13,9 +13,7 @@ import { Spinner } from '../spinner'
 import { VisuallyHidden } from '../visually-hidden'
 import styles from './icon-button.module.css'
 
-const iconButtonVariants = cva(
-  styles.root,
-  {
+const iconButtonVariants = cva(styles.root, {
     variants: {
       variant: {
         primary: styles['variant-primary'],

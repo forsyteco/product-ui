@@ -34,6 +34,7 @@ const componentEntries = [
   'fieldset',
   'filter-chip',
   'form',
+  'form-field',
   'icon-button',
   'inline-alert',
   'input',

@@ -82,6 +82,7 @@ When components need global providers (theme, future context), add `packages/rea
 
 - Prefer **`userEvent.setup()`** for clicks, typing, and keyboard — not static `userEvent` or `fireEvent`, except for edge cases fireEvent handles better (e.g. `submit` capture).
 - Call `const user = userEvent.setup()` once per test; always `await` interactions.
+- Use `await user.tab()` (or click outside) to blur fields — avoid raw `element.blur()` so React updates run inside `act`.
 - Wrap async UI assertions in `await waitFor(() => { ... })`.
 
 ---

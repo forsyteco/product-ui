@@ -1,0 +1,49 @@
+name: code-review
+
+on:
+  pull_request:
+    types: [ready_for_review, synchronize, reopened]
+    paths:
+      - "packages/react/**/*.ts"
+      - "packages/react/**/*.tsx"
+      - "packages/mcp/**/*.ts"
+      - "packages/mcp/**/*.tsx"
+      - "package.json"
+      - "packages/**/package.json"
+      - "README.md"
+      - ".cursor/rules/**"
+      - ".opencode/agent/**"
+
+jobs:
+  code-review:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+      issues: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Verify OpenCode secret
+        run: |
+          if [ -z "${{ secrets.ANTHROPIC_API_KEY }}" ]; then
+            echo "::error::Missing repository secret ANTHROPIC_API_KEY (required for automated code review)."
+            exit 1
+          fi
+
+      - name: Run code review
+        uses: anomalyco/opencode/github@908e28175f9e5c46206c8884bdd9a7dbb31d0f0b
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENCODE_PERMISSION: '{ "write": "deny", "edit": "deny", "doom_loop": "allow", "external_directory": "allow", "bash": { "*": "deny", "gh*": "allow", "gh pr review*": "deny" } }'
+        with:
+          model: anthropic/claude-sonnet-4-6
+          prompt: |
+            You are the code-reviewer agent. Read `.opencode/agent/code-reviewer.md` and follow every instruction in it to review this pull request. The agent file lists every cursor rule you must read, what to check, how to score, what to skip, and how to post the review with the gh CLI.

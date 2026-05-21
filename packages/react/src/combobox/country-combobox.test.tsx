@@ -119,7 +119,7 @@ describe('CountryCombobox', () => {
       const input = screen.getByDisplayValue('United Kingdom');
       await user.clear(input);
       await user.type(input, 'Atlantis');
-      input.blur();
+      await user.tab();
 
       // Assert
       await waitFor(() => {
@@ -145,7 +145,7 @@ describe('CountryCombobox', () => {
       // Act
       const input = screen.getByRole('combobox');
       await user.click(input);
-      input.blur();
+      await user.tab();
 
       // Assert
       await waitFor(() => {

@@ -5,7 +5,7 @@ const meta: Meta = {
   title: 'Components/RelativeTime/Features',
   component: RelativeTime,
   parameters: {
-    layout: 'fullscreen',
+    layout: 'padded',
     controls: {
       // StoryBook infers from type info of the component which includes CE Lifecycle,
       // SX props, and methods we want to otherwise ignore

@@ -5,12 +5,15 @@ import { Button } from '../button'
 export default {
     title: 'Components/RelativeTime/Examples',
     component: RelativeTime,
+    parameters: {
+        layout: 'padded',
+    },
 }
 
 export const DynamicRelativeTime = () => {
     const [time, setTime] = React.useState(false)
     return (
-        <div>
+        <div className="space-y-4">
             <div>
                 <Button onClick={() => setTime(!time)} aria-describedby="relative-time">
                     Show {time ? 'short' : 'exact'} date

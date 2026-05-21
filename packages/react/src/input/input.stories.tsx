@@ -9,7 +9,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Bare text input with size, error, success, and start/end adornment slots. Use `trailingAction` for trailing button actions. Pair with FormField for labels, captions, and validation messages.',
+          'Text input with size, error, success, and start/end adornment slots. Use `format="currency"` for locale-aware currency entry, and `trailingAction` for trailing button actions. Pair with FormField for labels, captions, and validation messages.',
       },
     },
   },

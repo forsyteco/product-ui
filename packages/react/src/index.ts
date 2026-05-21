@@ -40,8 +40,6 @@ export type {
 
 export { Input } from './input'
 export type { InputProps } from './input'
-export { CurrencyInput } from './currency-input'
-export type { CurrencyInputProps } from './currency-input'
 
 export { Listbox } from './listbox'
 export type { ListboxProps, ListboxOption } from './listbox'

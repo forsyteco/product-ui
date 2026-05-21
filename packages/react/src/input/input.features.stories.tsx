@@ -306,3 +306,57 @@ export const WithTrailingVisual: Story = {
     </InputFeatureLayout>
   ),
 };
+
+export const Currency: Story = {
+  render: () => {
+    const [valueDefault, setValueDefault] = useState<number | undefined>();
+    const [valueClamped, setValueClamped] = useState<number | undefined>(5);
+    const [valueLocale, setValueLocale] = useState<number | undefined>(1234.56);
+
+    return (
+      <InputFeatureLayout className="w-full max-w-md space-y-4">
+        <FormField>
+          <FormField.Label>Default (2 decimals)</FormField.Label>
+          <FormField.Control>
+            <Input
+              format="currency"
+              placeholder="Enter amount"
+              value={valueDefault}
+              onValueChange={setValueDefault}
+              currencySymbol="£"
+            />
+          </FormField.Control>
+        </FormField>
+
+        <FormField>
+          <FormField.Label>Clamped between 0 and 10</FormField.Label>
+          <FormField.Control>
+            <Input
+              format="currency"
+              value={valueClamped}
+              onValueChange={setValueClamped}
+              min={0}
+              max={10}
+              decimalScale={2}
+              currencySymbol="$"
+            />
+          </FormField.Control>
+        </FormField>
+
+        <FormField>
+          <FormField.Label>Locale fr-FR</FormField.Label>
+          <FormField.Control>
+            <Input
+              format="currency"
+              value={valueLocale}
+              onValueChange={setValueLocale}
+              locale="fr-FR"
+              decimalScale={2}
+              currencySymbol="€"
+            />
+          </FormField.Control>
+        </FormField>
+      </InputFeatureLayout>
+    );
+  },
+};

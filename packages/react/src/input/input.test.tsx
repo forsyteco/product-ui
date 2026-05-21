@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { Input } from './input';
 import styles from './input.module.css';
 
@@ -163,6 +163,100 @@ describe('Input', () => {
 
       // Assert
       expect(button).toBeInTheDocument();
+    });
+  });
+
+  describe('when format is currency', () => {
+    it('should format and report numeric value', () => {
+      // Arrange
+      const onValueChange = vi.fn();
+      render(<Input format="currency" onValueChange={onValueChange} />);
+
+      // Act
+      const input = screen.getByRole('textbox');
+      fireEvent.change(input, { target: { value: '1234' } });
+
+      // Assert
+      expect(input).toHaveValue('1,234');
+      expect(onValueChange).toHaveBeenLastCalledWith(1234);
+    });
+
+    it('should render currency symbol in start element', () => {
+      // Arrange
+      render(<Input format="currency" currencySymbol="$" />);
+
+      // Assert
+      expect(screen.getByText('$')).toBeInTheDocument();
+    });
+
+    it('should allow partial decimal states', () => {
+      // Arrange
+      const onValueChange = vi.fn();
+      render(<Input format="currency" onValueChange={onValueChange} />);
+      const input = screen.getByRole('textbox');
+
+      // Act
+      fireEvent.change(input, { target: { value: '1.' } });
+
+      // Assert
+      expect(input).toHaveValue('1.');
+      expect(onValueChange).toHaveBeenLastCalledWith(1);
+
+      // Act
+      fireEvent.change(input, { target: { value: '.5' } });
+
+      // Assert
+      expect(input).toHaveValue('0.5');
+      expect(onValueChange).toHaveBeenLastCalledWith(0.5);
+    });
+
+    it('should clamp values on change and blur', () => {
+      // Arrange
+      const onValueChange = vi.fn();
+      render(<Input format="currency" min={0} max={10} onValueChange={onValueChange} />);
+      const input = screen.getByRole('textbox');
+
+      // Act
+      fireEvent.change(input, { target: { value: '25' } });
+
+      // Assert
+      expect(onValueChange).toHaveBeenLastCalledWith(10);
+
+      // Act
+      fireEvent.blur(input);
+
+      // Assert
+      expect(input).toHaveValue('10');
+    });
+
+    it('should preserve trailing zeros on blur', () => {
+      // Arrange
+      const onValueChange = vi.fn();
+      render(<Input format="currency" onValueChange={onValueChange} />);
+      const input = screen.getByRole('textbox');
+
+      // Act
+      fireEvent.change(input, { target: { value: '1.00' } });
+      fireEvent.blur(input);
+
+      // Assert
+      expect(input).toHaveValue('1.00');
+      expect(onValueChange).toHaveBeenLastCalledWith(1);
+    });
+
+    it('should sync display when value prop changes', () => {
+      // Arrange
+      const { rerender } = render(<Input format="currency" value={1234} />);
+      const input = screen.getByRole('textbox');
+
+      // Assert
+      expect(input).toHaveValue('1,234');
+
+      // Act
+      rerender(<Input format="currency" value={567.89} />);
+
+      // Assert
+      expect(input).toHaveValue('567.89');
     });
   });
 });

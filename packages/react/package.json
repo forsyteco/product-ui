@@ -116,16 +116,6 @@
         "default": "./dist/counter-label/index.cjs"
       }
     },
-    "./currency-input": {
-      "import": {
-        "types": "./dist/currency-input/index.d.ts",
-        "default": "./dist/currency-input/index.mjs"
-      },
-      "require": {
-        "types": "./dist/currency-input/index.d.ts",
-        "default": "./dist/currency-input/index.cjs"
-      }
-    },
     "./data-table": {
       "import": {
         "types": "./dist/data-table/index.d.ts",

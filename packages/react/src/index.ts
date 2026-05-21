@@ -44,9 +44,6 @@ export type { InputProps } from './input'
 export { Listbox } from './listbox'
 export type { ListboxProps, ListboxOption } from './listbox'
 
-export { RadioGroup } from './radio-group'
-export type { RadioGroupProps, RadioGroupOption } from './radio-group'
-
 export { Select } from './select'
 export type { SelectProps, SelectOption } from './select'
 

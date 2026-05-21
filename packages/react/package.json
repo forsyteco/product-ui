@@ -196,16 +196,6 @@
         "default": "./dist/page-layout/index.cjs"
       }
     },
-    "./radio-group": {
-      "import": {
-        "types": "./dist/radio-group/index.d.ts",
-        "default": "./dist/radio-group/index.mjs"
-      },
-      "require": {
-        "types": "./dist/radio-group/index.d.ts",
-        "default": "./dist/radio-group/index.cjs"
-      }
-    },
     "./relative-time": {
       "import": {
         "types": "./dist/relative-time/index.d.ts",

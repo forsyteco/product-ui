@@ -29,7 +29,6 @@ const componentEntries = [
   'input',
   'listbox',
   'popover',
-  'radio-group',
   'relative-time',
   'select',
   'skeleton',

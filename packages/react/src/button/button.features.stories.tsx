@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Heart, Inbox, Bell } from 'lucide-react';
+import { Bell, Inbox } from 'lucide-react';
 import { Button } from './button';
 
 const meta = {
@@ -14,24 +14,41 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Variants: Story = {
-  render: () => (
-    <div className="flex gap-4">
-      <Button variant="primary">Primary</Button>
-      <Button variant="secondary">Secondary</Button>
-      <Button variant="outline">Outline</Button>
-      <Button variant="ghost">Ghost</Button>
-    </div>
-  ),
+export const Primary: Story = {
+  render: () => <Button variant="primary">Primary</Button>,
 };
 
-export const Sizes: Story = {
+export const Secondary: Story = {
+  render: () => <Button variant="secondary">Secondary</Button>,
+};
+
+export const Outline: Story = {
+  render: () => <Button variant="outline">Outline</Button>,
+};
+
+export const Ghost: Story = {
+  render: () => <Button variant="ghost">Ghost</Button>,
+};
+
+export const Destructive: Story = {
+  render: () => <Button variant="destructive">Destructive</Button>,
+};
+
+export const SizeSmall: Story = {
+  render: () => <Button size="sm">Small</Button>,
+};
+
+export const SizeMedium: Story = {
+  render: () => <Button size="md">Medium</Button>,
+};
+
+export const SizeLarge: Story = {
+  render: () => <Button size="lg">Large</Button>,
+};
+
+export const IconOnly: Story = {
   render: () => (
-    <div className="flex items-center gap-4">
-      <Button size="sm">Small</Button>
-      <Button size="md">Medium</Button>
-      <Button size="lg">Large</Button>
-    </div>
+    <Button icon={Inbox} aria-label="Notifications" description="View notifications" />
   ),
 };
 
@@ -46,53 +63,26 @@ export const Disabled: Story = {
   ),
 };
 
-export const IconOnlyVariants: Story = {
-  render: () => (
-    <div className="flex items-center gap-3">
-      <Button icon={Heart} variant="primary" aria-label="Primary" />
-      <Button icon={Heart} variant="secondary" aria-label="Secondary" />
-      <Button icon={Heart} variant="outline" aria-label="Outline" />
-      <Button icon={Heart} variant="ghost" aria-label="Ghost" />
-      <Button icon={Heart} variant="danger" aria-label="Danger" />
-      <Button icon={Heart} variant="primary" as="a" href="#" aria-label="Anchor (primary)" />
-    </div>
-  ),
-};
-
-export const IconOnlySizes: Story = {
-  render: () => (
-    <div className="flex items-center gap-3">
-      <Button icon={Inbox} size="small" aria-label="Small" />
-      <Button icon={Inbox} size="medium" aria-label="Medium" />
-      <Button icon={Inbox} size="large" aria-label="Large" />
-    </div>
-  ),
-};
-
-export const IconOnlyShapes: Story = {
-  render: () => (
-    <div className="flex items-center gap-3">
-      <Button icon={Heart} aria-label="Square" shape="square" />
-      <Button icon={Heart} aria-label="Circle" shape="circle" />
-    </div>
-  ),
-};
-
-export const IconOnlyStatesAndBehaviors: Story = {
+export const StatesAndBehaviors: Story = {
   render: () => {
     return (
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-3">
-          <Button icon={Inbox} aria-label="Disabled" disabled />
-          <Button icon={Inbox} aria-label="Inactive" inactive />
-          <Button icon={Inbox} aria-label="External tooltip" title="External tooltip" />
+          <Button inactive>Inactive</Button>
+          <Button title="External tooltip">External tooltip</Button>
+          <Button description="Described tooltip">Described tooltip</Button>
         </div>
         <div className="flex items-center gap-3">
-          <Button icon={Bell} aria-label="Menu anchor" aria-haspopup="menu" aria-expanded="false" />
-          <Button icon={Bell} aria-label="Loading" loading />
+          <Button aria-haspopup="menu" aria-expanded="false">
+            Menu anchor
+          </Button>
+          <Button loading>Loading</Button>
           <LoadingTriggerDemo />
         </div>
         <div className="flex items-center gap-3">
+          <Button description="Open inbox" keybindingHint="G+I">
+            Keybinding hint
+          </Button>
           <LongDelayTooltipDemo />
         </div>
       </div>
@@ -102,14 +92,15 @@ export const IconOnlyStatesAndBehaviors: Story = {
 
 const LoadingTriggerDemo = () => {
   const [isLoading, setIsLoading] = useState(false);
+
   return (
     <Button
-      icon={Inbox}
-      aria-label="Toggle loading"
       loading={isLoading}
-      onClick={() => setIsLoading((v) => !v)}
+      onClick={() => setIsLoading((value) => !value)}
       description="Click to toggle loading"
-    />
+    >
+      Toggle loading
+    </Button>
   );
 };
 
@@ -136,7 +127,7 @@ const LongDelayTooltipDemo = () => {
       }}
       className="relative"
     >
-      <Button icon={Bell} aria-label="Long delayed tooltip" />
+      <Button description="Tooltip after delay">Long delayed tooltip</Button>
       {show ? (
         <span className="absolute left-1/2 top-full mt-2 -translate-x-1/2 rounded bg-black px-2 py-1 text-xs text-white">
           Tooltip after delay

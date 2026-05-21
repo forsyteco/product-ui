@@ -75,10 +75,15 @@ export function InputShell({
         className
       )}
     >
-      {startElement ? <div className={styles.slot}>{startElement}</div> : null}
+      {startElement ? <div className={clsx(styles.slot, styles['slot-pad'])}>{startElement}</div> : null}
       {children}
       {endElement ? (
-        <div className={clsx(styles.slot, endSlotAction && styles['slot-action'])}>
+        <div
+          className={clsx(
+            styles.slot,
+            endSlotAction ? styles['slot-action'] : styles['slot-pad']
+          )}
+        >
           {endElement}
         </div>
       ) : null}

@@ -70,23 +70,23 @@
 
 .size-default {
   height: 2.25rem;
-  --input-text-inset: calc((2.25rem - var(--input-adornment-size)) / 4);
-  --input-slot-inset: calc((2.25rem - var(--input-adornment-size)) / 2);
-  --input-action-size: calc(2.25rem - (2 * var(--input-text-inset)));
+  --input-pad-inline: 0.75rem;
+  --input-slot-action-inset: calc((2.25rem - var(--input-adornment-size)) / 4);
+  --input-action-size: calc(2.25rem - (2 * var(--input-slot-action-inset)));
 }
 
 .size-sm {
   height: 2rem;
-  --input-text-inset: calc((2rem - var(--input-adornment-size)) / 4);
-  --input-slot-inset: calc((2rem - var(--input-adornment-size)) / 2);
-  --input-action-size: calc(2rem - (2 * var(--input-text-inset)));
+  --input-pad-inline: 0.625rem;
+  --input-slot-action-inset: calc((2rem - var(--input-adornment-size)) / 4);
+  --input-action-size: calc(2rem - (2 * var(--input-slot-action-inset)));
 }
 
 .size-lg {
   height: 2.5rem;
-  --input-text-inset: calc((2.5rem - var(--input-adornment-size)) / 4);
-  --input-slot-inset: calc((2.5rem - var(--input-adornment-size)) / 2);
-  --input-action-size: calc(2.5rem - (2 * var(--input-text-inset)));
+  --input-pad-inline: 1rem;
+  --input-slot-action-inset: calc((2.5rem - var(--input-adornment-size)) / 4);
+  --input-action-size: calc(2.5rem - (2 * var(--input-slot-action-inset)));
   font-size: var(--text-lg);
   line-height: var(--text-lg-line-height);
 }
@@ -96,13 +96,17 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  padding: var(--input-slot-inset);
   color: inherit;
   pointer-events: none;
 }
 
+.slot-pad {
+  padding-inline: var(--input-pad-inline);
+}
+
 .slot-action {
-  padding: var(--input-text-inset);
+  padding-block: var(--input-slot-action-inset);
+  padding-inline: 0 var(--input-pad-inline);
 }
 
 .slot :is(button, a) {
@@ -157,7 +161,7 @@
 }
 
 .input-pad {
-  padding-inline: var(--input-text-inset);
+  padding-inline: var(--input-pad-inline);
 }
 
 .input-pad-none-left {

@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Listbox } from './listbox';
 
 const options = [
@@ -9,20 +10,46 @@ const options = [
 ];
 
 describe('Listbox', () => {
-  it('renders the listbox component', () => {
-    render(<Listbox options={options} />);
-    expect(screen.getByText('Select an option...')).toBeInTheDocument();
+  describe('when rendered with options', () => {
+    it('should render the listbox component', () => {
+      // Arrange
+      render(<Listbox options={options} />);
+
+      // Act
+      const placeholder = screen.getByText('Select an option...');
+
+      // Assert
+      expect(placeholder).toBeInTheDocument();
+    });
   });
 
-  it('displays selected value', () => {
-    render(<Listbox options={options} value={options[0]} />);
-    expect(screen.getByText('Option 1')).toBeInTheDocument();
+  describe('when a value is selected', () => {
+    it('should display selected value', () => {
+      // Arrange
+      render(<Listbox options={options} value={options[0]} />);
+
+      // Act
+      const selected = screen.getByText('Option 1');
+
+      // Assert
+      expect(selected).toBeInTheDocument();
+    });
   });
 
-  it('calls onChange when option is selected', () => {
-    const handleChange = vi.fn();
-    render(<Listbox options={options} onChange={handleChange} />);
-    expect(handleChange).toBeDefined();
+  describe('when the user picks an option', () => {
+    it('should call onChange when option is selected', async () => {
+      // Arrange
+      const user = userEvent.setup();
+      const handleChange = vi.fn();
+      render(<Listbox options={options} onChange={handleChange} />);
+
+      // Act
+      await user.click(screen.getByRole('combobox'));
+      await user.click(screen.getByRole('option', { name: 'Option 2' }));
+
+      // Assert
+      expect(handleChange).toHaveBeenCalledTimes(1);
+      expect(handleChange).toHaveBeenCalledWith(options[1]);
+    });
   });
 });
-

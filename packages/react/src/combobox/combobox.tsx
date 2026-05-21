@@ -1,37 +1,23 @@
 import * as React from 'react';
-import {
-  Combobox as HeadlessCombobox,
-  ComboboxButton,
-  ComboboxInput,
-  ComboboxOption as HeadlessComboboxOption,
-  ComboboxOptions,
-} from '@headlessui/react';
-import { cn } from '../utils/tailwind';
+import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
+import { clsx } from 'clsx';
+import { getInputInnerClassName, inputVariants, type InputSize } from '../input/input-shell';
+import inputStyles from '../input/input.module.css';
+import menuStyles from '../field-select/field-select-menu.module.css';
+import captionStyles from '../field-select/field-caption.module.css';
+import shellStyles from '../field-select/field-control-shell.module.css';
+import { ChevronIcon } from '../field-select/chevron-icon';
+import { ClearIcon } from '../field-select/clear-icon';
 import { resolveFieldAutofillProps } from '../utils/field-autofill-props';
 import type { ComboboxOption } from './types';
+import styles from './combobox.module.css';
 
 type Ctx = {
-  options: ComboboxOption[];
-  filteredOptions: ComboboxOption[];
-  value: ComboboxOption | null;
-  setValue: (next: ComboboxOption | null) => void;
-
-  query: string;
-  setQuery: (next: string) => void;
-
   placeholder: string;
   disabled: boolean;
-  invalid: boolean;
-
-  isOpen: boolean;
-  setIsOpen: (next: boolean) => void;
-
+  error: boolean;
   clearable: boolean;
-
-  /** Ref to the root container; used to avoid closing on blur when focus moves inside (e.g. toggle or option). */
-  rootRef: React.RefObject<HTMLDivElement | null>;
-
-  filterFn: (option: ComboboxOption, query: string) => boolean;
+  size: InputSize;
   renderOption?: (
     option: ComboboxOption,
     state: { active: boolean; selected: boolean; disabled: boolean }
@@ -65,8 +51,11 @@ export type ComboboxRootProps = {
 
   placeholder?: string;
   disabled?: boolean;
+  error?: boolean;
+  /** @deprecated Use `error` instead */
   invalid?: boolean;
   clearable?: boolean;
+  size?: InputSize;
 
   /** Override filtering (fuzzy etc.) */
   filterFn?: (option: ComboboxOption, query: string) => boolean;
@@ -80,113 +69,81 @@ export type ComboboxRootProps = {
 
 function Root({
   options,
-
   value: valueProp,
   defaultValue = null,
   onChange,
-
   query: queryProp,
   defaultQuery = '',
   onQueryChange,
-
   placeholder = 'Select an option…',
   disabled = false,
-  invalid = false,
+  error,
+  invalid,
   clearable = true,
-
+  size = 'default',
   filterFn,
   renderOption,
-
   className,
   children,
 }: ComboboxRootProps) {
-  // selection (controlled/uncontrolled)
-  const [internalValue, setInternalValue] = React.useState<ComboboxOption | null>(defaultValue);
-  const value = valueProp !== undefined ? valueProp : internalValue;
-
-  const setValue = React.useCallback(
-    (next: ComboboxOption | null) => {
-      if (valueProp === undefined) setInternalValue(next);
-      onChange?.(next);
-    },
-    [onChange, valueProp]
-  );
-
-  // query (controlled/uncontrolled)
-  const [internalQuery, setInternalQuery] = React.useState(defaultQuery);
-  const query = queryProp !== undefined ? queryProp : internalQuery;
-
-  const setQuery = React.useCallback(
-    (next: string) => {
-      if (queryProp === undefined) setInternalQuery(next);
-      onQueryChange?.(next);
-    },
-    [onQueryChange, queryProp]
-  );
-
-  // open/close (local); only used for syncing (e.g. onClose). Visibility is controlled by Headless.
-  const [isOpen, setIsOpen] = React.useState(false);
-  const rootRef = React.useRef<HTMLDivElement>(null);
-
+  const isValueControlled = valueProp !== undefined;
+  const isQueryControlled = queryProp !== undefined;
   const effectiveFilterFn = filterFn ?? defaultFilterFn;
 
-  const filteredOptions = React.useMemo(() => {
-    if (!query.trim()) return options;
-    return options.filter((o) => effectiveFilterFn(o, query));
-  }, [options, query, effectiveFilterFn]);
+  const [internalInputValue, setInternalInputValue] = React.useState(() => {
+    if (defaultQuery) return defaultQuery;
+    if (defaultValue?.label) return defaultValue.label;
+    return '';
+  });
+
+  React.useEffect(() => {
+    if (isQueryControlled || !isValueControlled) return;
+    setInternalInputValue(valueProp?.label ?? '');
+  }, [isQueryControlled, isValueControlled, valueProp]);
+
+  const inputValue = isQueryControlled ? queryProp : internalInputValue;
+
+  const hasError = error ?? invalid ?? false;
 
   const ctx: Ctx = React.useMemo(
     () => ({
-      options,
-      filteredOptions,
-      value,
-      setValue,
-      query,
-      setQuery,
       placeholder,
       disabled,
-      invalid,
-      isOpen,
-      setIsOpen,
+      error: hasError,
       clearable,
-      rootRef,
-      filterFn: effectiveFilterFn,
+      size,
       renderOption,
     }),
-    [
-      options,
-      filteredOptions,
-      value,
-      setValue,
-      query,
-      setQuery,
-      placeholder,
-      disabled,
-      invalid,
-      isOpen,
-      clearable,
-      effectiveFilterFn,
-      renderOption,
-    ]
+    [placeholder, disabled, hasError, clearable, size, renderOption]
   );
 
   return (
     <ComboboxCtx.Provider value={ctx}>
-      <div ref={rootRef} className={cn('relative', className)}>
-        <HeadlessCombobox
-          by="id"
-          value={value}
-          onChange={(next) => {
-            setValue(next);
-            setIsOpen(false);
-          }}
-          onClose={() => setIsOpen(false)}
-          disabled={disabled}
-          nullable
-        >
-          {children}
-        </HeadlessCombobox>
-      </div>
+      <BaseCombobox.Root<ComboboxOption>
+        value={isValueControlled ? (valueProp ?? null) : undefined}
+        defaultValue={!isValueControlled ? (defaultValue ?? undefined) : undefined}
+        onValueChange={(next) => {
+          const nextValue = (next as ComboboxOption | null) ?? null;
+          onChange?.(nextValue);
+          if (!isQueryControlled) {
+            setInternalInputValue(nextValue?.label ?? '');
+          }
+        }}
+        inputValue={inputValue}
+        onInputValueChange={(next) => {
+          if (!isQueryControlled) {
+            setInternalInputValue(next);
+          }
+          onQueryChange?.(next);
+        }}
+        disabled={disabled}
+        items={options}
+        filter={(item, query) => effectiveFilterFn(item, query)}
+        isItemEqualToValue={(a, b) => a.id === b.id}
+        itemToStringLabel={(option) => option.label}
+      >
+        <div className={clsx(styles.root, className)}>{children}</div>
+      </BaseCombobox.Root>
     </ComboboxCtx.Provider>
   );
 }
@@ -195,73 +152,74 @@ function Label({
   className,
   ...props
 }: React.LabelHTMLAttributes<HTMLLabelElement>) {
-  return (
-    <label
-      {...props}
-      className={cn('mb-1 block text-sm font-medium text-foreground', className)}
-    />
-  );
+  return <label {...props} className={clsx(captionStyles.label, className)} />;
 }
 
 function Control({
   className,
+  children,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div {...props} className={cn('relative', className)} />;
+  const ctx = useComboboxCtx();
+  const childItems = React.Children.toArray(children);
+  const inputChild = childItems.find(
+    (child) => React.isValidElement(child) && child.type === Input
+  );
+  const clearChild = childItems.find(
+    (child) => React.isValidElement(child) && child.type === ClearButton
+  );
+  const toggleChild = childItems.find(
+    (child) => React.isValidElement(child) && child.type === ToggleButton
+  );
+
+  return (
+    <BaseCombobox.InputGroup
+      {...props}
+      className={clsx(
+        inputVariants({ size: ctx.size, error: ctx.error }),
+        styles.control,
+        className
+      )}
+    >
+      {inputChild}
+      {clearChild ? (
+        <div className={clsx(inputStyles.slot, shellStyles.adornmentSlotInteractive)}>{clearChild}</div>
+      ) : null}
+      {toggleChild ? (
+        <div className={clsx(inputStyles.slot, inputStyles['slot-pad'], shellStyles.adornmentSlot)}>
+          {toggleChild}
+        </div>
+      ) : null}
+    </BaseCombobox.InputGroup>
+  );
 }
 
 type InputProps = Omit<
-  React.ComponentProps<typeof ComboboxInput>,
-  'displayValue' | 'onChange'
+  React.ComponentProps<typeof BaseCombobox.Input>,
+  'placeholder'
 > & {
-  displayValue?: (option: ComboboxOption | null) => string;
-  onValueTextChange?: (text: string) => void;
-  /** Defaults true for Combobox */
-  openOnFocus?: boolean;
   placeholder?: string;
+  autoComplete?: string;
 };
 
 function Input({
   className,
-  displayValue,
-  onValueTextChange,
-  onFocus,
-  onBlur,
-  openOnFocus = true,
+  placeholder,
   autoComplete,
   ...props
 }: InputProps) {
   const ctx = useComboboxCtx();
 
-  const displayValueFn = displayValue ?? ((opt: ComboboxOption | null) => opt?.label ?? '');
-  const placeholderValue = props.placeholder ?? ctx.placeholder;
-  const inputProps = {
-    ...props,
-    placeholder: placeholderValue,
-    displayValue: displayValueFn as (item: unknown) => string,
-    ...resolveFieldAutofillProps({ autoComplete }),
-  } as React.ComponentProps<typeof ComboboxInput>;
   return (
-    <ComboboxInput
-      {...inputProps}
-      className={cn(
-        'w-full rounded-md border bg-background py-2 pl-3 pr-20 text-base leading-5 text-foreground',
-        'border-input focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background',
-        ctx.invalid && 'border-destructive focus:ring-destructive',
-        ctx.disabled && 'cursor-not-allowed opacity-50',
-        className
-      )}
-      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-        const next = e.target.value;
-        ctx.setQuery(next);
-        onValueTextChange?.(next);
-        if (!ctx.disabled) ctx.setIsOpen(true);
-      }}
-      onFocus={(e: React.FocusEvent<HTMLInputElement>) => {
-        if (!ctx.disabled && openOnFocus) ctx.setIsOpen(true);
-        onFocus?.(e);
-      }}
-      onBlur={onBlur}
+    <BaseCombobox.Input
+      {...props}
+      {...resolveFieldAutofillProps({ autoComplete })}
+      placeholder={placeholder ?? ctx.placeholder}
+      aria-invalid={ctx.error ? true : undefined}
+      className={getInputInnerClassName({
+        hasEndElement: true,
+        inputClassName: className,
+      })}
     />
   );
 }
@@ -269,67 +227,36 @@ function Input({
 function ClearButton({
   className,
   'aria-label': ariaLabel,
-  onClick,
   ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+}: React.ComponentProps<typeof BaseCombobox.Clear>) {
   const ctx = useComboboxCtx();
-  const visible = ctx.clearable && !!ctx.value && !ctx.disabled;
 
-  if (!visible) return null;
+  if (!ctx.clearable) return null;
 
   return (
-    <button
-      type="button"
+    <BaseCombobox.Clear
       {...props}
       aria-label={ariaLabel ?? 'Clear selection'}
-      className={cn(
-        'absolute inset-y-0 right-7 flex items-center px-2 text-muted-foreground hover:text-foreground',
-        className
-      )}
-      onClick={(e) => {
-        e.preventDefault();
-        ctx.setValue(null);
-        ctx.setQuery('');
-        ctx.setIsOpen(false);
-        onClick?.(e);
-      }}
+      className={clsx(shellStyles.iconButton, className)}
     >
-      <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path
-          fillRule="evenodd"
-          d="M10 8.586 4.293 2.879A1 1 0 1 0 2.879 4.293L8.586 10l-5.707 5.707a1 1 0 1 0 1.414 1.414L10 11.414l5.707 5.707a1 1 0 0 0 1.414-1.414L11.414 10l5.707-5.707A1 1 0 0 0 15.707 2.88L10 8.586Z"
-          clipRule="evenodd"
-        />
-      </svg>
-    </button>
+      <ClearIcon className={shellStyles.icon} />
+    </BaseCombobox.Clear>
   );
 }
 
 function ToggleButton({
   className,
   children,
-  onClick,
   ...props
-}: React.ComponentProps<typeof ComboboxButton>) {
-  const ctx = useComboboxCtx();
-
+}: React.ComponentProps<typeof BaseCombobox.Trigger>) {
   return (
-    <ComboboxButton
+    <BaseCombobox.Trigger
       {...props}
       aria-label={props['aria-label'] ?? 'Toggle options'}
-      className={cn(
-        'absolute inset-y-0 right-0 flex items-center pr-2 text-muted-foreground',
-        ctx.disabled && 'cursor-not-allowed opacity-50',
-        className
-      )}
-      onClick={onClick}
+      className={clsx(shellStyles.iconButton, className)}
     >
-      {children ?? (
-        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      )}
-    </ComboboxButton>
+      {children ?? <ChevronIcon className={shellStyles.icon} />}
+    </BaseCombobox.Trigger>
   );
 }
 
@@ -337,45 +264,41 @@ function Options({
   className,
   children,
   ...props
-}: Omit<React.ComponentProps<typeof ComboboxOptions>, 'children'> & {
+}: Omit<React.ComponentProps<typeof BaseCombobox.List>, 'children'> & {
   /** If omitted, renders filtered options */
   children?: React.ReactNode;
 }) {
   const ctx = useComboboxCtx();
   if (ctx.disabled) return null;
 
-  const hasResults = ctx.filteredOptions.length > 0;
-
   return (
-    <ComboboxOptions
-      {...props}
-      anchor="bottom start"
-      className={cn(
-        'z-10 max-h-60 w-[var(--input-width)] overflow-auto rounded-md bg-background py-1 text-base shadow-lg',
-        'invisible empty:invisible data-open:visible',
-        'ring-1 ring-border focus:outline-none',
-        className
-      )}
-    >
-      {children ? (
-        children
-      ) : hasResults ? (
-        ctx.filteredOptions.map((opt) => <Option key={opt.id} option={opt} />)
-      ) : (
-        <Empty />
-      )}
-    </ComboboxOptions>
+    <BaseCombobox.Portal>
+      <BaseCombobox.Positioner
+        side="bottom"
+        align="start"
+        sideOffset={4}
+        className={menuStyles.positioner}
+      >
+        <BaseCombobox.Popup className={clsx(menuStyles.popup, className)}>
+          <BaseCombobox.List {...props} className={menuStyles.list}>
+            <BaseCombobox.Empty className={menuStyles.empty}>Nothing found.</BaseCombobox.Empty>
+            {children ?? (
+              <BaseCombobox.Collection>
+                {(option: ComboboxOption) => <Option key={option.id} option={option} />}
+              </BaseCombobox.Collection>
+            )}
+          </BaseCombobox.List>
+        </BaseCombobox.Popup>
+      </BaseCombobox.Positioner>
+    </BaseCombobox.Portal>
   );
 }
 
 function Empty({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div
-      {...props}
-      className={cn('cursor-default select-none px-4 py-2 text-muted-foreground', className)}
-    >
+    <BaseCombobox.Empty {...props} className={clsx(menuStyles.empty, className)}>
       Nothing found.
-    </div>
+    </BaseCombobox.Empty>
   );
 }
 
@@ -384,54 +307,35 @@ function Option({
   className,
   children,
   ...props
-}: Omit<React.ComponentProps<typeof HeadlessComboboxOption>, 'value' | 'children'> & {
+}: Omit<React.ComponentProps<typeof BaseCombobox.Item>, 'value' | 'children'> & {
   option: ComboboxOption;
   children?: React.ReactNode;
 }) {
   const ctx = useComboboxCtx();
 
   return (
-    <HeadlessComboboxOption
+    <BaseCombobox.Item
       {...props}
       value={option}
       disabled={option.disabled}
-      className={({
-        active,
-        selected,
-        disabled: optDisabled,
-      }: {
-        active: boolean;
-        selected: boolean;
-        disabled: boolean;
-      }) =>
-        cn(
-          'relative select-none py-2 pl-3 pr-4',
-          optDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-default',
-          active ? 'bg-accent text-accent-foreground' : 'text-foreground',
-          selected && 'font-medium',
-          typeof className === 'function'
-            ? className({ active, selected, disabled: optDisabled })
-            : className
+      className={({ highlighted, selected, disabled: optDisabled }) =>
+        clsx(
+          menuStyles.option,
+          highlighted && menuStyles['option-active'],
+          selected && menuStyles['option-selected'],
+          optDisabled && menuStyles['option-disabled'],
+          typeof className === 'function' ? className({ highlighted, selected, disabled: optDisabled }) : className
         )
       }
     >
-      {({
-        active,
-        selected,
-        disabled: optDisabled,
-      }: {
-        active: boolean;
-        selected: boolean;
-        disabled: boolean;
-      }) => {
-        const content = children
-          ? children
-          : ctx.renderOption
-            ? ctx.renderOption(option, { active, selected, disabled: optDisabled })
-            : option.label;
-        return <>{content}</>;
-      }}
-    </HeadlessComboboxOption>
+      {children ??
+        ctx.renderOption?.(option, {
+          active: false,
+          selected: false,
+          disabled: Boolean(option.disabled),
+        }) ??
+        option.label}
+    </BaseCombobox.Item>
   );
 }
 
@@ -439,14 +343,14 @@ function Hint({
   className,
   ...props
 }: React.HTMLAttributes<HTMLParagraphElement>) {
-  return <p {...props} className={cn('mt-1 text-sm text-muted-foreground', className)} />;
+  return <p {...props} className={clsx(captionStyles.hint, className)} />;
 }
 
 function Error({
   className,
   ...props
 }: React.HTMLAttributes<HTMLParagraphElement>) {
-  return <p {...props} className={cn('mt-1 text-sm text-destructive', className)} />;
+  return <p {...props} className={clsx(captionStyles.error, className)} />;
 }
 
 export const Combobox = {
@@ -462,3 +366,5 @@ export const Combobox = {
   Hint,
   Error,
 } as const;
+
+export type { ComboboxRootProps as ComboboxProps };

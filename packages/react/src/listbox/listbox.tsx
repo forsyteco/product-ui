@@ -1,6 +1,11 @@
-import { type ReactNode } from 'react';
-import { Listbox as HeadlessListbox } from '@headlessui/react';
-import { cn } from '../utils/tailwind';
+import { Select as BaseSelect } from '@base-ui/react/select';
+import { clsx } from 'clsx';
+import { getInputInnerClassName, inputVariants, type InputSize } from '../input/input-shell';
+import inputStyles from '../input/input.module.css';
+import menuStyles from '../field-select/field-select-menu.module.css';
+import shellStyles from '../field-select/field-control-shell.module.css';
+import { ChevronIcon } from '../field-select/chevron-icon';
+import styles from './listbox.module.css';
 
 export type ListboxOption = {
   id: string | number;
@@ -12,85 +17,96 @@ export type ListboxOption = {
 export type ListboxProps = {
   options: ListboxOption[];
   value?: ListboxOption | null;
+  defaultValue?: ListboxOption | null;
   onChange?: (value: ListboxOption) => void;
   placeholder?: string;
   className?: string;
   disabled?: boolean;
-};
-
-export type ListboxButtonProps = {
-  children: ReactNode;
-  className?: string;
-};
-
-export type ListboxOptionsProps = {
-  children: ReactNode;
-  className?: string;
-};
-
-export type ListboxOptionProps = {
-  option: ListboxOption;
-  className?: string;
+  error?: boolean;
+  size?: InputSize;
 };
 
 function Listbox({
   options,
   value,
+  defaultValue,
   onChange,
   placeholder = 'Select an option...',
   className,
   disabled = false,
+  error = false,
+  size = 'default',
 }: ListboxProps) {
+  const isControlled = value !== undefined;
+
   return (
-    <HeadlessListbox value={value ?? undefined} onChange={onChange} disabled={disabled}>
-      <div className={cn('relative', className)}>
-        <HeadlessListbox.Button
-          className={cn(
-            'relative w-full cursor-default rounded-md bg-background py-2 pl-3 pr-10 text-left text-base text-foreground shadow-sm ring-1 ring-inset ring-border focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background',
-            disabled && 'cursor-not-allowed opacity-50'
-          )}
+    <BaseSelect.Root<ListboxOption>
+      value={isControlled ? (value ?? null) : undefined}
+      defaultValue={!isControlled ? (defaultValue ?? undefined) : undefined}
+      onValueChange={(next) => {
+        const resolved =
+          typeof next === 'object'
+            ? (next as ListboxOption)
+            : options.find((option) => option.value === String(next));
+        if (resolved) {
+          onChange?.(resolved);
+        }
+      }}
+      disabled={disabled}
+      items={options}
+      isItemEqualToValue={(a, b) => a.id === b.id}
+      itemToStringLabel={(option) => option.label}
+    >
+      <div className={clsx(styles.root, className)}>
+        <BaseSelect.Trigger
+          className={clsx(inputVariants({ size, error }), shellStyles.shellButton)}
+          aria-invalid={error ? true : undefined}
         >
-          <span className="block truncate">
-            {value?.label || placeholder}
+          <BaseSelect.Value
+            className={clsx(
+              getInputInnerClassName({ hasEndElement: true }),
+              shellStyles.shellValue
+            )}
+            placeholder={placeholder}
+          />
+          <span className={clsx(inputStyles.slot, inputStyles['slot-pad'], shellStyles.adornmentSlot)}>
+            <ChevronIcon className={shellStyles.icon} />
           </span>
-          <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-            <svg
-              className="h-5 w-5 text-muted-foreground"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </span>
-        </HeadlessListbox.Button>
-        <HeadlessListbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-background py-1 text-base shadow-lg ring-1 ring-border focus:outline-none">
-          {options.map((option) => (
-            <HeadlessListbox.Option
-              key={option.id}
-              value={option}
-              disabled={option.disabled}
-              className={({ active, disabled }) =>
-                cn(
-                  'relative cursor-default select-none py-2 pl-10 pr-4',
-                  active ? 'bg-accent text-accent-foreground' : 'text-foreground',
-                  disabled && 'cursor-not-allowed opacity-50'
-                )
-              }
-            >
-              {option.label}
-            </HeadlessListbox.Option>
-          ))}
-        </HeadlessListbox.Options>
+        </BaseSelect.Trigger>
+        <BaseSelect.Portal>
+          <BaseSelect.Positioner
+            side="bottom"
+            align="start"
+            sideOffset={4}
+            alignItemWithTrigger={false}
+            className={menuStyles.positioner}
+          >
+            <BaseSelect.Popup className={menuStyles.popup}>
+              <BaseSelect.List className={menuStyles.list}>
+                {options.map((option) => (
+                  <BaseSelect.Item
+                    key={option.id}
+                    value={option}
+                    disabled={option.disabled}
+                    className={({ highlighted, selected, disabled: optionDisabled }) =>
+                      clsx(
+                        menuStyles.option,
+                        highlighted && menuStyles['option-active'],
+                        selected && menuStyles['option-selected'],
+                        optionDisabled && menuStyles['option-disabled']
+                      )
+                    }
+                  >
+                    {option.label}
+                  </BaseSelect.Item>
+                ))}
+              </BaseSelect.List>
+            </BaseSelect.Popup>
+          </BaseSelect.Positioner>
+        </BaseSelect.Portal>
       </div>
-    </HeadlessListbox>
+    </BaseSelect.Root>
   );
 }
 
 export { Listbox };
-

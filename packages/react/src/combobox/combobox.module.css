@@ -1,0 +1,9 @@
+.root {
+  position: relative;
+  width: 100%;
+}
+
+.control {
+  width: 100%;
+  box-sizing: border-box;
+}

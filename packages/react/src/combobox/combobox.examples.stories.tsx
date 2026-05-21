@@ -27,7 +27,7 @@ export const CountrySelector: Story = {
   render: () => {
     const [selected, setSelected] = useState<ComboboxOption | null>(null);
     return (
-      <div className="p-6 max-w-md">
+      <div className="max-w-xs">
         <Combobox.Root
           options={countries}
           value={selected}

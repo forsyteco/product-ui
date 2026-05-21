@@ -1,0 +1,81 @@
+.popup {
+  box-sizing: border-box;
+  overflow: hidden;
+  z-index: 1;
+  border-radius: 10px;
+  border: 1px solid var(--field-input-border);
+  background-color: rgb(var(--background));
+  color: rgb(var(--foreground));
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.12);
+  width: var(--anchor-width, var(--input-width));
+  max-width: var(--available-width);
+  max-height: min(15rem, var(--available-height));
+  transform-origin: var(--transform-origin);
+  transition:
+    opacity 0.12s ease,
+    transform 0.12s ease;
+  outline: none;
+}
+
+.popup[data-starting-style],
+.popup[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+.list {
+  box-sizing: border-box;
+  overflow: auto;
+  padding: 0.25rem 0;
+  max-height: min(15rem, var(--available-height));
+  outline: none;
+}
+
+.empty {
+  cursor: default;
+  user-select: none;
+  color: rgb(var(--field-placeholder));
+}
+
+.empty:not(:empty) {
+  padding: 0.5rem var(--input-pad-inline, 0.75rem);
+}
+
+.empty:empty {
+  padding: 0;
+  margin: 0;
+  min-height: 0;
+  block-size: 0;
+  overflow: hidden;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  min-height: var(--text-base-line-height);
+  position: relative;
+  cursor: default;
+  user-select: none;
+  padding: 0.5rem var(--input-pad-inline, 0.75rem);
+  color: rgb(var(--foreground));
+}
+
+.option-active {
+  background-color: var(--field-input-halo);
+  color: rgb(var(--foreground));
+}
+
+.option-selected {
+  font-weight: 500;
+}
+
+.option-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.positioner {
+  z-index: 50;
+}

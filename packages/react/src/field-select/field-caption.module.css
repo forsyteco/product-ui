@@ -1,0 +1,22 @@
+.label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
+  font-weight: 500;
+  color: rgb(var(--foreground));
+}
+
+.hint {
+  margin-top: 0.25rem;
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-line-height);
+  color: rgb(var(--muted-foreground));
+}
+
+.error {
+  margin-top: 0.25rem;
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-line-height);
+  color: rgb(var(--destructive));
+}

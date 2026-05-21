@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Combobox } from './combobox';
 
 const options = [
@@ -34,48 +35,84 @@ function renderCombobox(props: {
 }
 
 describe('Combobox', () => {
-  it('renders the combobox component', () => {
-    renderCombobox({ options });
-    const input = screen.getByPlaceholderText('Select an option...');
-    expect(input).toBeInTheDocument();
+  describe('when rendered with default props', () => {
+    it('should render the combobox component', () => {
+      // Arrange
+      // Act
+      renderCombobox({ options });
+
+      // Assert
+      const input = screen.getByPlaceholderText('Select an option...');
+      expect(input).toBeInTheDocument();
+    });
   });
 
-  it('displays selected value', () => {
-    renderCombobox({ options, value: options[0] });
-    const input = screen.getByDisplayValue('Option 1');
-    expect(input).toBeInTheDocument();
+  describe('when a value is selected', () => {
+    it('should display the selected value', () => {
+      // Arrange
+      // Act
+      renderCombobox({ options, value: options[0] });
+
+      // Assert
+      const input = screen.getByDisplayValue('Option 1');
+      expect(input).toBeInTheDocument();
+    });
   });
 
-  it('filters options by query and shows empty state', () => {
-    renderCombobox({ options });
-    const input = screen.getByPlaceholderText('Select an option...');
+  describe('when the user focuses and types in the input', () => {
+    it('should filter options by query and show empty state', async () => {
+      // Arrange
+      const user = userEvent.setup();
+      renderCombobox({ options });
+      const input = screen.getByPlaceholderText('Select an option...');
 
-    fireEvent.focus(input);
-    fireEvent.change(input, { target: { value: 'Option 3' } });
-    expect(screen.getByText('Option 3')).toBeInTheDocument();
+      // Act
+      await user.click(input);
+      await user.type(input, 'Option 3');
 
-    fireEvent.change(input, { target: { value: 'Missing' } });
-    expect(screen.getByText('Nothing found.')).toBeInTheDocument();
+      // Assert
+      await waitFor(() => {
+        expect(screen.getByText('Option 3')).toBeInTheDocument();
+      });
+
+      // Act
+      await user.clear(input);
+      await user.type(input, 'Missing');
+
+      // Assert
+      await waitFor(() => {
+        expect(screen.getByText('Nothing found.')).toBeInTheDocument();
+      });
+    });
+
+    it('should call onChange when an option is selected', async () => {
+      // Arrange
+      const user = userEvent.setup();
+      const handleChange = vi.fn();
+      renderCombobox({ options, onChange: handleChange });
+      const input = screen.getByPlaceholderText('Select an option...');
+
+      // Act
+      await user.click(input);
+      await user.keyboard('{ArrowDown}{ArrowDown}');
+      await user.click(screen.getByRole('option', { name: 'Option 2' }));
+
+      // Assert
+      await waitFor(() => {
+        expect(handleChange).toHaveBeenCalledWith(options[1]);
+      });
+    });
   });
 
-  it('calls onChange when option is selected', () => {
-    const handleChange = vi.fn();
-    renderCombobox({ options, onChange: handleChange });
+  describe('when disabled is true', () => {
+    it('should disable the input', () => {
+      // Arrange
+      // Act
+      renderCombobox({ options, disabled: true });
 
-    const input = screen.getByPlaceholderText('Select an option...');
-    fireEvent.focus(input);
-    fireEvent.keyDown(input, { key: 'ArrowDown' });
-
-    const option = screen.getByText('Option 2');
-    fireEvent.mouseDown(option);
-    fireEvent.click(option);
-
-    expect(handleChange).toHaveBeenCalledWith(options[1]);
-  });
-
-  it('respects disabled state', () => {
-    renderCombobox({ options, disabled: true });
-    const input = screen.getByPlaceholderText('Select an option...');
-    expect(input).toHaveClass('opacity-50');
+      // Assert
+      const input = screen.getByPlaceholderText('Select an option...');
+      expect(input).toBeDisabled();
+    });
   });
 });

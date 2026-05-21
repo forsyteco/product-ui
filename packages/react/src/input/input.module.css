@@ -1,7 +1,7 @@
 .root {
   --input-adornment-size: 1rem;
   --input-active-border: var(--field-input-active-border);
-  --input-border: #b3c0d1;
+  --input-border: var(--field-input-border);
   --input-halo: var(--field-input-halo);
   --input-shadow-rest: 0 1px 2px rgb(0 0 0 / 0.05);
 
@@ -22,12 +22,14 @@
     box-shadow 0.15s ease;
 }
 
-.root:hover:not(:has(:disabled)):not(:has(input:focus)) {
+.root:hover:not(:disabled):not(:has(:disabled)):not(:has(input:focus)):not(:focus-visible):not([data-popup-open]) {
   border-color: color-mix(in srgb, rgb(var(--foreground)) 20%, transparent);
   box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
 }
 
-.root:has(input:focus) {
+.root:has(input:focus),
+.root:focus-visible,
+.root[data-popup-open] {
   border-color: rgb(var(--input-active-border));
   box-shadow: 0 0 0 3px var(--input-halo);
 }
@@ -45,24 +47,30 @@
   --input-active-border: var(--success);
 }
 
-.root--error:hover:not(:has(:disabled)):not(:has(input:focus)),
-.root--success:hover:not(:has(:disabled)):not(:has(input:focus)) {
+.root--error:hover:not(:disabled):not(:has(:disabled)):not(:has(input:focus)):not(:focus-visible):not([data-popup-open]),
+.root--success:hover:not(:disabled):not(:has(:disabled)):not(:has(input:focus)):not(:focus-visible):not([data-popup-open]) {
   border-color: var(--input-border);
 }
 
 .root--error:has(input:focus),
-.root--success:has(input:focus) {
+.root--error:focus-visible,
+.root--error[data-popup-open],
+.root--success:has(input:focus),
+.root--success:focus-visible,
+.root--success[data-popup-open] {
   border-color: rgb(var(--input-active-border));
   box-shadow:
     0 0 0 1px rgb(var(--input-active-border)),
     var(--input-shadow-rest);
 }
 
+.root:disabled,
 .root:has(:disabled) {
   cursor: not-allowed;
   opacity: 0.5;
 }
 
+.root:disabled:hover,
 .root:has(:disabled):hover {
   border-color: var(--input-border);
   box-shadow: var(--input-shadow-rest);

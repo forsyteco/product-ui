@@ -128,6 +128,7 @@
   --field-placeholder: 161 161 161;
   --field-error: 193 0 7;
   --field-error-halo: 248 240 240;
+  --field-input-border: #b3c0d1;
   --field-input-active-border: var(--neutral-200);
   --field-input-halo: color-mix(in srgb, rgb(var(--field-input-active-border)) 25%, rgb(var(--background)));
   --field-input-halo-active: color-mix(in srgb, rgb(var(--field-input-active-border)) 32%, rgb(var(--background)));
@@ -170,6 +171,7 @@
   --field-placeholder: 179 192 209;
   --field-error: 193 0 7;
   --field-error-halo: 248 240 240;
+  --field-input-border: #b3c0d1;
   --field-input-active-border: var(--field-focus-border);
   --field-input-halo: color-mix(in srgb, rgb(var(--field-input-active-border)) 25%, rgb(var(--background)));
   --field-input-halo-active: color-mix(in srgb, rgb(var(--field-input-active-border)) 32%, rgb(var(--background)));

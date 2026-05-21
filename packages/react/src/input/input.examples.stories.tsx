@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Input } from './input';
 import { Button } from '../button';
+import { FormField } from '../form-field';
 
 const meta = {
   title: 'Components/Input/Examples',
@@ -15,20 +16,20 @@ type Story = StoryObj<typeof meta>;
 
 export const LoginForm: Story = {
   render: () => (
-    <div className="p-6 max-w-md">
+    <div className="w-full max-w-sm">
       <form className="space-y-4">
-        <div>
-          <label className="block text-base font-medium text-gray-700 mb-1">
-            Email
-          </label>
-          <Input type="email" placeholder="you@example.com" />
-        </div>
-        <div>
-          <label className="block text-base font-medium text-gray-700 mb-1">
-            Password
-          </label>
-          <Input type="password" placeholder="••••••••" />
-        </div>
+        <FormField>
+          <FormField.Label>Email</FormField.Label>
+          <FormField.Control>
+            <Input type="email" placeholder="you@example.com" />
+          </FormField.Control>
+        </FormField>
+        <FormField>
+          <FormField.Label>Password</FormField.Label>
+          <FormField.Control>
+            <Input type="password" placeholder="••••••••" />
+          </FormField.Control>
+        </FormField>
         <Button type="submit" className="w-full">
           Sign In
         </Button>
@@ -39,24 +40,23 @@ export const LoginForm: Story = {
 
 export const FormWithValidation: Story = {
   render: () => (
-    <div className="p-6 max-w-md">
+    <div className="w-full max-w-sm">
       <form className="space-y-4">
-        <div>
-          <label className="block text-base font-medium text-gray-700 mb-1">
-            Username
-          </label>
-          <Input placeholder="Enter username" />
-          <p className="mt-1 text-base text-gray-500">Must be at least 3 characters</p>
-        </div>
-        <div>
-          <label className="block text-base font-medium text-gray-700 mb-1">
-            Email
-          </label>
-          <Input type="email" placeholder="Enter email" error />
-          <p className="mt-1 text-base text-red-600">Please enter a valid email address</p>
-        </div>
+        <FormField>
+          <FormField.Label>Username</FormField.Label>
+          <FormField.Control>
+            <Input placeholder="Enter username" />
+          </FormField.Control>
+          <FormField.Description>Must be at least 3 characters</FormField.Description>
+        </FormField>
+        <FormField>
+          <FormField.Label>Email</FormField.Label>
+          <FormField.Control describedBy="both">
+            <Input type="email" placeholder="Enter email" error />
+          </FormField.Control>
+          <FormField.Error>Please enter a valid email address</FormField.Error>
+        </FormField>
       </form>
     </div>
   ),
 };
-

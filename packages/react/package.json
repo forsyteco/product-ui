@@ -176,6 +176,16 @@
         "default": "./dist/fieldset/index.cjs"
       }
     },
+    "./form-field": {
+      "import": {
+        "types": "./dist/form-field/index.d.ts",
+        "default": "./dist/form-field/index.mjs"
+      },
+      "require": {
+        "types": "./dist/form-field/index.d.ts",
+        "default": "./dist/form-field/index.cjs"
+      }
+    },
     "./icon-button": {
       "import": {
         "types": "./dist/icon-button/index.d.ts",
@@ -347,6 +357,7 @@
       }
     },
     "./styles.css": "./styles.css",
+    "./components.css": "./dist/product-ui.css",
     "./fonts/*": "./fonts/*",
     "./tailwind": "./tailwind.config.js"
   },
@@ -370,6 +381,7 @@
   "author": "etiCloud Ltd",
   "license": "MIT",
   "dependencies": {
+    "@base-ui/react": "^1.3.0",
     "@github/relative-time-element": "^5.0.0",
     "@headlessui/react": "^2.2.9",
     "@lit-labs/react": "^2.1.3",

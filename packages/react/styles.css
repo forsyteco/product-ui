@@ -120,6 +120,14 @@
 
   --popover: var(--brand-white);
   --popover-foreground: var(--brand-black);
+
+  --success: 22 163 74;
+  --field-halo: 233 233 233;
+  --field-focus-border: 161 161 161;
+  --field-adornment: 81 81 81;
+  --field-placeholder: 161 161 161;
+  --field-error: 193 0 7;
+  --field-error-halo: 248 240 240;
 }
 
 :root:where([data-colour-scheme="blue"]) {
@@ -152,6 +160,13 @@
 
   --popover: var(--neutral-950);
   --popover-foreground: var(--brand-white);
+
+  --field-halo: 57 61 65;
+  --field-focus-border: 179 192 209;
+  --field-adornment: 196 207 222;
+  --field-placeholder: 179 192 209;
+  --field-error: 193 0 7;
+  --field-error-halo: 248 240 240;
 }
 
 body {

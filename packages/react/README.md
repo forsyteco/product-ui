@@ -40,7 +40,16 @@ Pull in the design tokens, fonts, and utilities provided by the library:
 @import '@forsyteco/product-ui/styles.css';
 ```
 
-### 3. Import components
+### 3. Import component bundle styles
+
+Components that use CSS modules (for example `Input` and `FormField`) also require:
+
+```css
+/* src/index.css or your main CSS file, after styles.css */
+@import '@forsyteco/product-ui/components.css';
+```
+
+### 4. Import components
 
 ```typescript
 import { Spinner } from '@forsyteco/product-ui'
@@ -63,7 +72,8 @@ function App() {
 
 ## Components
 
-All components use Tailwind CSS classes directly. Make sure Tailwind CSS is configured in your project.
+Most components use Tailwind CSS classes directly. Some components also ship CSS-module styles via
+`@forsyteco/product-ui/components.css`.
 
 ### Spinner
 

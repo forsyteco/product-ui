@@ -21,6 +21,9 @@ const config: StorybookConfig = {
     return mergeConfig(viteConfig, {
       base: '/product-ui/',
       plugins: [tailwindcss()],
+      optimizeDeps: {
+        include: ['@base-ui/react/input'],
+      },
     });
   },
 };

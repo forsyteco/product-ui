@@ -35,6 +35,15 @@ export type { AutocompleteRootProps, AutocompleteOption } from './autocomplete'
 
 export { Fieldset } from './fieldset'
 export type { FieldsetProps } from './fieldset'
+export { FormField } from './form-field'
+export type {
+  FormFieldProps,
+  FormFieldLabelProps,
+  FormFieldDescriptionProps,
+  FormFieldControlProps,
+  FormFieldErrorProps,
+  FormFieldLabelActionsProps,
+} from './form-field'
 
 export { Input } from './input'
 export type { InputProps } from './input'

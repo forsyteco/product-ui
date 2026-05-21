@@ -27,6 +27,7 @@ const componentEntries = [
   'disclosure',
   'dropdown-menu',
   'fieldset',
+  'form-field',
   'icon-button',
   'input',
   'listbox',
@@ -84,6 +85,7 @@ export default defineConfig({
     rollupOptions: {
       external: ['react', 'react-dom', 'react/jsx-runtime'],
       output: {
+        assetFileNames: 'product-ui.css',
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',

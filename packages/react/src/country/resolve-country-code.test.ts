@@ -15,8 +15,8 @@ describe('resolveCountryCode', () => {
     });
   });
 
-  describe('when value is a two-letter code', () => {
-    it('should return the uppercased value', () => {
+  describe('when value is a two-letter lowercase code', () => {
+    it('should return the uppercased code for flag rendering', () => {
       // Arrange
       const option = { label: 'France', value: 'fr' };
 

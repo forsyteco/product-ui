@@ -2,7 +2,10 @@
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
       "outDir": "./dist",
-    "typeRoots": ["../../node_modules/@types", "./node_modules/@types", "./@types"]
+    "typeRoots": ["../../node_modules/@types", "./node_modules/@types", "./@types"],
+    "paths": {
+      "#test-utils": ["./src/test/test-utils.tsx"]
+    }
     },
     "include": [
       "@types/**/*.ts",

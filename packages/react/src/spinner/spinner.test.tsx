@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { act, render } from '@testing-library/react';
+import { act, render } from '#test-utils';
 import { Spinner } from './spinner';
 
 describe('Spinner', () => {

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '#test-utils';
 import { CopyableCell } from './copyable-cell';
 
 describe('CopyableCell', () => {
@@ -78,24 +78,23 @@ describe('CopyableCell', () => {
   });
 
   describe('when styling the copy icon', () => {
-    it('should render the Copy icon from lucide-react', () => {
+    it('should render the copy icon', () => {
       // Arrange
       // Act
       const { container } = render(<CopyableCell value="Test value" />);
 
       // Assert
-      // lucide-react icons render as SVGs with the lucide class
-      const copyIcon = container.querySelector('svg.lucide-copy');
+      const copyIcon = container.querySelector('button svg');
       expect(copyIcon).toBeInTheDocument();
     });
 
-    it('should have correct size on copy icon (small)', () => {
+    it('should have correct size on copy icon (sm)', () => {
       // Arrange
       // Act
       const { container } = render(<CopyableCell value="Test value" />);
 
       // Assert
-      const copyIcon = container.querySelector('svg.lucide-copy');
+      const copyIcon = container.querySelector('button svg');
       expect(copyIcon).toHaveClass('h-3');
       expect(copyIcon).toHaveClass('w-3');
     });

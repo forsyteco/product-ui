@@ -7,6 +7,8 @@ import {
   type ColourScheme,
   type ThemeMode,
 } from '../src/theme/theme-provider';
+import { CountryFlagProvider } from '../src/country/flag-provider';
+import { createTwemojiFlagUrl } from './twemoji';
 
 import type { StorybookViewport } from './types';
 
@@ -95,13 +97,15 @@ export const decorators: Decorator[] = [
     const colourScheme: ColourScheme = globals.colourScheme ?? 'yellow';
 
     return (
-      <ThemeProvider
-        colourScheme={colourScheme}
-        defaultMode={mode}
-        storageKey={storybookThemeStorageKey}
-      >
-        <Story />
-      </ThemeProvider>
+      <CountryFlagProvider getFlagUrl={createTwemojiFlagUrl}>
+        <ThemeProvider
+          colourScheme={colourScheme}
+          defaultMode={mode}
+          storageKey={storybookThemeStorageKey}
+        >
+          <Story />
+        </ThemeProvider>
+      </CountryFlagProvider>
     );
   },
 ];

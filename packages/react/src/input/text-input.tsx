@@ -10,7 +10,7 @@ import styles from './input.module.css';
 
 const defaultTrailingActionProps = {
   variant: 'ghost',
-  size: 'small',
+  size: 'sm',
   shape: 'square',
 } as const satisfies Partial<IconOnlyButtonProps>;
 

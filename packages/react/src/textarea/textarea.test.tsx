@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '#test-utils';
 import { Textarea } from './textarea';
 import styles from './textarea.module.css';
 

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '#test-utils';
 import { DateCell } from './date-cell';
 
 describe('DateCell', () => {
@@ -117,8 +117,7 @@ describe('DateCell', () => {
       const { container } = render(<DateCell value={testDate} />);
 
       // Assert
-      // lucide-react icons render as SVGs with the lucide class
-      const clockIcon = container.querySelector('svg.lucide-clock');
+      const clockIcon = container.querySelector('svg');
       expect(clockIcon).toBeInTheDocument();
     });
   });

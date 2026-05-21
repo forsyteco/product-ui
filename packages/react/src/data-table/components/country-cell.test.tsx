@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '#test-utils';
 import { CountryCell } from './country-cell';
 
 describe('CountryCell', () => {
@@ -34,45 +34,36 @@ describe('CountryCell', () => {
   });
 
   describe('when rendering the flag image', () => {
-    it('should render an img element for the flag', () => {
+    it('should render a decorative flag image for known countries', () => {
       // Arrange
       // Act
-      render(<CountryCell value="United States" />);
+      const { container } = render(<CountryCell value="United States" />);
 
       // Assert
-      const img = screen.getByRole('img');
+      const img = container.querySelector('img');
       expect(img).toBeInTheDocument();
+      expect(img).toHaveAttribute('aria-hidden', 'true');
     });
 
     it('should render flag image with correct dimensions (h-5 w-5)', () => {
       // Arrange
       // Act
-      render(<CountryCell value="Canada" />);
+      const { container } = render(<CountryCell value="Canada" />);
 
       // Assert
-      const img = screen.getByRole('img');
+      const img = container.querySelector('img');
       expect(img).toHaveClass('h-5');
       expect(img).toHaveClass('w-5');
     });
 
-    it('should set correct alt text on flag image', () => {
+    it('should resolve the flag URL from the country code via CountryFlagProvider', () => {
       // Arrange
       // Act
-      render(<CountryCell value="Japan" />);
+      const { container } = render(<CountryCell value="Japan" />);
 
       // Assert
-      const img = screen.getByRole('img');
-      expect(img).toHaveAttribute('alt', 'Japan flag');
-    });
-
-    it('should use Twemoji CDN for flag images', () => {
-      // Arrange
-      // Act
-      render(<CountryCell value="United Kingdom" />);
-
-      // Assert
-      const img = screen.getByRole('img');
-      expect(img.getAttribute('src')).toContain('twemoji');
+      const img = container.querySelector('img');
+      expect(img?.getAttribute('src')).toContain('JP');
     });
   });
 
@@ -100,54 +91,40 @@ describe('CountryCell', () => {
       expect(screen.getByText('Unknown Country')).toBeInTheDocument();
     });
 
-    it('should still render an img element for unknown countries', () => {
+    it('should still attempt to render a flag when CountryFlagProvider supplies a URL', () => {
       // Arrange
       // Act
-      render(<CountryCell value="Fictional Land" />);
+      const { container } = render(<CountryCell value="Fictional Land" />);
 
       // Assert
-      const img = screen.getByRole('img');
-      expect(img).toBeInTheDocument();
+      expect(container.querySelector('img')).toBeInTheDocument();
     });
   });
 
   describe('when the flag image fails to load', () => {
-    it('should show fallback "-" when image fails to load', () => {
+    it('should hide the flag when the image fails to load', () => {
       // Arrange
-      render(<CountryCell value="Invalid Country" />);
-      const img = screen.getByRole('img');
+      const { container } = render(<CountryCell value="Invalid Country" />);
+      const img = container.querySelector('img');
+      expect(img).toBeInTheDocument();
 
       // Act
       act(() => {
-        fireEvent.error(img);
+        fireEvent.error(img!);
       });
 
       // Assert
-      expect(screen.getByText('-')).toBeInTheDocument();
-    });
-
-    it('should hide the img element when error occurs', () => {
-      // Arrange
-      render(<CountryCell value="Invalid Country" />);
-      const img = screen.getByRole('img');
-
-      // Act
-      act(() => {
-        fireEvent.error(img);
-      });
-
-      // Assert
-      expect(screen.queryByRole('img')).not.toBeInTheDocument();
+      expect(container.querySelector('img')).not.toBeInTheDocument();
     });
 
     it('should still display country name when image fails to load', () => {
       // Arrange
-      render(<CountryCell value="Some Country" />);
-      const img = screen.getByRole('img');
+      const { container } = render(<CountryCell value="Some Country" />);
+      const img = container.querySelector('img');
 
       // Act
       act(() => {
-        fireEvent.error(img);
+        fireEvent.error(img!);
       });
 
       // Assert

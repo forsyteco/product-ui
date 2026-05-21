@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { CountryCombobox } from './country-combobox';
 import type { CountryComboboxOption } from './country-combobox';
+import storyStyles from './combobox.examples.stories.module.css';
 
 const meta = {
   title: 'Components/Combobox/Examples',
@@ -39,19 +40,23 @@ const countries: CountryComboboxOption[] = [
   { id: 'bz', label: 'Belize', value: 'bz' },
   { id: 'bj', label: 'Benin', value: 'bj' },
   { id: 'bm', label: 'Bermuda', value: 'bm' },
-  { id: 'gb', label: 'United Kingdom', value: 'gb', isoCode: 'GB' },
-  { id: 'us', label: 'United States', value: 'us', isoCode: 'US' },
-  { id: 'fr', label: 'France', value: 'fr', isoCode: 'FR' },
-  { id: 'de', label: 'Germany', value: 'de', isoCode: 'DE' },
-  { id: 'jp', label: 'Japan', value: 'jp', isoCode: 'JP' },
-  { id: 'no', label: 'Norway', value: 'no', isoCode: 'NO' },
+  { id: 'gb', label: 'United Kingdom', value: 'gb' },
+  { id: 'us', label: 'United States', value: 'us' },
+  { id: 'fr', label: 'France', value: 'fr' },
+  { id: 'de', label: 'Germany', value: 'de' },
+  { id: 'jp', label: 'Japan', value: 'jp' },
+  { id: 'no', label: 'Norway', value: 'no' },
 ];
+
+const unitedKingdom =
+  countries.find((country) => country.value === 'gb') ??
+  ({ id: 'gb', label: 'United Kingdom', value: 'gb' } satisfies CountryComboboxOption);
 
 export const CountrySelectorWithFlags: Story = {
   render: () => {
     const [selected, setSelected] = useState<CountryComboboxOption | null>(null);
     return (
-      <div className="max-w-xs">
+      <div className={storyStyles.layout}>
         <CountryCombobox
           options={countries}
           value={selected}
@@ -59,9 +64,9 @@ export const CountrySelectorWithFlags: Story = {
           label="Country"
           placeholder="Search for a country..."
         />
-        {selected && (
-          <p className="mt-4 text-base text-muted-foreground">Selected: {selected.label}</p>
-        )}
+        {selected ? (
+          <p className={storyStyles.selectionHint}>Selected: {selected.label}</p>
+        ) : null}
       </div>
     );
   },
@@ -69,11 +74,9 @@ export const CountrySelectorWithFlags: Story = {
 
 export const CountrySelectorWithInitialValue: Story = {
   render: () => {
-    const [selected, setSelected] = useState<CountryComboboxOption | null>(
-      countries.find((country) => country.isoCode === 'GB') ?? null
-    );
+    const [selected, setSelected] = useState<CountryComboboxOption | null>(unitedKingdom);
     return (
-      <div className="max-w-xs">
+      <div className={storyStyles.layout}>
         <CountryCombobox
           options={countries}
           value={selected}
@@ -81,6 +84,27 @@ export const CountrySelectorWithInitialValue: Story = {
           label="Country of residence"
           placeholder="Search for a country..."
         />
+      </div>
+    );
+  },
+};
+
+export const CountrySelectorWithQuickSelect: Story = {
+  render: () => {
+    const [selected, setSelected] = useState<CountryComboboxOption | null>(null);
+    return (
+      <div className={storyStyles.layout}>
+        <CountryCombobox
+          options={countries}
+          value={selected}
+          onChange={setSelected}
+          quickSelect={unitedKingdom}
+          label="Country"
+          placeholder="Search for a country..."
+        />
+        {selected ? (
+          <p className={storyStyles.selectionHint}>Selected: {selected.label}</p>
+        ) : null}
       </div>
     );
   },

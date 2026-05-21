@@ -4,12 +4,14 @@ export type CountryResolvable = {
   label: string;
   id?: string | number;
   value?: string;
+  /** Lowercase ISO 3166-1 alpha-2 code (e.g. `gb`). */
   isoCode?: string;
 };
 
 /**
  * Resolves an ISO 3166-1 alpha-2 code from a country option or label.
- * Prefers explicit `isoCode`, then a 2-letter `value`/`id`, then the label lookup table.
+ * Prefers explicit `isoCode` (lowercase in data), then a 2-letter `value`/`id`, then the label lookup table.
+ * Returns an uppercased code for flag rendering.
  */
 export function resolveCountryCode(source: CountryResolvable): string | null {
   if (source.isoCode) {

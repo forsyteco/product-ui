@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '#test-utils';
 import userEvent from '@testing-library/user-event';
 import { Button } from './button';
 import styles from './button.module.css';
@@ -83,14 +83,14 @@ describe('Button', () => {
       // Arrange
       // Act
       const { container } = render(
-        <Button icon={HeartIcon} variant="primary" size="large" shape="circle" aria-label="Favorite" />
+        <Button icon={HeartIcon} variant="primary" size="lg" shape="circle" aria-label="Favorite" />
       );
       const button = container.firstChild as HTMLElement;
 
       // Assert
       expect(button).toHaveClass(styles['variant-primary']);
-      expect(button).toHaveClass(styles['size-large'], styles['shape-circle']);
-      expect(screen.getByTestId('icon')).toHaveClass(styles['icon-large']);
+      expect(button).toHaveClass(styles['size-icon-lg'], styles['shape-circle']);
+      expect(screen.getByTestId('icon')).toHaveClass(styles['icon-lg']);
     });
 
     it('should support loading state', () => {

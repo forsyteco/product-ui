@@ -1,44 +1,42 @@
 import * as React from 'react';
+import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
+import { clsx } from 'clsx';
+
+import { SearchIcon } from '../icons/icons';
+import { getInputInnerClassName, inputVariants, type InputSize } from '../input/input-shell';
+import inputStyles from '../input/input.module.css';
+import menuStyles from '../field-select/field-select-menu.module.css';
+import captionStyles from '../field-select/field-caption.module.css';
+import shellStyles from '../field-select/field-control-shell.module.css';
 import {
-  Combobox,
-  ComboboxInput,
-  ComboboxOption,
-  ComboboxOptions,
-  type ComboboxInputProps,
-} from '@headlessui/react';
-import { cn } from '../utils/tailwind';
+  LeadingVisual,
+  TrailingVisual,
+  TrailingAction,
+  resolveFieldControlSlot,
+} from '../field-select/field-control-visuals';
+import { ClearIcon } from '../field-select/clear-icon';
 import { resolveFieldAutofillProps } from '../utils/field-autofill-props';
 import type { AutocompleteOption } from './types';
+import styles from '../combobox/combobox.module.css';
 
 type Ctx = {
-  options: AutocompleteOption[];
-  filteredOptions: AutocompleteOption[];
-  value: AutocompleteOption | null;
-  setValue: (next: AutocompleteOption | null) => void;
-
-  query: string;
-  setQuery: (next: string) => void;
-
+  inputId: string;
   placeholder: string;
   disabled: boolean;
-  invalid: boolean;
-
-  isOpen: boolean;
-  setIsOpen: (next: boolean) => void;
-
+  error: boolean;
   clearable: boolean;
-
+  size: InputSize;
+  selectedValue: AutocompleteOption | null;
+  inputValue: string;
   minQueryLength: number;
-
-  filterFn: (option: AutocompleteOption, query: string) => boolean;
+  loading: boolean;
+  emptyBeforeThresholdText: (min: number) => string;
+  emptyAfterThresholdText: string;
+  selectValue: (value: AutocompleteOption | null) => void;
   renderOption?: (
     option: AutocompleteOption,
     state: { active: boolean; selected: boolean; disabled: boolean }
   ) => React.ReactNode;
-
-  loading: boolean;
-  emptyBeforeThresholdText: (min: number) => string;
-  emptyAfterThresholdText: string;
 };
 
 const AutocompleteCtx = React.createContext<Ctx | null>(null);
@@ -57,297 +55,250 @@ function defaultFilterFn(option: AutocompleteOption, query: string) {
 
 export type AutocompleteRootProps = {
   options: AutocompleteOption[];
-
   value?: AutocompleteOption | null;
   defaultValue?: AutocompleteOption | null;
   onChange?: (value: AutocompleteOption | null) => void;
-
   query?: string;
   defaultQuery?: string;
   onQueryChange?: (query: string) => void;
-
   placeholder?: string;
   disabled?: boolean;
+  error?: boolean;
+  /** @deprecated Use `error` instead */
   invalid?: boolean;
   clearable?: boolean;
-
-  /** Default 1 – options open on first character typed */
   minQueryLength?: number;
-
   loading?: boolean;
-
   filterFn?: (option: AutocompleteOption, query: string) => boolean;
-
   renderOption?: Ctx['renderOption'];
-
   emptyBeforeThresholdText?: (min: number) => string;
   emptyAfterThresholdText?: string;
-
   className?: string;
   children: React.ReactNode;
 };
 
 function Root({
   options,
-
   value: valueProp,
   defaultValue = null,
   onChange,
-
   query: queryProp,
   defaultQuery = '',
   onQueryChange,
-
   placeholder = 'Search…',
   disabled = false,
-  invalid = false,
+  error,
+  invalid,
   clearable = true,
-
   minQueryLength = 1,
   loading = false,
-
   filterFn,
   renderOption,
-
   emptyBeforeThresholdText = (min) => `Type ${min}+ characters…`,
   emptyAfterThresholdText = 'No results',
-
   className,
   children,
 }: AutocompleteRootProps) {
-  const [internalValue, setInternalValue] = React.useState<AutocompleteOption | null>(defaultValue);
-  const value = valueProp !== undefined ? valueProp : internalValue;
-
-  const setValue = React.useCallback(
-    (next: AutocompleteOption | null) => {
-      if (valueProp === undefined) setInternalValue(next);
-      onChange?.(next);
-    },
-    [onChange, valueProp]
-  );
-
-  const [internalQuery, setInternalQuery] = React.useState(defaultQuery);
-  const query = queryProp !== undefined ? queryProp : internalQuery;
-
-  const setQuery = React.useCallback(
-    (next: string) => {
-      if (queryProp === undefined) setInternalQuery(next);
-      onQueryChange?.(next);
-    },
-    [onQueryChange, queryProp]
-  );
-
-  const [isOpen, setIsOpen] = React.useState(false);
-
+  const inputId = React.useId();
+  const isValueControlled = valueProp !== undefined;
+  const isQueryControlled = queryProp !== undefined;
   const effectiveFilterFn = filterFn ?? defaultFilterFn;
 
-  const filteredOptions = React.useMemo(() => {
-    if (!query.trim()) return options;
-    return options.filter((o) => effectiveFilterFn(o, query));
-  }, [options, query, effectiveFilterFn]);
+  const [internalInputValue, setInternalInputValue] = React.useState(() => {
+    if (defaultQuery) return defaultQuery;
+    if (defaultValue?.label) return defaultValue.label;
+    return '';
+  });
+  const [internalValue, setInternalValue] = React.useState<AutocompleteOption | null>(defaultValue ?? null);
+
+  React.useEffect(() => {
+    if (isQueryControlled || !isValueControlled) return;
+    setInternalInputValue(valueProp?.label ?? '');
+  }, [isQueryControlled, isValueControlled, valueProp]);
+
+  const inputValue = isQueryControlled ? queryProp : internalInputValue;
+  const selectedValue = isValueControlled ? (valueProp ?? null) : internalValue;
+  const hasError = error ?? invalid ?? false;
+
+  const selectValue = React.useCallback(
+    (nextValue: AutocompleteOption | null) => {
+      if (!isValueControlled) {
+        setInternalValue(nextValue);
+      }
+      onChange?.(nextValue);
+      if (!isQueryControlled) {
+        setInternalInputValue(nextValue?.label ?? '');
+      }
+    },
+    [isQueryControlled, isValueControlled, onChange]
+  );
 
   const ctx: Ctx = React.useMemo(
     () => ({
-      options,
-      filteredOptions,
-      value,
-      setValue,
-      query,
-      setQuery,
+      inputId,
       placeholder,
       disabled,
-      invalid,
-      isOpen,
-      setIsOpen,
+      error: hasError,
       clearable,
+      size: 'default',
+      selectedValue,
+      inputValue,
       minQueryLength,
-      filterFn: effectiveFilterFn,
-      renderOption,
       loading,
       emptyBeforeThresholdText,
       emptyAfterThresholdText,
+      selectValue,
+      renderOption,
     }),
     [
-      options,
-      filteredOptions,
-      value,
-      setValue,
-      query,
-      setQuery,
+      inputId,
       placeholder,
       disabled,
-      invalid,
-      isOpen,
+      hasError,
       clearable,
+      selectedValue,
+      inputValue,
       minQueryLength,
-      effectiveFilterFn,
-      renderOption,
       loading,
       emptyBeforeThresholdText,
       emptyAfterThresholdText,
+      selectValue,
+      renderOption,
     ]
   );
 
   return (
     <AutocompleteCtx.Provider value={ctx}>
-      <div className={cn('relative', className)}>
-        <Combobox
-          by="id"
-          value={value}
-          onChange={(next) => setValue(next)}
-          disabled={disabled}
-          nullable
-        >
-          {children}
-        </Combobox>
-      </div>
+      <BaseCombobox.Root<AutocompleteOption>
+        value={isValueControlled ? (valueProp ?? null) : internalValue}
+        defaultValue={undefined}
+        onValueChange={(next) => {
+          selectValue((next as AutocompleteOption | null) ?? null);
+        }}
+        inputValue={inputValue}
+        onInputValueChange={(next) => {
+          if (!isQueryControlled) {
+            setInternalInputValue(next);
+          }
+          onQueryChange?.(next);
+        }}
+        disabled={disabled}
+        items={options}
+        filter={(item, query) => effectiveFilterFn(item, query)}
+        isItemEqualToValue={(a, b) => a.id === b.id}
+        itemToStringLabel={(option) => option.label}
+      >
+        <div className={clsx(styles.root, className)}>{children}</div>
+      </BaseCombobox.Root>
     </AutocompleteCtx.Provider>
   );
 }
 
-function Label({
-  className,
-  ...props
-}: React.LabelHTMLAttributes<HTMLLabelElement>) {
-  return (
-    <label
-      {...props}
-      className={cn('mb-1 block text-base font-medium text-foreground', className)}
-    />
-  );
+function Label({ className, ...props }: React.LabelHTMLAttributes<HTMLLabelElement>) {
+  const { inputId } = useAutocompleteCtx();
+  return <label htmlFor={inputId} {...props} className={clsx(captionStyles.label, className)} />;
 }
 
 function Control({
   className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
-  return <div {...props} className={cn('relative', className)} />;
-}
-
-function LeadingIcon({
-  className,
   children,
+  leadingVisual,
+  trailingVisual,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
-  const icon =
-    children ?? (
-      <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path
-          fillRule="evenodd"
-          d="M9 3a6 6 0 1 0 3.476 10.892l3.316 3.316a1 1 0 0 0 1.414-1.414l-3.316-3.316A6 6 0 0 0 9 3Zm-4 6a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z"
-          clipRule="evenodd"
-        />
-      </svg>
-    );
+}: React.HTMLAttributes<HTMLDivElement> & {
+  leadingVisual?: React.ReactNode;
+  trailingVisual?: React.ReactNode;
+}) {
+  const ctx = useAutocompleteCtx();
+  const childItems = React.Children.toArray(children);
+  const resolvedLeadingVisual = resolveFieldControlSlot(leadingVisual, childItems, LeadingVisual);
+  const resolvedTrailingVisual = resolveFieldControlSlot(trailingVisual, childItems, TrailingVisual);
+  const inputChild = childItems.find((child) => React.isValidElement(child) && child.type === Input);
+  const clearChild = childItems.find((child) => React.isValidElement(child) && child.type === ClearButton);
 
   return (
-    <div
+    <BaseCombobox.InputGroup
       {...props}
-      className={cn(
-        'pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground',
-        className
-      )}
+      className={clsx(inputVariants({ size: ctx.size, error: ctx.error }), styles.control, className)}
     >
-      {icon}
-    </div>
+      {resolvedLeadingVisual ? (
+        <div className={clsx(inputStyles.slot, inputStyles['slot-pad'], shellStyles.leadingVisual)}>
+          {resolvedLeadingVisual}
+        </div>
+      ) : null}
+      {inputChild && React.isValidElement(inputChild)
+        ? React.cloneElement(inputChild, {
+            hasLeadingVisual: Boolean(resolvedLeadingVisual),
+          } as Partial<InputProps>)
+        : null}
+      {clearChild ? (
+        <div className={clsx(inputStyles.slot, shellStyles.trailingAction)}>{clearChild}</div>
+      ) : null}
+      {resolvedTrailingVisual ? (
+        <div className={clsx(inputStyles.slot, inputStyles['slot-pad'], shellStyles.trailingVisual)}>
+          {resolvedTrailingVisual}
+        </div>
+      ) : null}
+    </BaseCombobox.InputGroup>
   );
 }
 
-type InputProps = Omit<
-  ComboboxInputProps<'input', AutocompleteOption | null>,
-  'displayValue' | 'onChange' | 'className'
-> & {
-  displayValue?: (option: AutocompleteOption | null) => string;
-  onValueTextChange?: (text: string) => void;
+type InputProps = Omit<React.ComponentProps<typeof BaseCombobox.Input>, 'placeholder' | 'className'> & {
   placeholder?: string;
   autoComplete?: string;
+  hasLeadingVisual?: boolean;
   className?: string;
 };
 
 function Input({
   className,
-  displayValue,
-  onValueTextChange,
-  onFocus,
-  onBlur,
-  autoComplete,
   placeholder,
+  autoComplete,
+  hasLeadingVisual = false,
   ...props
 }: InputProps) {
   const ctx = useAutocompleteCtx();
 
-  const displayValueFn = displayValue ?? ((opt: AutocompleteOption | null) => opt?.label ?? '');
-  const placeholderValue = placeholder ?? ctx.placeholder;
   return (
-    <ComboboxInput<AutocompleteOption | null>
+    <BaseCombobox.Input
       {...props}
-      placeholder={placeholderValue}
-      displayValue={displayValueFn}
+      id={ctx.inputId}
       {...resolveFieldAutofillProps({ autoComplete })}
-      className={cn(
-        'w-full rounded-md border bg-background py-2 pl-9 pr-10 text-base leading-5 text-foreground',
-        'border-input focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background',
-        ctx.invalid && 'border-destructive focus:ring-destructive',
-        ctx.disabled && 'cursor-not-allowed opacity-50',
-        className
-      )}
-      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-        const next = e.target.value;
-        ctx.setQuery(next);
-        onValueTextChange?.(next);
-
-        if (!ctx.disabled) {
-          const qLen = next.trim().length;
-          ctx.setIsOpen(qLen >= ctx.minQueryLength);
-        }
-      }}
-      onFocus={(e: React.FocusEvent<HTMLInputElement>) => {
-        onFocus?.(e);
-      }}
-      onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
-        if (!ctx.disabled) ctx.setIsOpen(false);
-        onBlur?.(e);
-      }}
+      placeholder={placeholder ?? ctx.placeholder}
+      aria-invalid={ctx.error ? true : undefined}
+      className={getInputInnerClassName({
+        hasLeadingVisual,
+        hasTrailingVisual: ctx.clearable,
+        inputClassName: className ?? undefined,
+      })}
     />
+  );
+}
+
+function LeadingIcon({ className }: { className?: string }) {
+  return (
+    <LeadingVisual>
+      <SearchIcon className={clsx(shellStyles.icon, className)} />
+    </LeadingVisual>
   );
 }
 
 function ClearButton({
   className,
   'aria-label': ariaLabel,
-  onClick,
   ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+}: React.ComponentProps<typeof BaseCombobox.Clear>) {
   const ctx = useAutocompleteCtx();
-  const visible = ctx.clearable && !!ctx.value && !ctx.disabled;
-
-  if (!visible) return null;
+  if (!ctx.clearable) return null;
 
   return (
-    <button
-      type="button"
+    <BaseCombobox.Clear
       {...props}
       aria-label={ariaLabel ?? 'Clear selection'}
-      className={cn(
-        'absolute inset-y-0 right-0 flex items-center px-3 text-muted-foreground hover:text-foreground',
-        className
-      )}
-      onClick={(e) => {
-        e.preventDefault();
-        ctx.setValue(null);
-        ctx.setQuery('');
-        ctx.setIsOpen(false);
-        onClick?.(e);
-      }}
+      className={clsx(shellStyles.iconButton, className)}
     >
-      <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path
-          fillRule="evenodd"
-          d="M10 8.586 4.293 2.879A1 1 0 1 0 2.879 4.293L8.586 10l-5.707 5.707a1 1 0 1 0 1.414 1.414L10 11.414l5.707 5.707a1 1 0 0 0 1.414-1.414L11.414 10l5.707-5.707A1 1 0 0 0 15.707 2.88L10 8.586Z"
-          clipRule="evenodd"
-        />
-      </svg>
-    </button>
+      <ClearIcon className={shellStyles.icon} />
+    </BaseCombobox.Clear>
   );
 }
 
@@ -355,46 +306,42 @@ function Options({
   className,
   children,
   ...props
-}: Omit<React.ComponentProps<typeof ComboboxOptions>, 'children'> & {
+}: Omit<React.ComponentProps<typeof BaseCombobox.List>, 'children'> & {
   children?: React.ReactNode;
 }) {
   const ctx = useAutocompleteCtx();
+  const queryLength = ctx.inputValue.trim().length;
 
-  const qLen = ctx.query.trim().length;
-  const meetsThreshold = qLen >= ctx.minQueryLength;
-
-  if (!ctx.isOpen || ctx.disabled || !meetsThreshold) return null;
-
-  const hasResults = ctx.filteredOptions.length > 0;
+  if (ctx.disabled || queryLength < ctx.minQueryLength) {
+    return null;
+  }
 
   return (
-    <ComboboxOptions
-      {...props}
-      className={cn(
-        'absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-background py-1 text-base shadow-lg',
-        'ring-1 ring-border focus:outline-none',
-        className
-      )}
-    >
-      {children ? (
-        children
-      ) : ctx.loading ? (
-        <Loading />
-      ) : hasResults ? (
-        ctx.filteredOptions.map((opt) => <Option key={opt.id} option={opt} />)
-      ) : (
-        <Empty />
-      )}
-    </ComboboxOptions>
+    <BaseCombobox.Portal>
+      <BaseCombobox.Positioner side="bottom" align="start" sideOffset={4} className={menuStyles.positioner}>
+        <BaseCombobox.Popup className={clsx(menuStyles.popup, className)}>
+          <BaseCombobox.List {...props} className={menuStyles.list}>
+            <BaseCombobox.Empty className={menuStyles.empty}>
+              {ctx.emptyAfterThresholdText}
+            </BaseCombobox.Empty>
+            {children ??
+              (ctx.loading ? (
+                <Loading />
+              ) : (
+                <BaseCombobox.Collection>
+                  {(option: AutocompleteOption) => <Option key={option.id} option={option} />}
+                </BaseCombobox.Collection>
+              ))}
+          </BaseCombobox.List>
+        </BaseCombobox.Popup>
+      </BaseCombobox.Positioner>
+    </BaseCombobox.Portal>
   );
 }
 
 function Loading({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div
-      {...props}
-      className={cn('cursor-default select-none px-4 py-2 text-muted-foreground', className)}
-    >
+    <div {...props} className={clsx(menuStyles.empty, className)}>
       Loading…
     </div>
   );
@@ -402,14 +349,11 @@ function Loading({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) 
 
 function Empty({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   const ctx = useAutocompleteCtx();
-  const qLen = ctx.query.trim().length;
+  const queryLength = ctx.inputValue.trim().length;
 
   return (
-    <div
-      {...props}
-      className={cn('cursor-default select-none px-4 py-2 text-muted-foreground', className)}
-    >
-      {qLen < ctx.minQueryLength
+    <div {...props} className={clsx(menuStyles.empty, className)}>
+      {queryLength < ctx.minQueryLength
         ? ctx.emptyBeforeThresholdText(ctx.minQueryLength)
         : ctx.emptyAfterThresholdText}
     </div>
@@ -421,69 +365,47 @@ function Option({
   className,
   children,
   ...props
-}: Omit<React.ComponentProps<typeof ComboboxOption>, 'value' | 'children'> & {
+}: Omit<React.ComponentProps<typeof BaseCombobox.Item>, 'value' | 'children'> & {
   option: AutocompleteOption;
   children?: React.ReactNode;
 }) {
   const ctx = useAutocompleteCtx();
 
   return (
-    <ComboboxOption
+    <BaseCombobox.Item
       {...props}
       value={option}
       disabled={option.disabled}
-      className={({
-        active,
-        selected,
-        disabled: optDisabled,
-      }: {
-        active: boolean;
-        selected: boolean;
-        disabled: boolean;
-      }) =>
-        cn(
-          'relative select-none py-2 pl-3 pr-4',
-          optDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-default',
-          active ? 'bg-accent text-accent-foreground' : 'text-foreground',
-          selected && 'font-medium',
-          typeof className === 'function'
-            ? className({ active, selected, disabled: optDisabled })
-            : className
+      className={({ highlighted, selected, disabled: optDisabled }) =>
+        clsx(
+          menuStyles.option,
+          highlighted && menuStyles['option-active'],
+          selected && menuStyles['option-selected'],
+          optDisabled && menuStyles['option-disabled'],
+          typeof className === 'function' ? className({ highlighted, selected, disabled: optDisabled }) : className
         )
       }
-    >
-      {({
-        active,
-        selected,
-        disabled: optDisabled,
-      }: {
-        active: boolean;
-        selected: boolean;
-        disabled: boolean;
-      }) => {
-        const content = children
-          ? children
-          : ctx.renderOption
-            ? ctx.renderOption(option, { active, selected, disabled: optDisabled })
-            : option.label;
-        return <>{content}</>;
-      }}
-    </ComboboxOption>
+      render={(itemProps, state) => (
+        <div {...itemProps}>
+          {children ??
+            ctx.renderOption?.(option, {
+              active: state.highlighted,
+              selected: state.selected,
+              disabled: state.disabled,
+            }) ??
+            option.label}
+        </div>
+      )}
+    />
   );
 }
 
-function Hint({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLParagraphElement>) {
-  return <p {...props} className={cn('mt-1 text-base text-muted-foreground', className)} />;
+function Hint({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) {
+  return <p {...props} className={clsx(captionStyles.hint, className)} />;
 }
 
-function Error({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLParagraphElement>) {
-  return <p {...props} className={cn('mt-1 text-base text-destructive', className)} />;
+function Error({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) {
+  return <p {...props} className={clsx(captionStyles.error, className)} />;
 }
 
 export const Autocomplete = {
@@ -491,6 +413,9 @@ export const Autocomplete = {
   Label,
   Control,
   LeadingIcon,
+  LeadingVisual,
+  TrailingVisual,
+  TrailingAction,
   Input,
   ClearButton,
   Options,

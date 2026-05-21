@@ -3,7 +3,7 @@
  */
 
 import { vi } from 'vitest';
-import { screen, within } from '@testing-library/react';
+import { screen, within } from '#test-utils';
 import type { UserEvent } from '@testing-library/user-event';
 import type { DataTableColumn, DataTableProps } from './types';
 

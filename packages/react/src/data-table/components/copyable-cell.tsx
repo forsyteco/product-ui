@@ -1,4 +1,4 @@
-import { Copy } from 'lucide-react';
+import { CopyIcon } from '../../icons/icons';
 import { cn } from '../../utils/tailwind';
 
 export type CopyableCellProps = Readonly<{
@@ -20,7 +20,7 @@ export function CopyableCell({ value }: CopyableCellProps) {
         )}
         aria-label="Copy to clipboard"
       >
-        <Copy className="h-3 w-3" />
+        <CopyIcon className="h-3 w-3" />
       </button>
     </span>
   );

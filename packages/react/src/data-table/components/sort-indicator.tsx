@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { ArrowUp, ArrowDown, ArrowUpDown } from 'lucide-react';
+import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon } from '../../icons/icons';
 import { cn } from '../../utils/tailwind';
 import type { SortDirection } from '../types';
 
@@ -35,13 +35,13 @@ function SortIndicator({ direction, color, activeBackground, activeForeground }:
       style={containerStyle}
     >
       {direction === 'asc' && (
-        <ArrowUp className={cn('h-3 w-3', !iconColor && 'text-foreground')} style={iconStyle} />
+        <ArrowUpIcon className={cn('h-3 w-3', !iconColor && 'text-foreground')} style={iconStyle} />
       )}
       {direction === 'desc' && (
-        <ArrowDown className={cn('h-3 w-3', !iconColor && 'text-foreground')} style={iconStyle} />
+        <ArrowDownIcon className={cn('h-3 w-3', !iconColor && 'text-foreground')} style={iconStyle} />
       )}
       {direction === null && (
-        <ArrowUpDown className={cn('h-3 w-3', !iconColor && 'opacity-50 text-foreground')} style={iconStyle} />
+        <ArrowUpDownIcon className={cn('h-3 w-3', !iconColor && 'opacity-50 text-foreground')} style={iconStyle} />
       )}
     </span>
   );

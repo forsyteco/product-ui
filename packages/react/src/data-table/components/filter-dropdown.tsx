@@ -1,6 +1,6 @@
 import { useState, useMemo, type CSSProperties } from 'react';
 import { Popover as HeadlessPopover, Portal } from '@headlessui/react';
-import { Filter, Search } from 'lucide-react';
+import { FilterIcon, SearchIcon } from '../../icons/icons';
 import { cn } from '../../utils/tailwind';
 import { Input } from '../../input';
 import { Button } from '../../button';
@@ -88,7 +88,7 @@ function FilterDropdown({
           style={buttonStyle}
           onClick={(e: React.MouseEvent) => e.stopPropagation()}
         >
-          <Filter
+          <FilterIcon
             className={cn('h-3 w-3', !currentIconColor && 'text-foreground')}
             style={currentIconColor ? { color: currentIconColor } : undefined}
           />
@@ -109,7 +109,7 @@ function FilterDropdown({
                 onChange={(e) => setSearchTerm(e.target.value)}
                 autoFocus
                 size="sm"
-                leadingVisual={<Search className="h-4 w-4" />}
+                leadingVisual={<SearchIcon className="h-4 w-4" />}
               />
             </div>
             {showSelectAll ? (

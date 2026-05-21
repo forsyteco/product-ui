@@ -25,9 +25,6 @@ export const buttonVariants = cva(styles.base, {
       md: styles['size-md'],
       lg: styles['size-lg'],
       icon: styles['size-icon'],
-      small: styles['size-small'],
-      medium: styles['size-medium'],
-      large: styles['size-large'],
     },
     shape: {
       square: styles['shape-square'],
@@ -43,13 +40,19 @@ export const buttonVariants = cva(styles.base, {
 
 export type ButtonVariantProps = VariantProps<typeof buttonVariants>;
 
-export const iconSizes = {
-  small: styles['icon-small'],
-  medium: styles['icon-medium'],
-  large: styles['icon-large'],
+export const iconButtonSizes = {
+  sm: styles['size-icon-sm'],
+  md: styles['size-icon-md'],
+  lg: styles['size-icon-lg'],
 } as const;
 
-export type IconOnlyButtonSize = keyof typeof iconSizes;
+export type IconOnlyButtonSize = keyof typeof iconButtonSizes;
+
+export const iconSizes = {
+  sm: styles['icon-sm'],
+  md: styles['icon-md'],
+  lg: styles['icon-lg'],
+} as const;
 
 export function normalizeButtonVariant(
   variant: ButtonVariantProps['variant'] | 'danger' | null | undefined

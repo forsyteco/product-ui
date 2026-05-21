@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { Clock } from 'lucide-react';
+import { ClockIcon } from '../../icons/icons';
 import { cn } from '../../utils/tailwind';
 
 export type DateCellProps = Readonly<{
@@ -49,7 +49,7 @@ export function DateCell({ value, dateFormat = 'DD/MM/YYYY' }: DateCellProps) {
     <div className="flex flex-col">
       <span className="text-foreground">{formattedDate}</span>
       <span className={cn('flex items-center gap-1 text-base text-muted-foreground')}>
-        <Clock className="h-3 w-3" />
+        <ClockIcon className="h-3 w-3" />
         {relativeTime}
       </span>
     </div>

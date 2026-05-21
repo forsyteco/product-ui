@@ -13,6 +13,7 @@ import { Spinner } from '../spinner';
 import { VisuallyHidden } from '../visually-hidden';
 import {
   buttonVariants,
+  iconButtonSizes,
   iconSizes,
   normalizeButtonVariant,
   type IconOnlyButtonSize,
@@ -127,7 +128,7 @@ const IconOnlyButtonInner = forwardRef<HTMLButtonElement | HTMLAnchorElement, Ic
       as = 'button',
       icon: Icon,
       variant,
-      size = 'medium',
+      size = 'md',
       shape = 'square',
       inactive = false,
       loading = false,
@@ -143,14 +144,14 @@ const IconOnlyButtonInner = forwardRef<HTMLButtonElement | HTMLAnchorElement, Ic
     const Component = as === 'a' ? 'a' : 'button';
     const tooltipText = description ?? ariaLabel;
     const title = keybindingHint ? `${tooltipText} (${keybindingHint})` : tooltipText;
-    const resolvedSize: IconOnlyButtonSize = size ?? 'medium';
+    const resolvedSize: IconOnlyButtonSize = size ?? 'md';
     const iconClassName = iconSizes[resolvedSize];
     const sharedClassName = cn(
       buttonVariants({
         variant: normalizeButtonVariant(variant),
-        size: resolvedSize,
         shape,
       }),
+      iconButtonSizes[resolvedSize],
       inactive && styles.inactive,
       className
     );

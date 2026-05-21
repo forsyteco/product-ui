@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, act } from '@testing-library/react';
+import { render, screen, act } from '#test-utils';
 import { Dialog, DialogPanel, DialogTitle, DialogDescription } from './dialog';
 
 describe('Dialog', () => {

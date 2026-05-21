@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '#test-utils';
 import userEvent from '@testing-library/user-event';
 import { Autocomplete } from './autocomplete';
 
@@ -118,7 +118,9 @@ describe('Autocomplete', () => {
       await user.type(input, 'Missing');
 
       // Assert
-      expect(screen.getByText('No results')).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByText('No results')).toBeInTheDocument();
+      });
     });
 
     it('should call onChange when an option is selected', async () => {
@@ -142,13 +144,13 @@ describe('Autocomplete', () => {
   });
 
   describe('when disabled is true', () => {
-    it('should apply disabled styling', () => {
+    it('should disable the input', () => {
       // Arrange
       // Act
       renderAutocomplete({ options, disabled: true });
 
       // Assert
-      expect(screen.getByPlaceholderText('Search…')).toHaveClass('opacity-50');
+      expect(screen.getByPlaceholderText('Search…')).toBeDisabled();
     });
   });
 

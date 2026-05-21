@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { clsx } from 'clsx';
-import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
+import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from '../icons/icons';
 import {
   DayPicker,
   getDefaultClassNames,
@@ -33,7 +33,7 @@ function CalendarChevron({ className, orientation, ...props }: CalendarChevronPr
   return <ChevronDownIcon className={clsx(styles.chevronIcon, className)} {...props} />;
 }
 
-type CalendarProps = React.ComponentProps<typeof DayPicker> & {
+export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
   buttonVariant?: React.ComponentProps<typeof Button>['variant'];
 };
 
@@ -138,7 +138,7 @@ function Calendar({
           captionLayout === 'label' ? styles.captionLabelLabel : styles.captionLabelDropdown,
           defaultClassNames.caption_label
         ),
-        table: clsx(styles.table, defaultClassNames.table),
+        table: styles.table,
         weekdays: clsx(styles.weekdays, defaultClassNames.weekdays),
         weekday: clsx(styles.weekday, defaultClassNames.weekday),
         week: clsx(styles.week, defaultClassNames.week),

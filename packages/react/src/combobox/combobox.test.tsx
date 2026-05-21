@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '#test-utils';
 import userEvent from '@testing-library/user-event';
 import { Combobox } from './combobox';
 
@@ -113,6 +113,24 @@ describe('Combobox', () => {
       // Assert
       const input = screen.getByPlaceholderText('Select an option...');
       expect(input).toBeDisabled();
+    });
+  });
+
+  describe('when error is true', () => {
+    it('should mark the input as invalid', () => {
+      // Arrange
+      // Act
+      render(
+        <Combobox.Root options={options} error placeholder="Select an option...">
+          <Combobox.Control>
+            <Combobox.Input />
+            <Combobox.ToggleButton />
+          </Combobox.Control>
+        </Combobox.Root>
+      );
+
+      // Assert
+      expect(screen.getByRole('combobox')).toHaveAttribute('aria-invalid', 'true');
     });
   });
 });

@@ -3,9 +3,8 @@
 import * as React from 'react';
 import { clsx } from 'clsx';
 import { Popover as BasePopover } from '@base-ui/react/popover';
-import { Calendar as CalendarIcon } from 'lucide-react';
 import type { Matcher } from 'react-day-picker';
-
+import { CalendarIcon } from '../icons/icons';
 import { Button, type IconOnlyButtonSize } from '../button';
 import { Calendar } from '../calendar';
 import captionStyles from '../field-select/field-caption.module.css';
@@ -20,9 +19,9 @@ import { mergeIds } from './merge-ids';
 import { useDatePickerInput } from './use-date-picker-input';
 
 const CALENDAR_BUTTON_SIZE: Record<NonNullable<TextInputProps['size']>, IconOnlyButtonSize> = {
-  sm: 'small',
-  default: 'medium',
-  lg: 'large',
+  sm: 'sm',
+  default: 'md',
+  lg: 'lg',
 };
 
 export type DatePickerProps = {
@@ -45,6 +44,8 @@ export type DatePickerProps = {
   disabledDates?: Matcher | Matcher[];
   error?: TextInputProps['error'];
   errorMessage?: React.ReactNode;
+  label?: React.ReactNode;
+  hint?: React.ReactNode;
   size?: TextInputProps['size'];
   className?: string;
   inputClassName?: string;
@@ -75,6 +76,8 @@ function DatePicker({
   disabledDates,
   error,
   errorMessage,
+  label,
+  hint,
   size = 'default',
   className,
   inputClassName,
@@ -87,6 +90,9 @@ function DatePicker({
   const containerRef = React.useRef<HTMLDivElement>(null);
   const popoverRef = React.useRef<HTMLDivElement>(null);
   const errorId = React.useId();
+  const hintId = React.useId();
+  const generatedInputId = React.useId();
+  const inputId = id ?? generatedInputId;
   const calendarTriggerId = React.useId();
   const [open, setOpen] = React.useState(false);
   const [internalValue, setInternalValue] = React.useState<Date | undefined>(defaultValue);
@@ -214,10 +220,15 @@ function DatePicker({
       className={clsx(styles.root, className)}
       onSubmitCapture={handleSubmitCapture}
     >
+      {label ? (
+        <label htmlFor={inputId} className={captionStyles.label}>
+          {label}
+        </label>
+      ) : null}
       <BasePopover.Root open={open} onOpenChange={setOpen} triggerId={calendarTriggerId} modal="trap-focus">
         <div className={styles.control}>
           <Input
-            id={id}
+            id={inputId}
             name={name}
             value={inputValue}
             onChange={readOnly ? undefined : handleInputChange}
@@ -235,7 +246,7 @@ function DatePicker({
             readOnly={readOnly}
             required={required}
             error={hasError}
-            aria-describedby={mergeIds(ariaDescribedBy, displayedError ? errorId : undefined)}
+            aria-describedby={mergeIds(ariaDescribedBy, hint ? hintId : undefined, displayedError ? errorId : undefined)}
             aria-invalid={hasError || undefined}
             size={size}
             className={styles.input}
@@ -247,7 +258,7 @@ function DatePicker({
                 ? {
                     icon: ClearIcon,
                     'aria-label': 'Clear date',
-                    onClick: (event) => {
+                    onClick: (event: React.MouseEvent<HTMLButtonElement>) => {
                       event.preventDefault();
                       clearValue();
                     },
@@ -266,7 +277,7 @@ function DatePicker({
                   type="button"
                   icon={CalendarIcon}
                   variant="outline"
-                  size={CALENDAR_BUTTON_SIZE[size]}
+                  size={CALENDAR_BUTTON_SIZE[size ?? 'default']}
                   shape="square"
                   aria-label={state.open ? 'Close calendar' : 'Open calendar'}
                   className={clsx(styles.trigger, triggerProps.className)}
@@ -296,13 +307,18 @@ function DatePicker({
                 defaultMonth={selected ?? defaultValue ?? new Date()}
                 initialFocus
                 {...mergedCalendarProps}
-                required
+                required={required}
               />
             </BasePopover.Popup>
           </BasePopover.Positioner>
         </BasePopover.Portal>
       </BasePopover.Root>
 
+      {hint ? (
+        <p id={hintId} className={captionStyles.hint}>
+          {hint}
+        </p>
+      ) : null}
       {displayedError ? (
         <p id={errorId} role="alert" className={captionStyles.error}>
           {displayedError}

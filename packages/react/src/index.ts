@@ -16,8 +16,8 @@ export type { TabsProps, TabListProps, TabProps, TabPanelsProps, TabPanelProps }
 export { Transition } from './transition'
 export type { TransitionProps } from './transition'
 
-export { Button } from './button'
-export type { ButtonProps, IconOnlyButtonProps } from './button'
+export { Button, buttonVariants } from './button'
+export type { ButtonProps, IconOnlyButtonProps, IconOnlyButtonSize } from './button'
 
 export { Checkbox } from './checkbox'
 export type { CheckboxProps } from './checkbox'
@@ -43,12 +43,21 @@ export type {
 export {
   COUNTRY_CODES,
   CountryFlag,
+  CountryFlagProvider,
   CountryOptionLabel,
+  findCountryOption,
   getCountryCode,
-  getFlagUrl,
   resolveCountryCode,
+  useCountryFlagUrl,
 } from './country'
-export type { CountryFlagProps, CountryOptionLabelProps, CountryResolvable } from './country'
+export type {
+  CountryFlagContextValue,
+  CountryFlagProps,
+  CountryFlagProviderProps,
+  CountryOptionLabelProps,
+  CountryOptionLike,
+  CountryResolvable,
+} from './country'
 
 export { Autocomplete } from './autocomplete'
 export type { AutocompleteRootProps, AutocompleteOption } from './autocomplete'
@@ -106,8 +115,18 @@ export type {
 export { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './card'
 
 export { Calendar, CalendarDayButton } from './calendar'
+export type { CalendarProps } from './calendar'
 export { DatePicker } from './date-picker'
 export type { DatePickerProps } from './date-picker'
+export {
+  buildDisabledMatchers,
+  formatDateInput,
+  getDisabledDateError,
+  isDateDisabled,
+  parsePastedDateInput,
+  resolveDateInput,
+} from './date-picker'
+export type { DateConstraintsOptions, DateInputResult, ResolveDateInputOptions } from './date-picker'
 
 export { Sonner } from './sonner'
 export type { SonnerProps } from './sonner'

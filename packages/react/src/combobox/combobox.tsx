@@ -14,6 +14,7 @@ import type { ComboboxOption } from './types';
 import styles from './combobox.module.css';
 
 type Ctx = {
+  inputId: string;
   placeholder: string;
   disabled: boolean;
   error: boolean;
@@ -21,6 +22,7 @@ type Ctx = {
   size: InputSize;
   selectedValue: ComboboxOption | null;
   inputValue: string;
+  selectValue: (value: ComboboxOption | null) => void;
   renderOption?: (
     option: ComboboxOption,
     state: { active: boolean; selected: boolean; disabled: boolean }
@@ -93,6 +95,7 @@ function Root({
   className,
   children,
 }: ComboboxRootProps) {
+  const inputId = React.useId();
   const isValueControlled = valueProp !== undefined;
   const isQueryControlled = queryProp !== undefined;
   const effectiveFilterFn = filterFn ?? defaultFilterFn;
@@ -114,8 +117,22 @@ function Root({
 
   const hasError = error ?? invalid ?? false;
 
+  const selectValue = React.useCallback(
+    (nextValue: ComboboxOption | null) => {
+      if (!isValueControlled) {
+        setInternalValue(nextValue);
+      }
+      onChange?.(nextValue);
+      if (!isQueryControlled) {
+        setInternalInputValue(nextValue?.label ?? '');
+      }
+    },
+    [isQueryControlled, isValueControlled, onChange]
+  );
+
   const ctx: Ctx = React.useMemo(
     () => ({
+      inputId,
       placeholder,
       disabled,
       error: hasError,
@@ -123,25 +140,19 @@ function Root({
       size,
       selectedValue,
       inputValue,
+      selectValue,
       renderOption,
     }),
-    [placeholder, disabled, hasError, clearable, size, selectedValue, inputValue, renderOption]
+    [inputId, placeholder, disabled, hasError, clearable, size, selectedValue, inputValue, selectValue, renderOption]
   );
 
   return (
     <ComboboxCtx.Provider value={ctx}>
       <BaseCombobox.Root<ComboboxOption>
-        value={isValueControlled ? (valueProp ?? null) : undefined}
-        defaultValue={!isValueControlled ? (defaultValue ?? undefined) : undefined}
+        value={isValueControlled ? (valueProp ?? null) : internalValue}
+        defaultValue={undefined}
         onValueChange={(next) => {
-          const nextValue = (next as ComboboxOption | null) ?? null;
-          if (!isValueControlled) {
-            setInternalValue(nextValue);
-          }
-          onChange?.(nextValue);
-          if (!isQueryControlled) {
-            setInternalInputValue(nextValue?.label ?? '');
-          }
+          selectValue((next as ComboboxOption | null) ?? null);
         }}
         inputValue={inputValue}
         onInputValueChange={(next) => {
@@ -164,9 +175,13 @@ function Root({
 
 function Label({
   className,
+  htmlFor,
   ...props
 }: React.LabelHTMLAttributes<HTMLLabelElement>) {
-  return <label {...props} className={clsx(captionStyles.label, className)} />;
+  const { inputId } = useComboboxCtx();
+  return (
+    <label htmlFor={htmlFor ?? inputId} {...props} className={clsx(captionStyles.label, className)} />
+  );
 }
 
 function Control({
@@ -253,6 +268,7 @@ function Input({
   return (
     <BaseCombobox.Input
       {...props}
+      id={props.id ?? ctx.inputId}
       {...resolveFieldAutofillProps({ autoComplete })}
       placeholder={placeholder ?? ctx.placeholder}
       aria-invalid={ctx.error ? true : undefined}
@@ -368,15 +384,18 @@ function Option({
           typeof className === 'function' ? className({ highlighted, selected, disabled: optDisabled }) : className
         )
       }
-    >
-      {children ??
-        ctx.renderOption?.(option, {
-          active: false,
-          selected: false,
-          disabled: Boolean(option.disabled),
-        }) ??
-        option.label}
-    </BaseCombobox.Item>
+      render={(itemProps, state) => (
+        <div {...itemProps}>
+          {children ??
+            ctx.renderOption?.(option, {
+              active: state.highlighted,
+              selected: state.selected,
+              disabled: state.disabled,
+            }) ??
+            option.label}
+        </div>
+      )}
+    />
   );
 }
 

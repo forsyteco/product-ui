@@ -261,24 +261,3 @@ export const COUNTRY_CODES: Record<string, string> = {
 export function getCountryCode(countryName: string): string | null {
   return COUNTRY_CODES[countryName] ?? null;
 }
-
-/**
- * Converts an ISO 2-letter country code to a Twemoji CDN URL for the flag
- * @param isoCode - The ISO 2-letter country code (e.g., "GB")
- * @returns The Twemoji CDN URL for the flag SVG
- */
-export function getFlagUrl(isoCode: string): string {
-  // Regional indicator symbols start at U+1F1E6 for 'A'
-  const BASE_CODE_POINT = 0x1f1e6;
-
-  const codePoints = isoCode
-    .toUpperCase()
-    .split('')
-    .map((char) => {
-      const offset = (char.codePointAt(0) ?? 0) - ('A'.codePointAt(0) ?? 0);
-      return (BASE_CODE_POINT + offset).toString(16);
-    })
-    .join('-');
-
-  return `https://cdn.jsdelivr.net/npm/twemoji@latest/2/svg/${codePoints}.svg`;
-}

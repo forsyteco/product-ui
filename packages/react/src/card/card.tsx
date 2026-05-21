@@ -11,13 +11,13 @@ function CardHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return <div data-slot="card-header" className={clsx(styles.header, className)} {...props} />;
 }
 
-function CardTitle({ className, ...props }: React.ComponentProps<'div'>) {
-  return <div data-slot="card-title" className={clsx(styles.title, className)} {...props} />;
+function CardTitle({ className, ...props }: React.ComponentProps<'h3'>) {
+  return <h3 data-slot="card-title" className={clsx(styles.title, className)} {...props} />;
 }
 
-function CardDescription({ className, ...props }: React.ComponentProps<'div'>) {
+function CardDescription({ className, ...props }: React.ComponentProps<'p'>) {
   return (
-    <div data-slot="card-description" className={clsx(styles.description, className)} {...props} />
+    <p data-slot="card-description" className={clsx(styles.description, className)} {...props} />
   );
 }
 

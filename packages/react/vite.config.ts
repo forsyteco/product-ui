@@ -83,7 +83,14 @@ export default defineConfig({
       fileName: (format, entryName) => withFileName(entryName, format),
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime'],
+      external: (id) =>
+        id === 'react' ||
+        id === 'react-dom' ||
+        id === 'react/jsx-runtime' ||
+        id.startsWith('@base-ui/') ||
+        id === 'dayjs' ||
+        id.startsWith('react-day-picker') ||
+        id === '@headlessui/react',
       output: {
         assetFileNames: 'product-ui.css',
         globals: {
@@ -97,7 +104,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['./vitest.setup.ts'],
+    setupFiles: ['./vitest.setup.tsx'],
     include: ['src/**/*.test.{ts,tsx}'],
     exclude: ['**/node_modules/**', '**/dist/**', '**/*.stories.test.{ts,tsx}'],
     projects: [

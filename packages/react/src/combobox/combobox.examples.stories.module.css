@@ -1,0 +1,10 @@
+.layout {
+  max-width: 20rem;
+}
+
+.selectionHint {
+  margin-top: 1rem;
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
+  color: rgb(var(--muted-foreground));
+}

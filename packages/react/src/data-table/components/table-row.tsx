@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRightIcon } from '../../icons/icons';
 import { cn } from '../../utils/tailwind';
 import { ROW_INTERACTION, type RowInteractionMode } from '../constants';
 import type { DataTableColorConfig } from '../types';
@@ -88,9 +88,9 @@ function TableRow<TData>({
       {isExpandable && (
         <td className="w-10 px-4 py-3">
           <Button
-            icon={ChevronRight}
+            icon={ChevronRightIcon}
             variant="ghost"
-            size="small"
+            size="sm"
             onClick={handleExpandClick}
             aria-expanded={isExpanded}
             aria-controls={isExpanded ? expandedContentId : undefined}

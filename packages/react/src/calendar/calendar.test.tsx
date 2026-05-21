@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '#test-utils';
 import userEvent from '@testing-library/user-event';
 import { Calendar, CalendarChevron, CalendarDayButton } from './calendar';
 
@@ -161,7 +161,7 @@ describe('CalendarChevron', () => {
       const { container } = render(<CalendarChevron orientation="down" />);
 
       // Assert
-      expect(container.querySelector('.lucide-chevron-down')).toBeInTheDocument();
+      expect(container.querySelector('svg')).toBeInTheDocument();
     });
   });
 });

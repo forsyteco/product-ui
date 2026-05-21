@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeftIcon, ChevronRightIcon } from '../../icons/icons';
 import { cn } from '../../utils/tailwind';
 import { Button } from '../../button';
 import type { DataTableColorConfig } from '../types';
@@ -42,17 +42,17 @@ function Pagination({
       </div>
       <div className="flex items-center gap-2">
         <Button
-          icon={ChevronLeft}
+          icon={ChevronLeftIcon}
           variant="ghost"
-          size="small"
+          size="sm"
           onClick={() => onPageChange(page - 1)}
           disabled={isFirstPage}
           aria-label="Previous page"
         />
         <Button
-          icon={ChevronRight}
+          icon={ChevronRightIcon}
           variant="ghost"
-          size="small"
+          size="sm"
           onClick={() => onPageChange(page + 1)}
           disabled={isLastPage}
           aria-label="Next page"

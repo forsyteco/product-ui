@@ -1,0 +1,177 @@
+---
+description: Framework-agnostic e2e test writing style and lifecycle rules
+globs:
+  - "**/*.e2e-spec.ts"
+alwaysApply: true
+---
+
+# e2e Test Style Rules
+
+## Goal
+Write realistic, maintainable e2e tests for HTTP APIs that validate:
+- HTTP behaviour
+- application / module wiring
+- request validation
+- authentication
+- persistence
+
+These rules are framework-agnostic and apply to any HTTP server. For framework-specific app bootstrap, DI, and pipe/guard wiring (e.g. NestJS), see the relevant framework strategy rule (e.g. `nestjs-testing-strategy.mdc`).
+
+---
+
+## File location and naming
+- Place e2e tests under `test/`
+- Use `*.e2e-spec.ts`
+- Group by feature
+
+Examples:
+- `test/users/users.e2e-spec.ts`
+- `test/auth/auth.e2e-spec.ts`
+
+---
+
+## Naming (MANDATORY)
+Use clear feature and route-oriented naming.
+
+Preferred:
+
+```ts
+describe('[Feature] Users - /users', () => {
+  describe('when creating a user with a valid payload', () => {
+    it('should return 201 and the created user', async () => {});
+  });
+});
+```
+
+Use `when` for context and `should` for outcome.
+
+---
+
+## AAA structure (MANDATORY)
+Every test must use:
+- Arrange
+- Act
+- Assert
+
+Use section comments.
+
+Example:
+
+```ts
+it('should return 400 for an invalid payload', async () => {
+  // Arrange
+  const payload = {};
+
+  // Act
+  const response = await request(app).post('/users').send(payload);
+
+  // Assert
+  expect(response.status).toBe(400);
+});
+```
+
+---
+
+## App lifecycle (framework-agnostic)
+- Boot a real application instance for the test suite (do not stub the HTTP layer).
+- Apply the same global middleware, validation, error filters, and auth used in production.
+- Always tear the app down in `afterAll` to release ports and resources.
+- Reset / truncate the test database between suites or describe blocks where state would otherwise leak.
+
+```ts
+let app: HttpServerLike;
+
+beforeAll(async () => {
+  app = await bootTestApp();
+});
+
+afterAll(async () => {
+  await app.close();
+});
+```
+
+The exact `bootTestApp()` implementation depends on the framework — see the relevant framework strategy rule.
+
+---
+
+## HTTP calls
+Use `supertest` against the running server:
+
+```ts
+await request(app).post('/users').send(payload).expect(201);
+```
+
+---
+
+## CRUD coverage
+For CRUD features, usually include:
+- create
+- list
+- get one
+- update
+- delete
+- subsequent 404 after delete where relevant
+
+---
+
+## Auth and validation
+- Include required auth headers for protected routes
+- Prefer deterministic auth for tests
+- Test validation failures explicitly
+- e2e should mirror production validation behaviour
+
+---
+
+## Database and lifecycle
+- Use a dedicated test database
+- Never use the dev database
+- Prefer ephemeral DB in CI
+- Ensure setup/teardown is reliable even when the test runner fails
+
+Recommended scripts pattern:
+- `pretest:e2e`
+- `test:e2e:run`
+- `test:e2e:teardown`
+- `test:e2e` wrapper using `npm-run-all --continue-on-error`
+
+---
+
+## Mocking
+Do not mock internal app wiring.
+
+Mock only external integrations when necessary:
+- third-party APIs
+- cloud services
+- non-deterministic external dependencies
+
+---
+
+## Example skeleton
+```ts
+describe('[Feature] Users - /users', () => {
+  let app: HttpServerLike;
+
+  beforeAll(async () => {
+    // Arrange
+    app = await bootTestApp();
+  });
+
+  afterAll(async () => {
+    await app.close();
+  });
+
+  describe('when creating a user with a valid payload', () => {
+    it('should return 201 and the created user', async () => {
+      // Arrange
+      const payload = { name: 'Jane' };
+
+      // Act
+      const response = await request(app).post('/users').send(payload);
+
+      // Assert
+      expect(response.status).toBe(201);
+      expect(response.body.name).toBe('Jane');
+    });
+  });
+});
+```

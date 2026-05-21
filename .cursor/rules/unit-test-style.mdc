@@ -2,7 +2,9 @@
 description: Framework-agnostic unit test writing style using When and AAA
 globs:
   - "**/*.spec.ts"
+  - "**/*.spec.tsx"
   - "**/*.test.ts"
+  - "**/*.test.tsx"
 alwaysApply: true
 ---
 
@@ -15,7 +17,7 @@ Write clear, maintainable unit tests using:
 - Should-style expectations
 
 These rules are framework-agnostic and apply to any TypeScript/JavaScript codebase.
-For framework-specific guidance (e.g. NestJS DI, controllers, guards), see the relevant framework strategy rule (e.g. `nestjs-testing-strategy.mdc`).
+For React component library tooling (Vitest, RTL, colocation), see `react-component-library-testing-strategy.mdc`.
 
 ---
 
@@ -94,7 +96,7 @@ Reach for a framework's test harness (e.g. a DI test module) only when direct in
 ---
 
 ## Mocking rules
-- Use `jest.fn()`
+- Use the test runner's mock fn (`vi.fn()` in Vitest, `jest.fn()` in Jest)
 - Mock only what the test actually uses
 - Keep mock values minimal and relevant
 - Clear mocks between tests when needed
@@ -103,7 +105,7 @@ Example:
 
 ```ts
 beforeEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 ```
 

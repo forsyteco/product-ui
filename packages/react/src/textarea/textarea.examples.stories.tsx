@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Textarea } from './textarea';
 import { Button } from '../button';
+import { Input } from '../input';
 
 const meta = {
   title: 'Components/Textarea/Examples',
@@ -18,33 +19,16 @@ export const ContactForm: Story = {
     <div className="p-6 max-w-md">
       <form className="space-y-4">
         <div>
-          <label className="block text-base font-medium text-gray-700 mb-1">
-            Name
-          </label>
-          <input
-            type="text"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="Your name"
-          />
+          <label className="block text-base font-medium text-gray-700 mb-1">Name</label>
+          <Input type="text" placeholder="Your name" />
         </div>
         <div>
-          <label className="block text-base font-medium text-gray-700 mb-1">
-            Email
-          </label>
-          <input
-            type="email"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            placeholder="you@example.com"
-          />
+          <label className="block text-base font-medium text-gray-700 mb-1">Email</label>
+          <Input type="email" placeholder="you@example.com" />
         </div>
         <div>
-          <label className="block text-base font-medium text-gray-700 mb-1">
-            Message
-          </label>
-          <Textarea
-            rows={6}
-            placeholder="Enter your message..."
-          />
+          <label className="block text-base font-medium text-gray-700 mb-1">Message</label>
+          <Textarea rows={6} placeholder="Enter your message..." />
         </div>
         <Button type="submit" className="w-full">
           Send Message
@@ -59,14 +43,8 @@ export const FormWithValidation: Story = {
     <div className="p-6 max-w-md">
       <form className="space-y-4">
         <div>
-          <label className="block text-base font-medium text-gray-700 mb-1">
-            Description
-          </label>
-          <Textarea
-            rows={4}
-            placeholder="Enter description..."
-            error
-          />
+          <label className="block text-base font-medium text-gray-700 mb-1">Description</label>
+          <Textarea rows={4} placeholder="Enter description..." error />
           <p className="mt-1 text-base text-red-600">
             Description must be at least 10 characters
           </p>
@@ -75,4 +53,3 @@ export const FormWithValidation: Story = {
     </div>
   ),
 };
-

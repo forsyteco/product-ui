@@ -146,16 +146,6 @@
         "default": "./dist/dialog/index.cjs"
       }
     },
-    "./disclosure": {
-      "import": {
-        "types": "./dist/disclosure/index.d.ts",
-        "default": "./dist/disclosure/index.mjs"
-      },
-      "require": {
-        "types": "./dist/disclosure/index.d.ts",
-        "default": "./dist/disclosure/index.cjs"
-      }
-    },
     "./dropdown-menu": {
       "import": {
         "types": "./dist/dropdown-menu/index.d.ts",

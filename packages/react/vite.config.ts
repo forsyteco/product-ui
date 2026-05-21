@@ -24,7 +24,6 @@ const componentEntries = [
   'combobox',
   'counter-label',
   'dialog',
-  'disclosure',
   'dropdown-menu',
   'form-field',
   'input',

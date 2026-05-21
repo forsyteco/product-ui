@@ -4,9 +4,6 @@ export type { SpinnerProps } from './spinner'
 export { DropdownMenu, DropdownMenuItem, DropdownMenuButton } from './dropdown-menu'
 export type { DropdownMenuProps, DropdownMenuItemProps, DropdownMenuButtonProps } from './dropdown-menu'
 
-export { Disclosure, DisclosureButton, DisclosurePanel } from './disclosure'
-export type { DisclosureProps, DisclosureButtonProps, DisclosurePanelProps } from './disclosure'
-
 export { Dialog, DialogPanel, DialogTitle, DialogDescription } from './dialog'
 export type { DialogProps, DialogPanelProps, DialogTitleProps, DialogDescriptionProps } from './dialog'
 

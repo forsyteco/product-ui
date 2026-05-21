@@ -82,7 +82,7 @@ function AvatarFallback(props: AvatarFallbackProps) {
         <AvatarPrimitive.Fallback
           data-slot="avatar-fallback"
           className={cn(
-            'flex size-full items-center justify-center rounded-full bg-muted text-xs font-medium uppercase text-foreground',
+            'flex size-full items-center justify-center rounded-full bg-muted text-base font-medium uppercase text-foreground',
             className
           )}
           {...rest}
@@ -99,7 +99,7 @@ function AvatarFallback(props: AvatarFallbackProps) {
         <AvatarPrimitive.Fallback
           data-slot="avatar-fallback"
           className={cn(
-            'flex size-full items-center justify-center rounded-full bg-muted text-xs font-medium uppercase text-foreground',
+            'flex size-full items-center justify-center rounded-full bg-muted text-base font-medium uppercase text-foreground',
             className
           )}
           {...rest}
@@ -126,7 +126,7 @@ function AvatarFallback(props: AvatarFallbackProps) {
               className="size-full"
               colors={[...BORING_AVATAR_COLORS]}
             />
-            <span className="absolute inset-0 flex items-center justify-center text-xs font-semibold uppercase text-foreground mix-blend-overlay">
+            <span className="absolute inset-0 flex items-center justify-center text-base font-semibold uppercase text-foreground mix-blend-overlay">
               {getInitials(name)}
             </span>
           </div>

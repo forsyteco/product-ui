@@ -47,7 +47,7 @@ export function RiskLevelCell({ value }: RiskLevelCellProps) {
   const displayValue = capitalizeFirst(value);
 
   return (
-    <span className={cn('rounded px-2 py-1 text-xs font-medium', colorClasses)}>
+    <span className={cn('rounded px-2 py-1 text-base font-medium', colorClasses)}>
       {displayValue}
     </span>
   );

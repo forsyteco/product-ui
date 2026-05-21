@@ -40,7 +40,7 @@ describe('StatusCell', () => {
       expect(screen.getByText('Failed')).toBeInTheDocument();
     });
 
-    it('should apply badge styling to status (rounded, text-xs, font-medium)', () => {
+    it('should apply badge styling to status (rounded, text-base, font-medium)', () => {
       // Arrange
       // Act
       render(<StatusCell value={STATUS.IN_PROGRESS} />);
@@ -48,7 +48,7 @@ describe('StatusCell', () => {
       // Assert
       const badge = screen.getByText('In progress');
       expect(badge).toHaveClass('rounded');
-      expect(badge).toHaveClass('text-xs');
+      expect(badge).toHaveClass('text-base');
       expect(badge).toHaveClass('font-medium');
     });
   });

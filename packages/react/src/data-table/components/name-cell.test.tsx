@@ -36,14 +36,14 @@ describe('NameCell', () => {
       expect(screen.getByText('john@example.com')).toBeInTheDocument();
     });
 
-    it('should apply correct styling to email (text-xs and text-muted-foreground)', () => {
+    it('should apply correct styling to email (text-base and text-muted-foreground)', () => {
       // Arrange
       // Act
       render(<NameCell value="Jane Smith" row={{ email: 'jane@example.com' }} />);
 
       // Assert
       const emailElement = screen.getByText('jane@example.com');
-      expect(emailElement).toHaveClass('text-xs');
+      expect(emailElement).toHaveClass('text-base');
       expect(emailElement).toHaveClass('text-muted-foreground');
     });
   });

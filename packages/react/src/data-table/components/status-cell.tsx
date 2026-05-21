@@ -65,14 +65,14 @@ export function StatusCell({ value, version }: StatusCellProps) {
     <div className={cn('flex flex-col gap-1')}>
       <span
         className={cn(
-          'inline-flex w-fit items-center rounded px-2 py-1 text-xs font-medium',
+          'inline-flex w-fit items-center rounded px-2 py-1 text-base font-medium',
           colorClasses
         )}
       >
         {displayValue}
       </span>
       {showVersion && (
-        <span className="text-xs text-muted-foreground">
+        <span className="text-base text-muted-foreground">
           <span>Version:</span> <span>{version ?? '-'}</span>
         </span>
       )}

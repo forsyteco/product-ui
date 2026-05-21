@@ -48,7 +48,7 @@ export function DateCell({ value, dateFormat = 'DD/MM/YYYY' }: DateCellProps) {
   return (
     <div className="flex flex-col">
       <span className="text-foreground">{formattedDate}</span>
-      <span className={cn('flex items-center gap-1 text-xs text-muted-foreground')}>
+      <span className={cn('flex items-center gap-1 text-base text-muted-foreground')}>
         <Clock className="h-3 w-3" />
         {relativeTime}
       </span>

@@ -75,7 +75,7 @@ describe('RiskLevelCell', () => {
   });
 
   describe('when applying base styling', () => {
-    it('should apply base styling classes (rounded, px-2, py-1, text-xs, font-medium)', () => {
+    it('should apply base styling classes (rounded, px-2, py-1, text-base, font-medium)', () => {
       // Arrange
       // Act
       render(<RiskLevelCell value="low" />);
@@ -85,7 +85,7 @@ describe('RiskLevelCell', () => {
       expect(badge).toHaveClass('rounded');
       expect(badge).toHaveClass('px-2');
       expect(badge).toHaveClass('py-1');
-      expect(badge).toHaveClass('text-xs');
+      expect(badge).toHaveClass('text-base');
       expect(badge).toHaveClass('font-medium');
     });
   });

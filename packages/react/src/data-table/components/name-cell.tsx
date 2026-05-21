@@ -24,7 +24,7 @@ export function NameCell<TData extends WithEmail>({ value, row }: NameCellProps<
   return (
     <div className="flex flex-col">
       <span className="font-medium text-foreground">{value}</span>
-      <span className="text-xs text-muted-foreground">{row.email}</span>
+      <span className="text-base text-muted-foreground">{row.email}</span>
     </div>
   );
 }

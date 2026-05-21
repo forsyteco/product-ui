@@ -102,7 +102,7 @@ function DataTable<TData, TExpandedData = unknown>({
       <div className="overflow-x-auto">
         <table
           aria-busy={loading}
-          className="w-full border-collapse text-sm"
+          className="w-full border-collapse text-base"
         >
           <TableHeader
             columns={columns}

@@ -37,7 +37,7 @@
 .size-default {
   padding-block: 0.125rem;
   padding-inline: calc(var(--label-pad-x-sm) * 1.5);
-  font-size: var(--text-xs);
+  font-size: var(--text-base);
   line-height: 1;
   font-weight: 600;
 }
@@ -53,7 +53,7 @@
 .size-lg {
   padding-block: 0.25rem;
   padding-inline: calc(var(--label-pad-x-sm) * 2);
-  font-size: var(--text-sm);
+  font-size: var(--text-lg);
   line-height: 1;
   font-weight: 600;
 }

@@ -1,7 +1,7 @@
 .root {
-  --textarea-active-border: var(--field-focus-border);
-  --textarea-border: color-mix(in srgb, rgb(var(--textarea-active-border)) 60%, rgb(var(--background)));
-  --textarea-halo: color-mix(in srgb, rgb(var(--textarea-active-border)) 25%, rgb(var(--background)));
+  --textarea-active-border: var(--field-input-active-border);
+  --textarea-border: var(--field-input-border);
+  --textarea-halo: var(--field-input-halo);
   --textarea-shadow-rest: 0 1px 2px rgb(0 0 0 / 0.05);
   --textarea-pad-block: 0.5rem;
   --textarea-pad-inline: 0.75rem;
@@ -51,7 +51,7 @@
 
 .error {
   --textarea-active-border: var(--field-error);
-  --textarea-border: color-mix(in srgb, rgb(var(--textarea-active-border)) 60%, rgb(var(--background)));
+  border-color: var(--textarea-border);
 }
 
 .error:hover:not(:disabled):not(:read-only):not(:focus-visible) {

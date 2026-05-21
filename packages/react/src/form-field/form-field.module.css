@@ -15,8 +15,8 @@
 }
 
 .label {
-  font-size: var(--text-sm);
-  line-height: var(--text-sm-line-height);
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
   font-weight: 500;
   color: rgb(var(--foreground));
 }
@@ -28,14 +28,14 @@
 }
 
 .description {
-  font-size: var(--text-sm);
-  line-height: var(--text-sm-line-height);
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
   color: rgb(var(--muted-foreground));
 }
 
 .error {
-  font-size: var(--text-sm);
-  line-height: var(--text-sm-line-height);
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
   color: rgb(var(--field-error));
 }
 

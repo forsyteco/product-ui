@@ -9,14 +9,14 @@
 
 .hint {
   margin-top: 0.25rem;
-  font-size: var(--text-sm);
-  line-height: var(--text-sm-line-height);
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
   color: rgb(var(--muted-foreground));
 }
 
 .error {
   margin-top: 0.25rem;
-  font-size: var(--text-sm);
-  line-height: var(--text-sm-line-height);
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
   color: rgb(var(--destructive));
 }

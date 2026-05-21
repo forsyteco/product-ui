@@ -37,7 +37,7 @@ function Pagination({
       className={cn('flex items-center justify-between px-4 py-3', className)}
       style={Object.keys(paginationStyle).length > 0 ? paginationStyle : undefined}
     >
-      <div className="text-sm text-muted-foreground">
+      <div className="text-base text-muted-foreground">
         Page {page} of {totalPages}
       </div>
       <div className="flex items-center gap-2">

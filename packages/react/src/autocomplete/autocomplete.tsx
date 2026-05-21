@@ -212,7 +212,7 @@ function Label({
   return (
     <label
       {...props}
-      className={cn('mb-1 block text-sm font-medium text-foreground', className)}
+      className={cn('mb-1 block text-base font-medium text-foreground', className)}
     />
   );
 }
@@ -476,14 +476,14 @@ function Hint({
   className,
   ...props
 }: React.HTMLAttributes<HTMLParagraphElement>) {
-  return <p {...props} className={cn('mt-1 text-sm text-muted-foreground', className)} />;
+  return <p {...props} className={cn('mt-1 text-base text-muted-foreground', className)} />;
 }
 
 function Error({
   className,
   ...props
 }: React.HTMLAttributes<HTMLParagraphElement>) {
-  return <p {...props} className={cn('mt-1 text-sm text-destructive', className)} />;
+  return <p {...props} className={cn('mt-1 text-base text-destructive', className)} />;
 }
 
 export const Autocomplete = {

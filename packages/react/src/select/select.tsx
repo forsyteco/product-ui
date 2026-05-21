@@ -1,6 +1,7 @@
 import { type SelectHTMLAttributes } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../utils/tailwind';
+import { resolveFieldAutofillProps } from '../utils/field-autofill-props';
 
 export type SelectOption = {
   value: string;
@@ -28,12 +29,13 @@ export type SelectProps = Omit<SelectHTMLAttributes<HTMLSelectElement>, 'childre
   placeholder?: string;
 };
 
-function Select({ options, placeholder, error, className, ...props }: SelectProps) {
+function Select({ options, placeholder, error, className, autoComplete, ...props }: SelectProps) {
   return (
     <div className="relative">
       <select
         className={cn(selectVariants({ error }), className)}
         {...props}
+        {...resolveFieldAutofillProps({ autoComplete })}
       >
         {placeholder && (
           <option value="" disabled>

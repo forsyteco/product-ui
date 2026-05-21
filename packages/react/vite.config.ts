@@ -26,7 +26,6 @@ const componentEntries = [
   'dialog',
   'disclosure',
   'dropdown-menu',
-  'fieldset',
   'form-field',
   'icon-button',
   'input',

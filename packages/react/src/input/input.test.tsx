@@ -115,4 +115,54 @@ describe('Input', () => {
       expect(input).toBeRequired();
     });
   });
+
+  describe('when autoComplete is not provided', () => {
+    it('should disable browser autofill and password manager heuristics', () => {
+      // Arrange
+      render(<Input aria-label="Reference" />);
+
+      // Act
+      const input = screen.getByRole('textbox', { name: 'Reference' });
+
+      // Assert
+      expect(input).toHaveAttribute('autocomplete', 'off');
+      expect(input).toHaveAttribute('data-lpignore', 'true');
+      expect(input).toHaveAttribute('data-1p-ignore', 'true');
+    });
+  });
+
+  describe('when autoComplete is explicitly enabled', () => {
+    it('should allow the provided autoComplete token', () => {
+      // Arrange
+      render(<Input autoComplete="email" aria-label="Email" />);
+
+      // Act
+      const input = screen.getByRole('textbox', { name: 'Email' });
+
+      // Assert
+      expect(input).toHaveAttribute('autocomplete', 'email');
+      expect(input).not.toHaveAttribute('data-lpignore');
+    });
+  });
+
+  describe('when trailingAction is provided', () => {
+    it('should render an icon button in the trailing slot', () => {
+      // Arrange
+      render(
+        <Input
+          aria-label="Password"
+          trailingAction={{
+            icon: () => null,
+            'aria-label': 'Show password',
+          }}
+        />
+      );
+
+      // Act
+      const button = screen.getByRole('button', { name: 'Show password' });
+
+      // Assert
+      expect(button).toBeInTheDocument();
+    });
+  });
 });

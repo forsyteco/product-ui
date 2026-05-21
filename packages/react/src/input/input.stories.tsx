@@ -9,7 +9,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Bare text input with size, error, success, and start/end adornment slots. Pair with FormField for labels, captions, and validation messages.',
+          'Bare text input with size, error, success, and start/end adornment slots. Use `trailingAction` for trailing IconButton actions. Pair with FormField for labels, captions, and validation messages.',
       },
     },
   },

@@ -29,28 +29,20 @@ export const inputVariants = cva(styles.root, {
 
 export type InputSize = NonNullable<VariantProps<typeof inputVariants>['size']>;
 
-export const inputSizePadding = {
-  default: { slot: styles['slot-pad-default'], input: styles['input-pad-default'] },
-  sm: { slot: styles['slot-pad-sm'], input: styles['input-pad-sm'] },
-  lg: { slot: styles['slot-pad-lg'], input: styles['input-pad-lg'] },
-} as const;
-
 export function getInputInnerClassName({
-  size = 'default',
   hasStartElement,
   hasEndElement,
   inputClassName,
 }: {
-  size?: InputSize;
   hasStartElement?: boolean;
   hasEndElement?: boolean;
   inputClassName?: string;
 }) {
-  const pad = inputSizePadding[size ?? 'default'];
   return clsx(
     styles.input,
-    hasStartElement ? styles['input-pad-none-left'] : pad.input,
-    hasEndElement ? styles['input-pad-none-right'] : pad.input,
+    styles['input-pad'],
+    hasStartElement && styles['input-pad-none-left'],
+    hasEndElement && styles['input-pad-none-right'],
     inputClassName
   );
 }
@@ -59,6 +51,7 @@ export type InputShellProps = VariantProps<typeof inputVariants> & {
   className?: string;
   startElement?: React.ReactNode;
   endElement?: React.ReactNode;
+  endSlotAction?: boolean;
   children: React.ReactNode;
 };
 
@@ -66,29 +59,28 @@ export function InputShell({
   className,
   startElement,
   endElement,
+  endSlotAction = false,
   size = 'default',
   error,
   success,
   children,
 }: InputShellProps) {
-  const resolvedSize = size ?? 'default';
-  const pad = inputSizePadding[resolvedSize];
   const hasError = error === true;
   const hasSuccess = success === true && !hasError;
 
   return (
     <div
       className={clsx(
-        inputVariants({ size: resolvedSize, error: hasError, success: hasSuccess }),
+        inputVariants({ size, error: hasError, success: hasSuccess }),
         className
       )}
     >
-      {startElement ? (
-        <div className={clsx(styles.slot, pad.slot)}>{startElement}</div>
-      ) : null}
+      {startElement ? <div className={styles.slot}>{startElement}</div> : null}
       {children}
       {endElement ? (
-        <div className={clsx(styles.slot, pad.slot)}>{endElement}</div>
+        <div className={clsx(styles.slot, endSlotAction && styles['slot-action'])}>
+          {endElement}
+        </div>
       ) : null}
     </div>
   );

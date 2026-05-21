@@ -166,16 +166,6 @@
         "default": "./dist/dropdown-menu/index.cjs"
       }
     },
-    "./fieldset": {
-      "import": {
-        "types": "./dist/fieldset/index.d.ts",
-        "default": "./dist/fieldset/index.mjs"
-      },
-      "require": {
-        "types": "./dist/fieldset/index.d.ts",
-        "default": "./dist/fieldset/index.cjs"
-      }
-    },
     "./form-field": {
       "import": {
         "types": "./dist/form-field/index.d.ts",

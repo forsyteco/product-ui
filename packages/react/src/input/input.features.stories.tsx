@@ -6,7 +6,6 @@ import { clsx } from 'clsx';
 import { CounterLabel } from '../counter-label';
 import formFieldStyles from '../form-field/form-field.module.css';
 import { FormField } from '../form-field';
-import { IconButton } from '../icon-button';
 import { Spinner } from '../spinner';
 import { VisuallyHidden } from '../visually-hidden';
 import { Input } from './input';
@@ -262,34 +261,46 @@ export const WithTooltipDirection: Story = {
   ),
 };
 
+const ukFlagSrc = 'https://cdn.jsdelivr.net/npm/twemoji@latest/2/svg/1f1ec-1f1e7.svg';
+
+function UkFlagIcon({ className }: { className?: string }) {
+  return <img src={ukFlagSrc} alt="" aria-hidden className={className} />;
+}
+
 export const WithTrailingAction: Story = {
   render: () => (
-    <InputFeatureLayout>
+    <InputFeatureLayout className="space-y-4">
       <Input
         type="password"
         placeholder="Password"
         aria-label="Password"
-        endElement={
-          <IconButton
-            icon={Eye}
-            variant="ghost"
-            size="small"
-            shape="circle"
-            aria-label="Show password"
-            type="button"
-          />
-        }
+        trailingAction={{
+          icon: Eye,
+          'aria-label': 'Show password',
+          type: 'button',
+        }}
+      />
+      <Input
+        placeholder="Country"
+        aria-label="Country"
+        defaultValue="United Kingdom"
+        readOnly
+        trailingAction={{
+          icon: UkFlagIcon,
+          'aria-label': 'Select country',
+          type: 'button',
+        }}
       />
     </InputFeatureLayout>
   ),
 };
 
-export const WithTrailingIcon: Story = {
+export const WithTrailingVisual: Story = {
   render: () => (
     <InputFeatureLayout>
       <Input
         placeholder="Search"
-        aria-label="Search with trailing icon"
+        aria-label="Search with trailing visual"
         endElement={<Search className="size-4" aria-hidden />}
       />
     </InputFeatureLayout>

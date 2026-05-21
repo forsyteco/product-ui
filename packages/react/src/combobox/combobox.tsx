@@ -7,6 +7,7 @@ import {
   ComboboxOptions,
 } from '@headlessui/react';
 import { cn } from '../utils/tailwind';
+import { resolveFieldAutofillProps } from '../utils/field-autofill-props';
 import type { ComboboxOption } from './types';
 
 type Ctx = {
@@ -227,6 +228,7 @@ function Input({
   onFocus,
   onBlur,
   openOnFocus = true,
+  autoComplete,
   ...props
 }: InputProps) {
   const ctx = useComboboxCtx();
@@ -237,6 +239,7 @@ function Input({
     ...props,
     placeholder: placeholderValue,
     displayValue: displayValueFn as (item: unknown) => string,
+    ...resolveFieldAutofillProps({ autoComplete }),
   } as React.ComponentProps<typeof ComboboxInput>;
   return (
     <ComboboxInput

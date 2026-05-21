@@ -33,8 +33,6 @@ export type { ComboboxRootProps, ComboboxOption } from './combobox'
 export { Autocomplete } from './autocomplete'
 export type { AutocompleteRootProps, AutocompleteOption } from './autocomplete'
 
-export { Fieldset } from './fieldset'
-export type { FieldsetProps } from './fieldset'
 export { FormField } from './form-field'
 export type {
   FormFieldProps,

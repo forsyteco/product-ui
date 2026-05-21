@@ -220,7 +220,7 @@ export const WithLeadingVisual: Story = {
       <Input
         placeholder="Search"
         aria-label="Search"
-        startElement={<Search className="size-4" aria-hidden />}
+        leadingVisual={<Search className="size-4" aria-hidden />}
       />
     </InputFeatureLayout>
   ),
@@ -232,7 +232,7 @@ export const WithLoadingIndicator: Story = {
       <Input
         placeholder="Loading…"
         aria-label="Loading input"
-        endElement={<Spinner size={20} />}
+        trailingVisual={<Spinner size={20} />}
         readOnly
       />
     </InputFeatureLayout>
@@ -299,7 +299,7 @@ export const WithTrailingVisual: Story = {
       <Input
         placeholder="Search"
         aria-label="Search with trailing visual"
-        endElement={<Search className="size-4" aria-hidden />}
+        trailingVisual={<Search className="size-4" aria-hidden />}
       />
     </InputFeatureLayout>
   ),

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Search } from 'lucide-react';
 import { Combobox } from './combobox';
 import type { ComboboxOption } from './types';
 
@@ -81,4 +82,28 @@ export const Disabled: Story = {
       </Combobox.Root>
     </div>
   ),
+};
+
+export const WithLeadingVisual: Story = {
+  render: () => {
+    const [selected, setSelected] = useState<ComboboxOption | null>(options[0]);
+    const showLeadingVisual = selected && selected.label === 'Apple';
+
+    return (
+      <div className="w-64">
+        <Combobox.Root options={options} value={selected} onChange={setSelected} placeholder="Select a fruit...">
+          <Combobox.Control
+            leadingVisual={
+              showLeadingVisual ? <Search className="size-4" aria-hidden /> : null
+            }
+          >
+            <Combobox.Input />
+            <Combobox.ClearButton />
+            <Combobox.ToggleButton />
+          </Combobox.Control>
+          <Combobox.Options />
+        </Combobox.Root>
+      </div>
+    );
+  },
 };

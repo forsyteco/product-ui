@@ -1,9 +1,14 @@
-.adornmentSlot {
+.leadingVisual {
   align-self: stretch;
   color: rgb(var(--foreground));
 }
 
-.adornmentSlotInteractive {
+.trailingVisual {
+  align-self: stretch;
+  color: rgb(var(--foreground));
+}
+
+.trailingAction {
   display: flex;
   flex-shrink: 0;
   align-self: stretch;
@@ -12,7 +17,7 @@
   pointer-events: none;
 }
 
-.adornmentSlotInteractive :is(button, a) {
+.trailingAction :is(button, a) {
   pointer-events: auto;
 }
 

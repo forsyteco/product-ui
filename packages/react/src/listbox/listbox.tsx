@@ -64,12 +64,12 @@ function Listbox({
         >
           <BaseSelect.Value
             className={clsx(
-              getInputInnerClassName({ hasEndElement: true }),
+              getInputInnerClassName({ hasTrailingVisual: true }),
               shellStyles.shellValue
             )}
             placeholder={placeholder}
           />
-          <span className={clsx(inputStyles.slot, inputStyles['slot-pad'], shellStyles.adornmentSlot)}>
+          <span className={clsx(inputStyles.slot, inputStyles['slot-pad'], shellStyles.trailingAction)}>
             <ChevronIcon className={shellStyles.icon} />
           </span>
         </BaseSelect.Trigger>

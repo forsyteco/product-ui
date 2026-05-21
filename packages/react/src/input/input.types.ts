@@ -7,9 +7,11 @@ import type { inputVariants } from './input-shell';
 type InputShellProps = VariantProps<typeof inputVariants> & {
   ref?: React.Ref<HTMLInputElement | null>;
   className?: string;
-  startElement?: React.ReactNode;
-  /** Decorative or non-interactive trailing content (e.g. spinner). Use `trailingAction` for buttons. */
-  endElement?: React.ReactNode;
+  /** Decorative or non-interactive leading content (e.g. icon, flag). */
+  leadingVisual?: React.ReactNode;
+  /** Decorative or non-interactive trailing content (e.g. spinner). */
+  trailingVisual?: React.ReactNode;
+  /** Interactive trailing button (e.g. show password, open picker). */
   trailingAction?: IconOnlyButtonProps;
   inputClassName?: string;
 };
@@ -21,7 +23,7 @@ export type TextInputProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'chil
 
 export type CurrencyInputModeProps = Omit<
   InputShellProps,
-  'endElement' | 'trailingAction'
+  'trailingVisual' | 'trailingAction'
 > &
   Omit<
     React.ComponentPropsWithoutRef<'input'>,
@@ -35,7 +37,7 @@ export type CurrencyInputModeProps = Omit<
     min?: number;
     max?: number;
     currencySymbol?: string;
-    endElement?: React.ReactNode;
+    trailingVisual?: React.ReactNode;
     trailingAction?: IconOnlyButtonProps;
   };
 

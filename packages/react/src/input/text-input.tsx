@@ -19,8 +19,8 @@ export function TextInput({
   className,
   inputClassName,
   type,
-  startElement,
-  endElement,
+  leadingVisual,
+  trailingVisual,
   trailingAction,
   size = 'default',
   error,
@@ -31,12 +31,10 @@ export function TextInput({
   ...props
 }: TextInputProps) {
   const hasError = error === true;
-  const endElementContent = trailingAction ? (
+  const trailingActionContent = trailingAction ? (
     <TrailingActionButton {...trailingAction} />
-  ) : (
-    endElement
-  );
-  const hasEndElement = Boolean(endElementContent);
+  ) : undefined;
+  const hasTrailingContent = Boolean(trailingActionContent ?? trailingVisual);
 
   return (
     <InputShell
@@ -44,9 +42,9 @@ export function TextInput({
       size={size}
       error={hasError}
       success={success}
-      startElement={startElement}
-      endElement={endElementContent}
-      endSlotAction={Boolean(trailingAction)}
+      leadingVisual={leadingVisual}
+      trailingVisual={trailingAction ? undefined : trailingVisual}
+      trailingAction={trailingActionContent}
     >
       <BaseInput
         {...props}
@@ -57,8 +55,8 @@ export function TextInput({
         aria-invalid={hasError ? true : ariaInvalid}
         data-slot="input"
         className={getInputInnerClassName({
-          hasStartElement: Boolean(startElement),
-          hasEndElement,
+          hasLeadingVisual: Boolean(leadingVisual),
+          hasTrailingVisual: hasTrailingContent,
           inputClassName,
         })}
       />

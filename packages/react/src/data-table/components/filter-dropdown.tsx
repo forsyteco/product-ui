@@ -109,7 +109,7 @@ function FilterDropdown({
                 onChange={(e) => setSearchTerm(e.target.value)}
                 autoFocus
                 size="sm"
-                startElement={<Search className="h-4 w-4" />}
+                leadingVisual={<Search className="h-4 w-4" />}
               />
             </div>
             {showSelectAll ? (

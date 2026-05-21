@@ -22,8 +22,8 @@ export type { ButtonProps, IconOnlyButtonProps } from './button'
 export { Checkbox } from './checkbox'
 export type { CheckboxProps } from './checkbox'
 
-export { Combobox } from './combobox'
-export type { ComboboxRootProps, ComboboxOption } from './combobox'
+export { Combobox, CountryCombobox, useComboboxContext, LeadingVisual, TrailingVisual, TrailingAction } from './combobox'
+export type { ComboboxRootProps, ComboboxOption, CountryComboboxOption, CountryComboboxProps } from './combobox'
 
 export { Autocomplete } from './autocomplete'
 export type { AutocompleteRootProps, AutocompleteOption } from './autocomplete'

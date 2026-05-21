@@ -19,7 +19,7 @@ export function CurrencyFormatInput({
   min,
   max,
   currencySymbol = '£',
-  startElement,
+  leadingVisual,
   onBlur,
   format: _format,
   ...props
@@ -59,7 +59,7 @@ export function CurrencyFormatInput({
       {...props}
       type="text"
       inputMode="decimal"
-      startElement={startElement ?? (currencySymbol ? <span>{currencySymbol}</span> : undefined)}
+      leadingVisual={leadingVisual ?? (currencySymbol ? <span>{currencySymbol}</span> : undefined)}
       value={displayValue}
       onBlur={(event) => {
         setIsEditing(false);

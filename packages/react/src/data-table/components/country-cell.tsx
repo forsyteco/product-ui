@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getCountryCode, getFlagUrl } from './country-codes';
+import { getCountryCode, getFlagUrl } from '../../country/country-codes';
 
 export type CountryCellProps = Readonly<{
   /** The country name to display (e.g., "United Kingdom", "France") */

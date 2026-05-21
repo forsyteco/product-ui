@@ -6,6 +6,7 @@ import inputStyles from '../input/input.module.css';
 import menuStyles from '../field-select/field-select-menu.module.css';
 import captionStyles from '../field-select/field-caption.module.css';
 import shellStyles from '../field-select/field-control-shell.module.css';
+import { LeadingVisual, TrailingVisual, TrailingAction, resolveFieldControlSlot } from '../field-select/field-control-visuals';
 import { ChevronIcon } from '../field-select/chevron-icon';
 import { ClearIcon } from '../field-select/clear-icon';
 import { resolveFieldAutofillProps } from '../utils/field-autofill-props';
@@ -18,6 +19,8 @@ type Ctx = {
   error: boolean;
   clearable: boolean;
   size: InputSize;
+  selectedValue: ComboboxOption | null;
+  inputValue: string;
   renderOption?: (
     option: ComboboxOption,
     state: { active: boolean; selected: boolean; disabled: boolean }
@@ -26,10 +29,14 @@ type Ctx = {
 
 const ComboboxCtx = React.createContext<Ctx | null>(null);
 
-function useComboboxCtx() {
+export function useComboboxContext() {
   const ctx = React.useContext(ComboboxCtx);
-  if (!ctx) throw new globalThis.Error('Combobox.* must be used within <Combobox.Root>.');
+  if (!ctx) throw new globalThis.Error('Combobox context must be used within <Combobox.Root>.');
   return ctx;
+}
+
+function useComboboxCtx() {
+  return useComboboxContext();
 }
 
 function defaultFilterFn(option: ComboboxOption, query: string) {
@@ -95,6 +102,7 @@ function Root({
     if (defaultValue?.label) return defaultValue.label;
     return '';
   });
+  const [internalValue, setInternalValue] = React.useState<ComboboxOption | null>(defaultValue ?? null);
 
   React.useEffect(() => {
     if (isQueryControlled || !isValueControlled) return;
@@ -102,6 +110,7 @@ function Root({
   }, [isQueryControlled, isValueControlled, valueProp]);
 
   const inputValue = isQueryControlled ? queryProp : internalInputValue;
+  const selectedValue = isValueControlled ? (valueProp ?? null) : internalValue;
 
   const hasError = error ?? invalid ?? false;
 
@@ -112,9 +121,11 @@ function Root({
       error: hasError,
       clearable,
       size,
+      selectedValue,
+      inputValue,
       renderOption,
     }),
-    [placeholder, disabled, hasError, clearable, size, renderOption]
+    [placeholder, disabled, hasError, clearable, size, selectedValue, inputValue, renderOption]
   );
 
   return (
@@ -124,6 +135,9 @@ function Root({
         defaultValue={!isValueControlled ? (defaultValue ?? undefined) : undefined}
         onValueChange={(next) => {
           const nextValue = (next as ComboboxOption | null) ?? null;
+          if (!isValueControlled) {
+            setInternalValue(nextValue);
+          }
           onChange?.(nextValue);
           if (!isQueryControlled) {
             setInternalInputValue(nextValue?.label ?? '');
@@ -158,10 +172,19 @@ function Label({
 function Control({
   className,
   children,
+  leadingVisual,
+  trailingVisual,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
+}: React.HTMLAttributes<HTMLDivElement> & {
+  /** Decorative or non-interactive leading content (e.g. icon, flag). */
+  leadingVisual?: React.ReactNode;
+  /** Decorative or non-interactive trailing content (e.g. spinner). */
+  trailingVisual?: React.ReactNode;
+}) {
   const ctx = useComboboxCtx();
   const childItems = React.Children.toArray(children);
+  const resolvedLeadingVisual = resolveFieldControlSlot(leadingVisual, childItems, LeadingVisual);
+  const resolvedTrailingVisual = resolveFieldControlSlot(trailingVisual, childItems, TrailingVisual);
   const inputChild = childItems.find(
     (child) => React.isValidElement(child) && child.type === Input
   );
@@ -181,12 +204,26 @@ function Control({
         className
       )}
     >
-      {inputChild}
+      {resolvedLeadingVisual ? (
+        <div className={clsx(inputStyles.slot, inputStyles['slot-pad'], shellStyles.leadingVisual)}>
+          {resolvedLeadingVisual}
+        </div>
+      ) : null}
+      {inputChild && React.isValidElement(inputChild)
+        ? React.cloneElement(inputChild, {
+            hasLeadingVisual: Boolean(resolvedLeadingVisual),
+          } as Partial<InputProps>)
+        : null}
       {clearChild ? (
-        <div className={clsx(inputStyles.slot, shellStyles.adornmentSlotInteractive)}>{clearChild}</div>
+        <div className={clsx(inputStyles.slot, shellStyles.trailingAction)}>{clearChild}</div>
+      ) : null}
+      {resolvedTrailingVisual ? (
+        <div className={clsx(inputStyles.slot, inputStyles['slot-pad'], shellStyles.trailingVisual)}>
+          {resolvedTrailingVisual}
+        </div>
       ) : null}
       {toggleChild ? (
-        <div className={clsx(inputStyles.slot, inputStyles['slot-pad'], shellStyles.adornmentSlot)}>
+        <div className={clsx(inputStyles.slot, inputStyles['slot-pad'], shellStyles.trailingAction)}>
           {toggleChild}
         </div>
       ) : null}
@@ -200,12 +237,14 @@ type InputProps = Omit<
 > & {
   placeholder?: string;
   autoComplete?: string;
+  hasLeadingVisual?: boolean;
 };
 
 function Input({
   className,
   placeholder,
   autoComplete,
+  hasLeadingVisual = false,
   ...props
 }: InputProps) {
   const ctx = useComboboxCtx();
@@ -217,7 +256,8 @@ function Input({
       placeholder={placeholder ?? ctx.placeholder}
       aria-invalid={ctx.error ? true : undefined}
       className={getInputInnerClassName({
-        hasEndElement: true,
+        hasLeadingVisual,
+        hasTrailingVisual: true,
         inputClassName: className,
       })}
     />
@@ -357,6 +397,9 @@ export const Combobox = {
   Root,
   Label,
   Control,
+  LeadingVisual,
+  TrailingVisual,
+  TrailingAction,
   Input,
   ClearButton,
   ToggleButton,
@@ -366,5 +409,7 @@ export const Combobox = {
   Hint,
   Error,
 } as const;
+
+export { LeadingVisual, TrailingVisual, TrailingAction };
 
 export type { ComboboxRootProps as ComboboxProps };

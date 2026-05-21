@@ -30,36 +30,39 @@ export const inputVariants = cva(styles.root, {
 export type InputSize = NonNullable<VariantProps<typeof inputVariants>['size']>;
 
 export function getInputInnerClassName({
-  hasStartElement,
-  hasEndElement,
+  hasLeadingVisual,
+  hasTrailingVisual,
   inputClassName,
 }: {
-  hasStartElement?: boolean;
-  hasEndElement?: boolean;
+  hasLeadingVisual?: boolean;
+  hasTrailingVisual?: boolean;
   inputClassName?: string;
 }) {
   return clsx(
     styles.input,
     styles['input-pad'],
-    hasStartElement && styles['input-pad-none-left'],
-    hasEndElement && styles['input-pad-none-right'],
+    hasLeadingVisual && styles['input-pad-none-left'],
+    hasTrailingVisual && styles['input-pad-none-right'],
     inputClassName
   );
 }
 
 export type InputShellProps = VariantProps<typeof inputVariants> & {
   className?: string;
-  startElement?: React.ReactNode;
-  endElement?: React.ReactNode;
-  endSlotAction?: boolean;
+  /** Decorative or non-interactive leading content (e.g. icon, flag). */
+  leadingVisual?: React.ReactNode;
+  /** Decorative or non-interactive trailing content (e.g. spinner). */
+  trailingVisual?: React.ReactNode;
+  /** Interactive trailing button content. Takes precedence over `trailingVisual`. */
+  trailingAction?: React.ReactNode;
   children: React.ReactNode;
 };
 
 export function InputShell({
   className,
-  startElement,
-  endElement,
-  endSlotAction = false,
+  leadingVisual,
+  trailingVisual,
+  trailingAction,
   size = 'default',
   error,
   success,
@@ -67,6 +70,7 @@ export function InputShell({
 }: InputShellProps) {
   const hasError = error === true;
   const hasSuccess = success === true && !hasError;
+  const trailingContent = trailingAction ?? trailingVisual;
 
   return (
     <div
@@ -75,16 +79,18 @@ export function InputShell({
         className
       )}
     >
-      {startElement ? <div className={clsx(styles.slot, styles['slot-pad'])}>{startElement}</div> : null}
+      {leadingVisual ? (
+        <div className={clsx(styles.slot, styles['slot-pad'])}>{leadingVisual}</div>
+      ) : null}
       {children}
-      {endElement ? (
+      {trailingContent ? (
         <div
           className={clsx(
             styles.slot,
-            endSlotAction ? styles['slot-action'] : styles['slot-pad']
+            trailingAction ? styles['slot-action'] : styles['slot-pad']
           )}
         >
-          {endElement}
+          {trailingContent}
         </div>
       ) : null}
     </div>

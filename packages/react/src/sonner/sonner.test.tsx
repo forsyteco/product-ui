@@ -4,29 +4,31 @@ import { toast } from 'sonner';
 import { Sonner } from './sonner';
 
 describe('Sonner', () => {
-  it('renders toasts', async () => {
-    // JSDOM doesn't implement matchMedia, but sonner uses it for theme detection.
-    Object.defineProperty(window, 'matchMedia', {
-      writable: true,
-      value: (query: string) => ({
-        matches: false,
-        media: query,
-        onchange: null,
-        addEventListener: () => {},
-        removeEventListener: () => {},
-        addListener: () => {},
-        removeListener: () => {},
-        dispatchEvent: () => false,
-      }),
-    });
+  describe('when a toast is triggered', () => {
+    it('should render the toast message', async () => {
+      // Arrange
+      Object.defineProperty(window, 'matchMedia', {
+        writable: true,
+        value: (query: string) => ({
+          matches: false,
+          media: query,
+          onchange: null,
+          addEventListener: () => {},
+          removeEventListener: () => {},
+          addListener: () => {},
+          removeListener: () => {},
+          dispatchEvent: () => false,
+        }),
+      });
+      render(<Sonner />);
 
-    render(<Sonner />);
+      // Act
+      toast('Hello');
 
-    toast('Hello');
-    await waitFor(() => {
-      expect(screen.getByText('Hello')).toBeInTheDocument();
+      // Assert
+      await waitFor(() => {
+        expect(screen.getByText('Hello')).toBeInTheDocument();
+      });
     });
   });
 });
-
-

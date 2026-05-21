@@ -1,35 +1,63 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Switch } from './switch';
 
 describe('Switch', () => {
-  it('renders the switch component', () => {
-    render(<Switch />);
-    const switchElement = screen.getByRole('switch');
-    expect(switchElement).toBeInTheDocument();
+  describe('when rendered with default props', () => {
+    it('should render a switch', () => {
+      // Arrange
+      // Act
+      render(<Switch />);
+
+      // Assert
+      expect(screen.getByRole('switch')).toBeInTheDocument();
+    });
   });
 
-  it('renders with label', () => {
-    render(<Switch label="Enable notifications" />);
-    expect(screen.getByText('Enable notifications')).toBeInTheDocument();
+  describe('when a label is provided', () => {
+    it('should render the label text', () => {
+      // Arrange
+      // Act
+      render(<Switch label="Enable notifications" />);
+
+      // Assert
+      expect(screen.getByText('Enable notifications')).toBeInTheDocument();
+    });
   });
 
-  it('applies checked state', () => {
-    render(<Switch checked />);
-    const switchElement = screen.getByRole('switch');
-    expect(switchElement).toHaveAttribute('aria-checked', 'true');
+  describe('when checked is true', () => {
+    it('should expose aria-checked as true', () => {
+      // Arrange
+      // Act
+      render(<Switch checked />);
+
+      // Assert
+      expect(screen.getByRole('switch')).toHaveAttribute('aria-checked', 'true');
+    });
   });
 
-  it('applies disabled state', () => {
-    render(<Switch disabled />);
-    const switchElement = screen.getByRole('switch');
-    expect(switchElement).toBeDisabled();
+  describe('when disabled is true', () => {
+    it('should disable the switch', () => {
+      // Arrange
+      // Act
+      render(<Switch disabled />);
+
+      // Assert
+      expect(screen.getByRole('switch')).toBeDisabled();
+    });
   });
 
-  it('calls onChange when toggled', () => {
-    const handleChange = vi.fn();
-    render(<Switch onChange={handleChange} />);
-    expect(handleChange).toBeDefined();
+  describe('when onChange is provided', () => {
+    it('should accept an onChange handler', () => {
+      // Arrange
+      const handleChange = vi.fn();
+
+      // Act
+      render(<Switch onChange={handleChange} />);
+
+      // Assert
+      expect(handleChange).toBeDefined();
+    });
   });
 });
-

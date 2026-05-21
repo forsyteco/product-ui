@@ -1,131 +1,159 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi, afterEach } from 'vitest';
+import userEvent from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
 import { CopyableCell } from './copyable-cell';
 
 describe('CopyableCell', () => {
-  const mockWriteText = vi.fn();
-
-  beforeEach(() => {
-    // Mock navigator.clipboard.writeText
-    Object.assign(navigator, {
-      clipboard: {
-        writeText: mockWriteText,
-      },
-    });
-    mockWriteText.mockResolvedValue(undefined);
-  });
-
   afterEach(() => {
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
-  describe('Text Rendering', () => {
-    it('renders the text value correctly', () => {
+  describe('when rendering text', () => {
+    it('should render the text value correctly', () => {
+      // Arrange
+      // Act
       render(<CopyableCell value="Hello World" />);
 
+      // Assert
       expect(screen.getByText('Hello World')).toBeInTheDocument();
     });
 
-    it('handles empty string gracefully', () => {
+    it('should handle empty string gracefully', () => {
+      // Arrange
+      // Act
       const { container } = render(<CopyableCell value="" />);
 
+      // Assert
       // Component should still render without errors
       expect(container.firstChild).toBeInTheDocument();
     });
   });
 
-  describe('Copy Icon Visibility', () => {
-    it('copy icon is initially hidden (has opacity-0 class)', () => {
+  describe('when displaying the copy icon', () => {
+    it('should have copy icon initially hidden (has opacity-0 class)', () => {
+      // Arrange
+      // Act
       const { container } = render(<CopyableCell value="Test value" />);
 
+      // Assert
       // The copy button should have opacity-0 class when not hovered
       const copyButton = container.querySelector('button');
       expect(copyButton).toBeInTheDocument();
       expect(copyButton).toHaveClass('opacity-0');
     });
 
-    it('copy icon has group-hover:opacity-100 class for hover visibility', () => {
+    it('should have group-hover:opacity-100 class on copy icon for hover visibility', () => {
+      // Arrange
+      // Act
       const { container } = render(<CopyableCell value="Test value" />);
 
+      // Assert
       const copyButton = container.querySelector('button');
       expect(copyButton).toHaveClass('group-hover:opacity-100');
     });
   });
 
-  describe('Container Layout', () => {
-    it('container has proper layout classes (inline-flex, items-center, gap)', () => {
+  describe('when rendering container layout', () => {
+    it('should have proper layout classes on container (inline-flex, items-center, gap)', () => {
+      // Arrange
+      // Act
       const { container } = render(<CopyableCell value="Test value" />);
 
+      // Assert
       const wrapper = container.firstChild;
       expect(wrapper).toHaveClass('inline-flex');
       expect(wrapper).toHaveClass('items-center');
       expect(wrapper).toHaveClass('gap-1');
     });
 
-    it('container has group class for hover interactions', () => {
+    it('should have group class on container for hover interactions', () => {
+      // Arrange
+      // Act
       const { container } = render(<CopyableCell value="Test value" />);
 
+      // Assert
       const wrapper = container.firstChild;
       expect(wrapper).toHaveClass('group');
     });
   });
 
-  describe('Copy Icon Styling', () => {
-    it('renders the Copy icon from lucide-react', () => {
+  describe('when styling the copy icon', () => {
+    it('should render the Copy icon from lucide-react', () => {
+      // Arrange
+      // Act
       const { container } = render(<CopyableCell value="Test value" />);
 
+      // Assert
       // lucide-react icons render as SVGs with the lucide class
       const copyIcon = container.querySelector('svg.lucide-copy');
       expect(copyIcon).toBeInTheDocument();
     });
 
-    it('copy icon has correct size (small)', () => {
+    it('should have correct size on copy icon (small)', () => {
+      // Arrange
+      // Act
       const { container } = render(<CopyableCell value="Test value" />);
 
+      // Assert
       const copyIcon = container.querySelector('svg.lucide-copy');
       expect(copyIcon).toHaveClass('h-3');
       expect(copyIcon).toHaveClass('w-3');
     });
 
-    it('copy button has cursor-pointer class', () => {
+    it('should have cursor-pointer class on copy button', () => {
+      // Arrange
+      // Act
       const { container } = render(<CopyableCell value="Test value" />);
 
+      // Assert
       const copyButton = container.querySelector('button');
       expect(copyButton).toHaveClass('cursor-pointer');
     });
   });
 
-  describe('Clipboard Functionality', () => {
-    it('clicking the copy icon calls navigator.clipboard.writeText with the value', async () => {
+  describe('when using clipboard functionality', () => {
+    it('should call navigator.clipboard.writeText with the value when copy icon is clicked', async () => {
+      // Arrange
+      const user = userEvent.setup({ writeToClipboard: false });
+      const mockWriteText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue(undefined);
       const { container } = render(<CopyableCell value="Copy this text" />);
-
       const copyButton = container.querySelector('button');
       expect(copyButton).toBeInTheDocument();
 
+      // Act
       if (copyButton) {
-        fireEvent.click(copyButton);
+        await user.click(copyButton);
       }
 
+      // Assert
       expect(mockWriteText).toHaveBeenCalledTimes(1);
       expect(mockWriteText).toHaveBeenCalledWith('Copy this text');
     });
 
-    it('copies empty string when value is empty', async () => {
+    it('should copy empty string when value is empty', async () => {
+      // Arrange
+      const user = userEvent.setup({ writeToClipboard: false });
+      const mockWriteText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue(undefined);
       const { container } = render(<CopyableCell value="" />);
-
       const copyButton = container.querySelector('button');
+
+      // Act
       if (copyButton) {
-        fireEvent.click(copyButton);
+        await user.click(copyButton);
       }
 
+      // Assert
       expect(mockWriteText).toHaveBeenCalledWith('');
     });
   });
 
-  describe('Accessibility', () => {
-    it('copy button has proper aria-label for accessibility', () => {
+  describe('when considering accessibility', () => {
+    it('should have proper aria-label on copy button for accessibility', () => {
+      // Arrange
+      // Act
       render(<CopyableCell value="Accessible text" />);
 
+      // Assert
       const copyButton = screen.getByRole('button', { name: /copy/i });
       expect(copyButton).toBeInTheDocument();
     });

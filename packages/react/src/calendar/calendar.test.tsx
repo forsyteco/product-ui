@@ -1,128 +1,167 @@
 import { describe, expect, it, vi } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Calendar, CalendarChevron, CalendarDayButton } from './calendar';
 
 describe('Calendar', () => {
-  it('renders the calendar root', () => {
-    render(<Calendar />);
-    const root = screen.getByTestId('calendar-root');
-    expect(root).toBeInTheDocument();
+  describe('when rendered with default props', () => {
+    it('should render the calendar root', () => {
+      // Arrange
+      // Act
+      render(<Calendar />);
+
+      // Assert
+      expect(screen.getByTestId('calendar-root')).toBeInTheDocument();
+    });
   });
 
-  it('calls nav handlers when navigating months', () => {
-    const onPrevClick = vi.fn();
-    const onNextClick = vi.fn();
-    render(
-      <Calendar
-        initialMonth={new Date(2024, 0, 1)}
-        onPrevClick={onPrevClick}
-        onNextClick={onNextClick}
-      />
-    );
+  describe('when navigating months', () => {
+    it('should call prev and next handlers', async () => {
+      // Arrange
+      const user = userEvent.setup();
+      const onPrevClick = vi.fn();
+      const onNextClick = vi.fn();
+      render(
+        <Calendar
+          initialMonth={new Date(2024, 0, 1)}
+          onPrevClick={onPrevClick}
+          onNextClick={onNextClick}
+        />
+      );
 
-    const prev = screen.getByLabelText(/previous month/i);
-    const next = screen.getByLabelText(/next month/i);
+      // Act
+      await user.click(screen.getByLabelText(/previous month/i));
+      await user.click(screen.getByLabelText(/next month/i));
 
-    fireEvent.click(prev);
-    fireEvent.click(next);
-
-    expect(onPrevClick).toHaveBeenCalled();
-    expect(onNextClick).toHaveBeenCalled();
+      // Assert
+      expect(onPrevClick).toHaveBeenCalled();
+      expect(onNextClick).toHaveBeenCalled();
+    });
   });
 
-  it('disables nav buttons when navigation is turned off', () => {
-    render(
-      <Calendar
-        initialMonth={new Date(2024, 0, 1)}
-        disableNavigation
-      />
-    );
+  describe('when disableNavigation is true', () => {
+    it('should disable nav buttons', () => {
+      // Arrange
+      // Act
+      render(
+        <Calendar
+          initialMonth={new Date(2024, 0, 1)}
+          disableNavigation
+        />
+      );
 
-    const prev = screen.getByLabelText(/previous month/i);
-    const next = screen.getByLabelText(/next month/i);
+      // Assert
+      expect(screen.getByLabelText(/previous month/i)).toBeDisabled();
+      expect(screen.getByLabelText(/next month/i)).toBeDisabled();
+    });
 
-    expect(prev).toBeDisabled();
-    expect(next).toBeDisabled();
+    it('should remove disabled nav buttons from tab order', () => {
+      // Arrange
+      // Act
+      render(
+        <Calendar
+          initialMonth={new Date(2024, 0, 1)}
+          disableNavigation
+        />
+      );
+
+      // Assert
+      expect(screen.getByLabelText(/previous month/i)).toHaveAttribute('tabindex', '-1');
+      expect(screen.getByLabelText(/next month/i)).toHaveAttribute('tabindex', '-1');
+    });
   });
 
-  it('removes disabled nav buttons from tab order', () => {
-    render(
-      <Calendar
-        initialMonth={new Date(2024, 0, 1)}
-        disableNavigation
-      />
-    );
+  describe('when using dropdown caption layout', () => {
+    it('should apply a custom month formatter', () => {
+      // Arrange
+      // Act
+      render(
+        <Calendar
+          initialMonth={new Date(2024, 0, 1)}
+          captionLayout="dropdown"
+          formatters={{
+            formatMonthDropdown: () => 'Mon',
+          }}
+        />
+      );
 
-    const prev = screen.getByLabelText(/previous month/i);
-    const next = screen.getByLabelText(/next month/i);
-
-    expect(prev).toHaveAttribute('tabindex', '-1');
-    expect(next).toHaveAttribute('tabindex', '-1');
+      // Assert
+      expect(screen.getAllByText('Mon').length).toBeGreaterThan(0);
+    });
   });
 
-  it('applies custom month formatter when using dropdown caption', () => {
-    render(
-      <Calendar
-        initialMonth={new Date(2024, 0, 1)}
-        captionLayout="dropdown"
-        formatters={{
-          formatMonthDropdown: () => 'Mon',
-        }}
-      />
-    );
+  describe('when showWeekNumber is true', () => {
+    it('should render week numbers', () => {
+      // Arrange
+      // Act
+      render(<Calendar initialMonth={new Date(2024, 0, 1)} showWeekNumber />);
 
-    expect(screen.getAllByText('Mon').length).toBeGreaterThan(0);
-  });
-
-  it('renders week numbers when enabled', () => {
-    render(<Calendar initialMonth={new Date(2024, 0, 1)} showWeekNumber />);
-    const weekNumbers = document.querySelectorAll('.rdp-week_number');
-    expect(weekNumbers.length).toBeGreaterThan(0);
-  });
-
-  it('focuses day button when focused modifier is true', () => {
-    render(
-      <CalendarDayButton
-        day={{
-          date: new Date('2024-01-01'),
-          displayIndex: 0,
-          displayMonth: new Date('2024-01-01'),
-        }}
-        modifiers={{ focused: true }}
-      />
-    );
-
-    const focused = document.activeElement as HTMLElement | null;
-    expect(focused?.dataset.day).toBe(new Date('2024-01-01').toLocaleDateString());
-  });
-
-  it('adds an accessible label to day buttons', () => {
-    render(
-      <CalendarDayButton
-        day={{
-          date: new Date('2024-01-01'),
-          displayIndex: 0,
-          displayMonth: new Date('2024-01-01'),
-        }}
-        modifiers={{ focused: false }}
-      />
-    );
-
-    expect(screen.getByRole('button')).toHaveAttribute(
-      'aria-label',
-      new Date('2024-01-01').toLocaleDateString('en', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      })
-    );
-  });
-
-  it('renders chevron fallback for non-left/right orientations', () => {
-    const { container } = render(<CalendarChevron orientation="down" />);
-    expect(container.querySelector('.lucide-chevron-down')).toBeInTheDocument();
+      // Assert
+      expect(document.querySelectorAll('.rdp-week_number').length).toBeGreaterThan(0);
+    });
   });
 });
 
+describe('CalendarDayButton', () => {
+  describe('when the focused modifier is true', () => {
+    it('should focus the day button', () => {
+      // Arrange
+      // Act
+      render(
+        <CalendarDayButton
+          day={{
+            date: new Date('2024-01-01'),
+            displayIndex: 0,
+            displayMonth: new Date('2024-01-01'),
+          }}
+          modifiers={{ focused: true }}
+        />
+      );
 
+      // Assert
+      const focused = document.activeElement as HTMLElement | null;
+      expect(focused?.dataset.day).toBe(new Date('2024-01-01').toLocaleDateString());
+    });
+  });
+
+  describe('when rendered for a day', () => {
+    it('should expose an accessible label', () => {
+      // Arrange
+      // Act
+      render(
+        <CalendarDayButton
+          day={{
+            date: new Date('2024-01-01'),
+            displayIndex: 0,
+            displayMonth: new Date('2024-01-01'),
+          }}
+          modifiers={{ focused: false }}
+        />
+      );
+
+      // Assert
+      expect(screen.getByRole('button')).toHaveAttribute(
+        'aria-label',
+        new Date('2024-01-01').toLocaleDateString('en', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })
+      );
+    });
+  });
+});
+
+describe('CalendarChevron', () => {
+  describe('when orientation is down', () => {
+    it('should render the down chevron icon', () => {
+      // Arrange
+      // Act
+      const { container } = render(<CalendarChevron orientation="down" />);
+
+      // Assert
+      expect(container.querySelector('.lucide-chevron-down')).toBeInTheDocument();
+    });
+  });
+});

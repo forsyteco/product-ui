@@ -4,42 +4,61 @@ import { render, screen } from '@testing-library/react';
 import { Avatar, AvatarFallback, AvatarImage } from './avatar';
 
 describe('Avatar', () => {
-  it('renders root', () => {
-    const { container } = render(<Avatar />);
-    expect(container.querySelector('[data-slot="avatar"]')).toBeInTheDocument();
+  describe('when rendered with default props', () => {
+    it('should render the avatar root', () => {
+      // Arrange
+      // Act
+      const { container } = render(<Avatar />);
+
+      // Assert
+      expect(container.querySelector('[data-slot="avatar"]')).toBeInTheDocument();
+    });
   });
 
-  it('renders initials fallback', () => {
-    const { container } = render(
-      <Avatar>
-        <AvatarFallback variant="initials" name="Ada Lovelace" />
-      </Avatar>
-    );
-    expect(container.querySelector('[data-slot="avatar-fallback"]')).toBeInTheDocument();
-    expect(screen.getByText('AL')).toBeInTheDocument();
+  describe('when using initials fallback', () => {
+    it('should render initials from the name', () => {
+      // Arrange
+      // Act
+      const { container } = render(
+        <Avatar>
+          <AvatarFallback variant="initials" name="Ada Lovelace" />
+        </Avatar>
+      );
+
+      // Assert
+      expect(container.querySelector('[data-slot="avatar-fallback"]')).toBeInTheDocument();
+      expect(screen.getByText('AL')).toBeInTheDocument();
+    });
   });
 
-  it('renders boring fallback', () => {
-    const { container } = render(
-      <Avatar>
-        <AvatarFallback variant="boring" name="Grace Hopper" />
-      </Avatar>
-    );
-    expect(container.querySelector('[data-slot="avatar-fallback"]')).toBeInTheDocument();
-    // The boring avatar renders an svg. We just assert something is in the DOM.
-    expect(container.querySelector('svg')).toBeInTheDocument();
+  describe('when using boring fallback', () => {
+    it('should render the boring avatar graphic', () => {
+      // Arrange
+      // Act
+      const { container } = render(
+        <Avatar>
+          <AvatarFallback variant="boring" name="Grace Hopper" />
+        </Avatar>
+      );
+
+      // Assert
+      expect(container.querySelector('[data-slot="avatar-fallback"]')).toBeInTheDocument();
+      expect(container.querySelector('svg')).toBeInTheDocument();
+    });
   });
 
-  it('renders image slot', () => {
-    const { container } = render(
-      <Avatar>
-        <AvatarImage src="https://example.com/avatar.png" alt="Avatar" />
-      </Avatar>
-    );
-    // Radix may not render the image element until it has loaded;
-    // this test just ensures the AvatarImage can be mounted without crashing.
-    expect(container.querySelector('[data-slot="avatar"]')).toBeInTheDocument();
+  describe('when an image is provided', () => {
+    it('should mount the avatar without crashing', () => {
+      // Arrange
+      // Act
+      const { container } = render(
+        <Avatar>
+          <AvatarImage src="https://example.com/avatar.png" alt="Avatar" />
+        </Avatar>
+      );
+
+      // Assert
+      expect(container.querySelector('[data-slot="avatar"]')).toBeInTheDocument();
+    });
   });
 });
-
-

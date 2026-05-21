@@ -11,36 +11,42 @@ import {
 } from './breadcrumb';
 
 describe('Breadcrumb', () => {
-  it('renders a breadcrumb navigation with links and current page semantics', () => {
-    render(
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/home">Home</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Settings</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-    );
+  describe('when rendered with links and a current page', () => {
+    it('should expose navigation semantics and link hrefs', () => {
+      // Arrange
+      // Act
+      render(
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/home">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Settings</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      );
 
-    const nav = screen.getByRole('navigation', { name: /breadcrumb/i });
-    expect(nav).toBeInTheDocument();
+      // Assert
+      expect(screen.getByRole('navigation', { name: /breadcrumb/i })).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: 'Home' })).toHaveAttribute('href', '/home');
 
-    const home = screen.getByRole('link', { name: 'Home' });
-    expect(home).toHaveAttribute('href', '/home');
-
-    const current = screen.getByText('Settings');
-    expect(current).toHaveAttribute('aria-current', 'page');
-    expect(current).toHaveAttribute('aria-disabled', 'true');
+      const current = screen.getByText('Settings');
+      expect(current).toHaveAttribute('aria-current', 'page');
+      expect(current).toHaveAttribute('aria-disabled', 'true');
+    });
   });
 
-  it('renders the ellipsis with accessible text', () => {
-    render(<BreadcrumbEllipsis />);
-    expect(screen.getByText('More')).toBeInTheDocument();
+  describe('when rendering the ellipsis', () => {
+    it('should expose accessible text', () => {
+      // Arrange
+      // Act
+      render(<BreadcrumbEllipsis />);
+
+      // Assert
+      expect(screen.getByText('More')).toBeInTheDocument();
+    });
   });
 });
-
-

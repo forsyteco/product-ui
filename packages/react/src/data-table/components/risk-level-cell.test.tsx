@@ -3,10 +3,13 @@ import { render, screen } from '@testing-library/react';
 import { RiskLevelCell } from './risk-level-cell';
 
 describe('RiskLevelCell', () => {
-  describe('High Risk Level', () => {
-    it('renders "High" with correct red styling', () => {
+  describe('when risk level is high', () => {
+    it('should render "High" with correct red styling', () => {
+      // Arrange
+      // Act
       render(<RiskLevelCell value="high" />);
 
+      // Assert
       const badge = screen.getByText('High');
       expect(badge).toBeInTheDocument();
       expect(badge).toHaveClass('bg-red-100');
@@ -14,10 +17,13 @@ describe('RiskLevelCell', () => {
     });
   });
 
-  describe('Medium Risk Level', () => {
-    it('renders "Medium" with correct yellow styling', () => {
+  describe('when risk level is medium', () => {
+    it('should render "Medium" with correct yellow styling', () => {
+      // Arrange
+      // Act
       render(<RiskLevelCell value="medium" />);
 
+      // Assert
       const badge = screen.getByText('Medium');
       expect(badge).toBeInTheDocument();
       expect(badge).toHaveClass('bg-yellow-100');
@@ -25,10 +31,13 @@ describe('RiskLevelCell', () => {
     });
   });
 
-  describe('Low Risk Level', () => {
-    it('renders "Low" with correct green styling', () => {
+  describe('when risk level is low', () => {
+    it('should render "Low" with correct green styling', () => {
+      // Arrange
+      // Act
       render(<RiskLevelCell value="low" />);
 
+      // Assert
       const badge = screen.getByText('Low');
       expect(badge).toBeInTheDocument();
       expect(badge).toHaveClass('bg-green-100');
@@ -36,30 +45,42 @@ describe('RiskLevelCell', () => {
     });
   });
 
-  describe('Case Insensitivity', () => {
-    it('handles lowercase input and capitalizes first letter', () => {
+  describe('when input case varies', () => {
+    it('should handle lowercase input and capitalize first letter', () => {
+      // Arrange
+      // Act
       render(<RiskLevelCell value="high" />);
 
+      // Assert
       expect(screen.getByText('High')).toBeInTheDocument();
     });
 
-    it('handles uppercase input and capitalizes only first letter', () => {
+    it('should handle uppercase input and capitalize only first letter', () => {
+      // Arrange
+      // Act
       render(<RiskLevelCell value="HIGH" />);
 
+      // Assert
       expect(screen.getByText('High')).toBeInTheDocument();
     });
 
-    it('handles mixed case input correctly', () => {
+    it('should handle mixed case input correctly', () => {
+      // Arrange
+      // Act
       render(<RiskLevelCell value="MeDiUm" />);
 
+      // Assert
       expect(screen.getByText('Medium')).toBeInTheDocument();
     });
   });
 
-  describe('Base Styling', () => {
-    it('applies base styling classes (rounded, px-2, py-1, text-xs, font-medium)', () => {
+  describe('when applying base styling', () => {
+    it('should apply base styling classes (rounded, px-2, py-1, text-xs, font-medium)', () => {
+      // Arrange
+      // Act
       render(<RiskLevelCell value="low" />);
 
+      // Assert
       const badge = screen.getByText('Low');
       expect(badge).toHaveClass('rounded');
       expect(badge).toHaveClass('px-2');
@@ -69,28 +90,37 @@ describe('RiskLevelCell', () => {
     });
   });
 
-  describe('Unknown Values', () => {
-    it('handles unknown values gracefully with default gray styling', () => {
+  describe('when value is unknown', () => {
+    it('should handle unknown values gracefully with default gray styling', () => {
+      // Arrange
+      // Act
       render(<RiskLevelCell value="unknown" />);
 
+      // Assert
       const badge = screen.getByText('Unknown');
       expect(badge).toBeInTheDocument();
       expect(badge).toHaveClass('bg-gray-100');
       expect(badge).toHaveClass('text-gray-800');
     });
 
-    it('handles empty string gracefully', () => {
+    it('should handle empty string gracefully', () => {
+      // Arrange
+      // Act
       const { container } = render(<RiskLevelCell value="" />);
 
+      // Assert
       const badge = container.querySelector('span');
       expect(badge).toBeInTheDocument();
       expect(badge).toHaveClass('bg-gray-100');
       expect(badge).toHaveClass('text-gray-800');
     });
 
-    it('handles random unknown value with proper capitalization', () => {
+    it('should handle random unknown value with proper capitalization', () => {
+      // Arrange
+      // Act
       render(<RiskLevelCell value="critical" />);
 
+      // Assert
       const badge = screen.getByText('Critical');
       expect(badge).toBeInTheDocument();
       expect(badge).toHaveClass('bg-gray-100');

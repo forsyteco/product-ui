@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Input } from './input';
 import styles from './input.module.css';
 
@@ -167,14 +168,15 @@ describe('Input', () => {
   });
 
   describe('when format is currency', () => {
-    it('should format and report numeric value', () => {
+    it('should format and report numeric value', async () => {
       // Arrange
+      const user = userEvent.setup();
       const onValueChange = vi.fn();
       render(<Input format="currency" onValueChange={onValueChange} />);
+      const input = screen.getByRole('textbox');
 
       // Act
-      const input = screen.getByRole('textbox');
-      fireEvent.change(input, { target: { value: '1234' } });
+      await user.type(input, '1234');
 
       // Assert
       expect(input).toHaveValue('1,234');
@@ -189,55 +191,59 @@ describe('Input', () => {
       expect(screen.getByText('$')).toBeInTheDocument();
     });
 
-    it('should allow partial decimal states', () => {
+    it('should allow partial decimal states', async () => {
       // Arrange
+      const user = userEvent.setup();
       const onValueChange = vi.fn();
       render(<Input format="currency" onValueChange={onValueChange} />);
       const input = screen.getByRole('textbox');
 
       // Act
-      fireEvent.change(input, { target: { value: '1.' } });
+      await user.type(input, '1.');
 
       // Assert
       expect(input).toHaveValue('1.');
       expect(onValueChange).toHaveBeenLastCalledWith(1);
 
       // Act
-      fireEvent.change(input, { target: { value: '.5' } });
+      await user.clear(input);
+      await user.type(input, '.5');
 
       // Assert
       expect(input).toHaveValue('0.5');
       expect(onValueChange).toHaveBeenLastCalledWith(0.5);
     });
 
-    it('should clamp values on change and blur', () => {
+    it('should clamp values on change and blur', async () => {
       // Arrange
+      const user = userEvent.setup();
       const onValueChange = vi.fn();
       render(<Input format="currency" min={0} max={10} onValueChange={onValueChange} />);
       const input = screen.getByRole('textbox');
 
       // Act
-      fireEvent.change(input, { target: { value: '25' } });
+      await user.type(input, '25');
 
       // Assert
       expect(onValueChange).toHaveBeenLastCalledWith(10);
 
       // Act
-      fireEvent.blur(input);
+      await user.tab();
 
       // Assert
       expect(input).toHaveValue('10');
     });
 
-    it('should preserve trailing zeros on blur', () => {
+    it('should preserve trailing zeros on blur', async () => {
       // Arrange
+      const user = userEvent.setup();
       const onValueChange = vi.fn();
       render(<Input format="currency" onValueChange={onValueChange} />);
       const input = screen.getByRole('textbox');
 
       // Act
-      fireEvent.change(input, { target: { value: '1.00' } });
-      fireEvent.blur(input);
+      await user.type(input, '1.00');
+      await user.tab();
 
       // Assert
       expect(input).toHaveValue('1.00');

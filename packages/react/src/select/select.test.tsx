@@ -1,5 +1,6 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Select } from './select';
 
 const options = [
@@ -9,26 +10,47 @@ const options = [
 ];
 
 describe('Select', () => {
-  it('renders the select component', () => {
-    render(<Select options={options} />);
-    expect(screen.getByText('Option 1')).toBeInTheDocument();
+  describe('when rendered with options', () => {
+    it('should render the first option label', () => {
+      // Arrange
+      // Act
+      render(<Select options={options} />);
+
+      // Assert
+      expect(screen.getByText('Option 1')).toBeInTheDocument();
+    });
   });
 
-  it('renders placeholder', () => {
-    render(<Select options={options} placeholder="Choose..." />);
-    expect(screen.getByText('Choose...')).toBeInTheDocument();
+  describe('when a placeholder is provided', () => {
+    it('should render the placeholder text', () => {
+      // Arrange
+      // Act
+      render(<Select options={options} placeholder="Choose..." />);
+
+      // Assert
+      expect(screen.getByText('Choose...')).toBeInTheDocument();
+    });
   });
 
-  it('applies error styling', () => {
-    const { container } = render(<Select options={options} error />);
-    const select = container.querySelector('select');
-    expect(select).toHaveClass('border-destructive-border');
+  describe('when error is true', () => {
+    it('should apply error styling', () => {
+      // Arrange
+      // Act
+      const { container } = render(<Select options={options} error />);
+
+      // Assert
+      expect(container.querySelector('select')).toHaveClass('border-destructive-border');
+    });
   });
 
-  it('applies disabled state', () => {
-    render(<Select options={options} disabled />);
-    const select = screen.getByRole('combobox');
-    expect(select).toBeDisabled();
+  describe('when disabled is true', () => {
+    it('should disable the select', () => {
+      // Arrange
+      // Act
+      render(<Select options={options} disabled />);
+
+      // Assert
+      expect(screen.getByRole('combobox')).toBeDisabled();
+    });
   });
 });
-

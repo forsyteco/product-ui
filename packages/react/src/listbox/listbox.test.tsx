@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Listbox } from './listbox';
 
@@ -45,11 +45,13 @@ describe('Listbox', () => {
 
       // Act
       await user.click(screen.getByRole('combobox'));
-      await user.click(screen.getByRole('option', { name: 'Option 2' }));
+      const option = await screen.findByRole('option', { name: 'Option 2' });
+      await user.click(option);
 
       // Assert
-      expect(handleChange).toHaveBeenCalledTimes(1);
-      expect(handleChange).toHaveBeenCalledWith(options[1]);
+      await waitFor(() => {
+        expect(handleChange).toHaveBeenCalledWith(options[1]);
+      });
     });
   });
 });

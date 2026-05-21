@@ -3,28 +3,48 @@ import { render, screen } from '@testing-library/react';
 import { Checkbox } from './checkbox';
 
 describe('Checkbox', () => {
-  it('renders the checkbox component', () => {
-    render(<Checkbox />);
-    const checkbox = screen.getByRole('checkbox');
-    expect(checkbox).toBeInTheDocument();
+  describe('when rendered with default props', () => {
+    it('should render a checkbox', () => {
+      // Arrange
+      // Act
+      render(<Checkbox />);
+
+      // Assert
+      expect(screen.getByRole('checkbox')).toBeInTheDocument();
+    });
   });
 
-  it('renders with label', () => {
-    render(<Checkbox label="Accept terms" />);
-    expect(screen.getByText('Accept terms')).toBeInTheDocument();
-    expect(screen.getByLabelText('Accept terms')).toBeInTheDocument();
+  describe('when a label is provided', () => {
+    it('should associate the label with the checkbox', () => {
+      // Arrange
+      // Act
+      render(<Checkbox label="Accept terms" />);
+
+      // Assert
+      expect(screen.getByText('Accept terms')).toBeInTheDocument();
+      expect(screen.getByLabelText('Accept terms')).toBeInTheDocument();
+    });
   });
 
-  it('applies checked state', () => {
-    render(<Checkbox defaultChecked />);
-    const checkbox = screen.getByRole('checkbox');
-    expect(checkbox).toBeChecked();
+  describe('when defaultChecked is true', () => {
+    it('should render as checked', () => {
+      // Arrange
+      // Act
+      render(<Checkbox defaultChecked />);
+
+      // Assert
+      expect(screen.getByRole('checkbox')).toBeChecked();
+    });
   });
 
-  it('applies disabled state', () => {
-    render(<Checkbox disabled />);
-    const checkbox = screen.getByRole('checkbox');
-    expect(checkbox).toBeDisabled();
+  describe('when disabled is true', () => {
+    it('should disable the checkbox', () => {
+      // Arrange
+      // Act
+      render(<Checkbox disabled />);
+
+      // Assert
+      expect(screen.getByRole('checkbox')).toBeDisabled();
+    });
   });
 });
-

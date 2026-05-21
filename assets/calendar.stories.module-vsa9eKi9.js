@@ -1,0 +1,1 @@
+const e="_footer_13z5k_1",a="_exampleCard_13z5k_7",o="_exampleCardContent_13z5k_19",t="_exampleCardFooter_13z5k_23",r="_exampleLabel_13z5k_30",l={footer:e,exampleCard:a,exampleCardContent:o,exampleCardFooter:t,exampleLabel:r};export{l as s};

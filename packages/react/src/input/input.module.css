@@ -1,7 +1,7 @@
 .root {
   --input-adornment-size: 1rem;
-  --input-active-border: var(--field-focus-border);
-  --input-border: color-mix(in srgb, rgb(var(--input-active-border)) 60%, rgb(var(--background)));
+  --input-active-border: 179 192 209;
+  --input-border: #b3c0d1;
   --input-halo: color-mix(in srgb, rgb(var(--input-active-border)) 25%, rgb(var(--background)));
   --input-shadow-rest: 0 1px 2px rgb(0 0 0 / 0.05);
 

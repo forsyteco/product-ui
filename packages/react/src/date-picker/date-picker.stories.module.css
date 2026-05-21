@@ -1,0 +1,39 @@
+.validationLayout {
+  width: 20rem;
+}
+
+.validationHint {
+  margin-top: 0.5rem;
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
+  color: rgb(var(--muted-foreground));
+}
+
+.exampleCard {
+  width: fit-content;
+  gap: 0.75rem;
+  padding-block: 1rem;
+}
+
+.exampleCard :global([data-slot='card-header']),
+.exampleCard :global([data-slot='card-content']),
+.exampleCard :global([data-slot='card-footer']) {
+  padding-inline: 1rem;
+}
+
+.exampleCardContent {
+  padding: 0;
+}
+
+.exampleCardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.exampleLabel {
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
+  color: rgb(var(--muted-foreground));
+}

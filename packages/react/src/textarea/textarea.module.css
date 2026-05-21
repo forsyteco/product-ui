@@ -50,7 +50,7 @@
 }
 
 .error {
-  --textarea-active-border: var(--field-error);
+  --textarea-active-border: var(--destructive);
   border-color: var(--textarea-border);
 }
 

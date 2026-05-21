@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 
 import { Calendar } from './calendar';
+import storyStyles from './calendar.stories.module.css';
 
 const meta = {
   title: 'Components/Calendar/Features',
@@ -27,7 +28,7 @@ export const ControlledSingle: Story = {
           if (date) setSelected(date);
         }}
         footer={
-          <div className="mt-4 text-base">
+          <div className={storyStyles.footer}>
             {selected ? `Selected: ${dayjs(selected).format('DD/MM/YYYY')}` : 'Pick a day'}
           </div>
         }

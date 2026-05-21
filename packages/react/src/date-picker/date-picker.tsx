@@ -1,26 +1,57 @@
-import * as React from 'react';
-import { Popover as HeadlessPopover, Portal } from '@headlessui/react';
-import { CalendarDays } from 'lucide-react';
-import { Calendar } from '../calendar';
-import { Button } from '../button';
-import { cn } from '../utils/tailwind';
+'use client';
 
-const defaultFormatDate = (date: Date) =>
-  date.toLocaleDateString('en', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  });
+import * as React from 'react';
+import { clsx } from 'clsx';
+import { Popover as BasePopover } from '@base-ui/react/popover';
+import { Calendar as CalendarIcon } from 'lucide-react';
+import type { Matcher } from 'react-day-picker';
+
+import { Button, type IconOnlyButtonSize } from '../button';
+import { Calendar } from '../calendar';
+import captionStyles from '../field-select/field-caption.module.css';
+import { ClearIcon } from '../field-select/clear-icon';
+import { Input } from '../input';
+import type { TextInputProps } from '../input/input.types';
+import { VisuallyHidden } from '../visually-hidden';
+import { buildDisabledMatchers, getDisabledDateError } from './date-constraints';
+import { normalizeSelectedDate } from './date-input';
+import styles from './date-picker.module.css';
+import { mergeIds } from './merge-ids';
+import { useDatePickerInput } from './use-date-picker-input';
+
+const CALENDAR_BUTTON_SIZE: Record<NonNullable<TextInputProps['size']>, IconOnlyButtonSize> = {
+  sm: 'small',
+  default: 'medium',
+  lg: 'large',
+};
 
 export type DatePickerProps = {
   value?: Date;
   defaultValue?: Date;
   onValueChange?: (value?: Date) => void;
   placeholder?: string;
+  /** dayjs format string used for typed input and display */
+  inputFormat?: string;
+  /** Optional formatter when inputFormat is not suitable for display */
   formatDate?: (date: Date) => string;
   disabled?: boolean;
+  readOnly?: boolean;
+  required?: boolean;
+  clearable?: boolean;
+  /** Allow compact digit entry such as `15012024` on commit */
+  allowCompactInput?: boolean;
+  minDate?: Date;
+  maxDate?: Date;
+  disabledDates?: Matcher | Matcher[];
+  error?: TextInputProps['error'];
+  errorMessage?: React.ReactNode;
+  size?: TextInputProps['size'];
   className?: string;
-  buttonClassName?: string;
+  inputClassName?: string;
+  name?: string;
+  id?: string;
+  'aria-describedby'?: string;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
   calendarProps?: Omit<
     React.ComponentProps<typeof Calendar>,
     'mode' | 'selected' | 'onSelect' | 'defaultMonth'
@@ -31,50 +62,109 @@ function DatePicker({
   value,
   defaultValue,
   onValueChange,
-  placeholder = 'Pick a date',
-  formatDate = defaultFormatDate,
+  placeholder,
+  inputFormat = 'DD/MM/YYYY',
+  formatDate,
   disabled,
+  readOnly = false,
+  required = false,
+  clearable = false,
+  allowCompactInput = false,
+  minDate,
+  maxDate,
+  disabledDates,
+  error,
+  errorMessage,
+  size = 'default',
   className,
-  buttonClassName,
+  inputClassName,
+  name,
+  id,
+  'aria-describedby': ariaDescribedBy,
+  onBlur,
   calendarProps,
 }: DatePickerProps) {
-  const popoverRef = React.useRef<HTMLDivElement | null>(null);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const popoverRef = React.useRef<HTMLDivElement>(null);
+  const errorId = React.useId();
+  const calendarTriggerId = React.useId();
+  const [open, setOpen] = React.useState(false);
   const [internalValue, setInternalValue] = React.useState<Date | undefined>(defaultValue);
   const isControlled = value !== undefined;
   const selected = isControlled ? value : internalValue;
+
+  const disabledMatchers = React.useMemo(
+    () =>
+      buildDisabledMatchers({
+        minDate,
+        maxDate,
+        disabledDates,
+        calendarDisabled: calendarProps?.disabled,
+      }),
+    [calendarProps?.disabled, disabledDates, maxDate, minDate]
+  );
+
+  const validateDate = React.useCallback(
+    (date: Date) =>
+      getDisabledDateError(
+        date,
+        {
+          minDate,
+          maxDate,
+          disabledDates,
+          calendarDisabled: calendarProps?.disabled,
+        },
+        inputFormat
+      ),
+    [calendarProps?.disabled, disabledDates, inputFormat, maxDate, minDate]
+  );
+
+  const setSelectedDate = React.useCallback(
+    (nextValue?: Date) => {
+      if (!isControlled) {
+        setInternalValue(nextValue);
+      }
+      onValueChange?.(nextValue);
+    },
+    [isControlled, onValueChange]
+  );
+
+  const {
+    inputValue,
+    validationError,
+    handleInputChange,
+    handlePaste,
+    commitInputValue,
+    clearValue,
+  } = useDatePickerInput({
+    value: selected,
+    inputFormat,
+    formatValue: formatDate,
+    onValueChange: setSelectedDate,
+    clearInputWhenValueIsEmpty: isControlled,
+    required,
+    allowCompactInput,
+    validateDate,
+  });
+
+  const displayedError = errorMessage ?? validationError;
+  const hasError = Boolean(error) || Boolean(displayedError);
+  const canClear = clearable && !disabled && Boolean(selected ?? inputValue.trim());
+
   React.useEffect(() => {
     if (!isControlled) {
       setInternalValue(defaultValue);
     }
   }, [defaultValue, isControlled]);
 
-  const formattedLabel = React.useMemo(() => {
-    if (!selected) return undefined;
-    try {
-      return formatDate(selected);
-    } catch {
-      return defaultFormatDate(selected);
-    }
-  }, [formatDate, selected]);
-  const label = formattedLabel ?? placeholder;
-
-  const handleSelect = (date?: Date) => {
-    if (!isControlled) {
-      setInternalValue(date);
-    }
-    onValueChange?.(date);
-  };
-
   const handleSubmitCapture = (event: React.FormEvent<HTMLDivElement>) => {
     const nativeEvent = event.nativeEvent as SubmitEvent;
     const submitter = nativeEvent.submitter as HTMLElement | null;
     const activeElement = document.activeElement as HTMLElement | null;
-    const popoverElement = popoverRef.current;
-
     const shouldIgnoreSubmit = (element: HTMLElement | null) =>
       Boolean(
         element &&
-          (popoverElement?.contains(element) ||
+          (popoverRef.current?.contains(element) ||
             element.closest('[data-calendar-submit-ignore="true"]'))
       );
 
@@ -84,54 +174,141 @@ function DatePicker({
     }
   };
 
+  const handleCalendarSelect = (date?: Date) => {
+    if (!date) {
+      return;
+    }
+
+    const normalizedDate = normalizeSelectedDate(date);
+    const constraintError = validateDate(normalizedDate);
+    if (constraintError) {
+      return;
+    }
+
+    setSelectedDate(normalizedDate);
+    setOpen(false);
+  };
+
+  const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      commitInputValue(event.currentTarget.value);
+      return;
+    }
+
+    if (event.key === 'ArrowDown' || (event.altKey && event.key === 'ArrowDown')) {
+      event.preventDefault();
+      setOpen(true);
+    }
+  };
+
+  const mergedCalendarProps = {
+    ...calendarProps,
+    disabled: disabledMatchers.length > 0 ? disabledMatchers : calendarProps?.disabled,
+    startMonth: calendarProps?.startMonth ?? minDate,
+    endMonth: calendarProps?.endMonth ?? maxDate,
+  };
+
   return (
-    <HeadlessPopover
-      className={cn('relative inline-flex w-full', className)}
+    <div
+      ref={containerRef}
+      className={clsx(styles.root, className)}
       onSubmitCapture={handleSubmitCapture}
     >
-      {({ close, open }) => (
-        <>
-          <HeadlessPopover.Button
-            as={Button}
-            type="button"
-            variant="outline"
+      <BasePopover.Root open={open} onOpenChange={setOpen} triggerId={calendarTriggerId} modal="trap-focus">
+        <div className={styles.control}>
+          <Input
+            id={id}
+            name={name}
+            value={inputValue}
+            onChange={readOnly ? undefined : handleInputChange}
+            onPaste={readOnly ? undefined : handlePaste}
+            onBlur={(event) => {
+              if (!readOnly) {
+                commitInputValue(event.target.value);
+              }
+              onBlur?.(event);
+            }}
+            onKeyDown={handleInputKeyDown}
+            onClick={readOnly && !disabled ? () => setOpen(true) : undefined}
+            placeholder={placeholder ?? inputFormat}
             disabled={disabled}
-            aria-expanded={open}
-            aria-haspopup="dialog"
-            aria-label={selected ? `Selected date: ${label}` : placeholder}
-            className={cn(
-              'h-9 w-full justify-between gap-2 bg-background/80 px-3 text-left text-base font-normal',
-              !selected && 'text-muted-foreground',
-              buttonClassName
-            )}
-          >
-            <span className="truncate">{label}</span>
-            <CalendarDays className="size-4 text-muted-foreground" />
-          </HeadlessPopover.Button>
+            readOnly={readOnly}
+            required={required}
+            error={hasError}
+            aria-describedby={mergeIds(ariaDescribedBy, displayedError ? errorId : undefined)}
+            aria-invalid={hasError || undefined}
+            size={size}
+            className={styles.input}
+            inputClassName={inputClassName}
+            autoComplete="off"
+            inputMode="numeric"
+            trailingAction={
+              canClear
+                ? {
+                    icon: ClearIcon,
+                    'aria-label': 'Clear date',
+                    onClick: (event) => {
+                      event.preventDefault();
+                      clearValue();
+                    },
+                  }
+                : undefined
+            }
+          />
 
-          <Portal>
-            <HeadlessPopover.Panel
+          <div className={styles['trigger-wrap']}>
+            <BasePopover.Trigger
+              id={calendarTriggerId}
+              disabled={disabled}
+              render={(triggerProps, state) => (
+                <Button
+                  {...triggerProps}
+                  type="button"
+                  icon={CalendarIcon}
+                  variant="outline"
+                  size={CALENDAR_BUTTON_SIZE[size]}
+                  shape="square"
+                  aria-label={state.open ? 'Close calendar' : 'Open calendar'}
+                  className={clsx(styles.trigger, triggerProps.className)}
+                />
+              )}
+            />
+          </div>
+        </div>
+
+        <BasePopover.Portal>
+          <BasePopover.Positioner side="bottom" align="end" sideOffset={8} className={styles.positioner}>
+            <BasePopover.Popup
               ref={popoverRef}
+              initialFocus={false}
+              aria-label="Choose date"
               data-slot="popover-content"
               data-calendar-submit-ignore="true"
-              className="z-50 mt-2 w-fit rounded-md bg-popover shadow-lg ring-1 ring-border focus:outline-none"
+              className={styles.popover}
             >
+              <VisuallyHidden>
+                <BasePopover.Close>Close calendar</BasePopover.Close>
+              </VisuallyHidden>
               <Calendar
                 mode="single"
                 selected={selected}
-                onSelect={(date: Date | undefined) => {
-                  handleSelect(date);
-                  close();
-                }}
+                onSelect={handleCalendarSelect}
                 defaultMonth={selected ?? defaultValue ?? new Date()}
                 initialFocus
-                {...calendarProps}
+                {...mergedCalendarProps}
+                required
               />
-            </HeadlessPopover.Panel>
-          </Portal>
-        </>
-      )}
-    </HeadlessPopover>
+            </BasePopover.Popup>
+          </BasePopover.Positioner>
+        </BasePopover.Portal>
+      </BasePopover.Root>
+
+      {displayedError ? (
+        <p id={errorId} role="alert" className={captionStyles.error}>
+          {displayedError}
+        </p>
+      ) : null}
+    </div>
   );
 }
 

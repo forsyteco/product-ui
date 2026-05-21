@@ -36,20 +36,22 @@
 
 .root--error,
 .root--success {
-  border-color: var(--input-border);
+  border-color: rgb(var(--input-active-border));
 }
 
 .root--error {
-  --input-active-border: var(--field-error);
+  --input-active-border: var(--destructive);
+  --input-halo: color-mix(in srgb, rgb(var(--destructive)) 25%, rgb(var(--background)));
 }
 
 .root--success {
   --input-active-border: var(--success);
+  --input-halo: color-mix(in srgb, rgb(var(--success)) 25%, rgb(var(--background)));
 }
 
 .root--error:hover:not(:disabled):not(:has(:disabled)):not(:has(input:focus)):not(:focus-visible):not([data-popup-open]),
 .root--success:hover:not(:disabled):not(:has(:disabled)):not(:has(input:focus)):not(:focus-visible):not([data-popup-open]) {
-  border-color: var(--input-border);
+  border-color: rgb(var(--input-active-border));
 }
 
 .root--error:has(input:focus),
@@ -60,7 +62,7 @@
 .root--success[data-popup-open] {
   border-color: rgb(var(--input-active-border));
   box-shadow:
-    0 0 0 1px rgb(var(--input-active-border)),
+    0 0 0 3px var(--input-halo),
     var(--input-shadow-rest);
 }
 

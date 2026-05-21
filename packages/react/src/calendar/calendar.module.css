@@ -1,0 +1,307 @@
+.calendar {
+  --calendar-cell-size: 2rem;
+  background-color: rgb(var(--background));
+  padding: 0.75rem;
+}
+
+:global([data-slot='popover-content']) .calendar,
+:global([data-slot='card-content']) .calendar {
+  background-color: transparent;
+}
+
+.dayPickerRoot {
+  width: fit-content;
+}
+
+.months {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .months {
+    flex-direction: row;
+  }
+}
+
+.month {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.nav {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem;
+}
+
+.navButton {
+  width: var(--calendar-cell-size);
+  height: var(--calendar-cell-size);
+  background-color: transparent;
+  padding: 0;
+  opacity: 0.8;
+}
+
+.navButton:hover {
+  background-color: transparent;
+  opacity: 1;
+}
+
+.navControl {
+  width: var(--calendar-cell-size);
+  height: var(--calendar-cell-size);
+  user-select: none;
+  padding: 0;
+}
+
+.navControl:global([aria-disabled='true']) {
+  opacity: 0.5;
+}
+
+.monthCaption {
+  display: flex;
+  height: var(--calendar-cell-size);
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding-inline: var(--calendar-cell-size);
+}
+
+.dropdowns {
+  display: flex;
+  height: var(--calendar-cell-size);
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
+  font-weight: 500;
+}
+
+.dropdownRoot {
+  position: relative;
+  border-radius: 0.375rem;
+  border: 1px solid rgb(var(--input));
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+}
+
+.dropdownRoot:focus-within {
+  border-color: rgb(var(--ring));
+  box-shadow: 0 0 0 3px color-mix(in srgb, rgb(var(--ring)) 50%, transparent);
+}
+
+.dropdown {
+  position: absolute;
+  inset: 0;
+  background-color: rgb(var(--popover));
+  opacity: 0;
+}
+
+.captionLabel {
+  user-select: none;
+  font-weight: 500;
+}
+
+.captionLabelLabel {
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
+}
+
+.captionLabelDropdown {
+  display: flex;
+  height: 2rem;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 0.375rem;
+  padding-left: 0.5rem;
+  padding-right: 0.25rem;
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
+}
+
+.captionLabelDropdown :global(svg) {
+  width: 0.875rem;
+  height: 0.875rem;
+  color: rgb(var(--muted-foreground));
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.weekdays {
+  display: flex;
+}
+
+.weekday {
+  user-select: none;
+  flex: 1;
+  border-radius: 0.375rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: rgb(var(--muted-foreground));
+}
+
+.week {
+  margin-top: 0.5rem;
+  display: flex;
+  width: 100%;
+}
+
+.weekNumberHeader {
+  width: var(--calendar-cell-size);
+  user-select: none;
+}
+
+.weekNumber {
+  user-select: none;
+  font-size: 0.8rem;
+  color: rgb(var(--muted-foreground));
+}
+
+.day {
+  position: relative;
+  display: flex;
+  width: var(--calendar-cell-size);
+  height: var(--calendar-cell-size);
+  user-select: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  text-align: center;
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
+}
+
+.day :global(button),
+.day :global(span) {
+  width: var(--calendar-cell-size);
+  height: var(--calendar-cell-size);
+}
+
+.dayButton {
+  width: var(--calendar-cell-size);
+  height: var(--calendar-cell-size);
+  border-radius: 0.375rem;
+  padding: 0;
+  font-weight: 400;
+}
+
+.dayButton:global([aria-selected='true']) {
+  opacity: 1;
+}
+
+.rangeStart {
+  border-top-left-radius: 0.375rem;
+  border-bottom-left-radius: 0.375rem;
+  background-color: rgb(var(--accent));
+}
+
+.rangeStart :global(button) {
+  background-color: rgb(var(--accent));
+  color: rgb(var(--accent-foreground));
+}
+
+.rangeStart :global(button:hover) {
+  background-color: rgb(var(--accent));
+  color: rgb(var(--accent-foreground));
+}
+
+.rangeMiddle {
+  border-radius: 0;
+  background-color: rgb(var(--accent));
+}
+
+.rangeMiddle :global(button) {
+  background-color: transparent;
+  color: rgb(var(--foreground));
+}
+
+.rangeMiddle :global(button:hover) {
+  background-color: transparent;
+  color: rgb(var(--foreground));
+}
+
+.rangeEnd {
+  border-top-right-radius: 0.375rem;
+  border-bottom-right-radius: 0.375rem;
+  background-color: rgb(var(--accent));
+}
+
+.rangeEnd :global(button) {
+  background-color: rgb(var(--accent));
+  color: rgb(var(--accent-foreground));
+}
+
+.rangeEnd :global(button:hover) {
+  background-color: rgb(var(--accent));
+  color: rgb(var(--accent-foreground));
+}
+
+.today :global(button) {
+  background-color: rgb(var(--primary));
+  color: rgb(var(--primary-foreground));
+}
+
+.today :global(button:hover) {
+  background-color: rgb(var(--primary));
+  color: rgb(var(--primary-foreground));
+}
+
+.selected :global(button) {
+  background-color: rgb(var(--accent));
+  color: rgb(var(--accent-foreground));
+  font-weight: 500;
+}
+
+.selected :global(button:hover) {
+  background-color: rgb(var(--accent));
+  color: rgb(var(--accent-foreground));
+}
+
+.outside {
+  color: rgb(var(--muted-foreground));
+  opacity: 0.8;
+}
+
+.outside:global([aria-selected='true']) {
+  background-color: color-mix(in srgb, rgb(var(--accent)) 50%, transparent);
+  color: rgb(var(--muted-foreground));
+  opacity: 0.3;
+}
+
+.disabled {
+  color: rgb(var(--muted-foreground));
+  opacity: 0.6;
+}
+
+.hidden {
+  visibility: hidden;
+  flex: 1;
+}
+
+.weekNumberCell {
+  display: flex;
+  width: var(--calendar-cell-size);
+  height: var(--calendar-cell-size);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.chevronIcon {
+  width: 1rem;
+  height: 1rem;
+}

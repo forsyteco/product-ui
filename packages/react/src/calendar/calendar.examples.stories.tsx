@@ -6,6 +6,7 @@ import { type DateRange } from 'react-day-picker';
 import { Button } from '../button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../card';
 import { Calendar } from './calendar';
+import storyStyles from './calendar.stories.module.css';
 
 const meta = {
   title: 'Components/Calendar/Examples',
@@ -30,11 +31,11 @@ export const RangePickerInCard: Story = {
           : 'Select a date range';
 
     return (
-      <Card className="w-fit">
+      <Card className={storyStyles.exampleCard}>
         <CardHeader>
           <CardTitle>Booking dates</CardTitle>
         </CardHeader>
-        <CardContent className="p-0">
+        <CardContent className={storyStyles.exampleCardContent}>
           <Calendar
             mode="range"
             selected={range}
@@ -42,9 +43,9 @@ export const RangePickerInCard: Story = {
             numberOfMonths={2}
           />
         </CardContent>
-        <CardFooter className="justify-between gap-2">
-          <div className="text-base text-muted-foreground">{label}</div>
-          <Button variant="outline" size="sm">
+        <CardFooter className={storyStyles.exampleCardFooter}>
+          <div className={storyStyles.exampleLabel}>{label}</div>
+          <Button variant="outline" size="sm" onClick={() => setRange(undefined)}>
             Clear
           </Button>
         </CardFooter>

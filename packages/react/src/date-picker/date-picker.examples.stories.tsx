@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Button } from '../button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../card';
 import { DatePicker } from './date-picker';
+import storyStyles from './date-picker.stories.module.css';
 
 const meta = {
   title: 'Components/DatePicker/Examples',
@@ -24,15 +25,15 @@ export const DatePickerInCard: Story = {
     const label = value ? dayjs(value).format('DD MMM YYYY') : 'No date selected';
 
     return (
-      <Card className="w-fit">
+      <Card className={storyStyles.exampleCard}>
         <CardHeader>
           <CardTitle>Schedule review</CardTitle>
         </CardHeader>
-        <CardContent className="p-0">
+        <CardContent className={storyStyles.exampleCardContent}>
           <DatePicker value={value} onValueChange={setValue} />
         </CardContent>
-        <CardFooter className="justify-between gap-2">
-          <div className="text-base text-muted-foreground">{label}</div>
+        <CardFooter className={storyStyles.exampleCardFooter}>
+          <div className={storyStyles.exampleLabel}>{label}</div>
           <Button variant="outline" size="sm" onClick={() => setValue(undefined)}>
             Clear
           </Button>

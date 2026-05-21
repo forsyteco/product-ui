@@ -163,17 +163,9 @@
 }
 
 .surface-tint:hover:not(:disabled) {
-  background-color: color-mix(
-    in oklab,
-    rgb(var(--background)) var(--button-hover-mix),
-    rgb(var(--foreground))
-  );
+  background-color: var(--field-input-halo);
 }
 
 .surface-tint:active:not(:disabled) {
-  background-color: color-mix(
-    in oklab,
-    rgb(var(--background)) var(--button-active-mix),
-    rgb(var(--foreground))
-  );
+  background-color: var(--field-input-halo-active);
 }

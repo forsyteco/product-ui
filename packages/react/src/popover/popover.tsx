@@ -8,7 +8,7 @@ export type PopoverProps = {
   className?: string;
 };
 
-export type PopoverTriggerProps = ButtonProps;
+export type PopoverTriggerProps = Omit<ButtonProps, 'as'>;
 
 export type PopoverContentProps = {
   children: ReactNode;

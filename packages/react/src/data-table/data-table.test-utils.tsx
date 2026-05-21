@@ -5,7 +5,7 @@
 import { vi } from 'vitest';
 import { screen, within } from '@testing-library/react';
 import type { UserEvent } from '@testing-library/user-event';
-import type { DataTableColumn } from './types';
+import type { DataTableColumn, DataTableProps } from './types';
 
 // Test data types
 export type TestData = { id: string; name: string; email: string; status: string };
@@ -54,7 +54,7 @@ export const MockExpandedRowContent = ({
 // Helper to create a controlled Promise for testing async behavior
 export const createDeferredPromise = <T,>() => {
   let resolve!: (value: T) => void;
-  let reject!: (reason?: unknown) => void;
+  let reject!: (reason?: Error) => void;
   const promise = new Promise<T>((res, rej) => {
     resolve = res;
     reject = rej;
@@ -62,11 +62,19 @@ export const createDeferredPromise = <T,>() => {
   return { promise, resolve, reject };
 };
 
+function getColumnHeaderElement(columnName: string): HTMLElement {
+  const header = screen.getByText(columnName).closest('th, [role="columnheader"]');
+  if (!(header instanceof HTMLElement)) {
+    throw new Error(`Column header not found for "${columnName}"`);
+  }
+  return header;
+}
+
 /**
  * Opens the filter dropdown for the Status column and returns the dropdown element
  */
 export async function openStatusFilterDropdown(user: UserEvent) {
-  const statusHeader = screen.getByText('Status').closest('th, [role="columnheader"]')!;
+  const statusHeader = getColumnHeaderElement('Status');
   const filterButton = within(statusHeader).getByRole('button', {
     name: /filter/i,
   });
@@ -78,16 +86,21 @@ export async function openStatusFilterDropdown(user: UserEvent) {
  * Gets the filter button for a column
  */
 export function getFilterButton(columnName: string) {
-  const header = screen.getByText(columnName).closest('th, [role="columnheader"]')!;
+  const header = getColumnHeaderElement(columnName);
   return within(header).getByRole('button', { name: /filter/i });
 }
+
+type DefaultDataTableTestProps = Pick<
+  DataTableProps<TestData>,
+  'columns' | 'data' | 'getRowId' | 'page' | 'pageSize' | 'totalCount' | 'onPageChange'
+>;
 
 /**
  * Creates default props for DataTable tests
  */
 export function createDefaultProps(
-  overrides?: Record<string, unknown>
-) {
+  overrides?: Partial<DefaultDataTableTestProps>
+): DefaultDataTableTestProps {
   return {
     columns: mockColumns,
     data: mockData,

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import dayjs from 'dayjs';
 import { useState } from 'react';
+import { type DateRange } from 'react-day-picker';
 
 import { Button } from '../button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../card';
@@ -19,7 +20,7 @@ type Story = StoryObj<typeof meta>;
 
 export const RangePickerInCard: Story = {
   render: () => {
-    const [range, setRange] = useState<{ from?: Date; to?: Date } | undefined>();
+    const [range, setRange] = useState<DateRange | undefined>();
 
     const label =
       range?.from && range?.to
@@ -37,8 +38,7 @@ export const RangePickerInCard: Story = {
           <Calendar
             mode="range"
             selected={range}
-            // React Day Picker's range type is generic; keep the story simple.
-            onSelect={(next) => setRange(next as unknown as { from?: Date; to?: Date } | undefined)}
+            onSelect={setRange}
             numberOfMonths={2}
           />
         </CardContent>

@@ -4,6 +4,7 @@ import {
   ComboboxInput,
   ComboboxOption,
   ComboboxOptions,
+  type ComboboxInputProps,
 } from '@headlessui/react';
 import { cn } from '../utils/tailwind';
 import { resolveFieldAutofillProps } from '../utils/field-autofill-props';
@@ -253,12 +254,14 @@ function LeadingIcon({
 }
 
 type InputProps = Omit<
-  React.ComponentProps<typeof ComboboxInput>,
-  'displayValue' | 'onChange'
+  ComboboxInputProps<'input', AutocompleteOption | null>,
+  'displayValue' | 'onChange' | 'className'
 > & {
   displayValue?: (option: AutocompleteOption | null) => string;
   onValueTextChange?: (text: string) => void;
   placeholder?: string;
+  autoComplete?: string;
+  className?: string;
 };
 
 function Input({
@@ -268,21 +271,19 @@ function Input({
   onFocus,
   onBlur,
   autoComplete,
+  placeholder,
   ...props
 }: InputProps) {
   const ctx = useAutocompleteCtx();
 
   const displayValueFn = displayValue ?? ((opt: AutocompleteOption | null) => opt?.label ?? '');
-  const placeholderValue = props.placeholder ?? ctx.placeholder;
-  const inputProps = {
-    ...props,
-    placeholder: placeholderValue,
-    displayValue: displayValueFn as (item: unknown) => string,
-    ...resolveFieldAutofillProps({ autoComplete }),
-  } as React.ComponentProps<typeof ComboboxInput>;
+  const placeholderValue = placeholder ?? ctx.placeholder;
   return (
-    <ComboboxInput
-      {...inputProps}
+    <ComboboxInput<AutocompleteOption | null>
+      {...props}
+      placeholder={placeholderValue}
+      displayValue={displayValueFn}
+      {...resolveFieldAutofillProps({ autoComplete })}
       className={cn(
         'w-full rounded-md border bg-background py-2 pl-9 pr-10 text-base leading-5 text-foreground',
         'border-input focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background',

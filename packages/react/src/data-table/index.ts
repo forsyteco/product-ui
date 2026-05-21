@@ -3,6 +3,7 @@ export { DateCell } from './components/date-cell';
 export { NameCell } from './components/name-cell';
 export { RiskLevelCell } from './components/risk-level-cell';
 export { CountryCell } from './components/country-cell';
+export { COUNTRY_CODES, getCountryCode, getFlagUrl } from '../country/country-codes';
 export { CopyableCell } from './components/copyable-cell';
 export { StatusCell, STATUS } from './components/status-cell';
 export { ROW_INTERACTION } from './constants';

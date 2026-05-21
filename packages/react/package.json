@@ -1,6 +1,6 @@
 {
   "name": "@forsyteco/product-ui",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "An implementation of Forsyte's product design system using React 🐝",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -104,6 +104,16 @@
       "require": {
         "types": "./dist/combobox/index.d.ts",
         "default": "./dist/combobox/index.cjs"
+      }
+    },
+    "./country": {
+      "import": {
+        "types": "./dist/country/index.d.ts",
+        "default": "./dist/country/index.mjs"
+      },
+      "require": {
+        "types": "./dist/country/index.d.ts",
+        "default": "./dist/country/index.cjs"
       }
     },
     "./data-table": {

@@ -70,7 +70,11 @@ export function DropdownMenuItem({ children, onClick, disabled, className }: Dro
   );
 }
 
-export function DropdownMenuButton({ children, className, ...props }: DropdownMenuButtonProps & ButtonProps) {
+export function DropdownMenuButton({
+  children,
+  className,
+  ...props
+}: DropdownMenuButtonProps & Omit<ButtonProps, 'as'>) {
   return (
     <Menu.Button
       as={Button}

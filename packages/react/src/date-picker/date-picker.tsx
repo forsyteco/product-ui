@@ -119,7 +119,7 @@ function DatePicker({
               <Calendar
                 mode="single"
                 selected={selected}
-                onSelect={(date) => {
+                onSelect={(date: Date | undefined) => {
                   handleSelect(date);
                   close();
                 }}

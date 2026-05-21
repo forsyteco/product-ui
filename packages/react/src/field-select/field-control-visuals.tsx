@@ -61,12 +61,3 @@ export function resolveFieldControlSlot(
 
   return null;
 }
-
-/** @deprecated Use `resolveFieldControlSlot` */
-export function resolveLeadingVisual(
-  leadingVisual: React.ReactNode | undefined,
-  childItems: React.ReactNode[],
-  marker: typeof LeadingVisual
-): React.ReactNode | null {
-  return resolveFieldControlSlot(leadingVisual, childItems, marker);
-}

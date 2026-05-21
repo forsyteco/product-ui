@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { resolveFieldAutofillProps } from './field-autofill-props';
+import { isPasswordManagerSuppressed, resolveFieldAutofillProps } from './field-autofill-props';
 
 describe('resolveFieldAutofillProps', () => {
   describe('when autoComplete is not provided', () => {
@@ -27,6 +27,9 @@ describe('resolveFieldAutofillProps', () => {
 
       // Assert
       expect(result.autoComplete).toBe('off');
+      if (!isPasswordManagerSuppressed(result)) {
+        throw new Error('Expected password manager suppression attributes');
+      }
       expect(result['data-lpignore']).toBe('true');
     });
   });

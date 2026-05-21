@@ -14,6 +14,7 @@ import {
 
 import { cn } from '../utils/tailwind';
 import { Button, buttonVariants } from '../button';
+import { normalizeButtonVariant } from '../button/button-variants';
 
 type CalendarChevronProps = React.ComponentProps<typeof ChevronLeftIcon> & {
   orientation?: 'left' | 'right' | string;
@@ -31,6 +32,10 @@ function CalendarChevron({ className, orientation, ...props }: CalendarChevronPr
   return <ChevronDownIcon className={cn('size-4', className)} {...props} />;
 }
 
+type CalendarProps = React.ComponentProps<typeof DayPicker> & {
+  buttonVariant?: React.ComponentProps<typeof Button>['variant'];
+};
+
 function Calendar({
   className,
   classNames,
@@ -40,10 +45,9 @@ function Calendar({
   formatters,
   components,
   ...props
-}: React.ComponentProps<typeof DayPicker> & {
-  buttonVariant?: React.ComponentProps<typeof Button>['variant'];
-}) {
+}: CalendarProps) {
   const defaultClassNames = getDefaultClassNames();
+  const normalizedButtonVariant = normalizeButtonVariant(buttonVariant);
 
   function Nav({ className }: NavProps) {
     const {
@@ -72,7 +76,7 @@ function Calendar({
       <nav className={cn('flex items-center gap-1', className)}>
         <Button
           type="button"
-          variant={buttonVariant}
+          variant={normalizedButtonVariant}
           size="icon"
           className="size-(--cell-size) bg-transparent p-0 opacity-80 hover:bg-transparent hover:opacity-100"
           tabIndex={isPreviousDisabled ? -1 : undefined}
@@ -85,7 +89,7 @@ function Calendar({
 
         <Button
           type="button"
-          variant={buttonVariant}
+          variant={normalizedButtonVariant}
           size="icon"
           className="size-(--cell-size) bg-transparent p-0 opacity-80 hover:bg-transparent hover:opacity-100"
           tabIndex={isNextDisabled ? -1 : undefined}
@@ -122,8 +126,8 @@ function Calendar({
         ),
         month: cn('flex w-full flex-col gap-4', defaultClassNames.month),
         nav: cn('absolute inset-x-0 top-0 flex w-full items-center justify-between gap-1', defaultClassNames.nav),
-        button_previous: cn(buttonVariants({ variant: buttonVariant }), 'size-(--cell-size) select-none p-0 aria-disabled:opacity-50', defaultClassNames.button_previous),
-        button_next: cn(buttonVariants({ variant: buttonVariant }), 'size-(--cell-size) select-none p-0 aria-disabled:opacity-50', defaultClassNames.button_next),
+        button_previous: cn(buttonVariants({ variant: normalizedButtonVariant }), 'size-(--cell-size) select-none p-0 aria-disabled:opacity-50', defaultClassNames.button_previous),
+        button_next: cn(buttonVariants({ variant: normalizedButtonVariant }), 'size-(--cell-size) select-none p-0 aria-disabled:opacity-50', defaultClassNames.button_next),
         month_caption: cn(
           'flex h-(--cell-size) w-full items-center justify-center px-(--cell-size)',
           defaultClassNames.month_caption

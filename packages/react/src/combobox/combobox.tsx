@@ -233,11 +233,12 @@ function Control({
 
 type InputProps = Omit<
   React.ComponentProps<typeof BaseCombobox.Input>,
-  'placeholder'
+  'placeholder' | 'className'
 > & {
   placeholder?: string;
   autoComplete?: string;
   hasLeadingVisual?: boolean;
+  className?: string;
 };
 
 function Input({
@@ -258,7 +259,7 @@ function Input({
       className={getInputInnerClassName({
         hasLeadingVisual,
         hasTrailingVisual: true,
-        inputClassName: className,
+        inputClassName: className ?? undefined,
       })}
     />
   );

@@ -52,7 +52,7 @@ export const iconSizes = {
 export type IconOnlyButtonSize = keyof typeof iconSizes;
 
 export function normalizeButtonVariant(
-  variant: ButtonVariantProps['variant'] | 'danger' | undefined
+  variant: ButtonVariantProps['variant'] | 'danger' | null | undefined
 ): NonNullable<ButtonVariantProps['variant']> {
   if (variant === 'danger') {
     return 'destructive';

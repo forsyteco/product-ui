@@ -131,7 +131,7 @@ function TableBody<TData, TExpandedData = unknown>({
               {columns.map((column) => {
                 const getValue = () => {
                   if (column.accessorFn) return column.accessorFn(row);
-                  if (column.accessorKey) return (row as Record<string, unknown>)[column.accessorKey];
+                  if (column.accessorKey) return row[column.accessorKey as keyof TData];
                   return undefined;
                 };
                 const value = getValue();

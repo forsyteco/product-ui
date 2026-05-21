@@ -22,8 +22,33 @@ export type { ButtonProps, IconOnlyButtonProps } from './button'
 export { Checkbox } from './checkbox'
 export type { CheckboxProps } from './checkbox'
 
-export { Combobox, CountryCombobox, useComboboxContext, LeadingVisual, TrailingVisual, TrailingAction } from './combobox'
-export type { ComboboxRootProps, ComboboxOption, CountryComboboxOption, CountryComboboxProps } from './combobox'
+export {
+  Combobox,
+  CountryCombobox,
+  useComboboxContext,
+  LeadingVisual,
+  TrailingVisual,
+  TrailingAction,
+  renderCountryOption,
+  useSelectedCountryFlag,
+} from './combobox'
+export type {
+  ComboboxRootProps,
+  ComboboxProps,
+  ComboboxOption,
+  CountryComboboxOption,
+  CountryComboboxProps,
+} from './combobox'
+
+export {
+  COUNTRY_CODES,
+  CountryFlag,
+  CountryOptionLabel,
+  getCountryCode,
+  getFlagUrl,
+  resolveCountryCode,
+} from './country'
+export type { CountryFlagProps, CountryOptionLabelProps, CountryResolvable } from './country'
 
 export { Autocomplete } from './autocomplete'
 export type { AutocompleteRootProps, AutocompleteOption } from './autocomplete'
@@ -39,7 +64,7 @@ export type {
 } from './form-field'
 
 export { Input } from './input'
-export type { InputProps } from './input'
+export type { InputProps, TextInputProps, CurrencyInputModeProps } from './input'
 
 export { Label } from './label'
 export type { LabelProps } from './label'

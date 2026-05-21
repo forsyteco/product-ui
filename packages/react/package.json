@@ -106,16 +106,6 @@
         "default": "./dist/combobox/index.cjs"
       }
     },
-    "./counter-label": {
-      "import": {
-        "types": "./dist/counter-label/index.d.ts",
-        "default": "./dist/counter-label/index.mjs"
-      },
-      "require": {
-        "types": "./dist/counter-label/index.d.ts",
-        "default": "./dist/counter-label/index.cjs"
-      }
-    },
     "./data-table": {
       "import": {
         "types": "./dist/data-table/index.d.ts",
@@ -164,6 +154,16 @@
       "require": {
         "types": "./dist/input/index.d.ts",
         "default": "./dist/input/index.cjs"
+      }
+    },
+    "./label": {
+      "import": {
+        "types": "./dist/label/index.d.ts",
+        "default": "./dist/label/index.mjs"
+      },
+      "require": {
+        "types": "./dist/label/index.d.ts",
+        "default": "./dist/label/index.cjs"
       }
     },
     "./listbox": {

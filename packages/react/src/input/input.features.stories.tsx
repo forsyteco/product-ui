@@ -3,7 +3,7 @@ import { Eye, Search } from 'lucide-react';
 import { useState } from 'react';
 import { clsx } from 'clsx';
 
-import { CounterLabel } from '../counter-label';
+import { Label } from '../label';
 import formFieldStyles from '../form-field/form-field.module.css';
 import { FormField } from '../form-field';
 import { Spinner } from '../spinner';
@@ -141,7 +141,7 @@ export const WithCharacterLimit: Story = {
           <FormField.LabelRow>
             <FormField.Label>Bio</FormField.Label>
             <FormField.LabelActions>
-              <CounterLabel>{`${value.length}/${maxLength}`}</CounterLabel>
+              <Label>{`${value.length}/${maxLength}`}</Label>
             </FormField.LabelActions>
           </FormField.LabelRow>
           <FormField.Control>
@@ -169,7 +169,7 @@ export const WithCharacterLimitAndCaption: Story = {
           <FormField.LabelRow>
             <FormField.Label>Bio</FormField.Label>
             <FormField.LabelActions>
-              <CounterLabel>{`${value.length}/${maxLength}`}</CounterLabel>
+              <Label>{`${value.length}/${maxLength}`}</Label>
             </FormField.LabelActions>
           </FormField.LabelRow>
           <FormField.Description>Keep it short and friendly.</FormField.Description>
@@ -199,11 +199,9 @@ export const WithCharacterLimitExceeded: Story = {
           <FormField.LabelRow>
             <FormField.Label>Short label</FormField.Label>
             <FormField.LabelActions>
-              <CounterLabel>
-                <span className={clsx(exceeded && formFieldStyles.error)}>
-                  {`${value.length}/${maxLength}`}
-                </span>
-              </CounterLabel>
+              <Label className={clsx(exceeded && formFieldStyles.error)}>
+                {`${value.length}/${maxLength}`}
+              </Label>
             </FormField.LabelActions>
           </FormField.LabelRow>
           <FormField.Control describedBy={exceeded ? 'both' : 'none'}>

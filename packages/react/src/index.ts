@@ -41,6 +41,9 @@ export type {
 export { Input } from './input'
 export type { InputProps } from './input'
 
+export { Label } from './label'
+export type { LabelProps } from './label'
+
 export { Listbox } from './listbox'
 export type { ListboxProps, ListboxOption } from './listbox'
 
@@ -92,9 +95,6 @@ export type { RelativeTimeProps } from './relative-time'
 
 export { VisuallyHidden } from './visually-hidden'
 export type { VisuallyHiddenProps } from './visually-hidden'
-
-export { CounterLabel } from './counter-label'
-export type { CounterLabelProps } from './counter-label'
 
 export { Avatar, AvatarFallback, AvatarImage } from './avatar'
 export type { AvatarProps, AvatarFallbackProps, AvatarImageProps } from './avatar'

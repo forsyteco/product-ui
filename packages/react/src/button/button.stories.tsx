@@ -8,7 +8,8 @@ const meta = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A button component with multiple variants and sizes. Supports all standard button HTML attributes.',
+        component:
+          'A button component with text and icon-only modes. Pass `icon` and `aria-label` for icon-only buttons.',
       },
     },
   },

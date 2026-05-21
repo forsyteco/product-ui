@@ -20,9 +20,7 @@ export { Transition } from './transition'
 export type { TransitionProps } from './transition'
 
 export { Button } from './button'
-export type { ButtonProps } from './button'
-export { IconButton } from './icon-button'
-export type { IconButtonProps } from './icon-button'
+export type { ButtonProps, IconOnlyButtonProps } from './button'
 
 export { Checkbox } from './checkbox'
 export type { CheckboxProps } from './checkbox'

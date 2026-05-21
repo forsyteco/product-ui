@@ -3,7 +3,7 @@ import * as React from 'react';
 import { clsx } from 'clsx';
 import { Input as BaseInput } from '@base-ui/react/input';
 
-import { IconButton, type IconButtonProps } from '../icon-button';
+import { Button, type IconOnlyButtonProps } from '../button';
 import { resolveFieldAutofillProps } from '../utils/field-autofill-props';
 import { getInputInnerClassName, InputShell, inputVariants } from './input-shell';
 import styles from './input.module.css';
@@ -12,7 +12,7 @@ const defaultTrailingActionProps = {
   variant: 'ghost',
   size: 'small',
   shape: 'square',
-} as const satisfies Partial<IconButtonProps>;
+} as const satisfies Partial<IconOnlyButtonProps>;
 
 export type InputProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'children' | 'size'> &
   VariantProps<typeof inputVariants> & {
@@ -20,7 +20,7 @@ export type InputProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'children
     startElement?: React.ReactNode;
     /** Decorative or non-interactive trailing content (e.g. spinner). Use `trailingAction` for buttons. */
     endElement?: React.ReactNode;
-    trailingAction?: IconButtonProps;
+    trailingAction?: IconOnlyButtonProps;
     inputClassName?: string;
   };
 
@@ -79,9 +79,9 @@ function Input({
 function TrailingActionButton({
   className,
   ...trailingAction
-}: IconButtonProps) {
+}: IconOnlyButtonProps) {
   return (
-    <IconButton
+    <Button
       {...defaultTrailingActionProps}
       {...trailingAction}
       className={clsx(styles['slot-action-button'], className)}

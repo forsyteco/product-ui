@@ -1,52 +1,208 @@
-import { forwardRef, type ComponentPropsWithoutRef, type ReactNode } from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '../utils/tailwind';
+import {
+  forwardRef,
+  type ComponentPropsWithoutRef,
+  type ComponentType,
+  type ForwardedRef,
+  type ReactNode,
+} from 'react';
+import { type VariantProps } from 'class-variance-authority';
 
-export type ButtonProps = ComponentPropsWithoutRef<'button'> &
+import { cn } from '../utils/tailwind';
+import { Spinner } from '../spinner';
+import { VisuallyHidden } from '../visually-hidden';
+import {
+  buttonVariants,
+  iconSizes,
+  normalizeButtonVariant,
+  type IconOnlyButtonSize,
+} from './button-variants';
+
+type IconComponent = ComponentType<{ className?: string }>;
+
+type SharedButtonProps = {
+  inactive?: boolean;
+  loading?: boolean;
+  description?: string;
+  keybindingHint?: string;
+  tooltipDirection?: 'n' | 'ne' | 'e' | 'se' | 's' | 'sw' | 'w' | 'nw';
+  className?: string;
+};
+
+type TextButtonProps = SharedButtonProps &
   VariantProps<typeof buttonVariants> & {
+    icon?: never;
     children?: ReactNode;
+    variant?: VariantProps<typeof buttonVariants>['variant'] | 'danger';
+    size?: 'sm' | 'md' | 'lg' | 'icon';
+    shape?: never;
+  } & Omit<ComponentPropsWithoutRef<'button'>, keyof SharedButtonProps | 'children'>;
+
+type IconOnlyButtonBaseProps = SharedButtonProps & {
+  icon: IconComponent;
+  children?: ReactNode;
+  description?: string;
+  variant?: VariantProps<typeof buttonVariants>['variant'] | 'danger';
+  size?: IconOnlyButtonSize;
+  shape?: 'square' | 'circle';
+  'aria-label': string;
+};
+
+type IconOnlyButtonAsButton = IconOnlyButtonBaseProps &
+  Omit<ComponentPropsWithoutRef<'button'>, keyof IconOnlyButtonBaseProps | 'as' | 'href' | 'children'> & {
+    as?: 'button';
+    href?: never;
   };
 
-export const buttonVariants = cva(
-  'inline-flex items-center justify-center rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none',
-  {
-    variants: {
-      variant: {
-        primary: 'bg-accent text-accent-foreground hover:opacity-90',
-        secondary: 'bg-primary text-primary-foreground hover:opacity-90',
-        accent: 'bg-accent text-accent-foreground hover:opacity-90',
-        outline: 'border border-border bg-background text-foreground hover:bg-muted',
-        ghost: 'text-foreground hover:bg-muted',
-        destructive: 'bg-destructive text-destructive-foreground hover:opacity-90',
-      },
-      size: {
-        sm: 'px-3 py-1.5 text-base',
-        md: 'px-4 py-2 text-base',
-        lg: 'px-6 py-3 text-base',
-        icon: 'h-9 w-9 p-0',
-      },
-    },
-    defaultVariants: {
-      variant: 'primary',
-      size: 'md',
-    },
-  }
-);
+type IconOnlyButtonAsAnchor = IconOnlyButtonBaseProps &
+  Omit<ComponentPropsWithoutRef<'a'>, keyof IconOnlyButtonBaseProps | 'as' | 'children'> & {
+    as: 'a';
+    href: string;
+  };
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  { variant, size, children, className, ...props },
+export type IconOnlyButtonProps = IconOnlyButtonAsButton | IconOnlyButtonAsAnchor;
+
+export type ButtonProps = TextButtonProps | IconOnlyButtonProps;
+
+function isIconOnlyButtonProps(props: ButtonProps): props is IconOnlyButtonProps {
+  return 'icon' in props && props.icon != null;
+}
+
+const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(function Button(
+  props: ButtonProps,
+  ref: ForwardedRef<HTMLButtonElement | HTMLAnchorElement>
+) {
+  if (isIconOnlyButtonProps(props)) {
+    return <IconOnlyButtonInner {...props} ref={ref} />;
+  }
+
+  return <TextButtonInner {...props} ref={ref as ForwardedRef<HTMLButtonElement>} />;
+});
+
+const TextButtonInner = forwardRef<HTMLButtonElement, TextButtonProps>(function TextButtonInner(
+  {
+    variant,
+    size = 'md',
+    children,
+    className,
+    inactive = false,
+    loading = false,
+    description,
+    keybindingHint,
+    tooltipDirection = 's',
+    ...props
+  },
   ref
 ) {
+  const tooltipText = description ?? (typeof props['aria-label'] === 'string' ? props['aria-label'] : undefined);
+  const title = keybindingHint && tooltipText ? `${tooltipText} (${keybindingHint})` : tooltipText;
+
   return (
     <button
       ref={ref}
-      className={cn(buttonVariants({ variant, size }), className)}
+      type={props.type ?? 'button'}
+      className={cn(
+        buttonVariants({
+          variant: normalizeButtonVariant(variant),
+          size,
+          shape: 'square',
+        }),
+        inactive && 'opacity-60',
+        className
+      )}
+      aria-busy={loading || undefined}
+      data-tooltip-direction={tooltipDirection}
+      data-inactive={inactive || undefined}
+      title={title}
       {...props}
     >
-      {children}
+      {loading === true ? <Spinner size={18} colors={['currentColor']} /> : children}
     </button>
   );
 });
 
-export { Button };
+const IconOnlyButtonInner = forwardRef<HTMLButtonElement | HTMLAnchorElement, IconOnlyButtonProps>(
+  function IconOnlyButtonInner(props, ref) {
+    const {
+      as = 'button',
+      icon: Icon,
+      variant,
+      size = 'medium',
+      shape = 'square',
+      inactive = false,
+      loading = false,
+      description,
+      children,
+      keybindingHint,
+      tooltipDirection = 's',
+      className,
+      'aria-label': ariaLabel,
+      ...rest
+    } = props;
 
+    const Component = as === 'a' ? 'a' : 'button';
+    const tooltipText = description ?? ariaLabel;
+    const title = keybindingHint ? `${tooltipText} (${keybindingHint})` : tooltipText;
+    const resolvedSize: IconOnlyButtonSize = size ?? 'medium';
+    const iconClassName = iconSizes[resolvedSize];
+    const sharedClassName = cn(
+      buttonVariants({
+        variant: normalizeButtonVariant(variant),
+        size: resolvedSize,
+        shape,
+      }),
+      inactive && 'opacity-60',
+      className
+    );
+    const screenReaderText = description ?? (typeof children === 'string' ? children : undefined);
+    const content =
+      loading === true ? (
+        <Spinner size={18} colors={['currentColor']} />
+      ) : (
+        <Icon aria-hidden className={cn('shrink-0', iconClassName)} />
+      );
+
+    if (Component === 'a') {
+      const { href, ...anchorProps } = rest as Omit<IconOnlyButtonAsAnchor, keyof IconOnlyButtonBaseProps>;
+
+      return (
+        <a
+          {...anchorProps}
+          ref={ref as ForwardedRef<HTMLAnchorElement>}
+          href={href}
+          className={sharedClassName}
+          aria-label={ariaLabel}
+          aria-busy={loading || undefined}
+          data-tooltip-direction={tooltipDirection}
+          data-inactive={inactive || undefined}
+          title={title}
+        >
+          {content}
+          {screenReaderText ? <VisuallyHidden>{screenReaderText}</VisuallyHidden> : null}
+          {children && typeof children !== 'string' ? <VisuallyHidden>{children}</VisuallyHidden> : null}
+        </a>
+      );
+    }
+
+    const buttonProps = rest as Omit<IconOnlyButtonAsButton, keyof IconOnlyButtonBaseProps>;
+
+    return (
+      <button
+        {...buttonProps}
+        ref={ref as ForwardedRef<HTMLButtonElement>}
+        type={buttonProps.type ?? 'button'}
+        className={sharedClassName}
+        aria-label={ariaLabel}
+        aria-busy={loading || undefined}
+        data-tooltip-direction={tooltipDirection}
+        data-inactive={inactive || undefined}
+        title={title}
+      >
+        {content}
+        {screenReaderText ? <VisuallyHidden>{screenReaderText}</VisuallyHidden> : null}
+        {children && typeof children !== 'string' ? <VisuallyHidden>{children}</VisuallyHidden> : null}
+      </button>
+    );
+  }
+);
+
+export { Button, buttonVariants };

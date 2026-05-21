@@ -8,4 +8,3 @@ describe('button index exports', () => {
     expect(typeof buttonVariants).toBe('function');
   });
 });
-

@@ -176,16 +176,6 @@
         "default": "./dist/form-field/index.cjs"
       }
     },
-    "./icon-button": {
-      "import": {
-        "types": "./dist/icon-button/index.d.ts",
-        "default": "./dist/icon-button/index.mjs"
-      },
-      "require": {
-        "types": "./dist/icon-button/index.d.ts",
-        "default": "./dist/icon-button/index.cjs"
-      }
-    },
     "./input": {
       "import": {
         "types": "./dist/input/index.d.ts",

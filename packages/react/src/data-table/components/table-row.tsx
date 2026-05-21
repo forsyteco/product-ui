@@ -4,7 +4,7 @@ import { cn } from '../../utils/tailwind';
 import { ROW_INTERACTION, type RowInteractionMode } from '../constants';
 import type { DataTableColorConfig } from '../types';
 import { Checkbox } from '../../checkbox';
-import { IconButton } from '../../icon-button';
+import { Button } from '../../button';
 
 export type TableRowProps<TData> = Readonly<{
   row: TData;
@@ -87,7 +87,7 @@ function TableRow<TData>({
     >
       {isExpandable && (
         <td className="w-10 px-4 py-3">
-          <IconButton
+          <Button
             icon={ChevronRight}
             variant="ghost"
             size="small"

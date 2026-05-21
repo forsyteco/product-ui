@@ -27,7 +27,6 @@ const componentEntries = [
   'disclosure',
   'dropdown-menu',
   'form-field',
-  'icon-button',
   'input',
   'listbox',
   'popover',

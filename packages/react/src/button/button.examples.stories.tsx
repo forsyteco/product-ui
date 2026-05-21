@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Heart, Inbox, Bell, MessageSquare } from 'lucide-react';
 import { Button } from './button';
 
 const meta = {
@@ -37,7 +38,7 @@ export const FormActions: Story = {
   ),
 };
 
-export const IconButton: Story = {
+export const WithLeadingIcon: Story = {
   render: () => (
     <div className="p-6 flex gap-4">
       <Button>
@@ -57,3 +58,22 @@ export const IconButton: Story = {
   ),
 };
 
+export const IconToolbar: Story = {
+  render: () => (
+    <div className="flex items-center gap-3">
+      <Button icon={Heart} aria-label="Favorite" />
+      <Button icon={Inbox} aria-label="Notifications" description="View notifications" />
+      <Button icon={Bell} aria-label="Alerts" variant="primary" />
+      <Button icon={MessageSquare} aria-label="Messages" variant="danger" />
+    </div>
+  ),
+};
+
+export const WithKeybindingHints: Story = {
+  render: () => (
+    <div className="flex items-center gap-3">
+      <Button icon={Inbox} aria-label="Notifications" description="Open inbox" keybindingHint="G+I" />
+      <Button icon={Bell} aria-label="Alerts" description="Open alerts" keybindingHint="G+A" />
+    </div>
+  ),
+};

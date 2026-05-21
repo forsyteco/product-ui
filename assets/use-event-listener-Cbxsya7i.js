@@ -1,1 +1,0 @@
-import{r as s}from"./iframe-CItR6fGu.js";import{s as u}from"./use-sync-refs-CaS58R8u.js";function E(r,e,i,t){let n=u(i);s.useEffect(()=>{r=r??window;function o(f){n.current(f)}return r.addEventListener(e,o,t),()=>r.removeEventListener(e,o,t)},[r,e,t])}export{E};

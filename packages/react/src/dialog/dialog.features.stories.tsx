@@ -2,6 +2,8 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Dialog, DialogPanel, DialogTitle, DialogDescription } from './dialog';
 import { Button } from '../button';
+import { Input } from '../input';
+import { Textarea } from '../textarea';
 
 const meta = {
   title: 'Components/Dialog/Features',
@@ -66,17 +68,11 @@ export const WithForm: Story = {
             <form className="mt-4 space-y-4">
               <div>
                 <label className="block text-base font-medium text-gray-700">Name</label>
-                <input
-                  type="text"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-                />
+                <Input type="text" className="mt-1" placeholder="Item name" />
               </div>
               <div>
                 <label className="block text-base font-medium text-gray-700">Description</label>
-                <textarea
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-                  rows={3}
-                />
+                <Textarea className="mt-1" rows={3} placeholder="Describe the item" />
               </div>
               <div className="flex justify-end gap-2">
                 <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>

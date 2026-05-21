@@ -8,6 +8,7 @@ import {
 import { type VariantProps } from 'class-variance-authority';
 
 import { cn } from '../utils/tailwind';
+import styles from './button.module.css';
 import { Spinner } from '../spinner';
 import { VisuallyHidden } from '../visually-hidden';
 import {
@@ -106,7 +107,7 @@ const TextButtonInner = forwardRef<HTMLButtonElement, TextButtonProps>(function 
           size,
           shape: 'square',
         }),
-        inactive && 'opacity-60',
+        inactive && styles.inactive,
         className
       )}
       aria-busy={loading || undefined}
@@ -150,7 +151,7 @@ const IconOnlyButtonInner = forwardRef<HTMLButtonElement | HTMLAnchorElement, Ic
         size: resolvedSize,
         shape,
       }),
-      inactive && 'opacity-60',
+      inactive && styles.inactive,
       className
     );
     const screenReaderText = description ?? (typeof children === 'string' ? children : undefined);
@@ -158,7 +159,7 @@ const IconOnlyButtonInner = forwardRef<HTMLButtonElement | HTMLAnchorElement, Ic
       loading === true ? (
         <Spinner size={18} colors={['currentColor']} />
       ) : (
-        <Icon aria-hidden className={cn('shrink-0', iconClassName)} />
+        <Icon aria-hidden className={cn(iconClassName)} />
       );
 
     if (Component === 'a') {

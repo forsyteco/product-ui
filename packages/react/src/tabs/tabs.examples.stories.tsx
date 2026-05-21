@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from './tabs';
 import { Button } from '../button';
+import { Input } from '../input';
 
 const meta = {
   title: 'Components/Tabs/Examples',
@@ -32,17 +33,17 @@ export const SettingsPage: Story = {
               <div className="space-y-4">
                 <div>
                   <label className="block text-base font-medium text-gray-700">Display Name</label>
-                  <input
+                  <Input
                     type="text"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                    className="mt-1"
                     defaultValue="John Doe"
                   />
                 </div>
                 <div>
                   <label className="block text-base font-medium text-gray-700">Email</label>
-                  <input
+                  <Input
                     type="email"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                    className="mt-1"
                     defaultValue="john@example.com"
                   />
                 </div>
@@ -52,11 +53,11 @@ export const SettingsPage: Story = {
               <div className="space-y-4">
                 <div>
                   <label className="block text-base font-medium text-gray-700">Current Password</label>
-                  <input type="password" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
+                  <Input type="password" className="mt-1" />
                 </div>
                 <div>
                   <label className="block text-base font-medium text-gray-700">New Password</label>
-                  <input type="password" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
+                  <Input type="password" className="mt-1" />
                 </div>
                 <Button>Update Password</Button>
               </div>

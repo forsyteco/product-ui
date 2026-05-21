@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Popover, PopoverContent, PopoverTrigger } from './popover';
 import { Button } from '../button';
+import { Input } from '../input';
 
 const meta = {
   title: 'Components/Popover/Features',
@@ -41,7 +42,7 @@ export const WithForm: Story = {
           </div>
           <div>
             <label className="block text-base font-medium text-gray-700">Date Range</label>
-            <input type="date" className="mt-1 block w-full rounded-md border-gray-300" />
+            <Input type="date" className="mt-1" />
           </div>
           <Button type="submit" className="w-full">
             Apply

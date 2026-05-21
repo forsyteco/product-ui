@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Button } from './button';
+import styles from './button.module.css';
 
 const HeartIcon = ({ className }: { className?: string }) => (
   <svg data-testid="icon" aria-hidden className={className} />
@@ -22,13 +23,13 @@ describe('Button', () => {
   it('applies variant classes', () => {
     const { container } = render(<Button variant="secondary">Button</Button>);
     const button = container.querySelector('button');
-    expect(button).toHaveClass('bg-primary');
+    expect(button).toHaveClass(styles['variant-secondary']);
   });
 
   it('applies size classes', () => {
     const { container } = render(<Button size="lg">Button</Button>);
     const button = container.querySelector('button');
-    expect(button).toHaveClass('px-6', 'py-3');
+    expect(button).toHaveClass(styles['size-lg']);
   });
 
   it('applies disabled state', () => {
@@ -49,9 +50,9 @@ describe('Button', () => {
         <Button icon={HeartIcon} variant="primary" size="large" shape="circle" aria-label="Favorite" />
       );
       const button = container.firstChild as HTMLElement;
-      expect(button).toHaveClass('bg-accent');
-      expect(button).toHaveClass('h-10', 'w-10', 'rounded-full');
-      expect(screen.getByTestId('icon')).toHaveClass('h-6', 'w-6');
+      expect(button).toHaveClass(styles['variant-primary']);
+      expect(button).toHaveClass(styles['size-large'], styles['shape-circle']);
+      expect(screen.getByTestId('icon')).toHaveClass(styles['icon-large']);
     });
 
     it('should support loading state', () => {
@@ -71,14 +72,14 @@ describe('Button', () => {
       const button = screen.getByRole('button');
       button.click();
       expect(handleClick).toHaveBeenCalledTimes(1);
-      expect(button).toHaveClass('opacity-60');
+      expect(button).toHaveClass(styles.inactive);
     });
 
     it('should map danger variant to destructive styling', () => {
       const { container } = render(
         <Button icon={HeartIcon} variant="danger" aria-label="Delete" />
       );
-      expect(container.firstChild).toHaveClass('bg-destructive');
+      expect(container.firstChild).toHaveClass(styles['variant-destructive']);
     });
   });
 });

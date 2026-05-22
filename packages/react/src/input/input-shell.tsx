@@ -84,14 +84,7 @@ export function InputShell({
       ) : null}
       {children}
       {trailingContent ? (
-        <div
-          className={clsx(
-            styles.slot,
-            trailingAction ? styles['slot-action'] : styles['slot-pad']
-          )}
-        >
-          {trailingContent}
-        </div>
+        <div className={clsx(styles.slot, styles['slot-pad'])}>{trailingContent}</div>
       ) : null}
     </div>
   );

@@ -25,7 +25,7 @@ const CALENDAR_BUTTON_SIZE: Record<NonNullable<TextInputProps['size']>, IconOnly
 };
 
 export type DatePickerProps = {
-  value?: Date;
+  value?: Date | null;
   defaultValue?: Date;
   onValueChange?: (value?: Date) => void;
   placeholder?: string;
@@ -59,34 +59,35 @@ export type DatePickerProps = {
   >;
 };
 
-function DatePicker({
-  value,
-  defaultValue,
-  onValueChange,
-  placeholder,
-  inputFormat = 'DD/MM/YYYY',
-  formatDate,
-  disabled,
-  readOnly = false,
-  required = false,
-  clearable = false,
-  allowCompactInput = false,
-  minDate,
-  maxDate,
-  disabledDates,
-  error,
-  errorMessage,
-  label,
-  hint,
-  size = 'default',
-  className,
-  inputClassName,
-  name,
-  id,
-  'aria-describedby': ariaDescribedBy,
-  onBlur,
-  calendarProps,
-}: DatePickerProps) {
+function DatePicker(props: DatePickerProps) {
+  const {
+    value: valueProp,
+    defaultValue,
+    onValueChange,
+    placeholder,
+    inputFormat = 'DD/MM/YYYY',
+    formatDate,
+    disabled,
+    readOnly = false,
+    required = false,
+    clearable = false,
+    allowCompactInput = false,
+    minDate,
+    maxDate,
+    disabledDates,
+    error,
+    errorMessage,
+    label,
+    hint,
+    size = 'default',
+    className,
+    inputClassName,
+    name,
+    id,
+    'aria-describedby': ariaDescribedBy,
+    onBlur,
+    calendarProps,
+  } = props;
   const containerRef = React.useRef<HTMLDivElement>(null);
   const popoverRef = React.useRef<HTMLDivElement>(null);
   const errorId = React.useId();
@@ -96,8 +97,8 @@ function DatePicker({
   const calendarTriggerId = React.useId();
   const [open, setOpen] = React.useState(false);
   const [internalValue, setInternalValue] = React.useState<Date | undefined>(defaultValue);
-  const isControlled = value !== undefined;
-  const selected = isControlled ? value : internalValue;
+  const isControlled = Object.hasOwn(props, 'value');
+  const selected = isControlled ? (valueProp ?? undefined) : internalValue;
 
   const disabledMatchers = React.useMemo(
     () =>
@@ -147,7 +148,6 @@ function DatePicker({
     inputFormat,
     formatValue: formatDate,
     onValueChange: setSelectedDate,
-    clearInputWhenValueIsEmpty: isControlled,
     required,
     allowCompactInput,
     validateDate,

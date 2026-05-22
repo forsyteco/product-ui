@@ -204,6 +204,32 @@ describe('DatePicker', () => {
     });
   });
 
+  describe('when value is controlled and the user clears the input', () => {
+    it('should call onValueChange with undefined and keep the input empty', async () => {
+      // Arrange
+      const user = userEvent.setup();
+      const onValueChange = vi.fn();
+      const { rerender } = render(
+        <DatePicker
+          value={new Date(2024, 0, 15)}
+          onValueChange={onValueChange}
+          inputFormat="DD/MM/YYYY"
+        />
+      );
+      const input = screen.getByRole('textbox');
+
+      // Act
+      await user.clear(input);
+
+      // Assert
+      expect(onValueChange).toHaveBeenCalledWith(undefined);
+      rerender(
+        <DatePicker value={undefined} onValueChange={onValueChange} inputFormat="DD/MM/YYYY" />
+      );
+      expect(input).toHaveValue('');
+    });
+  });
+
   describe('when clearable is enabled and a value is selected', () => {
     it('should clear the value when the clear button is clicked', async () => {
       // Arrange

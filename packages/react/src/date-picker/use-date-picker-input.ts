@@ -13,7 +13,6 @@ type UseDatePickerInputOptions = {
   inputFormat: string;
   formatValue?: (date: Date) => string;
   onValueChange?: (value?: Date) => void;
-  clearInputWhenValueIsEmpty?: boolean;
   required?: boolean;
   allowCompactInput?: boolean;
   validateDate?: ResolveDateInputOptions['validateDate'];
@@ -24,7 +23,6 @@ export function useDatePickerInput({
   inputFormat,
   formatValue,
   onValueChange,
-  clearInputWhenValueIsEmpty = false,
   required = false,
   allowCompactInput = false,
   validateDate,
@@ -46,17 +44,15 @@ export function useDatePickerInput({
   const [validationError, setValidationError] = React.useState<string>();
 
   React.useEffect(() => {
-    if (value !== undefined) {
-      setInputValue(formatDisplayValue(value));
+    if (value == null) {
+      setInputValue('');
       setValidationError(undefined);
       return;
     }
 
-    if (clearInputWhenValueIsEmpty) {
-      setInputValue('');
-      setValidationError(undefined);
-    }
-  }, [clearInputWhenValueIsEmpty, formatDisplayValue, value]);
+    setInputValue(formatDisplayValue(value));
+    setValidationError(undefined);
+  }, [formatDisplayValue, value]);
 
   const commitInputValue = React.useCallback(
     (rawValue: string) => {

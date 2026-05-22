@@ -81,22 +81,16 @@
 .size-default {
   height: 2.25rem;
   --input-pad-inline: 0.75rem;
-  --input-slot-action-inset: calc((2.25rem - var(--input-adornment-size)) / 4);
-  --input-action-size: calc(2.25rem - (2 * var(--input-slot-action-inset)));
 }
 
 .size-sm {
   height: 2rem;
   --input-pad-inline: 0.625rem;
-  --input-slot-action-inset: calc((2rem - var(--input-adornment-size)) / 4);
-  --input-action-size: calc(2rem - (2 * var(--input-slot-action-inset)));
 }
 
 .size-lg {
   height: 2.5rem;
   --input-pad-inline: 1rem;
-  --input-slot-action-inset: calc((2.5rem - var(--input-adornment-size)) / 4);
-  --input-action-size: calc(2.5rem - (2 * var(--input-slot-action-inset)));
   font-size: var(--text-lg);
   line-height: var(--text-lg-line-height);
 }
@@ -114,11 +108,6 @@
   padding-inline: var(--input-pad-inline);
 }
 
-.slot-action {
-  padding-block: var(--input-slot-action-inset);
-  padding-inline: 0 var(--input-pad-inline);
-}
-
 .slot :is(button, a) {
   pointer-events: auto;
 }
@@ -126,10 +115,7 @@
 .slot :is(button, a):focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px rgb(var(--field-halo));
-}
-
-.slot-action :is(button, a):focus-visible {
-  box-shadow: none;
+  border-radius: 0.25rem;
 }
 
 .slot :is(svg, img) {
@@ -138,25 +124,28 @@
   flex-shrink: 0;
 }
 
+.slot-action-button {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--input-adornment-size);
+  height: var(--input-adornment-size);
+  min-width: var(--input-adornment-size);
+  min-height: var(--input-adornment-size);
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: inherit;
+}
+
 .slot-action-button :is(svg, img) {
   width: var(--input-adornment-size);
   height: var(--input-adornment-size);
 }
 
-.slot-action-button {
-  box-sizing: border-box;
-  width: var(--input-action-size);
-  height: var(--input-action-size);
-  min-width: var(--input-action-size);
-  min-height: var(--input-action-size);
-  padding: 0;
-  border: none;
-  background-color: var(--input-halo);
-  color: inherit;
-}
-
 .slot-action-button:hover {
-  background-color: color-mix(in srgb, var(--input-halo) 80%, rgb(var(--foreground)));
+  color: rgb(var(--foreground));
 }
 
 .input {

@@ -20,7 +20,7 @@ export type CountryComboboxOption = ComboboxOption & {
   isoCode?: string;
 };
 
-export type CountryComboboxProps = Omit<ComboboxRootProps, 'options' | 'renderOption'> & {
+export type CountryComboboxProps = Omit<ComboboxRootProps, 'options' | 'renderOption' | 'children'> & {
   options: CountryComboboxOption[];
   label?: React.ReactNode;
   hint?: React.ReactNode;
@@ -29,6 +29,10 @@ export type CountryComboboxProps = Omit<ComboboxRootProps, 'options' | 'renderOp
   required?: boolean;
   /** Renders a quick-select button beside the field (e.g. UK flag). */
   quickSelect?: CountryComboboxOption;
+  /** Replaces the default options list (e.g. server-driven / infinite scroll). */
+  listBoxContent?: React.ReactNode;
+  /** Called when the combobox input receives focus. */
+  onInputFocus?: () => void;
 };
 
 const QUICK_SELECT_BUTTON_SIZE: Record<InputSize, IconOnlyButtonSize> = {
@@ -74,11 +78,13 @@ function CountryComboboxControl({
   required = false,
   onValidationError,
   preserveValidationOnNextChangeRef,
+  onInputFocus,
 }: {
   options: CountryComboboxOption[];
   required?: boolean;
   onValidationError: (message?: string) => void;
   preserveValidationOnNextChangeRef: React.MutableRefObject<boolean>;
+  onInputFocus?: () => void;
 }) {
   const { inputValue, selectedValue, selectValue } = useComboboxContext();
 
@@ -136,10 +142,13 @@ function CountryComboboxControl({
 
   const flag = useSelectedCountryFlag();
 
+  const handleFocus = () => {
+    onInputFocus?.();
+  };
+
   return (
     <Combobox.Control leadingVisual={flag}>
-      <Combobox.Input onBlur={handleBlur} onKeyDown={handleKeyDown} />
-      <Combobox.ClearButton />
+      <Combobox.Input onFocus={handleFocus} onBlur={handleBlur} onKeyDown={handleKeyDown} />
       <Combobox.ToggleButton />
     </Combobox.Control>
   );
@@ -183,8 +192,9 @@ function CountryCombobox({
   errorMessage,
   required = false,
   quickSelect,
+  listBoxContent,
+  onInputFocus,
   className,
-  children,
   disabled,
   size = 'default',
   error,
@@ -226,6 +236,7 @@ function CountryCombobox({
     required,
     onValidationError: handleValidationError,
     preserveValidationOnNextChangeRef,
+    onInputFocus,
   };
 
   const control = quickSelect ? (
@@ -253,10 +264,9 @@ function CountryCombobox({
     >
       {label ? <Combobox.Label>{label}</Combobox.Label> : null}
       {control}
-      <Combobox.Options />
+      {listBoxContent ?? <Combobox.Options />}
       {hint ? <Combobox.Hint>{hint}</Combobox.Hint> : null}
       {displayedError ? <Combobox.Error role="alert">{displayedError}</Combobox.Error> : null}
-      {children}
     </Combobox.Root>
   );
 }

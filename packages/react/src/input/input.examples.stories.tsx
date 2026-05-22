@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { AddressFormExample } from './address-form-example';
 import { Input } from './input';
 import { Button } from '../button';
 import { FormField } from '../form-field';
@@ -36,6 +37,10 @@ export const LoginForm: Story = {
       </form>
     </div>
   ),
+};
+
+export const AddressForm: Story = {
+  render: () => <AddressFormExample />,
 };
 
 export const FormWithValidation: Story = {

@@ -40,7 +40,7 @@
 }
 
 .variant-severe {
-  background-color: #2563eb;
+  background-color: rgb(var(--brand-black));
   color: rgb(var(--brand-white));
 }
 

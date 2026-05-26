@@ -13,6 +13,10 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+export const Default: Story = {
+  render: () => <Label variant="default">Default</Label>,
+};
+
 export const Primary: Story = {
   render: () => <Label variant="primary">Primary</Label>,
 };
@@ -21,12 +25,20 @@ export const Secondary: Story = {
   render: () => <Label variant="secondary">Secondary</Label>,
 };
 
-export const Outline: Story = {
-  render: () => <Label variant="outline">Outline</Label>,
-};
-
 export const Ghost: Story = {
   render: () => <Label variant="ghost">Ghost</Label>,
+};
+
+export const Success: Story = {
+  render: () => <Label variant="success">Success</Label>,
+};
+
+export const Severe: Story = {
+  render: () => <Label variant="severe">Severe</Label>,
+};
+
+export const Danger: Story = {
+  render: () => <Label variant="danger">Danger</Label>,
 };
 
 export const SizeSmall: Story = {

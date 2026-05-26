@@ -10,14 +10,22 @@ const meta = {
     docs: {
       description: {
         component:
-          'Compact badge-style label with variants aligned to Button: primary, secondary, outline, and ghost.',
+          'Compact badge-style label with neutral, semantic, and status variants for metadata and state chips.',
       },
     },
   },
   argTypes: {
     variant: {
       control: { type: 'select' },
-      options: ['primary', 'secondary', 'outline', 'ghost'],
+      options: [
+        'default',
+        'primary',
+        'secondary',
+        'ghost',
+        'success',
+        'severe',
+        'danger',
+      ],
     },
     size: {
       control: { type: 'select' },
@@ -42,7 +50,7 @@ export const Default: Story = {
 export const Playground: Story = {
   args: {
     children: 'Label',
-    variant: 'outline',
+    variant: 'default',
     size: 'default',
   },
 };

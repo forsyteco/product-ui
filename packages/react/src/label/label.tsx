@@ -7,10 +7,13 @@ import styles from './label.module.css';
 export const labelVariants = cva(styles.root, {
   variants: {
     variant: {
+      default: styles['variant-default'],
       primary: styles['variant-primary'],
       secondary: styles['variant-secondary'],
-      outline: styles['variant-outline'],
       ghost: styles['variant-ghost'],
+      success: styles['variant-success'],
+      severe: styles['variant-severe'],
+      danger: styles['variant-danger'],
     },
     size: {
       default: styles['size-default'],
@@ -19,7 +22,7 @@ export const labelVariants = cva(styles.root, {
     },
   },
   defaultVariants: {
-    variant: 'outline',
+    variant: 'default',
     size: 'default',
   },
 });
@@ -30,14 +33,14 @@ export type LabelProps = Omit<React.ComponentProps<'span'>, 'children'> &
   };
 
 const Label = forwardRef<HTMLSpanElement, LabelProps>(function Label(
-  { variant = 'outline', size = 'default', className, children, ...props },
+  { variant = 'default', size = 'default', className, children, ...props },
   ref
 ) {
   return (
     <span
       ref={ref}
       data-slot="label"
-      data-variant={variant ?? 'outline'}
+      data-variant={variant ?? 'default'}
       className={clsx(labelVariants({ variant, size }), className)}
       {...props}
     >

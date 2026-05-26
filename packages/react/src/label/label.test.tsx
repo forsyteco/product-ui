@@ -6,7 +6,7 @@ import styles from './label.module.css';
 
 describe('Label', () => {
   describe('when rendered with default props', () => {
-    it('should render with outline variant and default size styling', () => {
+    it('should render with default variant and default size styling', () => {
       // Arrange
       render(<Label>Status</Label>);
 
@@ -15,47 +15,30 @@ describe('Label', () => {
 
       // Assert
       expect(label).toHaveAttribute('data-slot', 'label');
-      expect(label).toHaveAttribute('data-variant', 'outline');
-      expect(label).toHaveClass(styles['variant-outline'], styles['size-default']);
+      expect(label).toHaveAttribute('data-variant', 'default');
+      expect(label).toHaveClass(styles['variant-default'], styles['size-default']);
     });
   });
 
-  describe('when variant is primary', () => {
-    it('should apply primary button-matched styling', () => {
+  describe('when a variant is provided', () => {
+    it.each([
+      ['default', 'variant-default'],
+      ['primary', 'variant-primary'],
+      ['secondary', 'variant-secondary'],
+      ['ghost', 'variant-ghost'],
+      ['success', 'variant-success'],
+      ['severe', 'variant-severe'],
+      ['danger', 'variant-danger'],
+    ] as const)('should apply %s styling', (variant, expectedClassName) => {
       // Arrange
-      render(<Label variant="primary">New</Label>);
+      render(<Label variant={variant}>Status</Label>);
 
       // Act
-      const label = screen.getByText('New');
+      const label = screen.getByText('Status');
 
       // Assert
-      expect(label).toHaveClass(styles['variant-primary']);
-    });
-  });
-
-  describe('when variant is secondary', () => {
-    it('should apply secondary button-matched styling', () => {
-      // Arrange
-      render(<Label variant="secondary">Beta</Label>);
-
-      // Act
-      const label = screen.getByText('Beta');
-
-      // Assert
-      expect(label).toHaveClass(styles['variant-secondary']);
-    });
-  });
-
-  describe('when variant is ghost', () => {
-    it('should apply ghost button-matched styling', () => {
-      // Arrange
-      render(<Label variant="ghost">Draft</Label>);
-
-      // Act
-      const label = screen.getByText('Draft');
-
-      // Assert
-      expect(label).toHaveClass(styles['variant-ghost']);
+      expect(label).toHaveClass(styles[expectedClassName]);
+      expect(label).toHaveAttribute('data-variant', variant);
     });
   });
 

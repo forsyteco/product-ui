@@ -1,0 +1,1 @@
+import{r as o}from"./iframe-DB_8LERs.js";const t="ArrowUp",n="ArrowDown",e="ArrowLeft",r="ArrowRight",s="Home",c="End",R=new Set([e,r]),A=new Set([t,n]),E=new Set([...R,...A]),x=new Set([...E,s,c]),O=o.createContext(void 0);function _(w){return o.useContext(O)}export{x as C,_ as u};

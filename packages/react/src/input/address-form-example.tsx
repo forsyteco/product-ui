@@ -2,7 +2,6 @@ import { useCallback, useState } from 'react';
 import { Plus } from 'lucide-react';
 
 import { Autocomplete, type AutocompleteOption } from '../autocomplete';
-import { Button } from '../button';
 import { CountryCombobox, type CountryComboboxOption } from '../combobox/country-combobox';
 import { FormField } from '../form-field';
 import { AddressManualEntryLink } from './address-manual-entry-link';
@@ -276,7 +275,6 @@ export function AddressFormExample() {
                 <Autocomplete.Options />
               </Autocomplete.Root>
               <AddressManualEntryLink
-                searchActive={searchQuery.trim().length > 0}
                 onClick={() => {
                   setSearchQuery('');
                   setIsManualEntry(true);
@@ -306,9 +304,9 @@ export function AddressFormExample() {
           />
           {isUkSelected ? (
             <div className={styles.secondaryActions}>
-              <Button type="button" variant="outline" onClick={returnToUkSearch}>
+              <button type="button" className={styles.returnToSearchLink} onClick={returnToUkSearch}>
                 Return to search
-              </Button>
+              </button>
             </div>
           ) : null}
         </>

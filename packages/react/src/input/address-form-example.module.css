@@ -31,16 +31,19 @@
   margin: 0;
   font-size: var(--text-base);
   line-height: var(--text-base-line-height);
-  color: rgb(var(--muted-foreground));
 }
 
-.manualEntryLink {
-  display: inline;
+.manualEntryLink,
+.addAddressLineLink,
+.returnToSearchLink {
+  display: inline-flex;
+  align-items: center;
   padding: 0;
   border: none;
   background: none;
   font: inherit;
-  line-height: inherit;
+  font-size: var(--text-base);
+  line-height: var(--text-base-line-height);
   text-align: right;
   color: rgb(var(--primary));
   text-decoration: underline;
@@ -48,7 +51,9 @@
   cursor: pointer;
 }
 
-.manualEntryLink:focus-visible {
+.manualEntryLink:focus-visible,
+.addAddressLineLink:focus-visible,
+.returnToSearchLink:focus-visible {
   outline: 2px solid rgb(var(--field-halo));
   outline-offset: 2px;
   border-radius: 2px;
@@ -76,26 +81,16 @@
   align-items: center;
   gap: 0.25rem;
   width: fit-content;
-  padding: 0;
-  border: none;
-  background: none;
-  font: inherit;
-  font-size: var(--text-base);
   line-height: var(--text-base-line-height);
-  color: rgb(var(--primary));
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  cursor: pointer;
-}
-
-.addAddressLineLink:focus-visible {
-  outline: 2px solid rgb(var(--field-halo));
-  outline-offset: 2px;
-  border-radius: 2px;
 }
 
 .addAddressLineLink svg {
   flex-shrink: 0;
+}
+
+.returnToSearchLink {
+  align-self: flex-end;
+  line-height: var(--text-base-line-height);
 }
 
 .addressOption {
